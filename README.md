@@ -1,42 +1,85 @@
-# Remedy
+# Bootstrap boilerplate for Harp
 
-A Harp boilerplate.
+Allows you to generate a Bootstrap enabled website in seconds using [Harp](http://harpjs.com):
 
-[Get started with Harp here](http://harpjs.com/docs/quick-start), or edit this blog from your Dropbox right away, by [publishing Remedy on the Harp Platform](https://www.harp.io/boilerplates?bp=hb-remedy) through Dropbox right away.
+- Includes documentation
+- Offers theme support that doesn't interfere with Bootstrap updates
+- Allows you to easily customize Bootstrap for each individual theme
+- Uses Bower to install Bootstrap (and automate updates)
+- Supports hosting in a subdirectory using a `baseUrl` variable
+- Prevents CSS bloat by allowing you to only include the Bootstrap components that you really need
+- Includes a showcase page that allows you to conveniently see what the Bootstrap components look like while your are customizing your Bootstrap styles
 
-## Get started
+## Demo
+
+A clean installation of the boilerplate looks like this: [http://jvandemo.github.io/hb-bootstrap/](http://jvandemo.github.io/hb-bootstrap/)
+
+## Installation
+
+First make sure you have Harp and Bower installed:
 
 ```sh
-npm install -g harp
-# May need to preface with sudo
-harp init my-blog --boilerplate kennethormandy/hb-remedy
-harp server my-blog
+$ sudo npm install -g harp
+$ sudo npm install -g bower
 ```
 
-Now visit [localhost:9000](http://localhost:9000) in your browser.
+Then initialize the boilerplate:
 
-[![A screenshot of an article in this Harp boilerplate.](https://raw.github.com/kennethormandy/hb-remedy/5b4af26eb5f56b4341016f2ed84d9ad560edcfcc/public/images/screenshot.png)](http://remedy.harpapp.io)
+```sh
+$ harp init -b jvandemo/hb-bootstrap myproject
+```
 
-The photograph is [Brandon J. Bilinski – Under Construction](http://www.flickr.com/photos/25751498@N06/6434260649/).
+Change the directory to the new `myproject` directory:
 
-### Remedy sports&hellip;
+```sh
+$ cd myproject
+```
 
-* Comments through Disqus
-* Improved support for fonts via Google Fonts or Typekit
-* Per-post banners
-* Stylised pullquotes and blockquotes from Markdown
-* Next and previous post links
-* [Private draft posts](http://kennethormandy.com/journal/static-draft-posts-with-harp)
-* Very light styling and markup, so it’s ready to customise
+Download Bootstrap using bower:
 
-…and is totally static, thanks to [Harp](http://harpjs.com).
+```sh
+$ bower install
+```
 
-## Photographs
+Start the harp server from your project directory:
 
-All photographs included in this boilerplate are copyright [Brandon J. Bilinski](http://www.flickr.com/photos/25751498@N06), used as examples with permission. They are not considered to be part of the source code of this project, and are therefore not available under the following license.
+```sh
+$ harp server
+```
 
-## License
+And navigate to `http://localhost:9000` in your browser:
 
-[The MIT License (MIT)](LICENSE.md)
+![](http://i.imgur.com/n9bcerv.png)
 
-Copyright © 2013–2014 [Kenneth Ormandy](http://kennethormandy.com)
+## Documentation
+
+The documentation is included in the boilerplate for your convenience (at the same time it demonstrates how you can easily create new layouts in your website):
+
+![](http://i.imgur.com/mJTLMQz.png)
+
+## Showcase page
+
+The boilerplate includes a showcase page to easily see what the Bootstrap components look like while your are customizing your Bootstrap styles:
+
+![](http://i.imgur.com/g43CZge.png)
+
+## Changelog
+
+### v0.4.0
+
+- Added support for `baseUrl`
+
+### v0.3.0
+
+- Added documentation as part of boilerplate
+- Update README.md
+
+### v0.2.0
+
+- Added support for customizing Bootstrap
+- Added two sample themes: default and flat
+
+### v0.1.0
+
+- Initial boilerplate
+
