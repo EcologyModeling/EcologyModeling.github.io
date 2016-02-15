@@ -1,0 +1,956 @@
+<!DOCTYPE html><html><head><meta charset="utf8"/><title>Математическое моделрование в экологии</title><link rel="stylesheet" href="/css/global.css"/><link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro"/><script src="/js/jquery/jquery.min.js"></script><script src="/js/bootstrap/bootstrap.js"></script></head><body><header><nav role="navigation" class="navbar navbar-default navbar-fixed-top"><div class="container-fluid"><div class="navbar-header"><button data-toggle="collapse" data-target="#navbar-top-collapse-1" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">Математическое моделрование в экологии</a></div><div id="navbar-top-collapse-1" class="collapse navbar-collapse"><ul class="nav navbar-nav navbar-right"><li><a href="/install">Установка R</a></li><li><a href="/lessons">Занятия</a></li></ul></div></div></nav></header><main><div class="container"><div class="row"><div class="col-sm-3"><ul class="nav nav-pills nav-stacked nav-docs"><li><a href="/lessons/recipes/Lecture1_ru">Введение</a></li><li><h1>Лекции</h1></li><li><a href="/lessons/recipes/Lecture1_ru">Семинар 1. Основы</a></li><li><a href="/lessons/recipes/Lecture2_ru">Семинар 2. Факторы и таблицы</a></li><li class="active"><a href="/lessons/recipes/Lecture3_ru">Семинар 3. Циклы и графика</a></li><li><h1>Ссылки</h1></li><li><a href="http://r.psylab.info/library/">Библиотека материалов по R</a></li><li><a href="http://datacamp.com">Datacamp - обучение R</a></li></ul></div><div class="col-sm-9"><article class="article-docs"><h1>Семинар 3 - циклы и графика</h1><h4>For - циклы с подсчетом повторов</h4><pre><code class="language-r">y=c()
+for (i in 1:100)
+{
+  x=i+2
+  y=c(y,x)
+}
+y
+</code></pre>
+<pre><code>##   [1]   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19
+##  [18]  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+##  [35]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53
+##  [52]  54  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70
+##  [69]  71  72  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87
+##  [86]  88  89  90  91  92  93  94  95  96  97  98  99 100 101 102
+</code></pre><pre><code class="language-r">l = list(1:10,-2:10,-9:-3,400:1000, 120:190)
+mn=c()
+for (i in 1:length(l))
+  {
+    mn=c(mn,mean(l[[i]]))
+  }
+mn
+</code></pre>
+<pre><code>## [1]   5.5   4.0  -6.0 700.0 155.0
+</code></pre><h4>Вычисление числа Пи методом Монтекарло</h4><h3>Просто</h3><pre><code class="language-r">x=runif(100000,-1,1)
+y=runif(100000,-1,1)
+
+Pi=0
+Nr=0
+Ns=0
+for (i in 1:100000)
+{
+
+if ((x[i]^2+y[i]^2)&gt;1)
+  { 
+    Ns=Ns+1
+  }
+  else
+  {
+    Nr=Nr+1
+  }
+}
+Pi=4*Nr/(Ns+Nr)
+Pi
+</code></pre>
+<pre><code>## [1] 3.139
+</code></pre><h4>Красиво</h4><pre><code class="language-r">pis=c()
+for (i in seq(10,10000,10))
+    { x=runif(i,-1,1)
+      y=runif(i,-1,1)
+      z=table(x^2+y^2&lt;=1)
+      my_p=4*z[2]/i
+      pis=c(pis,my_p)
+    }
+plot(pis,type=&quot;l&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-1.png" alt=""><!-- --></p>
+<pre><code class="language-r">hist(pis,nclas=100)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-2.png" alt=""><!-- --></p>
+<pre><code class="language-r">mean(pis)
+</code></pre>
+<pre><code>## [1] NA
+</code></pre><h4>Взяв iris data.frame, для первых двух колонок получить список содержащий матрицы для каждого ряда со значениями строки и суммы колоник без учета данных строки</h4><p>iris[1]</p>
+<pre><code class="language-r">l=list()
+for (i in 1:length(iris[,1]))
+  {
+   v=c(iris[i,1],sum(iris[,1])-iris[i,1],iris[i,2],sum(iris[,2])-iris[i,2])
+   dim(v)=c(2,2)
+   l2=list(v)
+   l=c(l,l2)
+  }
+l
+</code></pre>
+<pre><code>## [[1]]
+##       [,1]  [,2]
+## [1,]   5.1   3.5
+## [2,] 871.4 455.1
+## 
+## [[2]]
+##       [,1]  [,2]
+## [1,]   4.9   3.0
+## [2,] 871.6 455.6
+## 
+## [[3]]
+##       [,1]  [,2]
+## [1,]   4.7   3.2
+## [2,] 871.8 455.4
+## 
+## [[4]]
+##       [,1]  [,2]
+## [1,]   4.6   3.1
+## [2,] 871.9 455.5
+## 
+## [[5]]
+##       [,1]  [,2]
+## [1,]   5.0   3.6
+## [2,] 871.5 455.0
+## 
+## [[6]]
+##       [,1]  [,2]
+## [1,]   5.4   3.9
+## [2,] 871.1 454.7
+## 
+## [[7]]
+##       [,1]  [,2]
+## [1,]   4.6   3.4
+## [2,] 871.9 455.2
+## 
+## [[8]]
+##       [,1]  [,2]
+## [1,]   5.0   3.4
+## [2,] 871.5 455.2
+## 
+## [[9]]
+##       [,1]  [,2]
+## [1,]   4.4   2.9
+## [2,] 872.1 455.7
+## 
+## [[10]]
+##       [,1]  [,2]
+## [1,]   4.9   3.1
+## [2,] 871.6 455.5
+## 
+## [[11]]
+##       [,1]  [,2]
+## [1,]   5.4   3.7
+## [2,] 871.1 454.9
+## 
+## [[12]]
+##       [,1]  [,2]
+## [1,]   4.8   3.4
+## [2,] 871.7 455.2
+## 
+## [[13]]
+##       [,1]  [,2]
+## [1,]   4.8   3.0
+## [2,] 871.7 455.6
+## 
+## [[14]]
+##       [,1]  [,2]
+## [1,]   4.3   3.0
+## [2,] 872.2 455.6
+## 
+## [[15]]
+##       [,1]  [,2]
+## [1,]   5.8   4.0
+## [2,] 870.7 454.6
+## 
+## [[16]]
+##       [,1]  [,2]
+## [1,]   5.7   4.4
+## [2,] 870.8 454.2
+## 
+## [[17]]
+##       [,1]  [,2]
+## [1,]   5.4   3.9
+## [2,] 871.1 454.7
+## 
+## [[18]]
+##       [,1]  [,2]
+## [1,]   5.1   3.5
+## [2,] 871.4 455.1
+## 
+## [[19]]
+##       [,1]  [,2]
+## [1,]   5.7   3.8
+## [2,] 870.8 454.8
+## 
+## [[20]]
+##       [,1]  [,2]
+## [1,]   5.1   3.8
+## [2,] 871.4 454.8
+## 
+## [[21]]
+##       [,1]  [,2]
+## [1,]   5.4   3.4
+## [2,] 871.1 455.2
+## 
+## [[22]]
+##       [,1]  [,2]
+## [1,]   5.1   3.7
+## [2,] 871.4 454.9
+## 
+## [[23]]
+##       [,1]  [,2]
+## [1,]   4.6   3.6
+## [2,] 871.9 455.0
+## 
+## [[24]]
+##       [,1]  [,2]
+## [1,]   5.1   3.3
+## [2,] 871.4 455.3
+## 
+## [[25]]
+##       [,1]  [,2]
+## [1,]   4.8   3.4
+## [2,] 871.7 455.2
+## 
+## [[26]]
+##       [,1]  [,2]
+## [1,]   5.0   3.0
+## [2,] 871.5 455.6
+## 
+## [[27]]
+##       [,1]  [,2]
+## [1,]   5.0   3.4
+## [2,] 871.5 455.2
+## 
+## [[28]]
+##       [,1]  [,2]
+## [1,]   5.2   3.5
+## [2,] 871.3 455.1
+## 
+## [[29]]
+##       [,1]  [,2]
+## [1,]   5.2   3.4
+## [2,] 871.3 455.2
+## 
+## [[30]]
+##       [,1]  [,2]
+## [1,]   4.7   3.2
+## [2,] 871.8 455.4
+## 
+## [[31]]
+##       [,1]  [,2]
+## [1,]   4.8   3.1
+## [2,] 871.7 455.5
+## 
+## [[32]]
+##       [,1]  [,2]
+## [1,]   5.4   3.4
+## [2,] 871.1 455.2
+## 
+## [[33]]
+##       [,1]  [,2]
+## [1,]   5.2   4.1
+## [2,] 871.3 454.5
+## 
+## [[34]]
+##       [,1]  [,2]
+## [1,]   5.5   4.2
+## [2,] 871.0 454.4
+## 
+## [[35]]
+##       [,1]  [,2]
+## [1,]   4.9   3.1
+## [2,] 871.6 455.5
+## 
+## [[36]]
+##       [,1]  [,2]
+## [1,]   5.0   3.2
+## [2,] 871.5 455.4
+## 
+## [[37]]
+##       [,1]  [,2]
+## [1,]   5.5   3.5
+## [2,] 871.0 455.1
+## 
+## [[38]]
+##       [,1]  [,2]
+## [1,]   4.9   3.6
+## [2,] 871.6 455.0
+## 
+## [[39]]
+##       [,1]  [,2]
+## [1,]   4.4   3.0
+## [2,] 872.1 455.6
+## 
+## [[40]]
+##       [,1]  [,2]
+## [1,]   5.1   3.4
+## [2,] 871.4 455.2
+## 
+## [[41]]
+##       [,1]  [,2]
+## [1,]   5.0   3.5
+## [2,] 871.5 455.1
+## 
+## [[42]]
+##       [,1]  [,2]
+## [1,]   4.5   2.3
+## [2,] 872.0 456.3
+## 
+## [[43]]
+##       [,1]  [,2]
+## [1,]   4.4   3.2
+## [2,] 872.1 455.4
+## 
+## [[44]]
+##       [,1]  [,2]
+## [1,]   5.0   3.5
+## [2,] 871.5 455.1
+## 
+## [[45]]
+##       [,1]  [,2]
+## [1,]   5.1   3.8
+## [2,] 871.4 454.8
+## 
+## [[46]]
+##       [,1]  [,2]
+## [1,]   4.8   3.0
+## [2,] 871.7 455.6
+## 
+## [[47]]
+##       [,1]  [,2]
+## [1,]   5.1   3.8
+## [2,] 871.4 454.8
+## 
+## [[48]]
+##       [,1]  [,2]
+## [1,]   4.6   3.2
+## [2,] 871.9 455.4
+## 
+## [[49]]
+##       [,1]  [,2]
+## [1,]   5.3   3.7
+## [2,] 871.2 454.9
+## 
+## [[50]]
+##       [,1]  [,2]
+## [1,]   5.0   3.3
+## [2,] 871.5 455.3
+## 
+## [[51]]
+##       [,1]  [,2]
+## [1,]   7.0   3.2
+## [2,] 869.5 455.4
+## 
+## [[52]]
+##       [,1]  [,2]
+## [1,]   6.4   3.2
+## [2,] 870.1 455.4
+## 
+## [[53]]
+##       [,1]  [,2]
+## [1,]   6.9   3.1
+## [2,] 869.6 455.5
+## 
+## [[54]]
+##       [,1]  [,2]
+## [1,]   5.5   2.3
+## [2,] 871.0 456.3
+## 
+## [[55]]
+##       [,1]  [,2]
+## [1,]   6.5   2.8
+## [2,] 870.0 455.8
+## 
+## [[56]]
+##       [,1]  [,2]
+## [1,]   5.7   2.8
+## [2,] 870.8 455.8
+## 
+## [[57]]
+##       [,1]  [,2]
+## [1,]   6.3   3.3
+## [2,] 870.2 455.3
+## 
+## [[58]]
+##       [,1]  [,2]
+## [1,]   4.9   2.4
+## [2,] 871.6 456.2
+## 
+## [[59]]
+##       [,1]  [,2]
+## [1,]   6.6   2.9
+## [2,] 869.9 455.7
+## 
+## [[60]]
+##       [,1]  [,2]
+## [1,]   5.2   2.7
+## [2,] 871.3 455.9
+## 
+## [[61]]
+##       [,1]  [,2]
+## [1,]   5.0   2.0
+## [2,] 871.5 456.6
+## 
+## [[62]]
+##       [,1]  [,2]
+## [1,]   5.9   3.0
+## [2,] 870.6 455.6
+## 
+## [[63]]
+##       [,1]  [,2]
+## [1,]   6.0   2.2
+## [2,] 870.5 456.4
+## 
+## [[64]]
+##       [,1]  [,2]
+## [1,]   6.1   2.9
+## [2,] 870.4 455.7
+## 
+## [[65]]
+##       [,1]  [,2]
+## [1,]   5.6   2.9
+## [2,] 870.9 455.7
+## 
+## [[66]]
+##       [,1]  [,2]
+## [1,]   6.7   3.1
+## [2,] 869.8 455.5
+## 
+## [[67]]
+##       [,1]  [,2]
+## [1,]   5.6   3.0
+## [2,] 870.9 455.6
+## 
+## [[68]]
+##       [,1]  [,2]
+## [1,]   5.8   2.7
+## [2,] 870.7 455.9
+## 
+## [[69]]
+##       [,1]  [,2]
+## [1,]   6.2   2.2
+## [2,] 870.3 456.4
+## 
+## [[70]]
+##       [,1]  [,2]
+## [1,]   5.6   2.5
+## [2,] 870.9 456.1
+## 
+## [[71]]
+##       [,1]  [,2]
+## [1,]   5.9   3.2
+## [2,] 870.6 455.4
+## 
+## [[72]]
+##       [,1]  [,2]
+## [1,]   6.1   2.8
+## [2,] 870.4 455.8
+## 
+## [[73]]
+##       [,1]  [,2]
+## [1,]   6.3   2.5
+## [2,] 870.2 456.1
+## 
+## [[74]]
+##       [,1]  [,2]
+## [1,]   6.1   2.8
+## [2,] 870.4 455.8
+## 
+## [[75]]
+##       [,1]  [,2]
+## [1,]   6.4   2.9
+## [2,] 870.1 455.7
+## 
+## [[76]]
+##       [,1]  [,2]
+## [1,]   6.6   3.0
+## [2,] 869.9 455.6
+## 
+## [[77]]
+##       [,1]  [,2]
+## [1,]   6.8   2.8
+## [2,] 869.7 455.8
+## 
+## [[78]]
+##       [,1]  [,2]
+## [1,]   6.7   3.0
+## [2,] 869.8 455.6
+## 
+## [[79]]
+##       [,1]  [,2]
+## [1,]   6.0   2.9
+## [2,] 870.5 455.7
+## 
+## [[80]]
+##       [,1]  [,2]
+## [1,]   5.7   2.6
+## [2,] 870.8 456.0
+## 
+## [[81]]
+##       [,1]  [,2]
+## [1,]   5.5   2.4
+## [2,] 871.0 456.2
+## 
+## [[82]]
+##       [,1]  [,2]
+## [1,]   5.5   2.4
+## [2,] 871.0 456.2
+## 
+## [[83]]
+##       [,1]  [,2]
+## [1,]   5.8   2.7
+## [2,] 870.7 455.9
+## 
+## [[84]]
+##       [,1]  [,2]
+## [1,]   6.0   2.7
+## [2,] 870.5 455.9
+## 
+## [[85]]
+##       [,1]  [,2]
+## [1,]   5.4   3.0
+## [2,] 871.1 455.6
+## 
+## [[86]]
+##       [,1]  [,2]
+## [1,]   6.0   3.4
+## [2,] 870.5 455.2
+## 
+## [[87]]
+##       [,1]  [,2]
+## [1,]   6.7   3.1
+## [2,] 869.8 455.5
+## 
+## [[88]]
+##       [,1]  [,2]
+## [1,]   6.3   2.3
+## [2,] 870.2 456.3
+## 
+## [[89]]
+##       [,1]  [,2]
+## [1,]   5.6   3.0
+## [2,] 870.9 455.6
+## 
+## [[90]]
+##       [,1]  [,2]
+## [1,]   5.5   2.5
+## [2,] 871.0 456.1
+## 
+## [[91]]
+##       [,1]  [,2]
+## [1,]   5.5   2.6
+## [2,] 871.0 456.0
+## 
+## [[92]]
+##       [,1]  [,2]
+## [1,]   6.1   3.0
+## [2,] 870.4 455.6
+## 
+## [[93]]
+##       [,1]  [,2]
+## [1,]   5.8   2.6
+## [2,] 870.7 456.0
+## 
+## [[94]]
+##       [,1]  [,2]
+## [1,]   5.0   2.3
+## [2,] 871.5 456.3
+## 
+## [[95]]
+##       [,1]  [,2]
+## [1,]   5.6   2.7
+## [2,] 870.9 455.9
+## 
+## [[96]]
+##       [,1]  [,2]
+## [1,]   5.7   3.0
+## [2,] 870.8 455.6
+## 
+## [[97]]
+##       [,1]  [,2]
+## [1,]   5.7   2.9
+## [2,] 870.8 455.7
+## 
+## [[98]]
+##       [,1]  [,2]
+## [1,]   6.2   2.9
+## [2,] 870.3 455.7
+## 
+## [[99]]
+##       [,1]  [,2]
+## [1,]   5.1   2.5
+## [2,] 871.4 456.1
+## 
+## [[100]]
+##       [,1]  [,2]
+## [1,]   5.7   2.8
+## [2,] 870.8 455.8
+## 
+## [[101]]
+##       [,1]  [,2]
+## [1,]   6.3   3.3
+## [2,] 870.2 455.3
+## 
+## [[102]]
+##       [,1]  [,2]
+## [1,]   5.8   2.7
+## [2,] 870.7 455.9
+## 
+## [[103]]
+##       [,1]  [,2]
+## [1,]   7.1   3.0
+## [2,] 869.4 455.6
+## 
+## [[104]]
+##       [,1]  [,2]
+## [1,]   6.3   2.9
+## [2,] 870.2 455.7
+## 
+## [[105]]
+##       [,1]  [,2]
+## [1,]   6.5   3.0
+## [2,] 870.0 455.6
+## 
+## [[106]]
+##       [,1]  [,2]
+## [1,]   7.6   3.0
+## [2,] 868.9 455.6
+## 
+## [[107]]
+##       [,1]  [,2]
+## [1,]   4.9   2.5
+## [2,] 871.6 456.1
+## 
+## [[108]]
+##       [,1]  [,2]
+## [1,]   7.3   2.9
+## [2,] 869.2 455.7
+## 
+## [[109]]
+##       [,1]  [,2]
+## [1,]   6.7   2.5
+## [2,] 869.8 456.1
+## 
+## [[110]]
+##       [,1]  [,2]
+## [1,]   7.2   3.6
+## [2,] 869.3 455.0
+## 
+## [[111]]
+##       [,1]  [,2]
+## [1,]   6.5   3.2
+## [2,] 870.0 455.4
+## 
+## [[112]]
+##       [,1]  [,2]
+## [1,]   6.4   2.7
+## [2,] 870.1 455.9
+## 
+## [[113]]
+##       [,1]  [,2]
+## [1,]   6.8   3.0
+## [2,] 869.7 455.6
+## 
+## [[114]]
+##       [,1]  [,2]
+## [1,]   5.7   2.5
+## [2,] 870.8 456.1
+## 
+## [[115]]
+##       [,1]  [,2]
+## [1,]   5.8   2.8
+## [2,] 870.7 455.8
+## 
+## [[116]]
+##       [,1]  [,2]
+## [1,]   6.4   3.2
+## [2,] 870.1 455.4
+## 
+## [[117]]
+##       [,1]  [,2]
+## [1,]   6.5   3.0
+## [2,] 870.0 455.6
+## 
+## [[118]]
+##       [,1]  [,2]
+## [1,]   7.7   3.8
+## [2,] 868.8 454.8
+## 
+## [[119]]
+##       [,1]  [,2]
+## [1,]   7.7   2.6
+## [2,] 868.8 456.0
+## 
+## [[120]]
+##       [,1]  [,2]
+## [1,]   6.0   2.2
+## [2,] 870.5 456.4
+## 
+## [[121]]
+##       [,1]  [,2]
+## [1,]   6.9   3.2
+## [2,] 869.6 455.4
+## 
+## [[122]]
+##       [,1]  [,2]
+## [1,]   5.6   2.8
+## [2,] 870.9 455.8
+## 
+## [[123]]
+##       [,1]  [,2]
+## [1,]   7.7   2.8
+## [2,] 868.8 455.8
+## 
+## [[124]]
+##       [,1]  [,2]
+## [1,]   6.3   2.7
+## [2,] 870.2 455.9
+## 
+## [[125]]
+##       [,1]  [,2]
+## [1,]   6.7   3.3
+## [2,] 869.8 455.3
+## 
+## [[126]]
+##       [,1]  [,2]
+## [1,]   7.2   3.2
+## [2,] 869.3 455.4
+## 
+## [[127]]
+##       [,1]  [,2]
+## [1,]   6.2   2.8
+## [2,] 870.3 455.8
+## 
+## [[128]]
+##       [,1]  [,2]
+## [1,]   6.1   3.0
+## [2,] 870.4 455.6
+## 
+## [[129]]
+##       [,1]  [,2]
+## [1,]   6.4   2.8
+## [2,] 870.1 455.8
+## 
+## [[130]]
+##       [,1]  [,2]
+## [1,]   7.2   3.0
+## [2,] 869.3 455.6
+## 
+## [[131]]
+##       [,1]  [,2]
+## [1,]   7.4   2.8
+## [2,] 869.1 455.8
+## 
+## [[132]]
+##       [,1]  [,2]
+## [1,]   7.9   3.8
+## [2,] 868.6 454.8
+## 
+## [[133]]
+##       [,1]  [,2]
+## [1,]   6.4   2.8
+## [2,] 870.1 455.8
+## 
+## [[134]]
+##       [,1]  [,2]
+## [1,]   6.3   2.8
+## [2,] 870.2 455.8
+## 
+## [[135]]
+##       [,1]  [,2]
+## [1,]   6.1   2.6
+## [2,] 870.4 456.0
+## 
+## [[136]]
+##       [,1]  [,2]
+## [1,]   7.7   3.0
+## [2,] 868.8 455.6
+## 
+## [[137]]
+##       [,1]  [,2]
+## [1,]   6.3   3.4
+## [2,] 870.2 455.2
+## 
+## [[138]]
+##       [,1]  [,2]
+## [1,]   6.4   3.1
+## [2,] 870.1 455.5
+## 
+## [[139]]
+##       [,1]  [,2]
+## [1,]   6.0   3.0
+## [2,] 870.5 455.6
+## 
+## [[140]]
+##       [,1]  [,2]
+## [1,]   6.9   3.1
+## [2,] 869.6 455.5
+## 
+## [[141]]
+##       [,1]  [,2]
+## [1,]   6.7   3.1
+## [2,] 869.8 455.5
+## 
+## [[142]]
+##       [,1]  [,2]
+## [1,]   6.9   3.1
+## [2,] 869.6 455.5
+## 
+## [[143]]
+##       [,1]  [,2]
+## [1,]   5.8   2.7
+## [2,] 870.7 455.9
+## 
+## [[144]]
+##       [,1]  [,2]
+## [1,]   6.8   3.2
+## [2,] 869.7 455.4
+## 
+## [[145]]
+##       [,1]  [,2]
+## [1,]   6.7   3.3
+## [2,] 869.8 455.3
+## 
+## [[146]]
+##       [,1]  [,2]
+## [1,]   6.7   3.0
+## [2,] 869.8 455.6
+## 
+## [[147]]
+##       [,1]  [,2]
+## [1,]   6.3   2.5
+## [2,] 870.2 456.1
+## 
+## [[148]]
+##       [,1]  [,2]
+## [1,]   6.5   3.0
+## [2,] 870.0 455.6
+## 
+## [[149]]
+##       [,1]  [,2]
+## [1,]   6.2   3.4
+## [2,] 870.3 455.2
+## 
+## [[150]]
+##       [,1]  [,2]
+## [1,]   5.9   3.0
+## [2,] 870.6 455.6
+</code></pre><h4>Функция Apply</h4><p>apply (data.frame(), 1 or 2, FUNCTION) 1 - by row 2 - by column</p>
+<p>lapply(list, FUNCTION) - output is list sapply(list, FUNCTION) - output is vector tapply(vector,factor, FUN) - finds all data dedicated to one factor and applys function to it</p>
+<pre><code class="language-r">apply(iris[,1:4],2,sum)
+</code></pre>
+<pre><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##        876.5        458.6        563.7        179.9
+</code></pre><pre><code class="language-r">tapply(iris$Sepal.Length, iris$Species, sum)
+</code></pre>
+<pre><code>##     setosa versicolor  virginica 
+##      250.3      296.8      329.4
+</code></pre><h4>Базовая графика - функция plot(x,y)</h4><pre><code class="language-r">x=c(2,8,6)
+y=c(3,7,9)
+plot(5:10)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-1.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(x,y)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-2.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(x,y, type=&quot;l&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-3.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(x,y, type=&quot;b&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-4.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(x,y,type=&quot;h&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-5.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(x,y,type=&quot;s&quot;, col=rgb(.90,.10,.10,.9))
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-6.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type=&quot;h&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-7.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01), sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type=&quot;h&quot;, xlim=c(-20,20), ylim=c(-5,5))
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-8.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type=&quot;h&quot;, xlim=c(-20,20), ylim=c(-5,5),main=&quot;My first cos(x)&quot;,xlab=&quot;x&quot;,ylab=&quot;sin(x)&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-9.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type=&quot;l&quot;, xlim=c(-20,20), ylim=c(-5,5),main=&quot;My first cos(x)&quot;,xlab=&quot;x&quot;,ylab=&quot;sin(x)&quot;,lwd=.4)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-10.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type=&quot;l&quot;, xlim=c(-20,20), ylim=c(-5,5),main=&quot;My first cos(x)&quot;,xlab=&quot;x&quot;,ylab=&quot;sin(x)&quot;,lwd=4, lty=4)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-11.png" alt=""><!-- --></p>
+<pre><code class="language-r">plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type=&quot;b&quot;, xlim=c(-20,20), ylim=c(-5,5),main=&quot;My first cos(x)&quot;,xlab=&quot;x&quot;,ylab=&quot;sin(x)&quot;,lwd=4, lty=4, pch=4)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-12.png" alt=""><!-- --></p>
+<pre><code class="language-r">####Линии
+
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type=&quot;l&quot;)
+lines(seq(-10,10,.01),rep(c(0),2001), type=&quot;l&quot;, col=&quot;red&quot;)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-13.png" alt=""><!-- --></p>
+<pre><code class="language-r">x=(seq(-10,10,.01))
+plot(x, (1-x^2)^.5, type=&quot;l&quot;,ylim=c(1,-1), xlim=c(-1,1))
+lines(x, -((1-x^2)^.5))
+lines(rep(c(0),401),seq(-2,2,.01))
+lines(seq(-2,2,.01),rep(c(0),401))
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-6-14.png" alt=""><!-- --></p>
+<h1>Load the ggplot2 package</h1><pre><code class="language-r">#install.packages(&quot;ggplot2&quot;)
+library(ggplot2)
+</code></pre>
+<h1>Explore the mtcars data frame with str()</h1><pre><code class="language-r">str(mtcars)
+</code></pre>
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : num  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...
+</code></pre><h1>Execute the following command</h1><pre><code class="language-r">ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-9-1.png" alt=""><!-- --></p>
+<h1>Change the command below so that cyl is treated as factor</h1><pre><code class="language-r">ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-10-1.png" alt=""><!-- --></p>
+<h1>A scatter plot has been made for you</h1><pre><code class="language-r">ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-11-1.png" alt=""><!-- --></p>
+<h1>The color should be dependent on the displacement of the car engine, found in disp</h1><pre><code class="language-r">ggplot(mtcars, aes(x = wt, y = mpg, col = disp)) +
+  geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-12-1.png" alt=""><!-- --></p>
+<h1>The size should be dependent on the displacement of the car engine, found in</h1><pre><code class="language-r">ggplot(mtcars, aes(x = wt, y = mpg, size = disp)) +
+  geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-13-1.png" alt=""><!-- --></p>
+<h1>Add geom_point() and geom_smooth() with +</h1><pre><code class="language-r">ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-1.png" alt=""><!-- --></p>
+<pre><code class="language-r"># The plot you created in the previous exercise
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-2.png" alt=""><!-- --></p>
+<pre><code class="language-r"># Copy the above command but show only the smooth line
+ggplot(diamonds, aes(x = carat, y = price)) +  geom_smooth()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-3.png" alt=""><!-- --></p>
+<pre><code class="language-r"># Copy the above command and assign the correct value to col in aes()
+ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
+  geom_smooth()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-4.png" alt=""><!-- --></p>
+<pre><code class="language-r"># Keep the color settings from previous command. Plot only the points with argument alpha.
+ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
+  geom_point(alpha = 0.4)
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-5.png" alt=""><!-- --></p>
+<pre><code class="language-r"># Create the object containing the data and aes layers: dia_plot
+dia_plot = ggplot(diamonds, aes(x = carat, y = price))
+
+# Add a geom layer with + and geom_point()
+
+dia_plot + geom_point()
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-6.png" alt=""><!-- --></p>
+<pre><code class="language-r"># Add the same geom layer, but with aes() inside
+
+dia_plot + geom_point(aes(col=clarity))
+</code></pre>
+<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-7.png" alt=""><!-- --></p></article></div></div></div></main><footer>Создано с помощью  <a href="http://harpjs.com">Harp</a> в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -  <a href="http://lamp-lab.ru">ЛАМП</a></footer></body></html>
