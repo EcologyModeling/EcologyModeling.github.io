@@ -1,16 +1,88 @@
-/*
- *  /MathJax/fonts/HTML-CSS/TeX/png/AMS/Regular/GeneralPunctuation.js
- *  
- *  Copyright (c) 2010-2013 The MathJax Consortium
- *
- *  Part of the MathJax library.
- *  See http://www.mathjax.org for details.
- * 
- *  Licensed under the Apache License, Version 2.0;
- *  you may not use this file except in compliance with the License.
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
+/**
+ * Obsidian style
+ * ported by Alexander Marenin (http://github.com/ioncreature)
  */
 
-MathJax.OutputJax["HTML-CSS"].defineImageData({MathJax_AMS:{8245:[[2,4,0],[3,5,0],[3,5,0],[3,6,-1],[4,7,-1],[5,9,-1],[5,10,-1],[6,12,-1],[7,15,-1],[9,17,-1],[10,20,-2],[12,24,-2],[14,29,-2],[17,34,-3]]}});MathJax.Ajax.loadComplete(MathJax.OutputJax["HTML-CSS"].imgDir+"/AMS/Regular"+MathJax.OutputJax["HTML-CSS"].imgPacked+"/GeneralPunctuation.js");
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #282b2e;
+}
 
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-selector-id {
+  color: #93c763;
+}
+
+.hljs-number {
+  color: #ffcd22;
+}
+
+.hljs {
+  color: #e0e2e4;
+}
+
+.hljs-attribute {
+  color: #668bb0;
+}
+
+.hljs-code,
+.hljs-class .hljs-title,
+.hljs-section {
+  color: white;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #d39745;
+}
+
+.hljs-meta {
+  color: #557182;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-bullet,
+.hljs-subst,
+.hljs-emphasis,
+.hljs-type,
+.hljs-built_in,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #8cbbad;
+}
+
+.hljs-string,
+.hljs-symbol {
+  color: #ec7600;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+  color: #818e96;
+}
+
+.hljs-selector-class {
+  color: #A082BD
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-title,
+.hljs-section,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+  font-weight: bold;
+}
