@@ -1,0 +1,51 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   404.html
+#	modified:   index.html
+#	modified:   install/index.html
+#	modified:   js/highlight/CHANGES.html
+#	modified:   js/highlight/README.html
+#	modified:   js/highlight/README.ru.html
+#	modified:   lessons/index.html
+#	modified:   lessons/installation.html
+#	modified:   lessons/recipes/Lecture1.html
+#	modified:   lessons/recipes/Lecture1_ru.html
+#	modified:   lessons/recipes/Lecture2_ru.html
+#	modified:   lessons/recipes/Lecture3_ru.html
+#	modified:   lessons/recipes/Lesson4_Regression.html
+#	modified:   lessons/recipes/customize-bootstrap.html
+#	modified:   lessons/recipes/host-in-subdirectory.html
+#	modified:   lessons/recipes/themes.html
+#	modified:   public/_partials/head.jade
+#	modified:   public/lessons/recipes/Lesson4_Regression.md
+#
+# Untracked files:
+#	js/MathJax/
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/paraiso-light.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/pojoaque.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/pojoaque.jpg
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/qtcreator_dark.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/qtcreator_light.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/railscasts.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/rainbow.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/school-book.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/school-book.png
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/solarized-dark.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/solarized-light.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/sunburst.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/tomorrow-night-blue.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/tomorrow-night-bright.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/tomorrow-night-eighties.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/tomorrow-night.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/tomorrow.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/vs.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/xcode.css
+#	lessons/recipes/Lesson4_Regression_files/figure-markdown_github/zenburn.css
+#	public/js/MathJax/
+MathJax working
+#

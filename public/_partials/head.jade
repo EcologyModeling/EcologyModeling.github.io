@@ -7,5 +7,5 @@ script(src='#{baseUrl}/js/bootstrap/bootstrap.js')
 link(rel='stylesheet', href='#{baseUrl}/js/highlight/styles/solarized-light.css')
 script(src='#{baseUrl}/js/highlight/highlight.pack.js')
 script() hljs.initHighlightingOnLoad();
-script(type='text/x-mathjax-config') MathJax.Hub.Config({tex2jax:{inlineMath: [["$","$"],["\\(","\\)"]]}});
-script(src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full')
+script(src='#{baseUrl}/js/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+script(type='text/x-mathjax-config')   MathJax.Hub.Config({    tex2jax: {inlineMath: [['$','$'] , ['\\(','\\)']] }  });
