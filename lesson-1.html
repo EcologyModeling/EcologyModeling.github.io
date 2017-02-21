@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Введение</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+
+      <a class="productName" href="index.html">Математическое моделрование в экологии
+</a>
+
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="Part-1-topic-1.html">Занятия</a>
+        <a class="menuItem" href="Tests.html">Задания</a>
+        <a class="menuItem" href="presentations/Introduction_R.html">Презентации</a>
+        <a class="menuItem" href="materials.html">Материалы</a>
+        <a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+        <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid").addClass("footerPushDown");
+</script>
+
+
+<div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
+<div class="lessonPage">
+  <div class="lessonsNav">
+    <a id="nav-lesson-1" href="Part-1-topic-1.html">Введение в программирование на языке R</a>
+    <a id="nav-lesson-15" href="Part-2-topic-2.html">Физические модели. Формализация и численные решения.</a>
+    <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
+    <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
+    <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
+
+    <!--<a id="nav-lesson-5" href="lesson-5.html">Multiple regression modelling</a>
+        <a id="nav-lesson-5" href="lesson-5.html">Всякое новое</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Parameters</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Tables</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Markdown Basics</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Output Formats</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Notebooks</a>
+    <a id="nav-lesson-11" href="lesson-11.html">Slide Presentations</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Dashboards</a>
+    <a id="nav-lesson-13" href="lesson-13.html">Websites</a>
+    <a id="nav-lesson-14" href="lesson-14.html">Interactive Documents</a>
+    <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>-->
+  </div>
+  <div class="lessonContent">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Введение</h1>
+
+</div>
+
+
+<div id="---r" class="section level1">
+<h1>Введение в язык R</h1>
+<ul>
+<li>Large Data Sets</li>
+<li>Modeling and simulations</li>
+<li>Statistical analysis</li>
+<li>Extensive computational task</li>
+</ul>
+<hr />
+<ul>
+<li>Genomics, transcryptomycs</li>
+<li>Computational evolutionary biolo</li>
+<li>Structural biology</li>
+<li>Image analysis</li>
+<li>Quantative ecology</li>
+</ul>
+<hr />
+<div id="diensions-of-languages" class="section level4">
+<h4>3 diensions of languages</h4>
+<ul>
+<li><strong>High</strong> vs low</li>
+<li><strong>General</strong> vs targeted</li>
+<li><strong>Interpretive</strong> vs compiled</li>
+</ul>
+<hr />
+</div>
+<div id="structure-of-r-language" class="section level4">
+<h4>Structure of R language</h4>
+<ul>
+<li>S language</li>
+<li>Functions written in R itself</li>
+</ul>
+<hr />
+</div>
+<div id="specific-task" class="section level4">
+<h4>Specific task</h4>
+<ul>
+<li>Multiple testing</li>
+<li>MCMC</li>
+<li>Bias</li>
+<li>Gauss</li>
+<li>Plotting</li>
+<li>Sequencing</li>
+</ul>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Check graphics system</td>
+</tr>
+<tr class="even">
+<td><code>r plot(density(rnorm(100)), col = &quot;red&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td><img src="lesson-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="variables-types" class="section level4">
+<h4>Variables types</h4>
+<pre class="r"><code>x = 5
+x &lt;- 5
+assign(&quot;x&quot;, 5)</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Commands and Basic Functions</td>
+</tr>
+<tr class="even">
+<td>function c()</td>
+</tr>
+<tr class="odd">
+<td><code>r x &lt;- c(1, 3, 6, 7)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="vectors" class="section level4">
+<h4>Vectors</h4>
+<ul>
+<li>numerical</li>
+<li>character</li>
+<li>logical</li>
+</ul>
+<p>(factors are not classic vector objects)</p>
+<pre class="r"><code>char &lt;- c(&quot;8&quot;, &quot;edge&quot;, &quot;turn8k&quot;)
+logic &lt;- c(TRUE, FALSE, TRUE, FALSE)</code></pre>
+</div>
+<div id="dynamic-typisation" class="section level3">
+<h3>Dynamic typisation</h3>
+<pre class="r"><code>dynam &lt;- c(8, &quot;dds&quot;, TRUE)
+dynam &lt;- c(1, 0, 1, 1, TRUE)
+dynam</code></pre>
+<pre><code>## [1] 1 0 1 1 1</code></pre>
+<p>Priority Char-&gt;integer-&gt;Logic</p>
+<hr />
+<div id="functions" class="section level4">
+<h4>Functions</h4>
+<p>x=function(arg1,arg2,…)</p>
+<p>Invocation - function call</p>
+<p>args:</p>
+<ul>
+<li>tagged(named)</li>
+<li>positional</li>
+</ul>
+<p>Positional: log(x,base)</p>
+<pre class="r"><code>log(x, 10)</code></pre>
+<pre><code>## [1] 0.0000000 0.4771213 0.7781513 0.8450980</code></pre>
+<p>Tagged: log(base=base,x)</p>
+<pre class="r"><code>log(base = 10, x)</code></pre>
+<pre><code>## [1] 0.0000000 0.4771213 0.7781513 0.8450980</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Logical operations</td>
+</tr>
+<tr class="even">
+<td>&gt;,&lt;,&lt;=,&gt;=,==</td>
+</tr>
+<tr class="odd">
+<td><code>r x = 10 x &lt; 5</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] FALSE</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x &gt; 5</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] TRUE</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x == 10</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] TRUE</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="math-operations" class="section level4">
+<h4>Math operations</h4>
+<p>+, -, *, /, ^, sin(), cos(), sqrt(), log()</p>
+<pre class="r"><code>x^10</code></pre>
+<pre><code>## [1] 1e+10</code></pre>
+<hr />
+<p>Quiz</p>
+<pre class="r"><code>x = 10/(5 - 5)
+x</code></pre>
+<pre><code>## [1] Inf</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Recycling Rule</td>
+</tr>
+<tr class="even">
+<td><code>r x &lt;- c(2, 4, 5, 3, -4, 0) x * 5</code></td>
+</tr>
+<tr class="odd">
+<td><code>## [1]  10  20  25  15 -20   0</code></td>
+</tr>
+<tr class="even">
+<td><code>r y &lt;- c(5, 3) x * y</code></td>
+</tr>
+<tr class="odd">
+<td><code>## [1]  10  12  25   9 -20   0</code></td>
+</tr>
+<tr class="even">
+<td><code>r z &lt;- c(1, 2, 3, 4) x * z</code></td>
+</tr>
+<tr class="odd">
+<td><code>## Warning in x * z: longer object length is not a multiple of shorter object ## length</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1]  2  8 15 12 -4  0</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="length-function" class="section level4">
+<h4>Length function</h4>
+<pre class="r"><code>length(x)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### More basic functions</td>
+</tr>
+<tr class="even">
+<td>log(), mean(), min(), max(), sum(), prod(), abs()</td>
+</tr>
+<tr class="odd">
+<td><code>r x &lt;- c(3, 4, 6, -7, 8) mean = sum(x)/length(x) mean</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] 2.8</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="regular-sequenses" class="section level4">
+<h4>Regular sequenses</h4>
+<pre class="r"><code>x = 2:10
+y = 5:1
+z = -5:10
+w = -5:-10
+x</code></pre>
+<pre><code>## [1]  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>y</code></pre>
+<pre><code>## [1] 5 4 3 2 1</code></pre>
+<pre class="r"><code>z</code></pre>
+<pre><code>##  [1] -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>w</code></pre>
+<pre><code>## [1]  -5  -6  -7  -8  -9 -10</code></pre>
+<hr />
+</div>
+<div id="regular-sequence" class="section level4">
+<h4>Regular sequence</h4>
+<p>seq(from=,to=,by=)</p>
+<pre class="r"><code>z = seq(2, 5, 0.5)
+x = seq(3, 9.1, 0.1)
+y = seq(9, 3, -0.2)
+length(x)</code></pre>
+<pre><code>## [1] 62</code></pre>
+<pre class="r"><code>length(y)</code></pre>
+<pre><code>## [1] 31</code></pre>
+<pre class="r"><code>x * y</code></pre>
+<pre><code>##  [1] 27.00 27.28 27.52 27.72 27.88 28.00 28.08 28.12 28.12 28.08 28.00
+## [12] 27.88 27.72 27.52 27.28 27.00 26.68 26.32 25.92 25.48 25.00 24.48
+## [23] 23.92 23.32 22.68 22.00 21.28 20.52 19.72 18.88 18.00 54.90 54.56
+## [34] 54.18 53.76 53.30 52.80 52.26 51.68 51.06 50.40 49.70 48.96 48.18
+## [45] 47.36 46.50 45.60 44.66 43.68 42.66 41.60 40.50 39.36 38.18 36.96
+## [56] 35.70 34.40 33.06 31.68 30.26 28.80 27.30</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Regular sequence</td>
+</tr>
+<tr class="even">
+<td>rep(x, times=)</td>
+</tr>
+<tr class="odd">
+<td><code>r x = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;) rep(x, 4)</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="logical-vectors" class="section level4">
+<h4>Logical vectors</h4>
+<p>mode(x)</p>
+<pre class="r"><code>x &lt;- 1:10
+y &lt;- x &lt;= -5
+mode(x)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>mode(y)</code></pre>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<pre class="r"><code>mode(mode(x))</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Vector indexation</td>
+</tr>
+<tr class="even">
+<td>R is 1 based language</td>
+</tr>
+<tr class="odd">
+<td><code>r x = 1:20 x[2]</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] 2</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[0]</code></td>
+</tr>
+<tr class="even">
+<td><code>## integer(0)</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[5:9]</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1] 5 6 7 8 9</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[c(3, 7, 8, 9, 20)]</code></td>
+</tr>
+<tr class="even">
+<td><code>## [1]  3  7  8  9 20</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[-19]</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 20</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[-(1:6)]</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1]  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[x &gt; 10]</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1] 11 12 13 14 15 16 17 18 19 20</code></td>
+</tr>
+<tr class="odd">
+<td><code>r x[TRUE]</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></td>
+</tr>
+<tr class="odd">
+<td><code>r y = c(TRUE, FALSE) x[y]</code></td>
+</tr>
+<tr class="even">
+<td><code>##  [1]  1  3  5  7  9 11 13 15 17 19</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="adding-to-vectors" class="section level4">
+<h4>Adding to vectors</h4>
+<pre class="r"><code>vector &lt;- c()
+v2 &lt;- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)
+vector = c(v2, vector)
+vector = c(F, vector)
+x = 1:3
+x = c(5, x)
+x</code></pre>
+<pre><code>## [1] 5 1 2 3</code></pre>
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>#### Named vectors</td>
+</tr>
+<tr class="even">
+<td><code>r x = 1:5 names(x)</code></td>
+</tr>
+<tr class="odd">
+<td><code>## NULL</code></td>
+</tr>
+<tr class="even">
+<td><code>r names(x) &lt;- c(&quot;Fisrt&quot;, &quot;Second&quot;, &quot;Third&quot;, &quot;Forth&quot;, &quot;First&quot;) names(x)</code></td>
+</tr>
+<tr class="odd">
+<td><code>## [1] &quot;Fisrt&quot;  &quot;Second&quot; &quot;Third&quot;  &quot;Forth&quot;  &quot;First&quot;</code></td>
+</tr>
+<tr class="even">
+<td><code>r x[&quot;First&quot;]</code></td>
+</tr>
+<tr class="odd">
+<td><code>## First ##     5</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="vector-attributes" class="section level4">
+<h4>Vector attributes</h4>
+<p>length() names() mode()</p>
+<hr />
+<pre class="r"><code>log(3) == log(3, base = exp(1))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>x = seq(5, 100, 0.1)
+x[length(x)]</code></pre>
+<pre><code>## [1] 100</code></pre>
+<hr />
+</div>
+<div id="sort-and-order-functions" class="section level4">
+<h4>Sort and order functions</h4>
+<pre class="r"><code>x &lt;- c(-10, 2, 78, 34, -98, 23, 0, -8)
+order(x)</code></pre>
+<pre><code>## [1] 5 1 8 7 2 6 4 3</code></pre>
+<pre class="r"><code>sort(x)</code></pre>
+<pre><code>## [1] -98 -10  -8   0   2  23  34  78</code></pre>
+<pre class="r"><code>sort(x) == x[order(x)]</code></pre>
+<pre><code>## [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE</code></pre>
+</div>
+</div>
+</div>
+
+</div> <!-- lessonContent -->
+</div> <!-- lessonPage -->
+
+
+<script type="text/javascript">
+  var lesson = window.location.href.match(/lesson-[0-9]+/g);
+  if (lesson !== null) {
+    lesson = 'nav-' + lesson[0];
+    $('#'+lesson).addClass('current');
+  }
+
+  $('#show-answer').on("click", function() {
+    $('#show-answer').addClass('showing');
+    $('#model-answer').addClass('showing');
+  })
+</script>
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
+  <div id="logos">
+  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
+  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
+  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
+  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+  </div>
+</div>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

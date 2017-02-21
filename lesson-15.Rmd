@@ -1,0 +1,96 @@
+---
+title: "Манипуляции с данными"
+output:
+  html_document:
+    toc_float: false
+    highlight: textmate
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+---
+
+## Пакет dplyr
+
+Моделирование в той или иной форме является составной частью более сложного процесса, через который проходит любой исследователь работающий с реальными данными -  анализ данных. Не вдаваясь глубоко в подробности в данном разделе будет рассмотрен начальный этап анализа данных - преобразования или манипуляции с данными (data-manipulation).
+
+В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Одним из самых популярных подобных пакетов является пакет dplyr из целой "вселенной" пакетов tydiverse от известного разработчика Хадли Викхема.
+
+```{r}
+library("tidyverse")
+library("nycflights13")
+```
+Изучение пакета dplyr мы начнем со следующих функций:
+
+  * filter()
+  * arrange()
+  * select()
+  * mutate()
+  * summarize()
+  * group_by()
+  
+  
+filter() allows you to subset observations based on their values. The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all flights on January 1st with:
+
+```{r}
+
+filter(flights, month == 1, day == 1)
+```
+
+The following code finds all flights that departed in November or December:
+
+```{r}
+filter(flights, month == 11 | month == 12)
+```
+
+A useful shorthand for this problem is x %in% y. This will select every row where x is one of the values in y. We could use it to rewrite the preceding code:
+
+```{r}
+nov_dec <- filter(flights, month %in% c(11, 12))
+```
+
+arrange() works similarly to filter() except that instead of selecting rows, it changes their order. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns:
+
+```{r}
+arrange(flights, year, month, day)
+arrange(flights, desc(arr_delay))
+```
+
+Функция desc() говорит о том, что колонку нужно пересортировать от большего к меньшему
+
+It’s not uncommon to get datasets with hundreds or even thousands of variables. In this case, the first challenge is often narrowing in on the variables you’re actually interested in. select() allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.
+
+```{r}
+select(flights, year, month, day)
+```
+
+Интересной особенностью является возможностью выбирать ряд колонок меж двух заданных
+
+```{r}
+select(flights, year:day)
+select(flights, -(year:day))
+```
+
+Besides selecting sets of existing columns, it’s often useful to add new columns that are functions of existing columns. That’s the job of mutate().
+mutate() always adds new columns at the end of your dataset so we’ll start by creating a narrower dataset so we can see the new variables. Remember that when you’re in RStudio, the easiest way to see all the columns is View():
+
+```{r}
+flights_sml <- select(flights, year:day, ends_with("delay"), distance, air_time )
+mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)
+```
+
+The last key verb is summarize(). It collapses a data frame to a single row:
+
+```{r}
+summarize(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+summarize() is not terribly useful unless we pair it with group_by(). This changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group.” For example, if we applied exactly the same code to a data frame grouped by date, we get the average delay per date:
+
+```{r}
+by_day <- group_by(flights, year, month, day)
+summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+Together group_by() and summarize() provide one of the tools that you’ll use most commonly when working with dplyr: grouped summaries. But before we go any further with this, we need to introduce a powerful new idea: the pipe.
+
+Imagine that we want to explore the relationship between the distance and average delay for each location. Using what you know about dplyr, you might write code like this:

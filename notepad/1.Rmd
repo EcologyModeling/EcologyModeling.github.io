@@ -1,0 +1,166 @@
+---
+title: "R Notebook"
+output:
+  html_notebook: default
+  html_document: default
+  pdf_document: default
+---
+
+Классификация данных
+
++------------------------------+------------------------------------------+
+|*Machine learning terminology*|*Typical Algorithm*                       |
++------------------------------+------------------------------------------+
+|Classification: assigning     | Decision trees                           |
+|known labels to objects       | Naive Bayes                              |
+|                              | Logistic regression (witha threshold)    |
+|                              | Support vector machines                  |
++------------------------------+------------------------------------------+
+|Regression: predicting or     | Linear regression                        |
+|forecasting numerical         | Logistic regression                      |
+|values                        |                                          |
++------------------------------+------------------------------------------+
+|Association rules:            | Apriori                                  | 
+|finding objects that          |                                          |
+|tend to appear in             |                                          |
+|the data together             |                                          |
++------------------------------+------------------------------------------+
+|Clustering: finding groups of | K-means                                  |
+|objects that are more similar |                                          |
+|to each other than to objects |                                          |
+|in other groups               |                                          |
++------------------------------+------------------------------------------+
+|Nearest neighbor: predicting  | Nearest neighbor                         |
+|property of a datum based on  |                                          |  
+|the datum or data that are    |                                          |
+|most similar to it            |                                          |
++------------------------------+------------------------------------------+
+
+
+When building a model, the first thing to check is if the model even works on the data
+it was trained from. In this section, we do this by introducing quantitative measures of
+model performance. From an evaluation point of view, we group model types this way.
+
+1. Classification
+2. Scoring
+3. Probability estimation
+4. Raking
+5. Clustering
+ 
++------------+------------------------------------------------------------------------------------+
+|Null model  |A null model is the best model of a very simple form you’re trying to outperform.   |
+|            |The two most typical null model choices are a model that is a single                |
+|            |constant (returns the same answer for all situations) or a model that is            |
+|            |independent (doesn’t record any important relation or interaction between           |
+|            |inputs and outputs). We use null models to lower-bound desired performance,         |
+|            |so we usually compare to a best null model. For example, in a categorical           |
+|            |problem, the null model would always return the most popular                        |
+|            |category (as this is the easy guess that is least often wrong); for a score         |
+|            |model, the null model is often the average of all the outcomes (as this has         |
+|            |the least square deviation from all of the outcomes); and so on. The idea is        |
+|            |this: if you’re not out-performing the null model, you’re not delivering value.     |
+|            |Note that it can be hard to do as good as the best null model, because even         |
+|            |though the null model is simple, it’s privileged to know the overall distribution   |
+|            |of the items it will be quizzed on. We always assume the null model                 |
+|            |we’re comparing to is the best of all possible null models.                         |
++------------+------------------------------------------------------------------------------------+
+|Bayes rate  |A Bayes rate model (also sometimes called a saturated model) is a best              |
+|model       |possible model given the data at hand. The Bayes rate model is the perfect          |
+|            |model and it only makes mistakes when there are multiple examples with              |
+|            |the exact same set of known facts (same xs) but different outcomes (different       |
+|            |ys). It isn’t always practical to construct the Bayes rate model, but we            |
+|            |invoke it as an upper bound on a model evaluation score.                            |
+|            |If we feel our model is performing significantly above the null model rate and      |
+|            |is approaching the Bayes rate, then we can stop tuning. When we have a lot          |
+|            |of data and very few modeling features, we can estimate the Bayes error             |
+|            |rate. Another way to estimate the Bayes rate is to ask several different people     |
+|            |to score the same small sample of your data; the found inconsistency                |
+|            |rate can be an estimate of the Bayes rate.a                                         |
++------------+------------------------------------------------------------------------------------+
+ 
+ 
+ 
+
++---------------------------+-------------------------------+---------------------------------------+ 
+|                           |Prediction=NEGATIVE            |Prediction=POSITIVE                    |
++---------------------------+-------------------------------+---------------------------------------+ 
+|Truth mark=NOT IN CATEGORY |True negatives (TN) cM[1,1]=264|False positives (FP) cM[1,2]=14        |
++---------------------------+-------------------------------+---------------------------------------+ 
+|Truth mark=IN CATEGORY     |False negatives (FN) cM[2,1]=22| True positives (TP) cM[2,2]=158       |
++---------------------------+-------------------------------+---------------------------------------+
+
+
+
++-------------+---------------------+
+|Measure      | Formula             |
++-------------+---------------------+
+|Accuracy     |(TP+TN)/(TP+FP+TN+FN)|
++-------------+---------------------+
+|Precision    |TP/(TP+FP)           |
++-------------+---------------------+
+|Recall       |TP/(TP+FN)           |
++-------------+---------------------+
+|Sensitivity  |TP/(TP+FN)           |
++-------------+---------------------+
+|Specificity  |TN/(TN+FP)           |
++-------------+---------------------+
+
+###Make a table
+Measure   Typical business need Follow-up question Accuracy “We need most of our decisions to be correct.”
+          “Can we tolerate being wrong 5% of the time?
+          And do users see mistakes like spam marked
+          as non-spam or non-spam marked as spam as
+          being equivalent?”
+Precision “Most of what we marked as spam had darn well better be spam.”
+          “That would guarantee that most of what is in
+          the spam folder is in fact spam, but it isn’t the
+          best way to measure what fraction of the
+          user’s legitimate email is lost. We could cheat
+          on this goal by sending all our users a bunch
+          of easy-to-identify spam that we correctly identify.
+          Maybe we really want good specificity.”
+Recall    “We want to cut down on the amount of spam a user sees by a factor of
+          10 (eliminate 90% of the spam).”
+          “If 10% of the spam gets through, will the user
+          see mostly non-spam mail or mostly spam?
+          Will this result in a good user experience?”
+Sensitivity “We have to cut a lot of spam, otherwise
+             the user won’t see a benefit.”
+            “If we cut spam down to 1% of what it is now,
+             would that be a good user experience?”
+Specificity “We must be at least three nines on legitimate email; the user must see
+            at least 99.9% of their non-spam email.”
+            “Will the user tolerate missing 0.1% of their
+            legitimate email, and should we keep a spam
+            folder the user can look at?”
+ 
+
+CORRELATION
+Correlation is very helpful in checking if variables are potentially useful in a model. Be
+advised that there are at least three calculations that go by the name of correlation:
+Pearson, Spearman, and Kendall (see help(cor)). The Pearson coefficient checks for
+linear relations, the Spearman coefficient checks for rank or ordered relations, and
+the Kendall coefficient checks for degree of voting agreement. Each of these coefficients
+performs a progressively more drastic transform than the one before and has
+well-known direct significance tests (see help(cor.test)).
+
+***DON’T USE CORRELATION TO EVALUATE MODEL QUALITY IN PRODUCTION***
+
+It’s tempting to use correlation to measure model quality, but we advise against it.
+The problem is this: correlation ignores shifts and scaling factors. So correlation
+is actually computing if there is any shift and rescaling of your predictor
+that is a good predictor. This isn’t a problem for training data (as these predictions
+tend to not have a systematic bias in shift or scaling by design) but
+can mask systematic errors that may arise when a model is used in production.
+
+
+***THE WORST POSSIBLE MODELING OUTCOME***
+The worst possible modeling outcome is not failing to find a good model. The worst possible modeling outcome
+is thinking you have a good model when you don’t. One of the easiest
+ways to accidentally build such a deficient model is to have an instrumental or
+independent variable that is in fact a subtle function of the outcome. Such
+variables can easily leak into your training data, especially when you have no
+knowledge or control of variable meaning preparation. The point is this: such
+variables won’t actually be available in a real deployment and often are in
+training data packaged up by others.
+2

@@ -1,5 +1,4 @@
-# IDE
-.idea
-
-# Bower
-bower_components
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata

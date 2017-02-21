@@ -1,0 +1,12 @@
+---
+title: "Материалы"
+output:
+  html_document:
+    toc_float: false
+    highlight: textmate
+    includes:
+      before_body: [include_header.html]
+      after_body: [include_footer.html]
+---
+
+<ul class="nav nav-pills nav-stacked nav-docs"><li><a href="http://r.psylab.info/library/">Библиотека материалов по R</a></li><li><a href="http://datacamp.com">Datacamp - обучение R</a></li><li> <a href="http://www.ievbras.ru/ecostat/Kiril/R/Mastitsky%20and%20Shitikov%202014.pdf">Учебник по R от Мастицкого и Шитикова</a></li></ul>

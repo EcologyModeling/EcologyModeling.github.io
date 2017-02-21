@@ -1,3 +1,0 @@
-< END OF DOCUMENT >
-
-https://raw.githubusercontent.com/justmarkham/dplyr-tutorial/master/d
