@@ -28,57 +28,12 @@ output:
 
 8. По данным таблицы 'diamonds'(пакет ggplot2 ) почитайте среднюю стоимость цены карата для бриллиантов дороже 1000$ для каждой категории яркости (clarity).
 
+## Регрессионный и корелляционный анализы
 
-<!--
-## Passing  activities
+1. Написать собственную функцию, которая бы для двух векторов одинакового объема считала бы коэффициент корелляции Спирмена  $r = 1 - \frac{6\sum_{i=1}^N d^2}{n(n^2 - 1)}$.  Для получения рангов ипользуйте функцию rank. Дополнительные балы для тех, кто сможет исользовать функцую match вместо rank.
 
-Using data obtained from the next [link][l1], build the best fitted models for chosen variables for given period of time:
+2. Используя данные по ссылке [link][l1], постройте оптимальную линейную модель множественной регрессии для co2_flux используя только данные летних месяцев. В данных вместо значения NA используется значения -9999, исправьте это действием подобным data[data == -9999] = NA. Для выбора нужных суток используйте переменную DOY - день года (1 января - DOY = 1)
 
-* Arsalan - build model for variable co2_flux using data from summer months
-* Olga - build model for variable h2o_flux using data from autumn months
 
-## Example
 
-```{r, echo=TRUE}
-#better use code from Import Dataset Wizard 
-library(readr)
-eddypro <- read_csv("eddypro.csv",  skip = 1)
-table_names = names(eddypro)
-data <- read_csv("eddypro.csv",  skip = 3, col_names = table_names)
-data[data == -9999] = NA
-summer_data = data.frame(data[data$DOY > 150 & data$DOY < 241,])
-
-#summer_data$`x_70%`
-cor_vector = c()
-names(summer_data)
-summer_data = summer_data[,c(-1,-2,-3,-5, -33,-38,-70, -88:-131)]
-cor_vector = c()
-for (i in 1:length(names(summer_data))){
-  x = summer_data[,i]
-  y = summer_data$x_70.
-  cor_vector = c(cor_vector, cor(x,y,use = "na.or.complete"))
-}
-
-names(cor_vector) = names(summer_data)
-cor_vector[cor_vector^2 > .1]
-
-# H_scf  LE_scf  co2_scf  h2o_scf x_peak
-
-model1 = lm(x_70.~(H_scf+LE_scf+co2_scf+h2o_scf+x_peak)^5, data = summer_data)
-summary(model1)
-model2 = lm(x_70.~ H_scf + H_scf:LE_scf + LE_scf:co2_scf +LE_scf:x_peak + LE_scf:co2_scf:x_peak +H_scf:LE_scf:co2_scf:h2o_scf, data = summer_data)
-summary(model2)
-model3  = lm(x_70.~ H_scf, data = summer_data)
-anova(model2, model1)
-
-cor(summer_data$H_scf, summer_data$LE_scf,use = "na.or.complete")
-
-# Multicollinearity test
-# For example you have left columns a,b,c,d,e,f
-# you need to produce 
-# data2 = data.frame(a = data$a,b = data$b,c = data$c,d = data$d,e = data$e,f = data$f)
-# cor(data2, use = "na.or.complete")
-
-```
 [l1]:https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1 
--->
