@@ -14,25 +14,431 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div class="alert alert-danger" role="alert"> Раздел находится в разработке !</div>
 
+###Классификация данных
 
-## R Markdown
++------------------------------+------------------------------------------+
+|*Machine learning terminology*|*Typical Algorithm*                       |
++------------------------------+------------------------------------------+
+|Classification: assigning     | Decision trees                           |
+|known labels to objects       | Naive Bayes                              |
+|                              | Logistic regression (witha threshold)    |
+|                              | Support vector machines                  |
++------------------------------+------------------------------------------+
+|Regression: predicting or     | Linear regression                        |
+|forecasting numerical         | Logistic regression                      |
+|values                        |                                          |
++------------------------------+------------------------------------------+
+|Association rules:            | Apriori                                  | 
+|finding objects that          |                                          |
+|tend to appear in             |                                          |
+|the data together             |                                          |
++------------------------------+------------------------------------------+
+|Clustering: finding groups of | K-means                                  |
+|objects that are more similar |                                          |
+|to each other than to objects |                                          |
+|in other groups               |                                          |
++------------------------------+------------------------------------------+
+|Nearest neighbor: predicting  | Nearest neighbor                         |
+|property of a datum based on  |                                          |  
+|the datum or data that are    |                                          |
+|most similar to it            |                                          |
++------------------------------+------------------------------------------+
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+When building a model, the first thing to check is if the model even works on the data it was trained from. In this section, we do this by introducing quantitative measures of model performance. From an evaluation point of view, we group model types this way.
 
-```{r cars}
-summary(cars)
+1. Classification
+2. Scoring
+3. Probability estimation
+4. Raking
+5. Clustering
+ 
++------------+------------------------------------------------------------------------------------+
+|Null model  |A null model is the best model of a very simple form you’re trying to outperform.   |
+|            |The two most typical null model choices are a model that is a single                |
+|            |constant (returns the same answer for all situations) or a model that is            |
+|            |independent (doesn’t record any important relation or interaction between           |
+|            |inputs and outputs). We use null models to lower-bound desired performance,         |
+|            |so we usually compare to a best null model. For example, in a categorical           |
+|            |problem, the null model would always return the most popular                        |
+|            |category (as this is the easy guess that is least often wrong); for a score         |
+|            |model, the null model is often the average of all the outcomes (as this has         |
+|            |the least square deviation from all of the outcomes); and so on. The idea is        |
+|            |this: if you’re not out-performing the null model, you’re not delivering value.     |
+|            |Note that it can be hard to do as good as the best null model, because even         |
+|            |though the null model is simple, it’s privileged to know the overall distribution   |
+|            |of the items it will be quizzed on. We always assume the null model                 |
+|            |we’re comparing to is the best of all possible null models.                         |
++------------+------------------------------------------------------------------------------------+
+|Bayes rate  |A Bayes rate model (also sometimes called a saturated model) is a best              |
+|model       |possible model given the data at hand. The Bayes rate model is the perfect          |
+|            |model and it only makes mistakes when there are multiple examples with              |
+|            |the exact same set of known facts (same xs) but different outcomes (different       |
+|            |ys). It isn’t always practical to construct the Bayes rate model, but we            |
+|            |invoke it as an upper bound on a model evaluation score.                            |
+|            |If we feel our model is performing significantly above the null model rate and      |
+|            |is approaching the Bayes rate, then we can stop tuning. When we have a lot          |
+|            |of data and very few modeling features, we can estimate the Bayes error             |
+|            |rate. Another way to estimate the Bayes rate is to ask several different people     |
+|            |to score the same small sample of your data; the found inconsistency                |
+|            |rate can be an estimate of the Bayes rate.a                                         |
++------------+------------------------------------------------------------------------------------+
+ 
+ 
+ 
+
++---------------------------+-------------------------------+---------------------------------------+ 
+|                           |Prediction=NEGATIVE            |Prediction=POSITIVE                    |
++---------------------------+-------------------------------+---------------------------------------+ 
+|Truth mark=NOT IN CATEGORY |True negatives (TN) cM[1,1]=264|False positives (FP) cM[1,2]=14        |
++---------------------------+-------------------------------+---------------------------------------+ 
+|Truth mark=IN CATEGORY     |False negatives (FN) cM[2,1]=22| True positives (TP) cM[2,2]=158       |
++---------------------------+-------------------------------+---------------------------------------+
+
+
+
++-------------+---------------------+
+|Measure      | Formula             |
++-------------+---------------------+
+|Accuracy     |(TP+TN)/(TP+FP+TN+FN)|
++-------------+---------------------+
+|Precision    |TP/(TP+FP)           |
++-------------+---------------------+
+|Recall       |TP/(TP+FN)           |
++-------------+---------------------+
+|Sensitivity  |TP/(TP+FN)           |
++-------------+---------------------+
+|Specificity  |TN/(TN+FP)           |
++-------------+---------------------+
+
+###Make a table
++------------+------------------------------------------------------------------------------------+
+|Measure     |Typical business need Follow-up question Accuracy “We need most of our decisions to |
+|            |be correct.”“Can we tolerate being wrong 5% of the time? And do users see mistakes  |
+|            | like spam marked as non-spam or non-spam marked as spam as being equivalent?”      |
++------------+------------------------------------------------------------------------------------+
+|Precision   |“Most of what we marked as spam had darn well better be spam.” That would guarantee |
+|            |that most of what is in the spam folder is in fact spam but it isn’t the best way to| 
+|            |measure what fraction of the user’s legitimate email is lost. We could cheat on this| 
+|            |goal by sending all our users a bunch of easy-to-identify spam that we correctly    |
+|            |identify. Maybe we really want good specificity.”                                   |
++------------+------------------------------------------------------------------------------------+
+|Recall      | “We want to cut down on the amount of spam a user sees by a factor of 10 (eliminate|
+|            | 90% of the spam).” “If 10% of the spam gets through, will the user see mostly      |
+|            | non-spam mail or mostly spam? Will this result in a good user experience?”         |
++------------+------------------------------------------------------------------------------------+
+|Sensitivity |“We have to cut a lot of spam, otherwise  the user won’t see a benefit.”            |
+|            |“If we cut spam down to 1% of what it is now,would that be a good user experience?” |
+|            |                                                                                    |
++------------+------------------------------------------------------------------------------------+
+|Specificity |“We must be at least three nines on legitimate email; the user must see at least    |         
+|            | 99.9%of their non-spam email.” “Will the user tolerate missing 0.1% of their       |
+|            |legitimate email, and should we keep a spam folder the user can look at?”           |
++------------+------------------------------------------------------------------------------------+
+ 
+
+###Test and training splits
+
+When you’re building a model to make predictions, like our model to predict the probability of health insurance coverage, you need data to build the model. You also need data to test whether the model makes correct predictions on new data. The first set is called the training set, and the second set is called the test (or hold-out) set. The training set is the data that you feed to the model-building algorithm—regression, decision trees, and so on—so that the algorithm can set the correct parameters to best predict the outcome variable. The test set is the data that you feed into the resulting model, to verify that the model’s predictions are accurate. We’ll go into detail about the kinds of modeling issues that you can detect by using hold-out data in chapter 5. For now, we’ll just get our data ready for doing hold-out experiments at a later stage.
+
+Many writers recommend train/calibration/test splits, which is also good advice. Our philosophy is this: split the data into train/test early, don’t look at test until final evaluation, and if you need calibration data, resplit it from your training subset.
+
+###CORRELATION
+
+Correlation is very helpful in checking if variables are potentially useful in a model. Be advised that there are at least three calculations that go by the name of correlation: Pearson, Spearman, and Kendall (see help(cor)). The Pearson coefficient checks for linear relations, the Spearman coefficient checks for rank or ordered relations, and the Kendall coefficient checks for degree of voting agreement. Each of these coefficients performs a progressively more drastic transform than the one before and has well-known direct significance tests (see help(cor.test)).
+
+***DON’T USE CORRELATION TO EVALUATE MODEL QUALITY IN PRODUCTION***
+
+It’s tempting to use correlation to measure model quality, but we advise against it. The problem is this: correlation ignores shifts and scaling factors. So correlation is actually computing if there is any shift and rescaling of your predictor that is a good predictor. This isn’t a problem for training data (as these predictions tend to not have a systematic bias in shift or scaling by design) but can mask systematic errors that may arise when a model is used in production.
+
+
+***THE WORST POSSIBLE MODELING OUTCOME***
+The worst possible modeling outcome is not failing to find a good model. The worst possible modeling outcome is thinking you have a good model when you don’t. One of the easiest ways to accidentally build such a deficient model is to have an instrumental or independent variable that is in fact a subtle function of the outcome. Such variables can easily leak into your training data, especially when you have no knowledge or control of variable meaning preparation. The point is this: such variables won’t actually be available in a real deployment and often are in training data packaged up by others.
+
+
+###Logistic regression
+
+
+Logistic regression is the most important (and probably most used) member of a class of models called generalized linear models. Unlike linear regression, logistic regression can directly predict values that are restricted to the (0,1) interval, such as probabilities. It’s the go-to method for predicting probabilities or rates, and like linear regression, the coefficients of a logistic regression model can be treated as advice. It’s also a good first choice for binary classification problems.
+
+In this section, we’ll use a medical classification example (predicting whether a newborn will need extra medical attention) to work through all of the steps of producing and using a logistic regression model.
+
+Understanding logistic regression
+
+Logistic regression predicts the probability y that an instance belongs to a specific category— for instance, the probability that a flight will be delayed. When x[i,] is a row of inputs (for example, a flight’s origin and destination, the time of year, the weather, the air carrier), logistic regression finds a fit function f(x) such that
+
+P[y[i] in class] ~ f(x[i,]) = s(a+b[1] x[i,1] + ... b[n] x[i,n])
+
+Here, s(z) is the so-called sigmoid function, defined as s(z) = 1/(1+exp(z)). If the y[i] are the probabilities that the x[i,] belong to the class of interest (in our example, that a flight with certain characteristics will be delayed), then the task of fitting is to find the b[1], ..., b[n] such that f(x[i,]) is the best possible estimate of y[i]. R supplies a one-line command to find these coefficients: glm().4 Note that we don’t need to supply y[i] that are probability estimates to run glm(); the training method only requires y[i] that say whether a given training example is in the target class.
+The sigmoid function maps real numbers to the interval (0,1)—that is, to probabilities. The inverse of the sigmoid is the logit, which is defined as log(p/(1-p)), where p is a probability. The ratio p/(1-p) is known as the odds, so in the flight example, the logit is the log of the odds (or log-odds) that a flight will be delayed. In other words, you can think of logistic regression as a linear regression that finds the log-odds of the
+probability that you’re interested in.
+
+Logistic regression is usually used to perform classification, but logistic regression and its close cousin beta regression are also useful in estimating rates. In fact, R’s standard glm() call will work with prediction numeric values between 0 and 1.0 in addition to predicting classifications. Logistic regression can be used for classifying into any number of categories (as long as the categories are disjoint and cover all possibilities: every x has to belong to one of the given categories). But glm() only handles the two-category case, so our discussion will focus on this case.
+
+In particular, logistic regression assumes that logit(y) is linear in the values of x. Like linear regression, logistic regression will find the best coefficients to predict y, including finding advantageous combinations and cancellations when the inputs are correlated.
+
+For the example task, imagine that you’re working at a hospital. The goal is to design a plan that provisions neonatal emergency equipment to delivery rooms. Newborn babies are assessed at one and five minutes after birth using what’s called the Apgar test, which is designed to determine if a baby needs immediate emergency care or extra medical attention. A baby who scores below 7 (on a scale from 0 to 10) on the Apgar scale needs extra attention.
+
+Such at-risk babies are rare, so the hospital doesn’t want to provision extra emergency equipment for every delivery. On the other hand, at-risk babies may need attention quickly, so provisioning resources proactively to appropriate deliveries can save lives. The goal of this project is to identify ahead of time situations with a higher probability of risk, so that resources can be allocated appropriately
+
+```{r}
+sdata = read.csv("https://www.dropbox.com/s/lx9celfieswn4vq/NatalRisk.csv?dl=1")
+head(sdata)
+train <- sdata[sdata$ORIGRANDGROUP<=5,]
+test <- sdata[sdata$ORIGRANDGROUP>5,]
 ```
 
-## Including Plots
+The command to build a logistic regression model in R is glm(). In our case, the dependent variable y is the logical (or Boolean) atRisk; all the other variables in table 7.1 are the independent variables x. The formula for building a model to predict atRisk using these variables is rather long to type in by hand; you can generate the formula with the commands shown in the next listing.
 
-""
 
-You can also embed plots, for example:
+```{r}
+complications <- c("ULD_MECO","ULD_PRECIP","ULD_BREECH")
+riskfactors <- c("URF_DIAB", "URF_CHYPER", "URF_PHYPER",
+  "URF_ECLAM")
+  y <- "atRisk"
+  x <- c("PWGT",
+  "UPREVIS",
+  "CIG_REC",
+  "GESTREC3",
+  "DPLURAL",
+  complications,
+  riskfactors)
+fmla <- paste(y, paste(x, collapse="+"), sep="~")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+model <- glm(fmla, data=train, family=binomial(link="logit"))
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The family function specifies the assumed distribution of the dependent variable y. In our case, we’re modeling y as a binomial distribution, or as a coin whose probability of heads depends on x. The link function “links” the output to a linear model—pass y through the link function, and then model the resulting value as a linear function of the x values. Different combinations of family functions and link functions lead to different kinds of generalized linear
+models (for example, Poisson, or probit). In this book, we’ll only discuss logistic models, so we’ll only need to use the binomial family with the logit link.
+
+Making predictions with a logistic model is similar to making predictions with a linear model—use the predict() function.
+
+```{r}
+
+train$pred <- predict(model, newdata=train, type="response")
+test$pred <- predict(model, newdata=test, type="response")
+
+```
+
+We’ve again stored the predictions for the training and test sets as the column pred in the respective data frames. Note the additional parameter type="response". This tells the predict() function to return the predicted probabilities y. If you don’t specify type="response", then by default predict() will return the output of the link function, logit(y).
+
+One strength of logistic regression is that it preserves the marginal probabilities of the training data. That means that if you sum up the predicted probability scores for the entire training set, that quantity will be equal to the number of positive outcomes (atRisk == T) in the training set. This is also true for subsets of the data determined by variables included in the model. For example, in the subset of the training data that has train$GESTREC=="<37 weeks" (the baby was premature), the sum of the predicted probabilities equals the number of positive training examples.
+
+If our goal is to use the model to classify new instances into one of two categories (in this case, at-risk or not-at-risk), then we want the model to give high scores to positive instances and low scores otherwise. We can check if this is so by plotting the distribution of scores for both the positive and negative instances. Let’s do this on the training set (we should also plot the test set, to make sure that the performance is of similar quality).
+
+```{r}
+library(ggplot2)
+ggplot(train, aes(x=pred, color=atRisk, linetype=atRisk)) + geom_density()
+```
+
+The result is shown in figure 7.9. Ideally, we’d like the distribution of scores to be separated, with the scores of the negative instances (FALSE) to be concentrated on the left, and the distribution for the positive instances to be concentrated on the right. Earlier we showed an example of a classifier that separates the positives and the negativesquite well in figure 5.8. In the current case, both distributions are concentrated on the left, meaning that both positive and negative instances score low. This isn’t surprising, since the positive instances (the ones with the baby at risk) are rare (about 1.8% of all births in the dataset). The distribution of scores for the negative instances dies off sooner than the distribution for positive instances. This means that the model did identify subpopulations in the data where the rate of at-risk newborns is higher than the average.
+
+In order to use the model as a classifier, you must pick a threshold; scores above the threshold will be classified as positive, those below as negative. When you pick a threshold, you’re trying to balance the precision of the classifier (what fraction of the predicted positives are true positives) and its recall (how many of the true positives the classifier finds)
+
+If the score distributions of the positive and negative instances are well separated, as in figure 5.8, we can pick an appropriate threshold in the “valley” between the two peaks. In the current case, the two distributions aren’t well separated, which indicates that the model can’t build a classifier that simultaneously achieves good recall and good precision. But we can build a classifier that identifies a subset of situations with a higher-than-average rate of at-risk births, so preprovisioning resources to those situations may be advised. We’ll call the ratio of the classifier precision to the average rate
+of positives the enrichment rate. The higher we set the threshold, the more precise the classifier will be (we’ll identify a set of situations with a much higher-than-average rate of at-risk births); but we’ll also miss a higher percentage of at-risk situations, as well. When picking the threshold, we’ll use the training set, since picking the threshold is part of classifier-building.
+
+We can then use the test set to evaluate classifier performance. To help pick the threshold, we can use a plot like figure 7.10, which shows both enrichment and recall as a functions of the threshold. Looking at figure 7.10, you see that higher thresholds result in more precise classifications, at the cost of missing more cases; a lower threshold will identify more cases, at the cost of many more false positives. The best trade-off between precision and
+recall is a function of how many resources the hospital has available to allocate, and how many they can keep in reserve (or redeploy) for situations that the classifier missed. A threshold of 0.02 (which incidentally is about the overall rate of at-risk births in the training data) might be a good trade-off. The resulting classifier will identify a set of potential at-risk situations that finds about half of all the true at-risk situations,
+with a true positive rate 2.5 times higher than the overall population
+
+```{r}
+library(ROCR)
+library(grid) # Load grid library (you’ll need this  for the nplot function below).
+predObj <- prediction(train$pred, train$atRisk) # Create ROCR prediction object
+precObj <- performance(predObj, measure="prec") # Create ROCR object to calculate precision as a function of threshold
+recObj <- performance(predObj, measure="rec")# Create ROCR object to calculate recall as a function of threshold.
+precision <- (precObj@y.values)[[1]] # ROCR objects are what R calls S4 objects; the slots (or fields) of an S4 object are stored as lists within the object. You extract the slots from an S4 object using @ notation. 
+prec.x <- (precObj@x.values)[[1]] # The x values (thresholds) are the same in both predObj and recObj, so you only need to extract them once.
+recall <- (recObj@y.values)[[1]]
+rocFrame <- data.frame(threshold=prec.x, precision=precision, recall = recall) # Build data frame with thresholds, precision, and recall
+nplot <- function(plist) { #Function to plot multiple plots on one page (stacked).
+  n <- length(plist)
+  grid.newpage()
+  pushViewport(viewport(layout=grid.layout(n,1)))
+  vplayout=function(x,y) {viewport(layout.pos.row=x, layout.pos.col=y)}
+  for(i in 1:n) {
+    print(plist[[i]], vp=vplayout(i,1))
+    }
+}
+pnull <- mean(as.numeric(train$atRisk)) # Calculate rate of at-risk births in the training set.
+p1 <- ggplot(rocFrame, aes(x=threshold)) + # Plot enrichment rate as a function of threshold.
+geom_line(aes(y=precision/pnull)) +
+coord_cartesian(xlim = c(0,0.05), ylim=c(0,10) )
+
+
+p2 <- ggplot(rocFrame, aes(x=threshold)) + # Plot recall as a function of threshold
+geom_line(aes(y=recall)) +
+coord_cartesian(xlim = c(0,0.05) )
+nplot(list(p1, p2)) #Show both plots simultaneously.
+```
+
+Once we’ve picked an appropriate threshold, we can evaluate the resulting classifier by looking at the confusion matrix, as we discussed in section 5.2.1. Let’s use the test set to evaluate the classifier, with a threshold of 0.02.
+
+```{r}
+ctab.test <- table(pred=test$pred>0.02, atRisk=test$atRisk)
+ctab.test
+precision <- ctab.test[2,2]/sum(ctab.test[2,])
+precision
+recall <- ctab.test[2,2]/sum(ctab.test[,2])
+recall
+enrich <- precision/mean(as.numeric(test$atRisk))
+enrich
+```
+
+The resulting classifier is low-precision, but identifies a set of potential at-risk cases that contains 55.5% of the true positive cases in the test set, at a rate 2.66 times higher than the overall average. This is consistent with the results on the training set.
+
+The coefficients of a logistic regression model encode the relationships between the input variables and the output in a way similar to how the coefficients of a linear regression model do. You can get the model’s coefficients with the call coefficients(model).
+
+```{r}
+coefficients(model)
+```
+
+Negative coefficients that are statistically significant6 correspond to variables that are negatively correlated to the odds (and hence to the probability) of a positive outcome (the baby being at risk). Positive coefficients that are statistically significant are positively correlated to the odds of a positive outcome.
+As with linear regression, every categorical variable is expanded to a set of indicator variables. If the original variable has n levels, there will be n-1 indicator variables; the remaining level is the reference level.
+For example, the variable DPLURAL has three levels corresponding to single births, twins, and triplets or higher. The logistic regression model has two corresponding coefficients: DPLURALtwin and DPLURALtriplet or higher. The reference level is single births. Both of the DPLURAL coefficients are positive, indicating that multiple births have higher odds of being at risk than single births do, all other variables being equal.
+
+### INTERPRETING THE COEFFICIENTS
+
+Interpreting coefficient values is a little more complicated with logistic than with linear regression. If the coefficient for the variable x[,k] is b[k], then the odds of a positive outcome are multiplied by a factor of exp(b[k]) for every unit change in x[,k]. 
+The coefficient for GESTREC3< 37 weeks (for a premature baby) is 1.545183. So for a premature baby, the odds of being at risk are exp(1.545183)=4.68883 times
+higher compared to a baby that’s born full-term, with all other input variables unchanged. As an example, suppose a full-term baby with certain characteristics has a 1% probability of being at risk (odds are p/(1-p), or 0.01/0.99 = 0.0101); then the odds for a premature baby with the same characteristics are 0.0101*4.68883 = 0.047. This corresponds to a probability of being at risk of odds/(1+odds), or 0.047/
+1.047—about 4.5%.
+Similarly, the coefficient for UPREVIS (number of prenatal medical visits) is about -0.06. This means every prenatal visit lowers the odds of an at-risk baby by a factor of exp(-0.06), or about 0.94. Suppose the mother of our premature baby had made no prenatal visits; a baby in the same situation whose mother had made three prenatal visits would have odds of being at risk of about 0.047 * 0.94 * 0.94 * 0.94 = 0.039. This corresponds to a probability of being at risk of 3.75%.
+So the general advice in this case might be to keep a special eye on premature births (and multiple births), and encourage expectant mothers to make regular prenatal visits 
+
+###Reading the model summary and characterizing coefficients
+
+As we mentioned earlier, conclusions about the coefficient values are only to be trusted if the coefficient values are statistically significant. We also want to make sure that the model is actually explaining something. The diagnostics in the model summary will help us determine some facts about model quality. The call, as before, is summary(model).
+
+```{r}
+summary(model)
+```
+
+In linear regression, the residuals are the vector of differences between the true outcome values and the predicted output values (the errors). In logistic regression, the deviance residuals are related to the log likelihoods of having observed the true outcome, given the predicted probability of that outcome. The idea behind log likelihood is that positive instances y should have high probability py of occurring under the model; negative instances should have low probability of occurring (or putting it another way, (1-py) should be large). The log likelihood function rewards “matches” between the outcome y and the predicted probability py, and penalizes mismatches (high py for negative instances, and vice versa).
+
+```{r}
+pred <- predict(model, newdata=train, type="response")
+llcomponents <- function(y, py) { y*log(py) + (1-y)*log(1-py)} # Function to return the log likelihoods for each data point. Argument y is the true outcome
+                                                               # (as a numeric variable, 0/1); argument py is the predicted probability.
+edev <- sign(as.numeric(train$atRisk) - pred) * sqrt(-2*llcomponents(as.numeric(train$atRisk), pred)) # Calculate deviance result
+
+summary(edev)
+```
+
+Linear regression models are found by minimizing the sum of the squared residuals; logistic regression models are found by minimizing the sum of the squared residual deviances, which is equivalent to maximizing the log likelihood of the data, given the model.
+
+Logistic models can also be used to explicitly compute rates: given several groups of identical data points (identical except the outcome), predict the rate of positive outcomes in each group. This kind of data is called grouped data. In the case of grouped data, the deviance residuals can be used as a diagnostic for model fit. This is why the deviance residuals are included in the summary. We’re using ungrouped data— every data point in the training set is potentially unique. In the case of ungrouped data, the model fit diagnostics that use the deviance residuals are no longer valid
+
+The summary coefficients table for logistic regression has the same format as the coefficients table for linear regression
+The columns of the table represent
+ A coefficient
+ Its estimated value
+ The error around that estimate
+ The signed distance of the estimated coefficient value from 0 (using the standard error as the unit of distance)
+ The probability of seeing a coefficient value at least as large as we observed, under the null hypothesis that the coefficient value is really 0
+
+This last value, called the p-value or significance, tells us whether we should trust the estimated coefficient value. The standard rule of thumb is that coefficients with p-values less than 0.05 are reliable, although some researchers prefer stricter thresholds. For the birth data, we can see from the coefficient summary that premature birth and triplet birth are strong predictors of the newborn needing extra medical attention: the coefficient magnitudes are non-negligible and the p-values indicate significance.
+Other variables that affect the outcome are the mother’s prepregnancy weight (heavier mothers indicate higher risk—slightly surprising); the number of prenatal medical visits (the more visits, the lower the risk); meconium staining in the amniotic fluid; and breech position at birth. There might be a positive correlation between mother’s smoking and an at-risk birth, but the data doesn’t indicate it definitively. None of the other variables show a strong relationship to an at-risk birth
+
+
+Deviance is again a measure of how well the model fits the data. It is 2 times the negative log likelihood of the dataset, given the model. If you think of deviance as analogous to variance, then the null deviance is similar to the variance of the data around the average rate of positive examples. The residual deviance is similar to the variance of the data around the model. We can calculate the deviances for both the training and test sets.
+
+```{r}
+loglikelihood <- function(y, py) {
+  sum(y * log(py) + (1-y)*log(1 - py))
+}
+# Function to calculate the log likelihood of a dataset. Variable y is the outcome in numeric form (1 for positive examples, 0 for negative). Variable py is
+# the predicted probability that y==1.
+
+pnull <- mean(as.numeric(train$atRisk))
+pnull
+null.dev <- -2*loglikelihood(as.numeric(train$atRisk), pnull)
+null.dev
+model$null.deviance
+
+pred <- predict(model, newdata=train, type="response") #Predict probabilities for training data.
+resid.dev <- 2*loglikelihood(as.numeric(train$atRisk), pred) # Calculate deviance of model for training data
+
+resid.dev
+model$deviance # For training data, model deviance is stored in the slot model$deviance
+
+testy <- as.numeric(test$atRisk) # Calculate null deviance  and residual deviance for test data.
+testpred <- predict(model, newdata=test,
+type="response")
+pnull.test <- mean(testy)
+null.dev.test <- -2*loglikelihood(testy, pnull.test)
+resid.dev.test <- -2*loglikelihood(testy, testpred)
+
+pnull.test
+null.dev.test
+resid.dev.test
+
+```
+
+
+The first thing we can do with the null and residual deviances is check whether the model’s probability predictions are better than just guessing the average rate of positives, statistically speaking. In other words, is the reduction in deviance from the model meaningful, or just something that was observed by chance? This is similar to calculating the F-test statistics that are reported for linear regression. In the case of logistic regression, the test you’ll run is the chi-squared test. To do that, you need to know the degrees of freedom for the null model and the actual model (which are reported in the summary). The degrees of freedom of the null model is the number of data points minus 1: df.null = dim(train)[[1]] - 1. The degrees of freedom of the model that you fit is the number of data points minus the number of coefficients in the model: df.model = dim(train)[[1]] - length(model$coefficients).
+
+If the number of data points in the training set is large, and df.null - df.model is small, then the probability of the difference in deviances null.dev - resid.dev being as large as we observed is approximately distributed as a chi-squared distribution with df.null - df.model degrees of freedom.
+
+```{r}
+
+df.null <- dim(train)[[1]] - 1 # Null model has (number of data points - 1) degrees of freedom.
+df.model <- dim(train)[[1]] - length(model$coefficients) # Fitted model has (number of data points - number of coefficients) degrees of freedom.
+
+df.null
+df.model
+
+delDev <- null.dev - resid.dev
+deldf <- df.null - df.model # Compute difference in deviances and difference in degrees of freedom.
+p <- pchisq(delDev, deldf, lower.tail=F) # Estimate probability of seeing the observed difference in deviances under null model (the p-value)
+                                         # using chi-squared distribution.
+
+delDev
+deldf
+p
+```
+
+
+A useful goodness of fit measure based on the deviances is the pseudo R-squared: 1 - (dev.model/dev.null). The pseudo R-squared is the analog to the R-squared measure for linear regression. It’s a measure of how much of the deviance is “explained” by the model. Ideally, you want the pseudo R-squared to be close to 1. Let’s calculate the pseudo-R-squared for both the test and training data.
+
+```{r}
+pr2 <- 1-(resid.dev/null.dev)
+pr2.test <- 1-(resid.dev.test/null.dev.test)
+print(pr2.test)
+```
+
+The model only explains about 7.7–8.7% of the deviance; it’s not a highly predictive model (you should have suspected that already, from figure 7.9). This tells us that we haven’t yet identified all the factors that actually predict at-risk births.
+
+The model only explains about 7.7–8.7% of the deviance; it’s not a highly predictive model (you should have suspected that already, from figure 7.9). This tells us that we haven’t yet identified all the factors that actually predict at-risk births. The Fisher scoring method is an iterative optimization method similar to Newton’s method that glm() uses to find the best coefficients for the logistic regression model. You should expect it to converge in about six to eight iterations. If there are more iterations than that, then the algorithm may not have converged, and the model may not be valid.
+
+### Separation and quasi-separation
+The probable reason for nonconvergence is separation or quasi-separation: one of the model variables or some combination of the model variables predicts the outcome perfectly for at least a subset of the training data. You’d think this would be a good thing, but ironically logistic regression fails when the variables are too powerful. Ideally, glm() will issue a warning when it detects separation or quasi-separation:
+```{}
+Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+Unfortunately, there are situations when it seems that no warning is issued, but there are other warning signs:
+
+* An unusually high number of Fisher iterations
+* Very large coefficients, usually with extremely large standard errors
+* Residual deviances larger than the null deviances
+
+If you see any of these signs, the model is suspect. To try to fix the problem, remove any variables with unusually large coefficients; they’re probably causing the separation.
+You can try using a decision tree on the variables that you remove to detect regions of perfect prediction. The data that the decision tree doesn’t predict perfectly on can still be used for building a logistic regression model. The overall model would then be a hybrid: the decision tree to predict the too-good data, and a logistic regression model for the rest.
+
+
+
+
+What you should remember about logistic regression:
+
+* Logistic regression is the go-to statistical modeling method for binary classification.
+* Try logistic regression first, and then more complicated methods if logistic regression doesn’t perform well.
+* Logistic regression will have trouble with problems with a very large number of variables, or categorical variables with a very large number of levels.
+* Logistic regression is well calibrated: it reproduces the marginal probabilities of the data.
+* Logistic regression can predict well even in the presence of correlated variables, but correlated variables lower the quality of the advice.
+* Overly large coefficient magnitudes, overly large standard errors on the coefficient estimates, and the wrong sign on a coefficient could be indications of correlated inputs.
+* Too many Fisher iterations, or overly large coefficients with very large standard errors, could be signs that an input or combination of inputs is perfectly correlated with a subset of your responses. You may have to segment the data to deal with this issue.
+* glm() provides good diagnostics, but rechecking your model on test data is still your most effective diagnostic.
+* Pseudo R-squared is a useful goodness-of-fit heuristic.
+
