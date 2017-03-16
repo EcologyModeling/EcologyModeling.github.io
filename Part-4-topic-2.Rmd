@@ -12,174 +12,173 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<div class="alert alert-danger" role="alert"> Раздел находится в разработке !</div>
 
 ###Классификация данных
 
 +------------------------------+------------------------------------------+
-|*Machine learning terminology*|*Typical Algorithm*                       |
+|* Современная  Терминология  *|*Применяемые алгоритмы*                   |
 +------------------------------+------------------------------------------+
-|Classification: assigning     | Decision trees                           |
-|known labels to objects       | Naive Bayes                              |
-|                              | Logistic regression (witha threshold)    |
-|                              | Support vector machines                  |
+|Classification: assigning     | Дерево принятия решений                  |
+|known labels to objects       | Байессовские методы                      |
+|                              | Логистическая регрессия (с порогами)     |
+|                              | Методо опорных веторов                   |
 +------------------------------+------------------------------------------+
-|Regression: predicting or     | Linear regression                        |
-|forecasting numerical         | Logistic regression                      |
-|values                        |                                          |
+|Регрессия: численные предска  | Линейная регрессия                       |
+|-зания численных значений     | Логистическая регрессия                  |
+|                              |                                          |
 +------------------------------+------------------------------------------+
-|Association rules:            | Apriori                                  | 
-|finding objects that          |                                          |
-|tend to appear in             |                                          |
-|the data together             |                                          |
+|Правила агрегации:            | Априорные                                | 
+|поиск объектов, которые       |                                          |
+|часто встречаются             |                                          |
+|вместе                        |                                          |
 +------------------------------+------------------------------------------+
-|Clustering: finding groups of | K-means                                  |
-|objects that are more similar |                                          |
-|to each other than to objects |                                          |
-|in other groups               |                                          |
+|Класетризация: поиск групп    | K-средние                                |
+|объектов, которые более схожи |                                          |
+|между собой, чем между объек- |                                          |
+|тами в других группах         |                                          |
 +------------------------------+------------------------------------------+
-|Nearest neighbor: predicting  | Nearest neighbor                         |
-|property of a datum based on  |                                          |  
-|the datum or data that are    |                                          |
-|most similar to it            |                                          |
+|Ближайший сосед:предсказываем | Метод присоединения соседей              |
+|свойства данных на основе     |                                          |  
+|наиболее сходных с ними данных|                                          |
+|                              |                                          |
 +------------------------------+------------------------------------------+
 
 
-When building a model, the first thing to check is if the model even works on the data it was trained from. In this section, we do this by introducing quantitative measures of model performance. From an evaluation point of view, we group model types this way.
+При построении модели, в первую очередь проверьте,   работает ли модель  на данных, которые были использованы для ее обучени. Введенем количественные меры оценки эффективности модели. С точки зрения оценки , мы таким образом группируем модели по типам .
 
-1. Classification
-2. Scoring
-3. Probability estimation
-4. Raking
-5. Clustering
+1. Классификация
+2. Балловая оценка
+3. Оценка вероятности
+4. Ранжирование
+5. Кластеризация
  
 +------------+------------------------------------------------------------------------------------+
-|Null model  |A null model is the best model of a very simple form you’re trying to outperform.   |
-|            |The two most typical null model choices are a model that is a single                |
-|            |constant (returns the same answer for all situations) or a model that is            |
-|            |independent (doesn’t record any important relation or interaction between           |
-|            |inputs and outputs). We use null models to lower-bound desired performance,         |
-|            |so we usually compare to a best null model. For example, in a categorical           |
-|            |problem, the null model would always return the most popular                        |
-|            |category (as this is the easy guess that is least often wrong); for a score         |
-|            |model, the null model is often the average of all the outcomes (as this has         |
-|            |the least square deviation from all of the outcomes); and so on. The idea is        |
-|            |this: if you’re not out-performing the null model, you’re not delivering value.     |
-|            |Note that it can be hard to do as good as the best null model, because even         |
-|            |though the null model is simple, it’s privileged to know the overall distribution   |
-|            |of the items it will be quizzed on. We always assume the null model                 |
-|            |we’re comparing to is the best of all possible null models.                         |
+|Нулевая     |Нулевая модель это лучшая модель в наиболее простой из возможных форм, которую вы   |
+|модель      | пытаетесь превзойти. Два самых простых варианта это модель в виде одной константы  |
+|            |(дает всегда один ответ во всех случаях) или полностью независимая модель           |
+|            |( не отмечает важных отношений или взаимодействий между зависимой и независимыми    |
+|            |переменными). Нуль модели важны для оценки нижнего предела необходимой              |
+|            |производительности, т.е. сравниваем нашу модель с лучшей из возможных нуль моделей  |
+|            |Например при категориальном моделировании, нуль модель всегда будет возвращать      |
+|            |наиболее популярную категорию (что, очевидно, часто не верно); для оценочных        |
+|            |моделей, нулевая модель часто является средним всех зависимых значений ( так как    |
+|            |среднее обладает наименьшим квадратом отклонений); и т.д. Идея заключается в том,   |
+|            | что если вы не превосходите по точности нулевую модель, вы отказываетесь от своего |
+|            |предсказания (моделью). Стоит отметить, что часто сложно превзойти нулевую модель,  |
+|            |т.к. не смотря на свою простоту она уже выбрана исходя из того рапределения, которым|
+|            |обладают данные. Мы всегда исходим из того, что нулевая модель с которой мы проводим|
+|            |сравнения нашей модели лучшая из всех возможных нуль моделей.                       |
 +------------+------------------------------------------------------------------------------------+
-|Bayes rate  |A Bayes rate model (also sometimes called a saturated model) is a best              |
-|model       |possible model given the data at hand. The Bayes rate model is the perfect          |
-|            |model and it only makes mistakes when there are multiple examples with              |
-|            |the exact same set of known facts (same xs) but different outcomes (different       |
-|            |ys). It isn’t always practical to construct the Bayes rate model, but we            |
-|            |invoke it as an upper bound on a model evaluation score.                            |
-|            |If we feel our model is performing significantly above the null model rate and      |
-|            |is approaching the Bayes rate, then we can stop tuning. When we have a lot          |
-|            |of data and very few modeling features, we can estimate the Bayes error             |
-|            |rate. Another way to estimate the Bayes rate is to ask several different people     |
-|            |to score the same small sample of your data; the found inconsistency                |
-|            |rate can be an estimate of the Bayes rate.a                                         |
+|Байесовские |Байесовские модели (часто называемые насыщенными) лучшие возможные модели           |
+|модели      |для имеющихся в данный момент данных. Эти модели явялются идеальными при условии,   |
+|            |что не существует разных значениий зависимой переменной при одном и том же значении |
+|            |независимой. Создание Байесовских моделей не всегда практично,  но мы будем         |
+|            |рассматривать его, как лучший из возможных результатов моделирования.               |
+|            |Если вы понимаете, что ваша модель работает значительно лучше нулевой модели и по   |
+|            |качеству предсказания приближается к Байесовской, то оптимизацию данной модели можно|
+|            |прекратить. В ситуации обилия данных и малого количества переменных для             |
+|            |моделирования, можно рассчитать оценку Байесовской ошибки. Другой способ Байесовской|
+|            |оценки это попросить других аналогично оценить некоторую часть ваших данных, среднее|
+|            |этих оценок можно считать Байесовской оценкой                                       |
 +------------+------------------------------------------------------------------------------------+
  
  
- 
+### Confusion matrix
 
-+---------------------------+-------------------------------+---------------------------------------+ 
-|                           |Prediction=NEGATIVE            |Prediction=POSITIVE                    |
-+---------------------------+-------------------------------+---------------------------------------+ 
-|Truth mark=NOT IN CATEGORY |True negatives (TN) cM[1,1]=264|False positives (FP) cM[1,2]=14        |
-+---------------------------+-------------------------------+---------------------------------------+ 
-|Truth mark=IN CATEGORY     |False negatives (FN) cM[2,1]=22| True positives (TP) cM[2,2]=158       |
-+---------------------------+-------------------------------+---------------------------------------+
++---------------------------------------+----------------------------------+----------------------------------+ 
+|                                       |Предсказание = Отрицательное      |Предсказание = Положиетльное      |
++---------------------------------------+----------------------------------+----------------------------------+ 
+|Реальное положение = Гипотеза верна    |  Истинно отрицательный (TN)      | Ложноположительный (FP)          |
++---------------------------------------+----------------------------------+----------------------------------+ 
+|Реальное положение = Гипотеза НЕ верна |  Ложноотрицательный (FN)         | Истинно положительный (TP)       |
++---------------------------------------+----------------------------------+----------------------------------+
 
+### Таблица метрик качества модели
 
++------------------+---------------------+
+|Показатель        | Формула             |
++------------------+---------------------+
+|Аккуратность      |(TP+TN)/(TP+FP+TN+FN)|
++------------------+---------------------+
+|Точность          |TP/(TP+FP)           |
++------------------+---------------------+
+|Чувствительность  |TP/(TP+FN)           |
++------------------+---------------------+
+|Специфичность     |TN/(TN+FP)           |
++------------------+---------------------+
 
-+-------------+---------------------+
-|Measure      | Formula             |
-+-------------+---------------------+
-|Accuracy     |(TP+TN)/(TP+FP+TN+FN)|
-+-------------+---------------------+
-|Precision    |TP/(TP+FP)           |
-+-------------+---------------------+
-|Recall       |TP/(TP+FN)           |
-+-------------+---------------------+
-|Sensitivity  |TP/(TP+FN)           |
-+-------------+---------------------+
-|Specificity  |TN/(TN+FP)           |
-+-------------+---------------------+
+###Разъяснение
 
-###Make a table
 +------------+------------------------------------------------------------------------------------+
-|Measure     |Typical business need Follow-up question Accuracy “We need most of our decisions to |
-|            |be correct.”“Can we tolerate being wrong 5% of the time? And do users see mistakes  |
-|            | like spam marked as non-spam or non-spam marked as spam as being equivalent?”      |
+|Показатель  |Типичная бизнесс задача/проблема                                                    |
 +------------+------------------------------------------------------------------------------------+
-|Precision   |“Most of what we marked as spam had darn well better be spam.” That would guarantee |
-|            |that most of what is in the spam folder is in fact spam but it isn’t the best way to| 
-|            |measure what fraction of the user’s legitimate email is lost. We could cheat on this| 
-|            |goal by sending all our users a bunch of easy-to-identify spam that we correctly    |
-|            |identify. Maybe we really want good specificity.”                                   |
+|Accuracy    |“Нам необходимо, чтобы большинство наших предсказаний было верно.” Можем ли мы себе |
+|Аккуратность|позволить ошибиться в 5% случаев ? И является ли для пользователей эквивалентной    |  
+|            | ситуация, когда спам не отмечен как спам, а часть нормальных писем отмечена        |
 +------------+------------------------------------------------------------------------------------+
-|Recall      | “We want to cut down on the amount of spam a user sees by a factor of 10 (eliminate|
-|            | 90% of the spam).” “If 10% of the spam gets through, will the user see mostly      |
-|            | non-spam mail or mostly spam? Will this result in a good user experience?”         |
+|Precision   |“Большая часть того, что мы отметили как спам точно должно быть спамом". Показатель |
+|Точность    |гарантирует, что большая часть того, что попало в паку спам, действительно спам,    | 
+|            |но это далеко не лучший способ оценить какая часть реальных писем была потеряна     | 
+|            |(отнесена к спаму). Большую часть спама действительно легко распрознать, возможно   |
+|            | в реальном бизнесе много важнее будет специфичность                                |
 +------------+------------------------------------------------------------------------------------+
-|Sensitivity |“We have to cut a lot of spam, otherwise  the user won’t see a benefit.”            |
-|            |“If we cut spam down to 1% of what it is now,would that be a good user experience?” |
+|Recall      | “Мы хотим, чтобы доля спама, которая доходит до пользователя не превышала бы 10%.  |
+|Отзыв       | Если 10% спама проходят сквозь фильтр, будет ли пользователь видеть в основном     |
+|            | обычные письма или спам? Повлияет ли это на выбор нас пользователями?"             |
++------------+------------------------------------------------------------------------------------+
+|Sensitivity |“Мы должны отфильтровать большую часть спама, иначе пользователь нас не выберет.    |
+|Чувств-ность|“Если мы уменьшим долю спама до 1% от текущего уровня, повлияет ли это на выбор  ?” |
 |            |                                                                                    |
 +------------+------------------------------------------------------------------------------------+
-|Specificity |“We must be at least three nines on legitimate email; the user must see at least    |         
-|            | 99.9%of their non-spam email.” “Will the user tolerate missing 0.1% of their       |
-|            |legitimate email, and should we keep a spam folder the user can look at?”           |
+|Specificity |“Мы должны пропускать 99.9% реальных писем. Потерпит ли пользователь потерю 0,1%    |         
+|Специф-ть   | от своих писем?"                                                                   |
+|            |                                                                                    |
 +------------+------------------------------------------------------------------------------------+
  
 
-###Test and training splits
+###Тестовая и обучающая выборка
 
-When you’re building a model to make predictions, like our model to predict the probability of health insurance coverage, you need data to build the model. You also need data to test whether the model makes correct predictions on new data. The first set is called the training set, and the second set is called the test (or hold-out) set. The training set is the data that you feed to the model-building algorithm—regression, decision trees, and so on—so that the algorithm can set the correct parameters to best predict the outcome variable. The test set is the data that you feed into the resulting model, to verify that the model’s predictions are accurate. We’ll go into detail about the kinds of modeling issues that you can detect by using hold-out data in chapter 5. For now, we’ll just get our data ready for doing hold-out experiments at a later stage.
+Когда вы строите модель, чтобы делать прогнозы, как наша модель для прогнозирования вероятности медицинского страхования, вам нужны данные для построения модели. Вам также понадобятся данные для проверки того  делает ли наша модель верные предсказания на новых данных. Первая выборка называется обучающей, а второй набор называется тестировочным. Обучающий набор данных, это тот который вы "скармливаете" модели, так что алгоритм может установить правильные параметры, чтобы наиболее точно предсказать результат зависимой переменной. Тестовый набор данных, вы используете для "скармливания" результирующей модели, чтобы убедиться, что предсказания модели являются точными. 
 
-Many writers recommend train/calibration/test splits, which is also good advice. Our philosophy is this: split the data into train/test early, don’t look at test until final evaluation, and if you need calibration data, resplit it from your training subset.
+Многие авторы рекомендуют тестировочное/калибровочное/обучающее разбиение, что тоже хорошо. Мы предлагаем следующее: разбить данные на обучающие/тестировочные в начале, не использовать тестировочные данные до конца моделирования, и если вам нужны калибровочные данные, переразбить их из обучающего подмножества .
 
-###CORRELATION
+###Коррелляции при моделировании
 
-Correlation is very helpful in checking if variables are potentially useful in a model. Be advised that there are at least three calculations that go by the name of correlation: Pearson, Spearman, and Kendall (see help(cor)). The Pearson coefficient checks for linear relations, the Spearman coefficient checks for rank or ordered relations, and the Kendall coefficient checks for degree of voting agreement. Each of these coefficients performs a progressively more drastic transform than the one before and has well-known direct significance tests (see help(cor.test)).
+Корреляции очень полезно при проверке, являются ли переменные  потенциально полезными для модели. Помните, что есть по крайней мере три подхода, которые известны под именем корреляции: Пирсона, Спирмена и Кендалла (см. help(cor)). Пирсона применяют для линейных отношений, Спирмана для ранговых или сильно ненормальных данных. Каждый из этих коэффициентов выполняет все более радикальные преобразования над исходными данными,  и имеет хорошо разработанные тесты для оценки точности (см. help(кор.тест)).
 
-***DON’T USE CORRELATION TO EVALUATE MODEL QUALITY IN PRODUCTION***
+***НЕ ИСПОЛЬЗУЙТЕ КОЭФФИЦИЕНТ КОРЕЛЛЯЦИИ ДЛЯ ОЦЕНКИ КАЧЕСТВА РЕАЛЬНЫХ МОДЕЛЕЙ***
 
-It’s tempting to use correlation to measure model quality, but we advise against it. The problem is this: correlation ignores shifts and scaling factors. So correlation is actually computing if there is any shift and rescaling of your predictor that is a good predictor. This isn’t a problem for training data (as these predictions tend to not have a systematic bias in shift or scaling by design) but can mask systematic errors that may arise when a model is used in production.
-
-
-***THE WORST POSSIBLE MODELING OUTCOME***
-The worst possible modeling outcome is not failing to find a good model. The worst possible modeling outcome is thinking you have a good model when you don’t. One of the easiest ways to accidentally build such a deficient model is to have an instrumental or independent variable that is in fact a subtle function of the outcome. Such variables can easily leak into your training data, especially when you have no knowledge or control of variable meaning preparation. The point is this: such variables won’t actually be available in a real deployment and often are in training data packaged up by others.
+Очень заманчиво использовать корреляцию для оценки качества модели, но мы настоятельно рекомендуем не полагаться исключительно на него. Проблема заключается в следующем: корреляция игнорирует сдвиги и масштаб данных. По сути корелляция показывает, показывает только возможность наличия связи. Вы можете спокойно использовать его для оценок промежуточных моделей(так как эти предсказания, как правило, не имеют систематического смещения или масштабирования по дизайну), но может маскировать систематические ошибки, которые могут возникнуть, когда модель используется в производстве.
 
 
-###Logistic regression
+***ХУДШЕЕ ЧТО МОЖЕТ СЛУЧИТЬСЯ ПРИ МОДЕЛИРОВАНИИ***
+
+Самый худший возможный результат моделирования не отсутствие хорошей модели в итоге вашей работы. Самый худший возможный результат моделирования это уверенность в том, что у вас хорошая модель, когда на самом деле она таковой не является. Один из самых простых способов, чтобы нарваться на подобную ситуацию является наличие инструментальной или независимой переменной, являющейся хитрым неочевидным преобразованием зависимой переменной. Такие переменные могут легко просочиться в вашу обучающую выборку, особенно если у вас нет полного представления о природе каждой переменной.
+
+##Логистическая регрессия
 
 
-Logistic regression is the most important (and probably most used) member of a class of models called generalized linear models. Unlike linear regression, logistic regression can directly predict values that are restricted to the (0,1) interval, such as probabilities. It’s the go-to method for predicting probabilities or rates, and like linear regression, the coefficients of a logistic regression model can be treated as advice. It’s also a good first choice for binary classification problems.
+Логистическая регрессия является наиболее важным (и, вероятно, наиболее часто используемым) элементом класса моделей, называемых обобщенными линейными моделями. В отличие от линейной регрессии, логистическая регрессия может непосредственно предсказывать значения, которые ограничены интервалом (0,1), таким как вероятности. Это новый метод предсказания вероятностей или коэффициентов, и, подобно линейной регрессии, коэффициенты модели логистической регрессии можно рассматривать как рекомендации. Это также хороший первый выбор для задач двоичной классификации.
 
-In this section, we’ll use a medical classification example (predicting whether a newborn will need extra medical attention) to work through all of the steps of producing and using a logistic regression model.
+В этом разделе мы будем использовать пример из медицинской классификации (прогнозирующий, потребуется ли новорожденному дополнительное медицинское обслуживание) для проработки всех этапов создания и использования модели логистической регрессии.
 
-Understanding logistic regression
+### Понимая логистическую регрессию
 
-Logistic regression predicts the probability y that an instance belongs to a specific category— for instance, the probability that a flight will be delayed. When x[i,] is a row of inputs (for example, a flight’s origin and destination, the time of year, the weather, the air carrier), logistic regression finds a fit function f(x) such that
+Логистическая регрессия предсказывает вероятность того, что объект принадлежит определенной категории, например, вероятность того, что полет будет задержан. Когда x[i,] представляет собой строку входных данных (например, место и время полета, время года, погода, авиаперевозчик), логистическая регрессия находит фиктивную функцию f(x) такую, что
 
-P[y[i] in class] ~ f(x[i,]) = s(a+b[1] x[i,1] + ... b[n] x[i,n])
+$$P_{y_{[i]} в классе} \sim f_{(x_{[i,]})} = s(a+b_{[1]} x_{[i,1]} + ... b_{[n]} x_{[i,n]})$$
 
-Here, s(z) is the so-called sigmoid function, defined as s(z) = 1/(1+exp(z)). If the y[i] are the probabilities that the x[i,] belong to the class of interest (in our example, that a flight with certain characteristics will be delayed), then the task of fitting is to find the b[1], ..., b[n] such that f(x[i,]) is the best possible estimate of y[i]. R supplies a one-line command to find these coefficients: glm().4 Note that we don’t need to supply y[i] that are probability estimates to run glm(); the training method only requires y[i] that say whether a given training example is in the target class.
-The sigmoid function maps real numbers to the interval (0,1)—that is, to probabilities. The inverse of the sigmoid is the logit, which is defined as log(p/(1-p)), where p is a probability. The ratio p/(1-p) is known as the odds, so in the flight example, the logit is the log of the odds (or log-odds) that a flight will be delayed. In other words, you can think of logistic regression as a linear regression that finds the log-odds of the
-probability that you’re interested in.
+Здесь s (z) - так называемая сигмоидальная функция, определяемая как $s(z) = \frac{1}{(1 + exp(z))}$. Если $y[i]$ - вероятности того, что $x[i,]$ принадлежат интересующему классу (в нашем примере, вероятность того, что полет с определенными характеристиками будет задержан), тогда задача подгонки состоит в том, чтобы найти  $b[1 ]$, ..., $b[n]$, для которых $f(x[i,])$ является наилучшей оценкой $y[i]$.R предоставляет простую команду для поиска этих коэффициентов: glm (). Обратите внимание, что нам не нужно указывать y[i], которые являются оценками вероятности для запуска glm (); Метод обучения требует только y[i], которые говорят, находится ли данный учебный пример в целевом классе.
 
-Logistic regression is usually used to perform classification, but logistic regression and its close cousin beta regression are also useful in estimating rates. In fact, R’s standard glm() call will work with prediction numeric values between 0 and 1.0 in addition to predicting classifications. Logistic regression can be used for classifying into any number of categories (as long as the categories are disjoint and cover all possibilities: every x has to belong to one of the given categories). But glm() only handles the two-category case, so our discussion will focus on this case.
+Сигмоидная функция отображает действительные числа в интервал (0,1) или вероятности. Обратной к сигмоидной является logit функция, которая определяется как $log(\frac{p}{(1-p)})$, где p - вероятность. Отношение p / (1-p) известно как вероятность(odds), поэтому в нашем примере про полеты logit представляет собой список вероятностей (или логарифмических коэффициентов), того что полет будет задерживаться. Другими словами, вы можете думать о логистической регрессии как линейной регрессии, которая находит логарифмические коэффициенты вероятност интересующего вас события.
 
-In particular, logistic regression assumes that logit(y) is linear in the values of x. Like linear regression, logistic regression will find the best coefficients to predict y, including finding advantageous combinations and cancellations when the inputs are correlated.
+В частности, логистическая регрессия предполагает, что logit(y) является линейным к значениям x. Как и линейная регрессия, логистическая регрессия найдет наилучшие коэффициенты для прогнозирования y, включая поиск выгодных комбинаций и исключений переменных из модели, когда часть независимых переменных коррелированы.
 
-For the example task, imagine that you’re working at a hospital. The goal is to design a plan that provisions neonatal emergency equipment to delivery rooms. Newborn babies are assessed at one and five minutes after birth using what’s called the Apgar test, which is designed to determine if a baby needs immediate emergency care or extra medical attention. A baby who scores below 7 (on a scale from 0 to 10) on the Apgar scale needs extra attention.
+В качестве примерного задания, представьте, что вы работаете в больнице. Цель состоит в том, чтобы разработать план снабжения неонатального оборудования для оказания неотложной помощи в родильных отделениях. Новорожденных младенцев оценивают через 1 и 5 минут после рождения, используя так называемый тест «Апгар», который предназначен для определения того, нуждается ли ребенок в неотложной или экстренной медицинской помощи. Ребенку, который получил оценку ниже 7 (по шкале от 0 до 10) по шкале Апгара, требуется дополнительное внимание.
 
 Such at-risk babies are rare, so the hospital doesn’t want to provision extra emergency equipment for every delivery. On the other hand, at-risk babies may need attention quickly, so provisioning resources proactively to appropriate deliveries can save lives. The goal of this project is to identify ahead of time situations with a higher probability of risk, so that resources can be allocated appropriately
+
+Такого рода дети встречаются довольно редко, поэтому больницам не хочется тратиться на дополнительное аварийно-спасательное оборудование для каждой поставки. С другой стороны, детям в группе риска  может понадобиться помощь при этом очень быстро нужно, поэтому превентивная подготовка   может спасти жизнь. Целью данного исследования является попытка выявление ситуаций с повышенной вероятностью риска загодя, для того чтобы ресурсы были распределены точно и загодя.
 
 ```{r}
 sdata = read.csv("https://www.dropbox.com/s/lx9celfieswn4vq/NatalRisk.csv?dl=1")
@@ -188,8 +187,7 @@ train <- sdata[sdata$ORIGRANDGROUP<=5,]
 test <- sdata[sdata$ORIGRANDGROUP>5,]
 ```
 
-The command to build a logistic regression model in R is glm(). In our case, the dependent variable y is the logical (or Boolean) atRisk; all the other variables in table 7.1 are the independent variables x. The formula for building a model to predict atRisk using these variables is rather long to type in by hand; you can generate the formula with the commands shown in the next listing.
-
+Командой для построения модели логистической регрессии в R является модель glm(). В нашем случае зависимой переменной Y является логическая (булевая) переменная atRisk; все другие переменные в табл. 7.1 представлены независимыми переменными х. Формула для построения модели для прогнозирования atRisk с помощью этих переменных достаточно длинна для линейной записи; поэтому создадим формулу командами показаными в следующем листинге.
 
 ```{r}
 complications <- c("ULD_MECO","ULD_PRECIP","ULD_BREECH")
@@ -209,10 +207,11 @@ model <- glm(fmla, data=train, family=binomial(link="logit"))
 
 ```
 
-The family function specifies the assumed distribution of the dependent variable y. In our case, we’re modeling y as a binomial distribution, or as a coin whose probability of heads depends on x. The link function “links” the output to a linear model—pass y through the link function, and then model the resulting value as a linear function of the x values. Different combinations of family functions and link functions lead to different kinds of generalized linear
-models (for example, Poisson, or probit). In this book, we’ll only discuss logistic models, so we’ll only need to use the binomial family with the logit link.
+The family function specifies the assumed distribution of the dependent variable y. In our case, we’re modeling y as a binomial distribution, or as a coin whose probability of heads depends on x. The link function “links” the output to a linear model—pass y through the link function, and then model the resulting value as a linear function of the x values. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). In this book, we’ll only discuss logistic models, so we’ll only need to use the binomial family with the logit link.
 
-Making predictions with a logistic model is similar to making predictions with a linear model—use the predict() function.
+Параметры функции glm(), family определяет предполагаемое распределение зависимой переменной Y. В нашем случае, мы моделируем Y как биномиальное распределение, это как если бы мы моделировали результаты броски монеты, вероятность выпадения решки которых зависит от x. Параметр “ссылка” - link поясняет функции каким образом привести модель к линейному виду — преобразует Y через преобразованием указанным в параметре link, а затем моделируем полученное значение  линейной функции от переменных x. Комбинирование параметров link и family дают широчайший спектр обобщенных линейных моделей (например, Пуассона, или пробит). Здесь мы будем обсуждать только логистические модели.
+
+Создание прогнозов с логистической моделью аналогично прогнозированию с использованием линейной модели - используйте функцию predict ().
 
 ```{r}
 
@@ -221,27 +220,25 @@ test$pred <- predict(model, newdata=test, type="response")
 
 ```
 
-We’ve again stored the predictions for the training and test sets as the column pred in the respective data frames. Note the additional parameter type="response". This tells the predict() function to return the predicted probabilities y. If you don’t specify type="response", then by default predict() will return the output of the link function, logit(y).
+Мы снова сохранили прогнозы для обучающих и тестовых наборов в качестве столбца pred в соответствующих таблицах Обратите внимание на дополнительный тип параметра = "response"(«ответ»). Он сообщает функции predict () возвращать предсказанные вероятности y. Если вы не укажете type = "response", то по умолчанию функция predict () вернет вывод link функции - logit(y).
 
-One strength of logistic regression is that it preserves the marginal probabilities of the training data. That means that if you sum up the predicted probability scores for the entire training set, that quantity will be equal to the number of positive outcomes (atRisk == T) in the training set. This is also true for subsets of the data determined by variables included in the model. For example, in the subset of the training data that has train$GESTREC=="<37 weeks" (the baby was premature), the sum of the predicted probabilities equals the number of positive training examples.
+Одно из преимуществ логистической регрессии заключается в том, что она сохраняет предельные вероятности данных обучения. Это означает, что если вы суммируете предсказанные вероятности для всей тренировочной подвыборки, это количество будет равно количеству положительных результатов (atRisk == T) в обучающем наборе. Это справедливо также для подмножеств данных, определяемых переменными, включенными в модель. Например, в подмножестве данных обучения,  train$GESTREC == "<37 weeks" (ребенок был преждевременным), сумма прогнозируемых вероятностей равна числу положительных примеров обучения.
 
-If our goal is to use the model to classify new instances into one of two categories (in this case, at-risk or not-at-risk), then we want the model to give high scores to positive instances and low scores otherwise. We can check if this is so by plotting the distribution of scores for both the positive and negative instances. Let’s do this on the training set (we should also plot the test set, to make sure that the performance is of similar quality).
+Если наша цель заключается в использовании модели для классификации новых образцов в одну из двух категорий (в данном случае - риск-группу или не подверженную риску), мы хотим, чтобы модель давала высокие оценки при отнесении в группу и низкие значениям в противном случае. Мы можем проверить, так ли это, построив распределение баллов для положительных и отрицательных случаев. Давайте сделаем это на обучающем наборе (мы также должны построить тестовый набор, чтобы убедиться, что предсказание аналогичного качества).
 
 ```{r}
 library(ggplot2)
 ggplot(train, aes(x=pred, color=atRisk, linetype=atRisk)) + geom_density()
 ```
 
-The result is shown in figure 7.9. Ideally, we’d like the distribution of scores to be separated, with the scores of the negative instances (FALSE) to be concentrated on the left, and the distribution for the positive instances to be concentrated on the right. Earlier we showed an example of a classifier that separates the positives and the negativesquite well in figure 5.8. In the current case, both distributions are concentrated on the left, meaning that both positive and negative instances score low. This isn’t surprising, since the positive instances (the ones with the baby at risk) are rare (about 1.8% of all births in the dataset). The distribution of scores for the negative instances dies off sooner than the distribution for positive instances. This means that the model did identify subpopulations in the data where the rate of at-risk newborns is higher than the average.
+В идеале мы хотели бы, чтобы распределение баллов было разделено, а оценки отрицательных экземпляров (ЛОЖЬ) должны быть сосредоточены слева, а распределение для положительных экземпляров должно быть сосредоточено справа. В данном случае оба распределения сосредоточены слева, что означает, что как положительные, так и отрицательные случаи оцениваются на низком уровне. Это не удивительно, поскольку положительные случаи (те, в которых ребенок находится в группе риска) редки (около 1,8% от всех родов в наборе данных). Распределение оценок для отрицательных случаев уменьшается раньше, чем распределение для положительных экземпляров. Это означает, что модель выявила субпопуляции в данных, где процент новорожденных с повышенным риском выше среднего.
 
-In order to use the model as a classifier, you must pick a threshold; scores above the threshold will be classified as positive, those below as negative. When you pick a threshold, you’re trying to balance the precision of the classifier (what fraction of the predicted positives are true positives) and its recall (how many of the true positives the classifier finds)
+Чтобы использовать модель в качестве классификатора, вы должны выбрать пороговое значение; Баллы выше порога будут классифицироваться как положительные,а те, что ниже, как отрицательные. Когда вы выбираете пороговое значение, вы пытаетесь сбалансировать точность классификатора (какая доля прогнозируемых положительных результатов являются истинно положительными) и его отзыв (сколько из истинных положительных значений находит классификатор)
 
-If the score distributions of the positive and negative instances are well separated, as in figure 5.8, we can pick an appropriate threshold in the “valley” between the two peaks. In the current case, the two distributions aren’t well separated, which indicates that the model can’t build a classifier that simultaneously achieves good recall and good precision. But we can build a classifier that identifies a subset of situations with a higher-than-average rate of at-risk births, so preprovisioning resources to those situations may be advised. We’ll call the ratio of the classifier precision to the average rate
-of positives the enrichment rate. The higher we set the threshold, the more precise the classifier will be (we’ll identify a set of situations with a much higher-than-average rate of at-risk births); but we’ll also miss a higher percentage of at-risk situations, as well. When picking the threshold, we’ll use the training set, since picking the threshold is part of classifier-building.
 
-We can then use the test set to evaluate classifier performance. To help pick the threshold, we can use a plot like figure 7.10, which shows both enrichment and recall as a functions of the threshold. Looking at figure 7.10, you see that higher thresholds result in more precise classifications, at the cost of missing more cases; a lower threshold will identify more cases, at the cost of many more false positives. The best trade-off between precision and
-recall is a function of how many resources the hospital has available to allocate, and how many they can keep in reserve (or redeploy) for situations that the classifier missed. A threshold of 0.02 (which incidentally is about the overall rate of at-risk births in the training data) might be a good trade-off. The resulting classifier will identify a set of potential at-risk situations that finds about half of all the true at-risk situations,
-with a true positive rate 2.5 times higher than the overall population
+Если распределения баллов положительных и отрицательных примеров хорошо разделены, как показано на рисунке, мы можем выбрать соответствующий порог в «долине» между двумя пиками. В данном случае два распределения не очень хорошо разделены, что указывает на то, что модель не может построить классификатор, который одновременно обеспечивает хороший отзыв и хорошую точность.Но мы можем создать классификатор, который идентифицирует подмножество ситуаций с более высоким уровнем рождаемости в группе риска, поэтому предварительное выделение ресурсов для этих ситуаций может быть рекомендовано. Мы будем называть отношение точности классификатора к средней скорости срабатывания коэффициентом обогащения. Чем выше мы устанавливаем порог, тем более точным будет классификатор (мы определим набор ситуаций с гораздо более высоким чем средний уровнем точности определения родов с повышенным риском);одновременно мы также будем чаще пропускать(не классифицировать) ситуации, связанные с риском. При выборе порога мы будем использовать обучающий набор, так как выбор порога является частью построения классификатора.
+
+Затем мы можем использовать тестовый набор для оценки производительности классифицируюшей модели . Чтобы помочь подобрать порог, мы можем использовать график, см ниже, который показывает обвременно обогащение и отзыв как функции от пороговго значения. На рисунке, вы видите, что более высокие пороги приводят к более точной классификации, за счет упущения(неправильной классификации) большого количества случаев; Более низкий порог выявит больше критических ситуаций при родах за счет множества ложных срабатываний. Наилучший компромисс между точностью и отзывом зависит от объема ресурсов, которым располагает больница для распределения и сколько их можно оставить в резерве (или перераспределить) для ситуаций, которые пропустил классификатор. Хорошим выбором может стать порог в 0,02 (что, кстати, и составляет общий показатель рождаемости в группах риска). Получающийся классификатор будет идентифицировать набор потенциальных ситуаций с повышенным риском, который обнаруживают примерно половину всех реальных ситуаций, связанных с риском, с истинным положительным уровнем в 2,5 раза выше, чем в среднем(обнаруживаются такие ситуации).
 
 ```{r}
 library(ROCR)
@@ -274,7 +271,7 @@ coord_cartesian(xlim = c(0,0.05) )
 nplot(list(p1, p2)) #Show both plots simultaneously.
 ```
 
-Once we’ve picked an appropriate threshold, we can evaluate the resulting classifier by looking at the confusion matrix, as we discussed in section 5.2.1. Let’s use the test set to evaluate the classifier, with a threshold of 0.02.
+Как только мы подобрали соответствующий порог, мы можем оценить результирующий классификатор, посмотрев на таблицу показателей точности. Давайте используем тестовый набор для оценки классификатора с порогом 0,02.
 
 ```{r}
 ctab.test <- table(pred=test$pred>0.02, atRisk=test$atRisk)
@@ -287,36 +284,37 @@ enrich <- precision/mean(as.numeric(test$atRisk))
 enrich
 ```
 
-The resulting classifier is low-precision, but identifies a set of potential at-risk cases that contains 55.5% of the true positive cases in the test set, at a rate 2.66 times higher than the overall average. This is consistent with the results on the training set.
+Получающийся классификатор является низкоточным, но идентифицирует набор потенциальных случаев риска, который содержит 55,5% истинных положительных случаев в тестовом наборе, что в 2,66 раза превышает общее среднее. Этот результат хорошо согласуется с результатами тренировочного набора.
 
-The coefficients of a logistic regression model encode the relationships between the input variables and the output in a way similar to how the coefficients of a linear regression model do. You can get the model’s coefficients with the call coefficients(model).
+Коэффициенты модели логистической регрессии кодируют отношения между входными переменными и выводом путем, подобным тому, как это делают коэффициенты линейной регрессионной модели. Вы можете получить коэффициенты модели с помощью:
 
 ```{r}
 coefficients(model)
 ```
 
-Negative coefficients that are statistically significant6 correspond to variables that are negatively correlated to the odds (and hence to the probability) of a positive outcome (the baby being at risk). Positive coefficients that are statistically significant are positively correlated to the odds of a positive outcome.
-As with linear regression, every categorical variable is expanded to a set of indicator variables. If the original variable has n levels, there will be n-1 indicator variables; the remaining level is the reference level.
-For example, the variable DPLURAL has three levels corresponding to single births, twins, and triplets or higher. The logistic regression model has two corresponding coefficients: DPLURALtwin and DPLURALtriplet or higher. The reference level is single births. Both of the DPLURAL coefficients are positive, indicating that multiple births have higher odds of being at risk than single births do, all other variables being equal.
+Отрицательные коэффициенты, которые являются статистически значимыми, соответствуют переменным, которые отрицательно коррелируют с шансами (и, следовательно, с вероятностью) положительного результата (т.е. того, что ребенок находится в группе риска). Положительные коэффициенты, которые являются статистически значимыми, положительно коррелируют с шансами положительного результата.
+Как и в случае линейной регрессии, каждая категориальная переменная расширяется до набора индикаторных переменных. Если исходная переменная имеет n уровней, будет n-1 индикаторных переменных; оставшийся 1 уровень включен в свободный член.
 
-### INTERPRETING THE COEFFICIENTS
+Например, переменная DPLURAL имеет три уровня, соответствующих родам одного ребенка, двойняшкам и тройняшкам или выше. Модель логистической регрессии имеет два соответствующих коэффициента: DPLURALtwin и DPLURALtriplet или выше. Контрольный уровень - обычные роды. Оба коэффициента DPLURAL являются положительными, что указывает на то, что роды нескольких детей имеют более высокие шансы быть подверженными риску, чем обычные роды, при прочих равных условиях.
 
-Interpreting coefficient values is a little more complicated with logistic than with linear regression. If the coefficient for the variable x[,k] is b[k], then the odds of a positive outcome are multiplied by a factor of exp(b[k]) for every unit change in x[,k]. 
-The coefficient for GESTREC3< 37 weeks (for a premature baby) is 1.545183. So for a premature baby, the odds of being at risk are exp(1.545183)=4.68883 times
-higher compared to a baby that’s born full-term, with all other input variables unchanged. As an example, suppose a full-term baby with certain characteristics has a 1% probability of being at risk (odds are p/(1-p), or 0.01/0.99 = 0.0101); then the odds for a premature baby with the same characteristics are 0.0101*4.68883 = 0.047. This corresponds to a probability of being at risk of odds/(1+odds), or 0.047/
-1.047—about 4.5%.
-Similarly, the coefficient for UPREVIS (number of prenatal medical visits) is about -0.06. This means every prenatal visit lowers the odds of an at-risk baby by a factor of exp(-0.06), or about 0.94. Suppose the mother of our premature baby had made no prenatal visits; a baby in the same situation whose mother had made three prenatal visits would have odds of being at risk of about 0.047 * 0.94 * 0.94 * 0.94 = 0.039. This corresponds to a probability of being at risk of 3.75%.
-So the general advice in this case might be to keep a special eye on premature births (and multiple births), and encourage expectant mothers to make regular prenatal visits 
+### ИНТЕРПРЕТИРУЯ КОЭФФИЦИЕНТЫ
 
-###Reading the model summary and characterizing coefficients
+Интерпретация значений коэффициентов является немного более сложным, в случае с логистической регрессией, чем в случае с линейной регрессией. Если коэффициент для переменной x[,k] равен b[k], то коэффициенты положительного результата умножаются на коэффициент exp(b[k]) для каждого изменения  x[,k] на единицу.
+Коэффициент для GESTREC3 <37 недель (для недоношенного ребенка) составляет 1,545183. Так что для недоношенного ребенка вероятность оказаться в опасности равна exp(1,545183) = 4,68883 раз выше по сравнению с младенцем, рожденным в течение полного срока, при условии, что все остальные входные переменные остаются неизменными. В качестве примера предположим, что для полноценного ребенка с определенными характеристиками существует вероятность 1% риска (вероятность равна p / (1-p) или 0,01 / 0,99 = 0,0101); Тогда шансы(odds) для недоношенного малыша с такими же характеристиками составляют 0,0101 * 4,68883 = 0,047. Это соответствует вероятности риска =   шанс/ (1 + шанс), или 0,047 / 1,047 - около 4,5%.
 
-As we mentioned earlier, conclusions about the coefficient values are only to be trusted if the coefficient values are statistically significant. We also want to make sure that the model is actually explaining something. The diagnostics in the model summary will help us determine some facts about model quality. The call, as before, is summary(model).
+Аналогичным образом, коэффициент для UPREVIS (число пренатальных медицинских визитов) составляет около - 0,06. Это означает, что каждый визит в пренатальный период снижает коэффициент риска для младенца, подверженного риску, с коэффициентом exp(-0,06) или примерно 0,94. Предположим, что мать нашего недоношенного ребенка не сделала предродовых визитов; Ребенок в той же ситуации, чья мать совершила три дородовых визита на осмотр, будет иметь шансы на риск около 0,047x0,94x0,94x0,94 = 0,039. Это соответствует вероятности оказаться под угрозой 3,75%.
+
+Таким образом, общим советом в данном случае может быть особый взгляд на преждевременные роды (и множественные роды), а также поощрять будущих матерей совершать регулярные пренатальные посещения
+
+###Считывание сводки модели и определение коэффициентов
+
+Как мы уже упоминали ранее, выводам о значениях коэффициентов можно доверять только , если значения коэффициентов являются статистически значимыми. Мы также хотим убедиться, что модель действительно что-то объясняет. Диагностика в summary модели поможет нам определить некоторые факты о качестве модели. 
 
 ```{r}
 summary(model)
 ```
 
-In linear regression, the residuals are the vector of differences between the true outcome values and the predicted output values (the errors). In logistic regression, the deviance residuals are related to the log likelihoods of having observed the true outcome, given the predicted probability of that outcome. The idea behind log likelihood is that positive instances y should have high probability py of occurring under the model; negative instances should have low probability of occurring (or putting it another way, (1-py) should be large). The log likelihood function rewards “matches” between the outcome y and the predicted probability py, and penalizes mismatches (high py for negative instances, and vice versa).
+В линейной регрессии остатки представляют собой вектор различий между истинными значениями моделируемой величины и прогнозируемыми выходными значениями (ошибки). В логистической регрессии остатки отклонений связаны с логарифмическими вероятностями наблюдения истинного результата с учетом предсказанной вероятности этого результата. Идея логарифмического правдоподобия заключается в том, что положительные экземпляры $y$ должны иметь высокую вероятность возникновения $p$ в модели; Отрицательные экземпляры должны иметь низкую вероятность возникновения (или, иначе говоря, $(1-p_{y})$ должны быть большими). Функция логарифмического правдоподобия возвращает «совпадение» между результатом $y$ и предсказанной вероятностью $p_{y}$ и наказывает несоответствия (высокий $p_{y}$ для отрицательных случаев и наоборот).
 
 ```{r}
 pred <- predict(model, newdata=train, type="response")
@@ -327,23 +325,23 @@ edev <- sign(as.numeric(train$atRisk) - pred) * sqrt(-2*llcomponents(as.numeric(
 summary(edev)
 ```
 
-Linear regression models are found by minimizing the sum of the squared residuals; logistic regression models are found by minimizing the sum of the squared residual deviances, which is equivalent to maximizing the log likelihood of the data, given the model.
+Модель линейной регрессии строят, минимизируя сумму квадратов оклонений; модели логистической регрессии можно построить, минимизируя сумму квадратов отклонений остатков, что эквивалентно максимизации логарифмической правдоподобия данных с учетом модели.
 
-Logistic models can also be used to explicitly compute rates: given several groups of identical data points (identical except the outcome), predict the rate of positive outcomes in each group. This kind of data is called grouped data. In the case of grouped data, the deviance residuals can be used as a diagnostic for model fit. This is why the deviance residuals are included in the summary. We’re using ungrouped data— every data point in the training set is potentially unique. In the case of ungrouped data, the model fit diagnostics that use the deviance residuals are no longer valid
+Логистические модели также могут использоваться для явного вычисления коэффициентов: для нескольких групп идентичных точек данных (идентичных, кроме исхода) прогнозируют скорость положительных результатов в каждой группе. Такие данные называются сгруппированными данными. В случае сгруппированных данных остатки отклонений могут использоваться в качестве диагностики для подгонки модели. Вот почему остатки отклонений включены в итоговый отчет. Мы используем негруппированные данные - каждая точка данных в обучающем наборе потенциально уникальна. В случае негруппированных данных диагностика подгонки модели, использующая остатки отклонений, более недействительна.
 
-The summary coefficients table for logistic regression has the same format as the coefficients table for linear regression
-The columns of the table represent
- A coefficient
- Its estimated value
- The error around that estimate
- The signed distance of the estimated coefficient value from 0 (using the standard error as the unit of distance)
- The probability of seeing a coefficient value at least as large as we observed, under the null hypothesis that the coefficient value is really 0
+Таблица сводных коэффициентов для логистической регрессии имеет тот же формат, что и таблица коэффициентов для линейной регрессии
+Столбцы таблицы представляют
+ * имя  коэффициента
+ * его предсказанноее значение
+ * ошибка этой оценки
+ * Оценка отличия(со знаком)  коэффициента от 0 (используя стандартную ошибку как единицу расстояния)
+ * вероятность увидеть значение коэффициента, по крайней мере такое же большое, как мы наблюдали, при нулевой гипотезе, что значение коэффициента действительно 0
 
-This last value, called the p-value or significance, tells us whether we should trust the estimated coefficient value. The standard rule of thumb is that coefficients with p-values less than 0.05 are reliable, although some researchers prefer stricter thresholds. For the birth data, we can see from the coefficient summary that premature birth and triplet birth are strong predictors of the newborn needing extra medical attention: the coefficient magnitudes are non-negligible and the p-values indicate significance.
-Other variables that affect the outcome are the mother’s prepregnancy weight (heavier mothers indicate higher risk—slightly surprising); the number of prenatal medical visits (the more visits, the lower the risk); meconium staining in the amniotic fluid; and breech position at birth. There might be a positive correlation between mother’s smoking and an at-risk birth, but the data doesn’t indicate it definitively. None of the other variables show a strong relationship to an at-risk birth
+Это последнее значение, называемое p-значением или значимостью, указывает нам, следует ли доверять оценочному значению коэффициента. Стандартное эмпирическое правило состоит в том, что коэффициенты с p-значениями менее 0,05 являются надежными, хотя некоторые исследователи предпочитают более строгие пороговые значения. По данным о рождении мы можем видеть из сводки коэффициентов, что преждевременные роды и рождение тройни являются сильными предикторами новорожденных, нуждающихся в дополнительной медицинской помощи: величины коэффициентов не являются ни пренебрежимо малыми, а значения р указывают на значимость.
 
+Другими переменными, которые влияют на результат, являются вес матери (высокий вес указывают на более высокий риск, что несколько неожиданно); Число медицинских осмотров в пренатальном периоде (чем больше посещений, тем ниже риск); Окрашивание мекония в амниотической жидкости; И положение головы ребенка при рождении. Так же может быть положительная корреляция между курением матери и рождением в группе риска, но данные не указывают на это окончательно. Ни у одной из других переменных нет четкой связи с рождением в группе риска
 
-Deviance is again a measure of how well the model fits the data. It is 2 times the negative log likelihood of the dataset, given the model. If you think of deviance as analogous to variance, then the null deviance is similar to the variance of the data around the average rate of positive examples. The residual deviance is similar to the variance of the data around the model. We can calculate the deviances for both the training and test sets.
+Девиантность(девиация) тут тоже является показателем того, насколько хорошо модель соответствует данным. Она равна 2-м отрицательным логарифмическим вероятностям для набора данных, учитывая модель. Если вы думаете о девиантности как об аналоге дисперсии, то нулевая девиантность аналогична дисперсии данных с приблизительно  средним уровнеи положительных примеров. Девиантность отклонений аналогично приблизительной дисперсии данных  модели. Мы можем рассчитать девиантнность как для тренировочных, так и для тестовых наборов.
 
 ```{r}
 loglikelihood <- function(y, py) {
@@ -378,9 +376,9 @@ resid.dev.test
 ```
 
 
-The first thing we can do with the null and residual deviances is check whether the model’s probability predictions are better than just guessing the average rate of positives, statistically speaking. In other words, is the reduction in deviance from the model meaningful, or just something that was observed by chance? This is similar to calculating the F-test statistics that are reported for linear regression. In the case of logistic regression, the test you’ll run is the chi-squared test. To do that, you need to know the degrees of freedom for the null model and the actual model (which are reported in the summary). The degrees of freedom of the null model is the number of data points minus 1: df.null = dim(train)[[1]] - 1. The degrees of freedom of the model that you fit is the number of data points minus the number of coefficients in the model: df.model = dim(train)[[1]] - length(model$coefficients).
+Первое, что мы можем сделать с нулевыми и остаточными отклонениями, - это проверить, являются ли предсказания вероятности модели лучше, чем просто угадывать среднюю скорость срабатываний статистически. Другими словами, является ли уменьшение отклонения от модели значимым или просто то, что наблюдалось случайно? Это похоже на вычисление статистики F-теста, которая сообщается для линейной регрессии. В случае логистической регрессии тест, который вы запустите, - это тест хи-квадрат. Чтобы сделать это, вам нужно знать степени свободы для нулевой модели и фактической модели (о которых сообщается в резюме). Степени свободы нулевой модели - это количество точек данных минус 1: df.null = dim (train) [[1]] - 1. Степени свободы модели, которую вы подгоните, - это количество точек данных минус Число коэффициентов в модели: df.model = dim (train) [[1]] - length(model$coefficients).
 
-If the number of data points in the training set is large, and df.null - df.model is small, then the probability of the difference in deviances null.dev - resid.dev being as large as we observed is approximately distributed as a chi-squared distribution with df.null - df.model degrees of freedom.
+Если количество точек данных в обучающем наборе велико, а df.null - df.model мало, то вероятность разницы в отклонениях null.dev - resid.dev, будучи такой большой, как мы наблюдали, приблизительно распределяется как хи-квадрат со степенями свободы df.null - df.model.
 
 ```{r}
 
@@ -400,8 +398,8 @@ deldf
 p
 ```
 
+Полезным критерием пригодности, основанным на отклонениях, является псевдо-R-квадрат: 1 - (dev.model / dev.null). Псевдо R-квадрат является аналогом R-квадрата для линейной регрессии. Это показатель того, насколько отклонение «объясняется» моделью. В идеальном случае вы хотите, чтобы псевдо-R-квадрат был близок к 1. Рассчитаем псевдо-R-квадрат как для тестовых, так и для обучающих данных.
 
-A useful goodness of fit measure based on the deviances is the pseudo R-squared: 1 - (dev.model/dev.null). The pseudo R-squared is the analog to the R-squared measure for linear regression. It’s a measure of how much of the deviance is “explained” by the model. Ideally, you want the pseudo R-squared to be close to 1. Let’s calculate the pseudo-R-squared for both the test and training data.
 
 ```{r}
 pr2 <- 1-(resid.dev/null.dev)
@@ -409,36 +407,37 @@ pr2.test <- 1-(resid.dev.test/null.dev.test)
 print(pr2.test)
 ```
 
-The model only explains about 7.7–8.7% of the deviance; it’s not a highly predictive model (you should have suspected that already, from figure 7.9). This tells us that we haven’t yet identified all the factors that actually predict at-risk births.
+Модель объясняет только 7,7-8,7% отклонения; Это не очень прогностическая модель (вам следовало бы заподозрить это уже на рисунке 7.9). Это говорит нам о том, что мы еще не определили все факторы, которые фактически предсказывают рождение детей с повышенным риском.
 
-The model only explains about 7.7–8.7% of the deviance; it’s not a highly predictive model (you should have suspected that already, from figure 7.9). This tells us that we haven’t yet identified all the factors that actually predict at-risk births. The Fisher scoring method is an iterative optimization method similar to Newton’s method that glm() uses to find the best coefficients for the logistic regression model. You should expect it to converge in about six to eight iterations. If there are more iterations than that, then the algorithm may not have converged, and the model may not be valid.
+Модель объясняет только 7,7-8,7% отклонения; Это не очень хорошая прогностическая модель (вам следовало бы заподозрить это уже на пред рисунке). Это говорит нам о том, что мы еще не определили все факторы, которые фактически предсказывают рождение детей с повышенным риском. Метод оценки Фишера представляет собой метод итеративной оптимизации, аналогичный методу Ньютона, который использует glm() для нахождения наилучших коэффициентов для модели логистической регрессии. Вы должны ожидать, что он сходится примерно через шесть-восемь итераций. Если итераций больше, чем это, тогда алгоритм может не совпадать, и модель может оказаться недействительной.
 
-### Separation and quasi-separation
-The probable reason for nonconvergence is separation or quasi-separation: one of the model variables or some combination of the model variables predicts the outcome perfectly for at least a subset of the training data. You’d think this would be a good thing, but ironically logistic regression fails when the variables are too powerful. Ideally, glm() will issue a warning when it detects separation or quasi-separation:
+### Разделение и квази-разделение
+
+Вероятной причиной несведение является разделение или квази-разделение: одна из переменных модели или некоторая комбинация переменных модели предсказывает исход отлично, по крайней мере,на подмножестве обучающих данных. Вы могли бы подумать, что это хорошо, но по иронии судьбы логистическая регрессия терпит неудачу, когда переменные слишком хороши в предсказании. В идеале glm() выдаст предупреждение, когда обнаружит разделение или квази-разделение:
+
 ```{}
 Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred
 ```
-Unfortunately, there are situations when it seems that no warning is issued, but there are other warning signs:
-
-* An unusually high number of Fisher iterations
-* Very large coefficients, usually with extremely large standard errors
-* Residual deviances larger than the null deviances
 
-If you see any of these signs, the model is suspect. To try to fix the problem, remove any variables with unusually large coefficients; they’re probably causing the separation.
-You can try using a decision tree on the variables that you remove to detect regions of perfect prediction. The data that the decision tree doesn’t predict perfectly on can still be used for building a logistic regression model. The overall model would then be a hybrid: the decision tree to predict the too-good data, and a logistic regression model for the rest.
+К сожалению, есть ситуации, когда кажется, что никаких предупреждений не выдается, но есть и другие предупреждающие знаки:
 
+* Необычно большое количество итераций Фишера
+* Очень большие коэффициенты, как правило, с чрезвычайно большими стандартными ошибками
+* Остаточные отклонения, превышающие нулевые отклонения
 
+Если вы видите какой-либо из этих признаков, модель подозрительна. Чтобы попытаться решить проблему, удалите все переменные с необычно большими коэффициентами; Они, вероятно, вызывают разделение.
 
 
-What you should remember about logistic regression:
 
-* Logistic regression is the go-to statistical modeling method for binary classification.
-* Try logistic regression first, and then more complicated methods if logistic regression doesn’t perform well.
-* Logistic regression will have trouble with problems with a very large number of variables, or categorical variables with a very large number of levels.
-* Logistic regression is well calibrated: it reproduces the marginal probabilities of the data.
-* Logistic regression can predict well even in the presence of correlated variables, but correlated variables lower the quality of the advice.
-* Overly large coefficient magnitudes, overly large standard errors on the coefficient estimates, and the wrong sign on a coefficient could be indications of correlated inputs.
-* Too many Fisher iterations, or overly large coefficients with very large standard errors, could be signs that an input or combination of inputs is perfectly correlated with a subset of your responses. You may have to segment the data to deal with this issue.
-* glm() provides good diagnostics, but rechecking your model on test data is still your most effective diagnostic.
-* Pseudo R-squared is a useful goodness-of-fit heuristic.
+###Что вы должны помнить о логистической регрессии:
+
+* Логистическая регрессия - это метод статистического моделирования для двоичной классификации.
+* Сначала попробуйте логистическую регрессию, а затем более сложные методы, если логистическая регрессия не работает достаточно хорошо.
+* Логистическая регрессия будет иметь проблемы с проектами с очень большим числом переменных или категориальными переменными с очень большим количеством уровней.
+* Логистическая регрессия хорошо откалибрована: она воспроизводит предельные вероятности данных.
+* Логистическая регрессия может хорошо прогнозировать даже при наличии коррелированных переменных, но коррелированные переменные понижают качество предсказания.
+* Чрезмерно большие значения коэффициентов, слишком большие стандартные ошибки в оценках коэффициента и неправильный знак коэффициента могут быть показателями коррелированных входных данных.
+* Слишком много итераций Фишера или слишком большие коэффициенты с очень большими стандартными ошибками могут быть признаками того, что вход или комбинация входов отлично коррелирует с  вашей зависимой переменной. Вам может потребоваться сегментировать данные для решения этой проблемы.
+* gl () обеспечивает хороший набор  диагностик, но повторная проверка вашей модели на тестовых данных по-прежнему является наиболее эффективным способом проверки качества.
+* Pseudo R-squared - полезная эвристика добротности
 
