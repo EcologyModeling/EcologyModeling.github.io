@@ -157,6 +157,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
     <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
     <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
+    <a id="nav-lesson-5" href="Part-5-topic-1.html">Дополнительные методы</a>
 
     <!--<a id="nav-lesson-5" href="lesson-5.html">Multiple regression modelling</a>
         <a id="nav-lesson-5" href="lesson-5.html">Всякое новое</a>
@@ -211,10 +212,10 @@ testing &lt;- PID[-train,]
 ## Classification tree:
 ## tree(formula = diabetes ~ ., data = training)
 ## Variables actually used in tree construction:
-## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;mass&quot;     &quot;pedigree&quot; &quot;insulin&quot; 
-## Number of terminal nodes:  15 
-## Residual mean deviance:  0.7882 = 472.1 / 599 
-## Misclassification error rate: 0.1743 = 107 / 614</code></pre>
+## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;triceps&quot;  &quot;pressure&quot; &quot;mass&quot;     &quot;pedigree&quot;
+## Number of terminal nodes:  13 
+## Residual mean deviance:  0.8556 = 514.2 / 601 
+## Misclassification error rate: 0.1889 = 116 / 614</code></pre>
 <pre class="r"><code>plot(our.big.tree)
 text(our.big.tree)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
@@ -232,7 +233,7 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <pre class="r"><code> # let&#39;s test its accuracy
  pruned.preds &lt;- predict(pruned.tree, newdata=testing, type=&quot;class&quot;)
  accuracy(pruned.preds, testing[,9])</code></pre>
-<pre><code>## [1] 0.8051948</code></pre>
+<pre><code>## [1] 0.7662338</code></pre>
 <p>Rad! A tree so simple it can be easily memorized by medical personnel and achieves the same testing-set accuracy as the unwieldy tree in figure 9.8: 71%! Now the accuracy rate, by itself, is nothing to write home about, particularly because the naïve classifier achieves a 65% accuracy rate. Nevertheless, the fact that a significantly better classifier can be built from two simple rules—closely following the logic physicians employ, anyway—is where decision trees have a huge leg up relative to other techniques. Further, we could have bumped up this accuracy rate with more samples and more careful hyper-parameter tuning.</p>
 </div>
 <div id="random-forest" class="section level3">
@@ -311,7 +312,15 @@ name=&quot;bagging, test&quot;)</code></pre>
 <div id="using-random-forests-to-further-improve-prediction" class="section level4">
 <h4>Using random forests to further improve prediction</h4>
 <p>In bagging, the trees are built using randomized datasets, but each tree is built by considering the exact same set of features. This means that all the individual trees are likely to use very similar sets of features (perhaps in a different order or with different split values). Hence, the individual trees will tend to be overly correlated with each other. If there are regions in feature space where one tree tends to make mistakes, then all the trees are likely to make mistakes there, too, diminishing our opportunity for correction. The random forest approach tries to de-correlate the trees by randomizing the set of variables that each tree is allowed to use. For each individual tree in the ensemble, the random forest method does the following:</p>
-<p>1 Draws a bootstrapped sample from the training data 2 For each sample, grows a decision tree, and at each node of the tree * Randomly draws a subset of mtry variables from the p total features that are available * Picks the best variable and the best split from that set of mtry variables * Continues until the tree is fully grown</p>
+<ol style="list-style-type: decimal">
+<li>Draws a bootstrapped sample from the training data</li>
+<li>For each sample, grows a decision tree, and at each node of the tree</li>
+</ol>
+<ul>
+<li>Randomly draws a subset of mtry variables from the p total features that are available</li>
+<li>Picks the best variable and the best split from that set of mtry variables</li>
+<li>Continues until the tree is fully grown</li>
+</ul>
 <p>The final ensemble of trees is then bagged to make the random forest predictions. This is quite involved, but fortunately all done by a single-line random forest call.</p>
 <p>By default, the randomForest() function in R draws mtry = p/3 variables at each node for regression trees and m = sqrt(p) variables for classification trees. In theory, random forests aren’t terribly sensitive to the value of mtry. Smaller values will grow the trees faster; but if you have a very large number of variables to choose from, of which only a small fraction are actually useful, then using a larger mtry is better, since with a larger mtry you’re more likely to draw some useful variables at every step of the tree-growing procedure. Continuing from the data in section 9.1, let’s build a spam model using random forests.</p>
 <pre class="r"><code>library(randomForest)</code></pre>
@@ -383,7 +392,8 @@ spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre
 </div>
 <div id="bagging-and-random-forest-takeaways" class="section level4">
 <h4>Bagging and random forest takeaways</h4>
-<p>Here’s what you should remember about bagging and random forests: <em> Bagging stabilizes decision trees and improves accuracy by reducing variance. </em> Bagging reduces generalization error. <em> Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble. </em> Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model. <em> Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance. </em> Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.</p>
+<p>Here’s what you should remember about bagging and random forests:</p>
+<p><em> Bagging stabilizes decision trees and improves accuracy by reducing variance. </em> Bagging reduces generalization error. <em> Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble. </em> Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model. <em> Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance. </em> Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.</p>
 </div>
 </div>
 

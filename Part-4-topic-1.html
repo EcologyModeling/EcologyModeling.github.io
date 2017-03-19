@@ -157,6 +157,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
     <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
     <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
+    <a id="nav-lesson-5" href="Part-5-topic-1.html">Дополнительные методы</a>
 
     <!--<a id="nav-lesson-5" href="lesson-5.html">Multiple regression modelling</a>
         <a id="nav-lesson-5" href="lesson-5.html">Всякое новое</a>
@@ -276,9 +277,14 @@ describe(PE)</code></pre>
 <p>Загрузим данные по исследванию последствий сотрясение головного мозга, вызвынных связанными со спортом травмами, которое включает в себя данные опроса как контрольной группоы, так и группы спортсменов, которые пострадали от сотрясения.</p>
 <pre class="r"><code>impact=read.csv(&quot;https://dl.dropboxusercontent.com/s/7ubjig9z5hmv858/impact.csv?dl=0&quot;)
 describe(impact)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
 <pre><code>##            vars  n  mean    sd median trimmed   mad   min   max range
 ## subject       1 40 20.50 11.69  20.50   20.50 14.83  1.00 40.00 39.00
-## condition*    2 40  1.50  0.51   1.50    1.50  0.74  1.00  2.00  1.00
+## condition*    2 40   NaN    NA     NA     NaN    NA   Inf  -Inf  -Inf
 ## vermem1       3 40 89.75  6.44  91.00   90.44  6.67 75.00 98.00 23.00
 ## vismem1       4 40 74.88  8.60  75.00   74.97  9.64 59.00 91.00 32.00
 ## vms1          5 40 34.03  3.90  33.50   34.02  3.62 26.29 41.87 15.58
@@ -293,7 +299,7 @@ describe(impact)</code></pre>
 ## sym2         14 40 13.88 15.32   7.00   12.38 10.38  0.00 43.00 43.00
 ##             skew kurtosis   se
 ## subject     0.00    -1.29 1.85
-## condition*  0.00    -2.05 0.08
+## condition*    NA       NA   NA
 ## vermem1    -0.70    -0.51 1.02
 ## vismem1    -0.11    -0.96 1.36
 ## vms1        0.08    -0.75 0.62
@@ -310,10 +316,20 @@ describe(impact)</code></pre>
 <pre class="r"><code>entirecorr &lt;- round(cor(impact$vismem2,impact$vermem2),2)</code></pre>
 <p>С помощью команды describeBy из пакета psych посомтрим описательные статистики для переменных данной таблицы, сгруппированные по категориям переменной condition - состояние опрошенных. Т.е. посмотрим описательные статистики для контрольной и целевой группы.</p>
 <pre class="r"><code>describeBy(impact, impact$condition)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
 <pre><code>## $concussed
 ##            vars  n  mean    sd median trimmed   mad   min   max range
 ## subject       1 20 30.50  5.92  30.50   30.50  7.41 21.00 40.00 19.00
-## condition*    2 20  1.00  0.00   1.00    1.00  0.00  1.00  1.00  0.00
+## condition*    2 20   NaN    NA     NA     NaN    NA   Inf  -Inf  -Inf
 ## vermem1       3 20 89.65  7.17  92.50   90.56  5.93 75.00 97.00 22.00
 ## vismem1       4 20 74.75  8.03  74.00   74.25  8.15 63.00 91.00 28.00
 ## vms1          5 20 33.20  3.62  33.09   33.27  3.32 26.29 39.18 12.89
@@ -328,7 +344,7 @@ describe(impact)</code></pre>
 ## sym2         14 20 27.65  9.07  27.00   27.75 11.12 13.00 43.00 30.00
 ##             skew kurtosis   se
 ## subject     0.00    -1.38 1.32
-## condition*   NaN      NaN 0.00
+## condition*    NA       NA   NA
 ## vermem1    -0.79    -0.70 1.60
 ## vismem1     0.45    -0.72 1.80
 ## vms1       -0.13    -0.78 0.81
@@ -345,7 +361,7 @@ describe(impact)</code></pre>
 ## $control
 ##            vars  n  mean   sd median trimmed  mad   min   max range  skew
 ## subject       1 20 10.50 5.92  10.50   10.50 7.41  1.00 20.00 19.00  0.00
-## condition*    2 20  2.00 0.00   2.00    2.00 0.00  2.00  2.00  0.00   NaN
+## condition*    2 20   NaN   NA     NA     NaN   NA   Inf  -Inf  -Inf    NA
 ## vermem1       3 20 89.85 5.82  90.00   90.31 7.41 78.00 98.00 20.00 -0.41
 ## vismem1       4 20 75.00 9.34  77.00   75.50 9.64 59.00 88.00 29.00 -0.46
 ## vms1          5 20 34.86 4.09  34.39   34.85 4.92 27.36 41.87 14.51  0.09
@@ -360,7 +376,7 @@ describe(impact)</code></pre>
 ## sym2         14 20  0.10 0.31   0.00    0.00 0.00  0.00  1.00  1.00  2.47
 ##            kurtosis   se
 ## subject       -1.38 1.32
-## condition*      NaN 0.00
+## condition*       NA   NA
 ## vermem1       -0.87 1.30
 ## vismem1       -1.27 2.09
 ## vms1          -1.19 0.91
@@ -402,11 +418,6 @@ c(mean(y), sd(y)) # среднее значение и станд. отклон�
 ## data:  y
 ## W = 0.98263, p-value = 0.2121</code></pre>
 <pre class="r"><code>library(ggplot2) # графическое изображение распределения данных</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ggplot2&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:psych&#39;:
-## 
-##     %+%, alpha</code></pre>
 <pre class="r"><code>ggplot(data = data.frame(y), aes(x = y)) + geom_histogram() +
 ylab(&quot;Частота&quot;) + xlab(&quot;Давление, мм рт. ст.&quot;)</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -443,17 +454,6 @@ summary(y.lm)</code></pre>
 ## Residual standard error: 16.96 on 99 degrees of freedom</code></pre>
 <p>Как следует из приведенных результатов, свободный член подогнанной модели (Intercept) в точности совпадает со средним значением данных (135.16 мм рт. ст.), а стандартное отклонение остатков модели (Residual standard error) совпадает со стандартным отклонением этих данных (16.96 мм рт. ст.). Важно, однако, что мы при этом вычислили также оценку стандартной ошибки среднего значения, равную 1.696 (см. столбец Std. Error на пересечении со строкой (Intercept)). По определению, стандартная ошибка параметра – это стандартное отклонение <span class="math display">\[нормального\]</span> распределения значений этого параметра, рассчитанных по выборкам одинакового размера из той же генеральной совокупности. Мы можем использовать это обстоятельство для учета неопределенности в отношении точечных оценок параметров модели при порождении новых данных. Так, зная выборочные оценки параметров и их стандартные ошибки, мы можем: а) сгенерировать несколько возможных значений этих параметров (т.е. составить несколько реализаций той же модели, варьируя значения параметров) и б) сгенерировать новые данные на основе каждой из этих альтернативных реализаций модели.</p>
 <pre class="r"><code>library(arm)</code></pre>
-<pre><code>## Loading required package: MASS</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## Loading required package: lme4</code></pre>
-<pre><code>## 
-## arm (Version 1.9-3, built: 2016-11-21)</code></pre>
-<pre><code>## Working directory is E:/YandexDisk/Jobs/EDDY/Environmental Modelling/Modelling site/EcologyModeling.github.io</code></pre>
-<pre><code>## 
-## Attaching package: &#39;arm&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:psych&#39;:
-## 
-##     logit, rescale, sim</code></pre>
 <pre class="r"><code>set.seed(102) # для воспроизводимости результата
 y.sim &lt;- sim(y.lm, 5)</code></pre>
 <p>y.sim - объект класса S4, который содержит слоты coef (коэффициенты модели) и sigma (станд. отклонения остатков модели):</p>
@@ -540,17 +540,6 @@ y &lt;- rnorm(100, mean = 97.078 + 0.949*x, 9.563)</code></pre>
 <h2>Линейная регрессия. Практика</h2>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:MASS&#39;:
-## 
-##     select</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>options(stringsAsFactors = FALSE)</code></pre>
 <p>Загрузим данные сравнения достатка и роста человека и ряда других демографических характеристик от 1379 человек, которые были собранны в 1994 году. Это симулированные данные, основанные на реальных данных, собранных Гельманом и Хиллом.</p>
 <pre class="r"><code>wages &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/s/oq4dc134y8xdyce/wages.csv?dl=0&quot;)

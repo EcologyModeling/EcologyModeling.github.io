@@ -159,8 +159,8 @@ As you see, bagging improves accuracy and F1, and reduces deviance over both the
 In bagging, the trees are built using randomized datasets, but each tree is built by considering the exact same set of features. This means that all the individual trees are likely to use very similar sets of features (perhaps in a different order or with different split values). Hence, the individual trees will tend to be overly correlated with each other. If there are regions in feature space where one tree tends to make mistakes, then all the trees are likely to make mistakes there, too, diminishing our opportunity for correction. The random forest approach tries to de-correlate the trees by randomizing
 the set of variables that each tree is allowed to use. For each individual tree in the ensemble, the random forest method does the following:
 
-1 Draws a bootstrapped sample from the training data
-2 For each sample, grows a decision tree, and at each node of the tree
+1. Draws a bootstrapped sample from the training data
+2. For each sample, grows a decision tree, and at each node of the tree
   * Randomly draws a subset of mtry variables from the p total features that are available
   * Picks the best variable and the best split from that set of mtry variables
   * Continues until the tree is fully grown
@@ -221,9 +221,11 @@ The smaller model performs just as well as the random forest model built using a
 ####Bagging and random forest takeaways
 
 Here’s what you should remember about bagging and random forests:
+
 * Bagging stabilizes decision trees and improves accuracy by reducing variance.
 * Bagging reduces generalization error.
 * Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble.
 * Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model.
 * Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance.
 * Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.
+

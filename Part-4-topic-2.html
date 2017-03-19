@@ -157,6 +157,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
     <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
     <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
+    <a id="nav-lesson-5" href="Part-5-topic-1.html">Дополнительные методы</a>
 
     <!--<a id="nav-lesson-5" href="lesson-5.html">Multiple regression modelling</a>
         <a id="nav-lesson-5" href="lesson-5.html">Всякое новое</a>
@@ -612,7 +613,7 @@ print(pr2.test)</code></pre>
 <div id="---" class="section level3">
 <h3>Разделение и квази-разделение</h3>
 <p>Вероятной причиной несведение является разделение или квази-разделение: одна из переменных модели или некоторая комбинация переменных модели предсказывает исход отлично, по крайней мере,на подмножестве обучающих данных. Вы могли бы подумать, что это хорошо, но по иронии судьбы логистическая регрессия терпит неудачу, когда переменные слишком хороши в предсказании. В идеале glm() выдаст предупреждение, когда обнаружит разделение или квази-разделение:</p>
-<pre><code>Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<p>Warning message: glm.fit: fitted probabilities numerically 0 or 1 occurred</p>
 <p>К сожалению, есть ситуации, когда кажется, что никаких предупреждений не выдается, но есть и другие предупреждающие знаки:</p>
 <ul>
 <li>Необычно большое количество итераций Фишера</li>
