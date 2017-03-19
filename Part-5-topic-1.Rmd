@@ -1,0 +1,229 @@
+---
+title: "Рандомизация, бутстреп и все-все-все"
+output:
+  html_document:
+    highlight: textmate
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+---
+
+###Decision trees
+
+We now move on to one of the easily interpretable and most popular classifiers there are out there: the decision tree. Decision trees—which look like an upside
+down tree with the trunk on top and the leaves on the bottom—play an important role in situations where classification decisions have to be transparent and easily understood and explained. It also handles both continuous and categorical predictors, outliers, and irrelevant predictors rather gracefully. Finally, the general ideas behind the algorithms that create decision trees are quite intuitive, though the details can sometimes get hairy.
+
+This is a rather simple decision tree with only three leaves (terminal nodes) and two decision points. Note that the first decision point is (a) on a binary categorical variable, and (b) results in one terminal node, motorcycle. The other branch contains the other decision point, a continuous variable with a split point. This split point was chosen carefully by the decision tree-creating algorithm to result in the most informative split—the one that best classifies the rest of the observations as measured by the misclassification rate of the training data
+
+Actually, in most cases, the decision tree-creating algorithm doesn't choose a split that results in the lowest misclassification rate of the
+training data, but chooses on that which minimizes either the Gini coefficient or cross entropy of the remaining training observations. The reasons for this are two-fold: (a) both the Gini coefficient and cross entropy have mathematical properties that make them more easily amendable to numerical optimization, and (b) it generally results in a final tree with less bias.
+
+The overall idea of the decision tree-growing algorithm, recursive splitting, is simple:
+1. Step 1: Choose a variable and split point that results in the best classification outcomes.
+2. Step 2: For each of the resulting branches, check to see if some stopping criteria is met. If so, leave it alone. If not, move on to next step.
+3. Step 3: Repeat Step 1 on the branches that do not meet the stopping criteria.
+
+The stopping criterion is usually either a certain depth, which the tree cannot grow past, or a minimum number of observations, for which a leaf node cannot further classify. Both of these are hyper-parameters (also called tuning parameters) of the decision tree algorithm—just like the k in k-NN—and must be fiddled with in order to achieve the best possible decision tree for classifying an independent dataset. A decision tree, if not kept in check, can grossly overfit the data—returning an enormous and complicated tree with a minimum leaf node size of 1—resulting in a nearly bias-less classification mechanism with prodigious variance. To prevent this, either the tuning parameters must be chosen carefully or a huge tree can be built and cut down to size afterward. The latter technique is generally preferred and is, quite appropriately, called pruning. The most common pruning technique is called cost complexity pruning, where complex parts of the tree that provide little in the way of classification power, as measured by improvement of the final misclassification rate,
+are cut down and removed.
+Enough theory—let's get started! First, we'll grow a full tree using the PID dataset and plot the result:
+
+```{r}
+library(mlbench)
+library(tree)
+
+data(PimaIndiansDiabetes)
+PID <- PimaIndiansDiabetes
+
+accuracy <- function(predictions, answers){sum((predictions==answers)/(length(answers)))}
+
+ntrain <- round(nrow(PID)*4/5)
+train <- sample(1:nrow(PID), ntrain)
+training <- PID[train,]
+testing <- PID[-train,]
+
+
+
+ our.big.tree <- tree(diabetes ~ ., data=training)
+ summary(our.big.tree)
+plot(our.big.tree)
+text(our.big.tree)
+```
+
+The power of a decision tree—which is usually not competitive with other classification mechanisms, accuracy-wise—is that the representation of the decision
+rules are transparent, easy to visualize, and easy to explain. This tree is rather large and unwieldy, which hinders its ability to be understood (or memorized) at a glance. Additionally, for all its complexity, it only achieves an 81% accuracy rate on the training data (as reported by the summary function). We can (and will) do better! Next, we will be investigating the optimal size of the tree employing cross-validation, using the cv.tree function.
+
+
+```{r}
+set.seed(3)
+cv.results <- cv.tree(our.big.tree, FUN=prune.misclass)
+plot(cv.results$size, cv.results$dev, type="b")
+```
+
+In the preceding code, we are telling the cv.tree function that we want to prune our tree using the misclassification rate as our objective metric. Then, we are plotting the CV error rate (dev) and a function of tree size (size).
+
+As you can see from the output (shown in Figure 9.9), the optimal size (number of terminal nodes) of the tree seems to be five. However, a tree of size three is not terribly less performant than a tree of size five; so, for ease of visualization, interpretation, and memorization, we will be using a final tree with three terminal nodes. To actually perform the pruning, we will be using the prune.misclass function, which takes the size of the tree as an argument.
+
+```{r}
+pruned.tree <- prune.misclass(our.big.tree, best=3)
+ plot(pruned.tree)
+ text(pruned.tree)
+ # let's test its accuracy
+ pruned.preds <- predict(pruned.tree, newdata=testing, type="class")
+ accuracy(pruned.preds, testing[,9])
+```
+
+Rad! A tree so simple it can be easily memorized by medical personnel and achieves the same testing-set accuracy as the unwieldy tree in figure 9.8: 71%! Now the accuracy rate, by itself, is nothing to write home about, particularly because the naïve classifier achieves a 65% accuracy rate. Nevertheless, the fact that a significantly better classifier can be built from two simple rules—closely following the logic physicians employ, anyway—is where decision trees have a huge leg up relative to other techniques. Further, we could have bumped up this accuracy rate with more samples and more careful hyper-parameter tuning.
+
+###Random forest
+
+One way to mitigate the shortcomings of decision tree models is by bootstrap aggregation, or bagging. In bagging, you draw bootstrap samples (random samples with replacement) from your data. From each sample, you build a decision tree model. The final model is the average of all the individual decision trees.2 To make this concrete, suppose that x is an input datum, y_i(x) is the output of the ith tree, c(y_1(x), y_2(x), ... y_n(x)) is the vector of individual outputs, and y is the output of the final model:
+
+* For regression, or for estimating class probabilities, y(x) is the average of the scores returned by the individual trees: y(x) = mean(c(y_1(x), ... y_n(x))).
+* For classification, the final model assigns the class that got the most votes from the individual trees.
+
+Bagging decision trees stabilizes the final model by lowering the variance; this improves the accuracy. A bagged ensemble of trees is also less likely to overfit the data.
+
+####Bagging classifiers
+
+The proofs that bagging reduces variance are only valid for regression and for estimating class probabilities, not for classifiers (a model that only returns class membership, not class probabilities). Bagging a bad classifier can make it worse. So you definitely want to work over estimated class probabilities, if they’re at all available. But it can be shown that for CART trees (which is the decision tree implementation in R) under mild assumptions, bagging tends to increase classifier accuracy.
+
+The Spambase dataset (also used in chapter 5) provides a good example of the bagging technique. The dataset consists of about 4,600 documents and 57 features that describe the frequency of certain key words and characters. First we’ll train a decision tree to estimate the probability that a given document is spam, and then we’ll evaluate the tree’s deviance (which you’ll recall from discussions in chapters 5 and 7 is similar to variance) and its prediction accuracy.
+
+We’ll write a few convenience functions and train a decision tree, as in the following listing.
+
+```{r}
+spamD <- read.table('https://raw.githubusercontent.com/WinVector/zmPDSwR/master/Spambase/spamD.tsv',header=T,sep='\t')
+spamTrain <- subset(spamD,spamD$rgroup>=10)
+spamTest <- subset(spamD,spamD$rgroup<10)
+spamVars <- setdiff(colnames(spamD),list('rgroup','spam'))
+spamFormula <- as.formula(paste('spam=="spam"',
+paste(spamVars,collapse=' + '),sep=' ~ '))
+loglikelihood <- function(y, py) {
+pysmooth <- ifelse(py==0, 1e-12,
+ifelse(py==1, 1-1e-12, py))
+sum(y * log(pysmooth) + (1-y)*log(1 - pysmooth))
+}
+accuracyMeasures <- function(pred, truth, name="model") {
+dev.norm <- -2*loglikelihood(as.numeric(truth), pred)/length(pred)
+ctable <- table(truth=truth,
+pred=(pred>0.5))
+accuracy <- sum(diag(ctable))/sum(ctable)
+precision <- ctable[2,2]/sum(ctable[,2])
+recall <- ctable[2,2]/sum(ctable[2,])
+f1 <- precision*recall
+data.frame(model=name, accuracy=accuracy, f1=f1, dev.norm)
+}
+library(rpart)
+treemodel <- rpart(spamFormula, spamTrain)
+accuracyMeasures(predict(treemodel, newdata=spamTrain),
+                 spamTrain$spam=="spam",
+name="tree, training")
+accuracyMeasures(predict(treemodel, newdata=spamTest),
+spamTest$spam=="spam",
+name="tree, test")
+```
+The output of the last two calls to accuracyMeasures() produces the following output. As expected, the accuracy and F1 scores both degrade on the test set, and the deviance increases (we want the deviance to be small):
+
+Now let’s try bagging the decision trees.
+
+```{r}
+ntrain <- dim(spamTrain)[1]
+n <- ntrain
+ntree <- 100
+samples <- sapply(1:ntree,
+FUN = function(iter)
+{sample(1:ntrain, size=n, replace=T)})
+treelist <-lapply(1:ntree,
+FUN=function(iter)
+{samp <- samples[,iter];
+rpart(spamFormula, spamTrain[samp,])})
+predict.bag <- function(treelist, newdata) {
+preds <- sapply(1:length(treelist),
+FUN=function(iter) {
+predict(treelist[[iter]], newdata=newdata)})
+predsums <- rowSums(preds)
+predsums/length(treelist)
+}
+accuracyMeasures(predict.bag(treelist, newdata=spamTrain),
+  spamTrain$spam=="spam",
+  name="bagging, training")
+accuracyMeasures(predict.bag(treelist, newdata=spamTest),spamTest$spam=="spam",
+name="bagging, test")
+```
+
+As you see, bagging improves accuracy and F1, and reduces deviance over both the training and test sets when compared to the single decision tree (we’ll see a direct comparison of the scores a little later on). The improvement is more dramatic on the test set: the bagged model has less generalization error3 than the single decision tree. We can further improve model performance by going from bagging to random forests.
+
+#### Using random forests to further improve prediction
+
+In bagging, the trees are built using randomized datasets, but each tree is built by considering the exact same set of features. This means that all the individual trees are likely to use very similar sets of features (perhaps in a different order or with different split values). Hence, the individual trees will tend to be overly correlated with each other. If there are regions in feature space where one tree tends to make mistakes, then all the trees are likely to make mistakes there, too, diminishing our opportunity for correction. The random forest approach tries to de-correlate the trees by randomizing
+the set of variables that each tree is allowed to use. For each individual tree in the ensemble, the random forest method does the following:
+
+1 Draws a bootstrapped sample from the training data
+2 For each sample, grows a decision tree, and at each node of the tree
+  * Randomly draws a subset of mtry variables from the p total features that are available
+  * Picks the best variable and the best split from that set of mtry variables
+  * Continues until the tree is fully grown
+  
+The final ensemble of trees is then bagged to make the random forest predictions. This is quite involved, but fortunately all done by a single-line random forest call.
+
+By default, the randomForest() function in R draws mtry = p/3 variables at each node for regression trees and m = sqrt(p) variables for classification trees. In theory, random forests aren’t terribly sensitive to the value of mtry. Smaller values will grow the trees faster; but if you have a very large number of variables to choose from, of which only a small fraction are actually useful, then using a larger mtry is better, since with a larger mtry you’re more likely to draw some useful variables at every step of the tree-growing procedure.
+Continuing from the data in section 9.1, let’s build a spam model using random forests.
+
+```{r}
+library(randomForest)
+set.seed(5123512)
+fmodel <- randomForest(x=spamTrain[,spamVars],
+                       y=spamTrain$spam,
+                      ntree=100,
+                      nodesize=7,
+                      importance=T)
+accuracyMeasures(predict(fmodel, newdata=spamTrain[,spamVars],type='prob')[,'spam'], spamTrain$spam=="spam",name="random forest, train")
+accuracyMeasures(predict(fmodel, newdata=spamTest[,spamVars],type='prob')[,'spam'], spamTest$spam=="spam",name="random forest, test")
+                       
+```
+
+The random forest model performed dramatically better than the other two models in both training and test. But the random forest’s generalization error was comparable to that of a single decision tree (and almost twice that of the bagged model).
+
+
+####EXAMINING VARIABLE IMPORTANCE
+
+A useful feature of the randomForest() function is its variable importance calculation. Since the algorithm uses a large number of bootstrap samples, each data point x has a corresponding set of out-of-bag samples: those samples that don’t contain the point x. The out-of-bag samples can be used is a way similar to N-fold cross validation, to estimate the accuracy of each tree in the ensemble.
+
+To estimate the “importance” of a variable v, the variable’s values are randomly permuted in the out-of-bag samples, and the corresponding decrease in each tree’s accuracy is estimated. If the average decrease over all the trees is large, then the variable is considered important—its value makes a big difference in predicting the outcome. If the average decrease is small, then the variable doesn’t make much difference to the outcome. The algorithm also measures the decrease in node purity that occurs from splitting on a permuted variable (how this variable affects the quality
+of the tree).
+
+We can calculate the variable importance by setting importance=T in the random-Forest() call, and then calling the functions importance() and varImpPlot().
+
+```{r}
+varImp <- importance(fmodel)
+varImp[1:10, ]
+varImpPlot(fmodel, type=1)
+```
+
+Knowing which variables are most important (or at least, which variables contribute the most to the structure of the underlying decision trees) can help you with variable reduction. This is useful not only for building smaller, faster trees, but for choosing variables to be used by another modeling algorithm, if that’s desired. We can reduce the number of variables in this spam example from 57 to 25 without affecting the quality of the final model.
+
+```{r}
+selVars <- names(sort(varImp[,1], decreasing=T))[1:25]
+fsel <- randomForest(x=spamTrain[,selVars],y=spamTrain$spam,
+ntree=100,
+nodesize=7,
+importance=T)
+accuracyMeasures(predict(fsel,
+newdata=spamTrain[,selVars],type='prob')[,'spam'],
+spamTrain$spam=="spam",name="RF small, train")
+accuracyMeasures(predict(fsel,
+newdata=spamTest[,selVars],type='prob')[,'spam'],
+spamTest$spam == "spam", name="RF small, test" )
+```
+The smaller model performs just as well as the random forest model built using all 57 variables.
+
+####Bagging and random forest takeaways
+
+Here’s what you should remember about bagging and random forests:
+* Bagging stabilizes decision trees and improves accuracy by reducing variance.
+* Bagging reduces generalization error.
+* Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble.
+* Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model.
+* Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance.
+* Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.
