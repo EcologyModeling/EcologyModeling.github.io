@@ -212,10 +212,10 @@ testing &lt;- PID[-train,]
 ## Classification tree:
 ## tree(formula = diabetes ~ ., data = training)
 ## Variables actually used in tree construction:
-## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;triceps&quot;  &quot;pressure&quot; &quot;mass&quot;     &quot;pedigree&quot;
-## Number of terminal nodes:  13 
-## Residual mean deviance:  0.8556 = 514.2 / 601 
-## Misclassification error rate: 0.1889 = 116 / 614</code></pre>
+## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;mass&quot;     &quot;pregnant&quot;
+## Number of terminal nodes:  9 
+## Residual mean deviance:  0.8441 = 510.7 / 605 
+## Misclassification error rate: 0.2134 = 131 / 614</code></pre>
 <pre class="r"><code>plot(our.big.tree)
 text(our.big.tree)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
@@ -233,7 +233,7 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <pre class="r"><code> # let&#39;s test its accuracy
  pruned.preds &lt;- predict(pruned.tree, newdata=testing, type=&quot;class&quot;)
  accuracy(pruned.preds, testing[,9])</code></pre>
-<pre><code>## [1] 0.7662338</code></pre>
+<pre><code>## [1] 0.6948052</code></pre>
 <p>Rad! A tree so simple it can be easily memorized by medical personnel and achieves the same testing-set accuracy as the unwieldy tree in figure 9.8: 71%! Now the accuracy rate, by itself, is nothing to write home about, particularly because the naïve classifier achieves a 65% accuracy rate. Nevertheless, the fact that a significantly better classifier can be built from two simple rules—closely following the logic physicians employ, anyway—is where decision trees have a huge leg up relative to other techniques. Further, we could have bumped up this accuracy rate with more samples and more careful hyper-parameter tuning.</p>
 </div>
 <div id="random-forest" class="section level3">
@@ -394,6 +394,161 @@ spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre
 <h4>Bagging and random forest takeaways</h4>
 <p>Here’s what you should remember about bagging and random forests:</p>
 <p><em> Bagging stabilizes decision trees and improves accuracy by reducing variance. </em> Bagging reduces generalization error. <em> Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble. </em> Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model. <em> Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance. </em> Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.</p>
+</div>
+</div>
+<div id="-" class="section level2">
+<h2>Методы геостатистики</h2>
+<p>Пойма долины реки Геул, расположенной на юге Нидерландов, сильно загрязнена тяжелыми металлами. Из-за развития в прошлом металлодобывающей промышленности произошло загрязнение аллювиальных почв свинцом, цинком и кадмием. Каждый раз, когда река затапливала долину, на речных берегах откладывались загрязненные отложения. Загрязняющие вещества могут затруднять использование этих земель, поэтому требуются подробные карты, где показаны зоны с высокой концентрацией тяжелых металлов.</p>
+<div class="section level4">
+<h4>Данные</h4>
+<p>Данные, которые мы будем использовать для построения карт:</p>
+<p>* geuldata.txt - файл ASCII с 100 точками, где указана концентрация свинца и географические координат точек; <em> mask_aoi_shp.xxx - это шейп- файлы, очерчивающие территорию исследования; </em> river_line.xxx - это шейп- файлы, показывающие реку Геул; <em> geul_mask.txt – файл-маска, растровая карта, очерчивающие территорию исследования; </em> geul_dem.txt - цифровая модель рельефа (ЦМР) исследуемой территории; <em> geul_slope.txt – карта уклонов местности, полученная из ЦМР; </em> river_dist.txt - растровая карта, где показано кратчайшее расстояние до реки Геул для каждой ячейки сетки.</p>
+<p>Файл-маска, очерчивающая территорию исследования или какой-либо объект - это ASCII файл, в котором закодирован растр, там указано: количество строк и столбцов, координаты первой ячейки; число, которым обозначают отсутствие данных (-9999), и сама матрица, где единицами отмечены значимые пикселы (объект), а значениями -9999 – пикселы, не относящиеся к объекту. Таким образом, можно проводить обработку объектов со сложной конфигурацией.</p>
+<p>Для работы мы будем использовать широкий список пакетов для работы с геопривязанными растрами, картами и статистическим анализом географических данных</p>
+<pre class="r"><code>## подключаем необходимые пакеты
+library(sp)</code></pre>
+<pre><code>## Warning: package &#39;sp&#39; was built under R version 3.3.3</code></pre>
+<pre class="r"><code>library(sf)</code></pre>
+<pre><code>## Warning: package &#39;sf&#39; was built under R version 3.3.3</code></pre>
+<pre><code>## Linking to GEOS 3.5.0, GDAL 2.1.1, proj.4 4.9.3</code></pre>
+<pre class="r"><code>library(rgdal)</code></pre>
+<pre><code>## Warning: package &#39;rgdal&#39; was built under R version 3.3.3</code></pre>
+<pre><code>## rgdal: version: 1.2-5, (SVN revision 648)
+##  Geospatial Data Abstraction Library extensions to R successfully loaded
+##  Loaded GDAL runtime: GDAL 2.0.1, released 2015/09/15
+##  Path to GDAL shared files: C:/RLibraries/rgdal/gdal
+##  Loaded PROJ.4 runtime: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+##  Path to PROJ.4 shared files: C:/RLibraries/rgdal/proj
+##  Linking to sp version: 1.2-4</code></pre>
+<pre class="r"><code>library(maptools)</code></pre>
+<pre><code>## Warning: package &#39;maptools&#39; was built under R version 3.3.3</code></pre>
+<pre><code>## Checking rgeos availability: TRUE</code></pre>
+<pre class="r"><code>library(gstat)</code></pre>
+<pre><code>## Warning: package &#39;gstat&#39; was built under R version 3.3.3</code></pre>
+<pre class="r"><code>library(rgeos)</code></pre>
+<pre><code>## Warning: package &#39;rgeos&#39; was built under R version 3.3.3</code></pre>
+<pre><code>## rgeos version: 0.3-22, (SVN revision 544)
+##  GEOS runtime version: 3.5.0-CAPI-1.9.0 r4084 
+##  Linking to sp version: 1.2-4 
+##  Polygon checking: TRUE</code></pre>
+<pre class="r"><code>library(MASS)</code></pre>
+<pre><code>## Warning: package &#39;MASS&#39; was built under R version 3.3.3</code></pre>
+<p>Загрузим данные с формами территории изучаемой местности:</p>
+<pre class="r"><code> geul &lt;- read.table(&quot;https://www.dropbox.com/s/q77agu5bigcwwbg/geuldata.txt?dl=1&quot;, header = TRUE)</code></pre>
+<p>Пакет sp предоставляет возможности для отображения пространственных объектов. С помощью команды coordinates(переменная) = ~x+y можно преобразовать таблицу (фрейм) в пространственные данные, указывая, что пременные x и y в таблице это координаты. Поэтому мы сможем отобразить часть данных таблицы в виде картограммы:</p>
+<pre class="r"><code>coordinates(geul) &lt;- ~x+y
+plot(geul)</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>С помощью команды spplot(пространственная переменная), состоящей из слов spatial + plot, можно отобразить разнообразные пространственные объекты. Для понимания это команды изучим ее параметры последовательно</p>
+<pre class="r"><code>spplot(geul)</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Если в таблице помимо координат есть несколько переменных, то в параметрах нужно указать, какую переменную отображать. В данном случае это необязательно. Функция spplot обладает широким рядом параметров, которые позволяют настроить большое количество отображаемых параметров картосхемы:</p>
+<pre class="r"><code>spplot(geul, zcol = &quot;pb&quot;, xlim = c(190000,192000), ylim = c(314000,316000), cex = 1.5, main = &quot;Pb data&quot;,
+key.space = list(x = 0.02, y = 0.26, corner = c(0,1)),
+scales=list(draw=TRUE))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>С помощью команд st_read пакета sf можно загружать в RStudio (считывать) шейп-файлы с полигонами и линиями. К сожалению, эта фнукция корректно работает только с локальными файлами, т.к. по сути она считывает два файла и ище подобный файл по имени данного ей файла, поэтому нам придется предварительно скачать файлы функцией download.file()</p>
+<pre class="r"><code>download.file(&quot;https://www.dropbox.com/s/67vtttr1uj7en39/mask_aoi_shp.shp?dl=1&quot;, destfile = &quot;./mask_aoi_shp.shp&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/2ry4uwbre6haqvi/river_line.shp?dl=1&quot;, destfile = &quot;./river_line.shp&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/pyi0tptksx0rpjn/mask_aoi_shp.dbf?dl=1&quot;, destfile = &quot;./mask_aoi_shp.dbf&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/zito4qcq1mtbyp3/mask_aoi_shp.prj?dl=1&quot;, destfile = &quot;./mask_aoi_shp.prj&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/9b5j4skfeu877cr/mask_aoi_shp.shx?dl=1&quot;, destfile = &quot;./mask_aoi_shp.shx&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/9q8w7dzczghvsus/river_line.shx?dl=1&quot;, destfile = &quot;./river_line.shx&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/73htull4j5u3mlr/river_line.dbf?dl=1&quot;, destfile = &quot;./iver_line.dbf&quot;, mode=&quot;wb&quot;)
+download.file(&quot;https://www.dropbox.com/s/ffo94fswywjezl9/river_line.prj?dl=1&quot;, destfile = &quot;./river_line.pr&quot;, mode=&quot;wb&quot;)
+
+
+studarea &lt;- readShapePoly(&quot;mask_aoi_shp.shp&quot;)</code></pre>
+<pre><code>## Warning: use rgdal::readOGR or sf::st_read</code></pre>
+<pre class="r"><code>riverline &lt;- readShapeLines(&quot;river_line.shp&quot;)</code></pre>
+<pre><code>## Warning: use rgdal::readOGR or sf::st_read</code></pre>
+<p>Теперь объединим на одном рисунке и полигон, показывающий изучаемую территорию, и линию реки. Для этого объединим объекты в список:</p>
+<pre class="r"><code>spplot(geul, zcol = &quot;pb&quot;, xlim = c(190000,192000), ylim = c(314000,316000), cex = 1.5, main = &quot;Pb data&quot;,
+key.space = list(x = 0.02, y = 0.26, corner = c(0,1)),
+sp.layout = list(list(&quot;sp.polygons&quot;, studarea, col= &quot;red&quot;),
+list(&quot;sp.lines&quot;, riverline, col=&quot;blue&quot;, lwd=2)),
+scales=list(draw=T))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Пакет gstat работает с переменными, определенными специальным образом. Такие переменные называются gstat objects или объекты пакета gstat. Общий вид впервые создаваемого объекта пакета gstat для одной переменной выглядит следующим образом (большая часть параметров не указана):</p>
+<p>gstat(formula, data, model = NULL)</p>
+<p>Параметр formula определяет зависимую переменную (отклик) и независимые переменные. Выбор формулы зависит от выбранного метода интерполяции. В данном случае мы будем использовать формулу для простого и ординарного кригинга вида z~1, где z – это экологическая или почвенная переменная, пространственное распределение которой нужно предсказать, а независимых переменных нет. Параметр data указывает на пространственный фрейм данных, где содержатся исходные данные: координаты точек, зависимая переменная и независимые переменные (если они есть).</p>
+<pre class="r"><code>gpb = gstat(formula = pb~1, data = geul)
+vgpb &lt;- variogram(gpb)
+vgmpb &lt;- vgm(nugget = 5000, psill = 25000, range = 400, model = &quot;Sph&quot;)
+vgmpb &lt;- fit.variogram(vgpb, vgmpb, fit.method=7)</code></pre>
+</div>
+<div id="-----" class="section level4">
+<h4>Интерполяция точечных данных методом обратных расстояний</h4>
+<p>Метод обратных расстояний или метод обратных взвешенных расстояний (IDW - Inverse Distance Weighting) предполагает, что объекты, которые находятся поблизости, более похожи, чем объекты, удаленные друг от друга; при этом каждая точка пробоотбора оказывает «локальное влияние», которое уменьшается с увеличением расстояния. При расчете значения в точке, где не было пробоотбора, используются точки, значения показателя в которых известны, при этом вес точек стремительно уменьшается как функция от расстояния. Поэтому метод носит название обратных взвешенных расстояний. Интерполяция методом обратных расстояний осуществляется с помощью функции krige из библиотеки gstat. В результате интерполяции создается, так называемый «грид-файл», где значения предсказываются в узлах регулярной сетки. В качестве параметров функции krige указывается зависимая переменная с помощью параметра formula, задаются координаты и исходные данные с помощью параметра locations и подгружается маска, где указаны границы участка, с помощью параметра newdata. Маска - это текстовый фрейм, в котором указано, сколько нужно получить строк, сколько столбцов, координаты первой точки (левого верхнего угла); число, обозначающее, что нет данных (-9999) и далее приведена матрица, где единицами отмечены точки, в которых должны быть предсказаны значения, а числом -9999 помечены точки, где значения предсказывать не нужно, так как они выходят за границы участка.</p>
+<p>Затем запускаем команду krige, позволяющую провести интерполяцию методом обратных расстояний. Значения будут предсказаны только в точках, которые помечены единицами в маске.</p>
+<pre class="r"><code>download.file(&quot;https://www.dropbox.com/s/e6yarwp4y51pdx3/geul_mask.txt?dl=1&quot;, destfile = &quot;./geul_mask.txt&quot;, mode=&quot;wb&quot;)
+mask &lt;- readGDAL(&quot;geul_mask.txt&quot;)</code></pre>
+<pre><code>## geul_mask.txt has GDAL driver AAIGrid 
+## and has 80 rows and 80 columns</code></pre>
+<pre class="r"><code>geul.idw &lt;- krige(formula = pb~1, locations = geul, newdata = mask)</code></pre>
+<pre><code>## [inverse distance weighted interpolation]</code></pre>
+<p>В фрейме geul.idw содержатся две пространственные переменные: var1.pred и var1.var. В переменной var1.pred (= prediction) содержатся предсказанные значения зависимой переменной (отклика), в данном случае содержание свинца. В переменной var1.var (= variance) должна быть указана дисперсия (квадрат ошибки) предсказания. Так как метод обратных расстояний не позволяет получить такую информацию, то в переменной var1.var указано, что значения отсутствуют. Так как в пространственном фрейме geul.idw содержатся две переменных, они и были нарисованы. Воспользуемся параметром zcol для того, чтобы на картограмме была только одна нужная переменная.</p>
+<pre class="r"><code>spplot(geul.idw, zcol = &quot;var1.pred&quot;)</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>С помощью параметра col.regions можно задавать разные палитры заливки картограммы. Например, воспользуемся палитрой «радуга» и вновь нарисуем картограмму:</p>
+<pre class="r"><code>spplot(geul.idw, zcol = &quot;var1.pred&quot;, col.regions = rainbow(15) )</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>spplot(geul.idw, zcol = &quot;var1.pred&quot;, col.regions = bpy.colors(), xlim=c(190200,191300), ylim=c(314300,315600), main=&quot;IDW Pb predictions [ppm] with river&quot;,
+sp.layout = list(&quot;sp.lines&quot;, riverline, col=&quot;lightblue&quot;, lwd=2))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+</div>
+<div id="------" class="section level4">
+<h4>Интерполяция точечных данных методом ординарного кригинга (теория)</h4>
+<p>Кригинг - ключевой метод геостатистики для анализа пространственно-распределенных данных. Он основывается на гипотезе о пространственной однородности («стационарности 2-го порядка»). Важным преимуществом кригинга является то, что предсказывается не только среднее значение экологической переменной в точке, но и ее возможный разброс. Чаще всего результаты оформляются в виде предсказанных значений и ошибки предсказания.</p>
+<p>Интерполяция методом кригинга предполагает, что пространственные изменения значений экологической переменной Z(х) в точках х в общем случае являются суммой трех компонент:</p>
+<p><span class="math display">\[Z(x)= m(x)+e(x)+ \sigma\]</span></p>
+<ul>
+<li>где m(x) - структурная (неслучайная) компонента, которая может быть описана какой-либо математической функцией;</li>
+<li>e(x) - случайная, но пространственно-коррелированная компонента. (Отклонения являются случайными, но связанными друг с другом пространственно). Предположения, которые делаются относительно данной компоненты: -среднее всех e(x)=0; - дисперсия значений e(x) и e(x+h) в любых точках x и (x+h) зависят от смещения h, то есть от расстояния между точками, но не зависят от местоположения точек;</li>
+<li>$$ - случайный шум, не связанный с общей тенденцией и не имеющий пространственной автокорреляции, называется еще остаточная ошибка.</li>
+</ul>
+<p>В зависимости от природы m(x) различают следующие виды кригинга:</p>
+<ul>
+<li>ординарный: m – неизвестная константа, то есть неизвестное постоянное среднее всех значений Z(x);</li>
+<li>простой: m – известная константа (среднее);</li>
+<li>универсальный: m – некоторая детерминистская функция, называемая трендом.</li>
+</ul>
+<p>В методе кригинга для определения неизвестного значения в некоторой точке значения исходных точек (опорных точек, точек пробоотбора), попавших в некую окрестность вокруг обрабатываемой точки, взвешиваются.</p>
+<p>В отличия метода обратных расстояний веса зависят не только от расстояния между опорной точкой и искомой, но и от пространственной структуры данных в целом (компонента e(x)).</p>
+<p>Поэтому кригинг включает 2 основные задачи:</p>
+<ol style="list-style-type: decimal">
+<li>установить пространственную структуру данных - подобрать к данным модель пространственной изменчивости (семивариограмму);</li>
+<li>провести интерполяцию, используя параметры модели семивариограммы.</li>
+</ol>
+</div>
+<div id="------" class="section level4">
+<h4>Построение семивариограммы и подбор оптимальных параметров модели</h4>
+<p>Семивариограмма (или вариограмма) - это функция, которая связывает различие в значениях опорных точек и расстояние, на которое они отстоят друг от друга. Она служит средством для исследования пространственной автокорреляции (то есть пространственных связей) между точками. По оси x откладывается расстояние между точками (в метрах, км или др.). По оси y – усредненная дисперсия разности значений в точках, находящихся на данном расстоянии. Если по оси y отложена дисперсия для разности всех пар точек, то такой график называется «вариационное облако».</p>
+<pre class="r"><code>vgpb1 = variogram(gpb, cloud=TRUE)
+plot (vgpb1)</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+<div id="-" class="section level4">
+<h4>Ординарный кригинг</h4>
+<p>Используйте команду fit.variogram для того, чтобы подобрать оптимальные параметры семивариограммы. Интерполяцию методом ординарного кригинга можно провести с помощью функции krige из библиотеки gstat. Одним из аргументов является, как уже отмечалось ранее, newdata, где вы определяете пространственные границы экстраполяции. Для этого можно использовать данные файла geul_mask.txt. Среди параметров обязательным является model, задающий параметры модели семивариограммы.</p>
+<pre class="r"><code>mask &lt;- readGDAL(&quot;geul_mask.txt&quot;)</code></pre>
+<pre><code>## geul_mask.txt has GDAL driver AAIGrid 
+## and has 80 rows and 80 columns</code></pre>
+<pre class="r"><code>vgmpb &lt;- vgm(nugget = 5000, psill = 25000, range = 400, model = &quot;Sph&quot;)
+vgmpb &lt;- fit.variogram(vgpb, vgmpb, fit.method=7)
+geul.krig &lt;- krige(formula = pb~1, locations = geul, newdata = mask, model= vgmpb)</code></pre>
+<pre><code>## [using ordinary kriging]</code></pre>
+<pre class="r"><code>geul.krig$var1.sd &lt;- sqrt(geul.krig$var1.var)
+spplot(geul.krig, zcol=c(&quot;var1.pred&quot;,&quot;var1.sd&quot;))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>spplot(geul.krig, zcol = &quot;var1.sd&quot;, col.regions = bpy.colors(), main=&quot;st dev [ppm]&quot;, xlim=c(190200,191300), ylim=c(314300,315600), sp.layout=list(&quot;sp.points&quot;,geul, pch=1, cex=2))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<p>Для того, чтобы сравнить карты нужно расположить их рядом. Для этого добавим в файл geul.krig еще одну переменную idw, в которую перепишем предсказанные значения методом обратных расстояния. Убедимся, что переменная добавилась с помощью команды names и визуализируем карты.</p>
+<pre class="r"><code>geul.krig$idw=geul.idw$var1.pred
+names(geul.krig)</code></pre>
+<pre><code>## [1] &quot;var1.pred&quot; &quot;var1.var&quot;  &quot;var1.sd&quot;   &quot;idw&quot;</code></pre>
+<pre class="r"><code>spplot(geul.krig, zcol=c(&quot;var1.pred&quot;,&quot;idw&quot;))</code></pre>
+<p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 </div>
 
