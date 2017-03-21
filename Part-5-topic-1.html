@@ -183,18 +183,27 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="decision-trees" class="section level3">
-<h3>Decision trees</h3>
-<p>We now move on to one of the easily interpretable and most popular classifiers there are out there: the decision tree. Decision trees—which look like an upside down tree with the trunk on top and the leaves on the bottom—play an important role in situations where classification decisions have to be transparent and easily understood and explained. It also handles both continuous and categorical predictors, outliers, and irrelevant predictors rather gracefully. Finally, the general ideas behind the algorithms that create decision trees are quite intuitive, though the details can sometimes get hairy.</p>
-<p>This is a rather simple decision tree with only three leaves (terminal nodes) and two decision points. Note that the first decision point is (a) on a binary categorical variable, and (b) results in one terminal node, motorcycle. The other branch contains the other decision point, a continuous variable with a split point. This split point was chosen carefully by the decision tree-creating algorithm to result in the most informative split—the one that best classifies the rest of the observations as measured by the misclassification rate of the training data</p>
-<p>Actually, in most cases, the decision tree-creating algorithm doesn’t choose a split that results in the lowest misclassification rate of the training data, but chooses on that which minimizes either the Gini coefficient or cross entropy of the remaining training observations. The reasons for this are two-fold: (a) both the Gini coefficient and cross entropy have mathematical properties that make them more easily amendable to numerical optimization, and (b) it generally results in a final tree with less bias.</p>
-<p>The overall idea of the decision tree-growing algorithm, recursive splitting, is simple: 1. Step 1: Choose a variable and split point that results in the best classification outcomes. 2. Step 2: For each of the resulting branches, check to see if some stopping criteria is met. If so, leave it alone. If not, move on to next step. 3. Step 3: Repeat Step 1 on the branches that do not meet the stopping criteria.</p>
-<p>The stopping criterion is usually either a certain depth, which the tree cannot grow past, or a minimum number of observations, for which a leaf node cannot further classify. Both of these are hyper-parameters (also called tuning parameters) of the decision tree algorithm—just like the k in k-NN—and must be fiddled with in order to achieve the best possible decision tree for classifying an independent dataset. A decision tree, if not kept in check, can grossly overfit the data—returning an enormous and complicated tree with a minimum leaf node size of 1—resulting in a nearly bias-less classification mechanism with prodigious variance. To prevent this, either the tuning parameters must be chosen carefully or a huge tree can be built and cut down to size afterward. The latter technique is generally preferred and is, quite appropriately, called pruning. The most common pruning technique is called cost complexity pruning, where complex parts of the tree that provide little in the way of classification power, as measured by improvement of the final misclassification rate, are cut down and removed. Enough theory—let’s get started! First, we’ll grow a full tree using the PID dataset and plot the result:</p>
-<pre class="r"><code>library(mlbench)</code></pre>
-<pre><code>## Warning: package &#39;mlbench&#39; was built under R version 3.3.3</code></pre>
-<pre class="r"><code>library(tree)</code></pre>
-<pre><code>## Warning: package &#39;tree&#39; was built under R version 3.3.3</code></pre>
-<pre class="r"><code>data(PimaIndiansDiabetes)
+<div id="--" class="section level3">
+<h3>Деревья принятия решений</h3>
+<p>Теперь мы перейдем к одному из легко интерпретируемых и наиболее популярных методов классификации: деревья решений. Деревья решений, которые выглядят как перевернутое дерево с основанием сверху и кроной внизу, играют важную роль в ситуациях, когда задачи классификации должны быть предельно прозрачными и легко интерпретируемыми. Метод довольно грациозно обрабатывает как непрерывные, так и категориальные предикторы, выбросы и несоответствующие предикторы. Наконец, общие идеи алгоритмов, которые создают деревья решений, достаточно интуитивно понятны, хотя детали могут иногда осложнить ситуацию.</p>
+<div class="figure">
+<img src="Part-5-topic-1_files/figure-html/cluster.png" alt="Пример классификационного дерева" />
+<p class="caption">Пример классификационного дерева</p>
+</div>
+<p>Рассмотрим довольно простое дерево решений с тремя листьями (конечными узлами) и двумя точками принятия решения. Обратите внимание, что первая точка принятия решения - это (a) бинарная категориальная переменная, и (b) приводит к одному терминальному узлу - мотоциклу. Другая ветвь содержит другую точку решения, непрерывную переменную с точкой разделения. Эта точка разделения была тщательно выбрана алгоритмом создания дерева решений, чтобы получить наиболее информативное разделение, которое наилучшим образом классифицирует остальную часть наблюдений, измеренную по коэффициенту ошибочной классификации данных обучения</p>
+<p>На самом деле, в большинстве случаев, алгоритм создания дерева решений не выбирает разбивку, которая приводит к самому низкому уровню ошибок в классификации Но выбирает то, что минимизирует либо коэффициент Джини, либо кросс энтропию остальных тренировочных наблюдений. У этого выюора есть две причины: (а) и коэффициент Джини, и кросс энтропия имеют математические свойства, которые делают их более легко применимыми для численной оптимизации, и (б) оба подхода обычно приводит к финальному дереву с меньшим смещением.</p>
+<p>Общая идея алгоритма создания(иногда пишут выращивания) дерева решений - рекурсивного разбиения, проста:</p>
+<ol style="list-style-type: decimal">
+<li>Шаг 1: Выберите переменную и точку разделения, которая приведет к лучшим результатам классификации.</li>
+<li>Шаг 2. Для каждой из результирующих ветвей проверьте, соблюдены ли некоторые критерии остановки. Если да, оставьте это в покое. Если нет, переходите к следующему шагу.</li>
+<li>Шаг 3: Повторите шаг 1 на ветвях, которые не соответствуют критериям остановки.</li>
+</ol>
+<p>Критерий остановки обычно представляет собой либо определенную глубину, по которой дерево не может вырасти, либо минимальное количество наблюдений, для которых листовой узел далее классифицировать не может. Оба эти параметра являются гиперпараметрами (также называемыми параметрами настройки) алгоритма дерева решений - и их нужно обрабатывать, чтобы достичь наилучшего дерева решений для классификации независимого набора данных. Дерево решений, если его не держать под контролем, может сильно переусердствовать с данными, возвращая громадное и сложное дерево с минимальным размером листового узла, равным 1, что приводит к почти безрассудному механизму классификации с огромной дисперсией. Чтобы этого не произошло, либо параметры настройки должны быть выбраны очень тщательно, либо огромное дерево может быть перестроено и сокращено до меньшего размера впоследствии. Последний подход обычно наиболее предпочтителен и, вполне уместно, называется обрезкой. Наиболее распространенная техника обрезки называется сокращением затрат, где сложные части дерева, которые мало влияют на классификационную способность, измеряются путем улучшения конечной скорости классификации, сокращаются и удаляются.</p>
+<p>Достаточно теории, давайте начнем! Во-первых, мы будем выращивать полное дерево с использованием набора данных PID и построить результат:</p>
+<pre class="r"><code>library(mlbench)
+library(tree)
+
+data(PimaIndiansDiabetes)
 PID &lt;- PimaIndiansDiabetes
 
 accuracy &lt;- function(predictions, answers){sum((predictions==answers)/(length(answers)))}
@@ -212,20 +221,20 @@ testing &lt;- PID[-train,]
 ## Classification tree:
 ## tree(formula = diabetes ~ ., data = training)
 ## Variables actually used in tree construction:
-## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;mass&quot;     &quot;pregnant&quot;
-## Number of terminal nodes:  9 
-## Residual mean deviance:  0.8441 = 510.7 / 605 
-## Misclassification error rate: 0.2134 = 131 / 614</code></pre>
+## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;mass&quot;     &quot;pedigree&quot;
+## Number of terminal nodes:  10 
+## Residual mean deviance:  0.8793 = 531.1 / 604 
+## Misclassification error rate: 0.2199 = 135 / 614</code></pre>
 <pre class="r"><code>plot(our.big.tree)
 text(our.big.tree)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>The power of a decision tree—which is usually not competitive with other classification mechanisms, accuracy-wise—is that the representation of the decision rules are transparent, easy to visualize, and easy to explain. This tree is rather large and unwieldy, which hinders its ability to be understood (or memorized) at a glance. Additionally, for all its complexity, it only achieves an 81% accuracy rate on the training data (as reported by the summary function). We can (and will) do better! Next, we will be investigating the optimal size of the tree employing cross-validation, using the cv.tree function.</p>
+<p>Сила дерева решений, который обычно мало нкурентоспособен по сравнению с другими механизмами классификации, с точки зрения точности, состоит в том, что правила разбиения прозрачны, легко визуализируются и легко объясняются. Это дерево довольно большое и громоздкое, что препятствует его способности быть понятым (или запомтинаемым) с первого взгляда. Кроме того, при всей своей сложности он достигает только 81% точности тренировочных данных (как сообщается итоговой функцией). Далее, мы будем исследовать оптимальный размер дерева, используя кросс-проверку, с помощью функции cv.tree.</p>
 <pre class="r"><code>set.seed(3)
 cv.results &lt;- cv.tree(our.big.tree, FUN=prune.misclass)
 plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>In the preceding code, we are telling the cv.tree function that we want to prune our tree using the misclassification rate as our objective metric. Then, we are plotting the CV error rate (dev) and a function of tree size (size).</p>
-<p>As you can see from the output (shown in Figure 9.9), the optimal size (number of terminal nodes) of the tree seems to be five. However, a tree of size three is not terribly less performant than a tree of size five; so, for ease of visualization, interpretation, and memorization, we will be using a final tree with three terminal nodes. To actually perform the pruning, we will be using the prune.misclass function, which takes the size of the tree as an argument.</p>
+<p>В предшествующем коде мы сообщаем функции cv.tree, что хотим сократить наше дерево, используя частоту ошибочной классификации как нашу объективную метрику. Затем мы строим график коэффициента CV (dev) и функцию размера (размера) дерева.</p>
+<p>Как вы можете видеть из вывода (показано на рис), оптимальный размер (количество терминальных узлов) дерева, кажется, равен пяти. Однако дерево размером три не намного менее эффективно, чем дерево размером пять; Поэтому для удобства визуализации, интерпретации и запоминания мы будем использовать конечное дерево с тремя конечными узлами. Чтобы выполнить обрезку, мы будем использовать функцию prune.misclass, которая принимает размер дерева в качестве аргумента.</p>
 <pre class="r"><code>pruned.tree &lt;- prune.misclass(our.big.tree, best=3)
  plot(pruned.tree)
  text(pruned.tree)</code></pre>
@@ -233,96 +242,84 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <pre class="r"><code> # let&#39;s test its accuracy
  pruned.preds &lt;- predict(pruned.tree, newdata=testing, type=&quot;class&quot;)
  accuracy(pruned.preds, testing[,9])</code></pre>
-<pre><code>## [1] 0.6948052</code></pre>
-<p>Rad! A tree so simple it can be easily memorized by medical personnel and achieves the same testing-set accuracy as the unwieldy tree in figure 9.8: 71%! Now the accuracy rate, by itself, is nothing to write home about, particularly because the naïve classifier achieves a 65% accuracy rate. Nevertheless, the fact that a significantly better classifier can be built from two simple rules—closely following the logic physicians employ, anyway—is where decision trees have a huge leg up relative to other techniques. Further, we could have bumped up this accuracy rate with more samples and more careful hyper-parameter tuning.</p>
+<pre><code>## [1] 0.7922078</code></pre>
+<p>Дерево настолько простое, что его легко запомнить медицинский персонал и достигает той же точности, что и громоздкое дерево на рисунке предыдущей попытки: 71%! В данном случае супер точность наверное и не достижима, особенно потому, что простейший классификатор достигает 65% точности. Тем не менее, тот факт, что значительно лучший классификатор можно построить из двух простых правил - в точности следуя логике, применяемой врачами, это именно то, поле где деревья решений имеют огромное превосходство относительно других методов. Представьте, что по результатам ваших исследований вам нужно дать заказчику очень простой и понятный набор рекомендаций, ничего лучше дерева принятия решений вам не найти</p>
 </div>
-<div id="random-forest" class="section level3">
-<h3>Random forest</h3>
-<p>One way to mitigate the shortcomings of decision tree models is by bootstrap aggregation, or bagging. In bagging, you draw bootstrap samples (random samples with replacement) from your data. From each sample, you build a decision tree model. The final model is the average of all the individual decision trees.2 To make this concrete, suppose that x is an input datum, y_i(x) is the output of the ith tree, c(y_1(x), y_2(x), … y_n(x)) is the vector of individual outputs, and y is the output of the final model:</p>
-<p><em> For regression, or for estimating class probabilities, y(x) is the average of the scores returned by the individual trees: y(x) = mean(c(y_1(x), … y_n(x))). </em> For classification, the final model assigns the class that got the most votes from the individual trees.</p>
-<p>Bagging decision trees stabilizes the final model by lowering the variance; this improves the accuracy. A bagged ensemble of trees is also less likely to overfit the data.</p>
-<div id="bagging-classifiers" class="section level4">
-<h4>Bagging classifiers</h4>
-<p>The proofs that bagging reduces variance are only valid for regression and for estimating class probabilities, not for classifiers (a model that only returns class membership, not class probabilities). Bagging a bad classifier can make it worse. So you definitely want to work over estimated class probabilities, if they’re at all available. But it can be shown that for CART trees (which is the decision tree implementation in R) under mild assumptions, bagging tends to increase classifier accuracy.</p>
-<p>The Spambase dataset (also used in chapter 5) provides a good example of the bagging technique. The dataset consists of about 4,600 documents and 57 features that describe the frequency of certain key words and characters. First we’ll train a decision tree to estimate the probability that a given document is spam, and then we’ll evaluate the tree’s deviance (which you’ll recall from discussions in chapters 5 and 7 is similar to variance) and its prediction accuracy.</p>
-<p>We’ll write a few convenience functions and train a decision tree, as in the following listing.</p>
+<div id="-" class="section level3">
+<h3>Случайный лес</h3>
+<p>Одним из способов смягчения недостатков моделей дерева решений является бутстрап агрегация или бэггинг (суммирование - сумкирование). При бэггинге вы извлекаете в “сумки” образцы бутстрапа(случайные образцы с заменой) из ваших данных. По каждому образцу вы строите модель дерева решений. Конечная модель - это среднее из всех индивидуальных деревьев решений. Чтобы сделать это пространное объяснение более конкретным, предположим, что x является входной переменной, <span class="math inline">\(y_{i}(x)\)</span> - выход i-го дерева, <span class="math inline">\(c(y_{1}(x), y_{2}(x) , ... y_{n}(x))\)</span> - вектор отдельных выходов, а <span class="math inline">\(y\)</span> - выход конечной модели:</p>
+<ul>
+<li>При регрессии или для оценки вероятностей классов <span class="math inline">\(y(x)\)</span> - это среднее значение оценок, полученных отдельными деревьями: <span class="math inline">\(y(x) = mean(c(y_{1}(x), ... y_{n}(x)))\)</span>.</li>
+<li>При классификации конечная модель присваивает классу, получившему наибольшее количество голосов от отдельных деревьев.</li>
+</ul>
+<p>Деревья решений методом бэггинга стабилизируют окончательную модель, уменьшая дисперсию; Это повышает точность. Набор деревьев полученный беггингом также менее подвержен оверфиттингу.</p>
+<div id="--" class="section level4">
+<h4>Классификаторы при беггинге</h4>
+<p>Доказательства того, что беггинг уменьшает дисперсию, действительны только для регрессии и для оценки вероятностей классов, но не для классификаторов (моделей, которые возвращают членство в классе, а не вероятности класса). Бэггинг и без того плохого классификатора может сделать его еще хуже. Таким образом, вы определенно хотите работать над оценочными вероятностями класса, если они вообще возможны. Но можно показать, что для деревьев CART (что является реализацией дерева решений в R) при ряде допщуений бэггинг имеет тенденцию повышать точность классификатора.</p>
+<p>Набор данных Spambase является хорошим образцом для демонстрации бэггинга. Набор данных состоит из 4600 документов и 57 их черт, которые описывают частоту определенных ключевых слов и символов. Сначала мы подготовим дерево решений, чтобы оценить вероятность того, что данный документ является спамом, а затем мы оценим отклонение дерева и его точность прогнозирования.</p>
+<p>Мы напишем несколько вспомогательных функций и обучим дерево решений, как в следующем коде.</p>
 <pre class="r"><code>spamD &lt;- read.table(&#39;https://raw.githubusercontent.com/WinVector/zmPDSwR/master/Spambase/spamD.tsv&#39;,header=T,sep=&#39;\t&#39;)
 spamTrain &lt;- subset(spamD,spamD$rgroup&gt;=10)
 spamTest &lt;- subset(spamD,spamD$rgroup&lt;10)
 spamVars &lt;- setdiff(colnames(spamD),list(&#39;rgroup&#39;,&#39;spam&#39;))
-spamFormula &lt;- as.formula(paste(&#39;spam==&quot;spam&quot;&#39;,
-paste(spamVars,collapse=&#39; + &#39;),sep=&#39; ~ &#39;))
+spamFormula &lt;- as.formula(paste(&#39;spam==&quot;spam&quot;&#39;, paste(spamVars,collapse=&#39; + &#39;),sep=&#39; ~ &#39;))
 loglikelihood &lt;- function(y, py) {
-pysmooth &lt;- ifelse(py==0, 1e-12,
-ifelse(py==1, 1-1e-12, py))
-sum(y * log(pysmooth) + (1-y)*log(1 - pysmooth))
-}
+  pysmooth &lt;- ifelse(py==0, 1e-12, ifelse(py==1, 1-1e-12, py))
+  sum(y * log(pysmooth) + (1-y)*log(1 - pysmooth))
+} 
 accuracyMeasures &lt;- function(pred, truth, name=&quot;model&quot;) {
-dev.norm &lt;- -2*loglikelihood(as.numeric(truth), pred)/length(pred)
-ctable &lt;- table(truth=truth,
-pred=(pred&gt;0.5))
-accuracy &lt;- sum(diag(ctable))/sum(ctable)
-precision &lt;- ctable[2,2]/sum(ctable[,2])
-recall &lt;- ctable[2,2]/sum(ctable[2,])
-f1 &lt;- precision*recall
-data.frame(model=name, accuracy=accuracy, f1=f1, dev.norm)
+  dev.norm = -2*loglikelihood(as.numeric(truth), pred)/length(pred)
+  ctable = table(truth=truth,pred=(pred&gt;0.5))
+  accuracy = sum(diag(ctable))/sum(ctable)
+  precision = ctable[2,2]/sum(ctable[,2])
+  recall = ctable[2,2]/sum(ctable[2,])
+  f1 = precision*recall
+  data.frame(model=name, accuracy=accuracy, f1=f1, dev.norm)
 }
+
 library(rpart)
 treemodel &lt;- rpart(spamFormula, spamTrain)
-accuracyMeasures(predict(treemodel, newdata=spamTrain),
-                 spamTrain$spam==&quot;spam&quot;,
-name=&quot;tree, training&quot;)</code></pre>
+accuracyMeasures(predict(treemodel, newdata=spamTrain), spamTrain$spam==&quot;spam&quot;, name=&quot;tree, training&quot;)</code></pre>
 <pre><code>##            model  accuracy        f1  dev.norm
 ## 1 tree, training 0.9104514 0.7809002 0.5618654</code></pre>
-<pre class="r"><code>accuracyMeasures(predict(treemodel, newdata=spamTest),
-spamTest$spam==&quot;spam&quot;,
-name=&quot;tree, test&quot;)</code></pre>
+<pre class="r"><code>accuracyMeasures(predict(treemodel, newdata=spamTest), spamTest$spam==&quot;spam&quot;, name=&quot;tree, test&quot;)</code></pre>
 <pre><code>##        model  accuracy        f1  dev.norm
 ## 1 tree, test 0.8799127 0.7091151 0.6702857</code></pre>
-<p>The output of the last two calls to accuracyMeasures() produces the following output. As expected, the accuracy and F1 scores both degrade on the test set, and the deviance increases (we want the deviance to be small):</p>
-<p>Now let’s try bagging the decision trees.</p>
+<p>Результат двух последних вызовов метода precisionMeasures () дает следующий результат. Как и ожидалось, точность и оценки F1 деградируют на тестовом наборе, а отклонение увеличивается (мы хотим, чтобы отклонение было небольшим).</p>
+<p>Проверим метод беггинга при создании деревьев решений</p>
 <pre class="r"><code>ntrain &lt;- dim(spamTrain)[1]
 n &lt;- ntrain
 ntree &lt;- 100
 samples &lt;- sapply(1:ntree,
-FUN = function(iter)
-{sample(1:ntrain, size=n, replace=T)})
-treelist &lt;-lapply(1:ntree,
-FUN=function(iter)
-{samp &lt;- samples[,iter];
-rpart(spamFormula, spamTrain[samp,])})
-predict.bag &lt;- function(treelist, newdata) {
-preds &lt;- sapply(1:length(treelist),
-FUN=function(iter) {
-predict(treelist[[iter]], newdata=newdata)})
-predsums &lt;- rowSums(preds)
-predsums/length(treelist)
+FUN = function(iter) {sample(1:ntrain, size=n, replace=T)})
+treelist &lt;-lapply(1:ntree, FUN=function(iter){samp &lt;- samples[,iter];rpart(spamFormula, spamTrain[samp,])})
+predict.bag &lt;- function(treelist, newdata) { 
+  preds &lt;- sapply(1:length(treelist), FUN=function(iter) {predict(treelist[[iter]], newdata=newdata)})
+  predsums &lt;- rowSums(preds)
+  predsums/length(treelist)
 }
-accuracyMeasures(predict.bag(treelist, newdata=spamTrain),
-  spamTrain$spam==&quot;spam&quot;,
-  name=&quot;bagging, training&quot;)</code></pre>
+accuracyMeasures(predict.bag(treelist, newdata=spamTrain), spamTrain$spam==&quot;spam&quot;,  name=&quot;bagging, training&quot;)</code></pre>
 <pre><code>##               model  accuracy        f1  dev.norm
 ## 1 bagging, training 0.9234854 0.8109497 0.4685034</code></pre>
-<pre class="r"><code>accuracyMeasures(predict.bag(treelist, newdata=spamTest),spamTest$spam==&quot;spam&quot;,
-name=&quot;bagging, test&quot;)</code></pre>
+<pre class="r"><code>accuracyMeasures(predict.bag(treelist, newdata=spamTest), spamTest$spam==&quot;spam&quot;, name=&quot;bagging, test&quot;)</code></pre>
 <pre><code>##           model  accuracy        f1  dev.norm
 ## 1 bagging, test 0.9126638 0.7819273 0.5266863</code></pre>
-<p>As you see, bagging improves accuracy and F1, and reduces deviance over both the training and test sets when compared to the single decision tree (we’ll see a direct comparison of the scores a little later on). The improvement is more dramatic on the test set: the bagged model has less generalization error3 than the single decision tree. We can further improve model performance by going from bagging to random forests.</p>
+<p>Как видите, бэггинг повышает точность и F1, а также уменьшает отклонения от учебных и тестовых наборов по сравнению с единым деревом решений (мы увидим прямое сравнение результатов немного позже). Прогресс еще больше впечатляет на тестовом наборе: у модели с бэггингом меньше ошибок обобщения, чем у единичного дерева решений. Мы можем еще больше повысить производительность модели, перейдя от бэггинга к методу случайных лесов.</p>
 </div>
-<div id="using-random-forests-to-further-improve-prediction" class="section level4">
-<h4>Using random forests to further improve prediction</h4>
-<p>In bagging, the trees are built using randomized datasets, but each tree is built by considering the exact same set of features. This means that all the individual trees are likely to use very similar sets of features (perhaps in a different order or with different split values). Hence, the individual trees will tend to be overly correlated with each other. If there are regions in feature space where one tree tends to make mistakes, then all the trees are likely to make mistakes there, too, diminishing our opportunity for correction. The random forest approach tries to de-correlate the trees by randomizing the set of variables that each tree is allowed to use. For each individual tree in the ensemble, the random forest method does the following:</p>
+<div id="-------" class="section level4">
+<h4>Использование метода случайных лесов для дальнейшего улучшения прогнозирования</h4>
+<p>При бэггинге деревья строятся с использованием рандомизированных наборов данных, но каждое дерево строится с учетом одного и того же набора функций. Это означает, что все отдельные деревья могут использовать очень похожие наборы функций (возможно, в другом порядке или с разными значениями разделения). Следовательно, отдельные деревья будут иметь тенденцию к чрезмерной корреляции друг с другом. Если есть ряд независимых переменных, для которых единичное дерево будет склонно совершать ошибки, то и все возможные деревья, вероятно, тоже будут ошибаются на этих участках, уменьшая нашу возможность исправления. Метод случайного леса пытается де-коррелировать деревья путем рандомизации набора переменных, которые разрешено использовать каждому дереву. Для каждого отдельного дерева в ансамбле метод случайного леса выполняет следующие действия:</p>
 <ol style="list-style-type: decimal">
-<li>Draws a bootstrapped sample from the training data</li>
-<li>For each sample, grows a decision tree, and at each node of the tree</li>
+<li>Выбирает произвольный набор данных(строк из таблицы) из обучающей выборки(bootstrap)</li>
+<li>Для каждой бустрап подвыборки создается дерево решений и на каждом узле дерева:</li>
 </ol>
 <ul>
-<li>Randomly draws a subset of mtry variables from the p total features that are available</li>
-<li>Picks the best variable and the best split from that set of mtry variables</li>
-<li>Continues until the tree is fully grown</li>
+<li>Произвольно извлекает подмножество из mtry пробных переменных из p всего доступных зависимых переменных</li>
+<li>Выбирает лучшую переменную и наилучшее разбиение из этого набора переменных mtry</li>
+<li>Продолжать, пока дерево не будет полностью выращено</li>
 </ul>
-<p>The final ensemble of trees is then bagged to make the random forest predictions. This is quite involved, but fortunately all done by a single-line random forest call.</p>
-<p>By default, the randomForest() function in R draws mtry = p/3 variables at each node for regression trees and m = sqrt(p) variables for classification trees. In theory, random forests aren’t terribly sensitive to the value of mtry. Smaller values will grow the trees faster; but if you have a very large number of variables to choose from, of which only a small fraction are actually useful, then using a larger mtry is better, since with a larger mtry you’re more likely to draw some useful variables at every step of the tree-growing procedure. Continuing from the data in section 9.1, let’s build a spam model using random forests.</p>
+<p>Окончательный набор деревьев затем подвергается беггингу, чтобы сформулировать предсказание Это довольно сложно, но, к счастью, все это делается с помощью одной командой</p>
+<p>По умолчанию функция randomForest () в R выводит mtry = p / 3 переменных в каждом узле для деревьев регрессии и m = sqrt(p) переменных для деревьев классификации. Теоретически, случайные леса не очень чувствительны к значению mtry. При меньших значениях деревья будут расти быстрее; Но если у вас есть очень большое количество переменных на выбор, из которых только небольшая часть действительно полезна, то лучше использовать большее значение mtry, так как при большом mtry вы, с большей вероятностью выберете некоторые полезные переменные на каком либо из шагов процедуры выращивания деревьев. Продолжая использовать данные по спаму, давайте построим модель используя метод случайных лесов.</p>
 <pre class="r"><code>library(randomForest)</code></pre>
 <pre><code>## Warning: package &#39;randomForest&#39; was built under R version 3.3.3</code></pre>
 <pre><code>## randomForest 4.6-12</code></pre>
@@ -339,13 +336,13 @@ accuracyMeasures(predict(fmodel, newdata=spamTrain[,spamVars],type=&#39;prob&#39
 <pre class="r"><code>accuracyMeasures(predict(fmodel, newdata=spamTest[,spamVars],type=&#39;prob&#39;)[,&#39;spam&#39;], spamTest$spam==&quot;spam&quot;,name=&quot;random forest, test&quot;)</code></pre>
 <pre><code>##                 model  accuracy        f1  dev.norm
 ## 1 random forest, test 0.9541485 0.8845029 0.3972416</code></pre>
-<p>The random forest model performed dramatically better than the other two models in both training and test. But the random forest’s generalization error was comparable to that of a single decision tree (and almost twice that of the bagged model).</p>
+<p>Модель оказалась значительно лучше, чем две предыдущие модели в процессе обучения и тестирования. Но ошибка обобщения случайного леса была сопоставима с ошибкой одного дерева решений (и почти вдвое больше, чем у модели в мешках).</p>
 </div>
-<div id="examining-variable-importance" class="section level4">
-<h4>EXAMINING VARIABLE IMPORTANCE</h4>
-<p>A useful feature of the randomForest() function is its variable importance calculation. Since the algorithm uses a large number of bootstrap samples, each data point x has a corresponding set of out-of-bag samples: those samples that don’t contain the point x. The out-of-bag samples can be used is a way similar to N-fold cross validation, to estimate the accuracy of each tree in the ensemble.</p>
-<p>To estimate the “importance” of a variable v, the variable’s values are randomly permuted in the out-of-bag samples, and the corresponding decrease in each tree’s accuracy is estimated. If the average decrease over all the trees is large, then the variable is considered important—its value makes a big difference in predicting the outcome. If the average decrease is small, then the variable doesn’t make much difference to the outcome. The algorithm also measures the decrease in node purity that occurs from splitting on a permuted variable (how this variable affects the quality of the tree).</p>
-<p>We can calculate the variable importance by setting importance=T in the random-Forest() call, and then calling the functions importance() and varImpPlot().</p>
+<div id="--" class="section level4">
+<h4>Выявление значимости переменных</h4>
+<p>Полезной особенностью функции randomForest() является ее вычисление важности для каждой переменной. Поскольку алгоритм использует большое количество выборок бутстрапа, каждая точка данных x имеет соответствующий набор образцов вне пакета: те образцы, которые не содержат точку x. Данные не попавшие в выборку беггингом могут быть использованы аналогично N-кратной перекрестной проверке, для оценки точности каждого дерева в ансамбле.</p>
+<p>Для оценки «важности» переменной v значения переменных случайным образом переставляются в выборках вне выборки беггингом, и оценивается соответствующее снижение точности каждого дерева. Если среднее уменьшение по всем деревьям велико, то переменная считается важной - ее значение имеет большое значение для прогнозирования результата. Если среднее уменьшение невелико, то переменная не имеет большого значения для результата. Алгоритм также измеряет снижение чистоты узла, которое происходит при расщеплении по перестановленной переменной (как эта переменная влияет на качество дерева).</p>
+<p>Мы можем рассчитать важность переменной, установив значение = T в вызове функции randomForest (), а затем вызывая функции important () и varImpPlot ().</p>
 <pre class="r"><code>varImp &lt;- importance(fmodel)
 varImp[1:10, ]</code></pre>
 <pre><code>##                     non-spam       spam MeanDecreaseAccuracy
@@ -372,7 +369,7 @@ varImp[1:10, ]</code></pre>
 ## word.freq.mail            11.127200</code></pre>
 <pre class="r"><code>varImpPlot(fmodel, type=1)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Knowing which variables are most important (or at least, which variables contribute the most to the structure of the underlying decision trees) can help you with variable reduction. This is useful not only for building smaller, faster trees, but for choosing variables to be used by another modeling algorithm, if that’s desired. We can reduce the number of variables in this spam example from 57 to 25 without affecting the quality of the final model.</p>
+<p>Знание того, какие переменные являются наиболее важными (или, по крайней мере, какие переменные в наибольшей степени вносят вклад в структуру базовых деревьев решений), может помочь вам с уменьшением количества переменных. Это полезно не только для построения меньших, более быстрых деревьев, но и для выбора переменных, которые будут использоваться другим алгоритмом моделирования, если это необходимо. Мы можем уменьшить число переменных в этом примере спама с 57 до 25, не потеряв в качестве конечной модели.</p>
 <pre class="r"><code>selVars &lt;- names(sort(varImp[,1], decreasing=T))[1:25]
 fsel &lt;- randomForest(x=spamTrain[,selVars],y=spamTrain$spam,
 ntree=100,
@@ -388,12 +385,19 @@ newdata=spamTest[,selVars],type=&#39;prob&#39;)[,&#39;spam&#39;],
 spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre>
 <pre><code>##            model  accuracy        f1  dev.norm
 ## 1 RF small, test 0.9497817 0.8742775 0.3985712</code></pre>
-<p>The smaller model performs just as well as the random forest model built using all 57 variables.</p>
+<p>Меньшая модель работает точно так же, как и модель предложенная методом случайного леса, построенная с использованием всех 57 переменных.</p>
 </div>
-<div id="bagging-and-random-forest-takeaways" class="section level4">
-<h4>Bagging and random forest takeaways</h4>
-<p>Here’s what you should remember about bagging and random forests:</p>
-<p><em> Bagging stabilizes decision trees and improves accuracy by reducing variance. </em> Bagging reduces generalization error. <em> Random forests further improve decision tree performance by de-correlating the individual trees in the bagging ensemble. </em> Random forests’ variable importance measures can help you determine which variables are contributing the most strongly to your model. <em> Because the trees in a random forest ensemble are unpruned and potentially quite deep, there’s still a danger of overfitting. Be sure to evaluate the model on holdout data to get a better estimate of model performance. </em> Bagging and random forests are after-the-fact improvements we can try in order to improve model outputs. In our next section, we’ll work with generalized additive models, which work to improve how model inputs are used.</p>
+<div id="------" class="section level4">
+<h4>Подводя итоги блуждания Беггинса в случайном лесу</h4>
+<p>Вот что вы должны помнить о мешках и случайных лесах:</p>
+<ul>
+<li>Беггинг стабилизирует деревья решений и повышает точность путем уменьшения дисперсии.</li>
+<li>Беггинг уменьшает вероятность ошибки обобщения.</li>
+<li>Случайные леса еще больше улучшают производительность дерева решений путем де-корреляции отдельных деревьев в наборе выборок беггингом.</li>
+<li>Оценка эффективности переменной методом случайных лесов могут помочь вам определить, какие переменные вносят наибольший вклад в вашу модель.</li>
+<li>Меж тем, все равно существует опасность оверфитинга.</li>
+<li>Беггинг и случайные леса - это дополнительные практики, которые мы могут помоч улучшить результаты моделирования.</li>
+</ul>
 </div>
 </div>
 <div id="-" class="section level2">
@@ -402,17 +406,22 @@ spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre
 <div class="section level4">
 <h4>Данные</h4>
 <p>Данные, которые мы будем использовать для построения карт:</p>
-<p>* geuldata.txt - файл ASCII с 100 точками, где указана концентрация свинца и географические координат точек; <em> mask_aoi_shp.xxx - это шейп- файлы, очерчивающие территорию исследования; </em> river_line.xxx - это шейп- файлы, показывающие реку Геул; <em> geul_mask.txt – файл-маска, растровая карта, очерчивающие территорию исследования; </em> geul_dem.txt - цифровая модель рельефа (ЦМР) исследуемой территории; <em> geul_slope.txt – карта уклонов местности, полученная из ЦМР; </em> river_dist.txt - растровая карта, где показано кратчайшее расстояние до реки Геул для каждой ячейки сетки.</p>
+<ul>
+<li>geuldata.txt - файл ASCII с 100 точками, где указана концентрация свинца и географические координат точек;</li>
+<li>mask_aoi_shp.xxx - это шейп- файлы, очерчивающие территорию исследования;</li>
+<li>river_line.xxx - это шейп- файлы, показывающие реку Геул;</li>
+<li>geul_mask.txt – файл-маска, растровая карта, очерчивающие территорию исследования;</li>
+<li>geul_dem.txt - цифровая модель рельефа (ЦМР) исследуемой территории;</li>
+<li>geul_slope.txt – карта уклонов местности, полученная из ЦМР;</li>
+<li>river_dist.txt - растровая карта, где показано кратчайшее расстояние до реки Геул для каждой ячейки сетки.</li>
+</ul>
 <p>Файл-маска, очерчивающая территорию исследования или какой-либо объект - это ASCII файл, в котором закодирован растр, там указано: количество строк и столбцов, координаты первой ячейки; число, которым обозначают отсутствие данных (-9999), и сама матрица, где единицами отмечены значимые пикселы (объект), а значениями -9999 – пикселы, не относящиеся к объекту. Таким образом, можно проводить обработку объектов со сложной конфигурацией.</p>
 <p>Для работы мы будем использовать широкий список пакетов для работы с геопривязанными растрами, картами и статистическим анализом географических данных</p>
 <pre class="r"><code>## подключаем необходимые пакеты
-library(sp)</code></pre>
-<pre><code>## Warning: package &#39;sp&#39; was built under R version 3.3.3</code></pre>
-<pre class="r"><code>library(sf)</code></pre>
-<pre><code>## Warning: package &#39;sf&#39; was built under R version 3.3.3</code></pre>
+library(sp)
+library(sf)</code></pre>
 <pre><code>## Linking to GEOS 3.5.0, GDAL 2.1.1, proj.4 4.9.3</code></pre>
 <pre class="r"><code>library(rgdal)</code></pre>
-<pre><code>## Warning: package &#39;rgdal&#39; was built under R version 3.3.3</code></pre>
 <pre><code>## rgdal: version: 1.2-5, (SVN revision 648)
 ##  Geospatial Data Abstraction Library extensions to R successfully loaded
 ##  Loaded GDAL runtime: GDAL 2.0.1, released 2015/09/15
@@ -421,18 +430,14 @@ library(sp)</code></pre>
 ##  Path to PROJ.4 shared files: C:/RLibraries/rgdal/proj
 ##  Linking to sp version: 1.2-4</code></pre>
 <pre class="r"><code>library(maptools)</code></pre>
-<pre><code>## Warning: package &#39;maptools&#39; was built under R version 3.3.3</code></pre>
 <pre><code>## Checking rgeos availability: TRUE</code></pre>
-<pre class="r"><code>library(gstat)</code></pre>
-<pre><code>## Warning: package &#39;gstat&#39; was built under R version 3.3.3</code></pre>
-<pre class="r"><code>library(rgeos)</code></pre>
-<pre><code>## Warning: package &#39;rgeos&#39; was built under R version 3.3.3</code></pre>
+<pre class="r"><code>library(gstat)
+library(rgeos)</code></pre>
 <pre><code>## rgeos version: 0.3-22, (SVN revision 544)
 ##  GEOS runtime version: 3.5.0-CAPI-1.9.0 r4084 
 ##  Linking to sp version: 1.2-4 
 ##  Polygon checking: TRUE</code></pre>
 <pre class="r"><code>library(MASS)</code></pre>
-<pre><code>## Warning: package &#39;MASS&#39; was built under R version 3.3.3</code></pre>
 <p>Загрузим данные с формами территории изучаемой местности:</p>
 <pre class="r"><code> geul &lt;- read.table(&quot;https://www.dropbox.com/s/q77agu5bigcwwbg/geuldata.txt?dl=1&quot;, header = TRUE)</code></pre>
 <p>Пакет sp предоставляет возможности для отображения пространственных объектов. С помощью команды coordinates(переменная) = ~x+y можно преобразовать таблицу (фрейм) в пространственные данные, указывая, что пременные x и y в таблице это координаты. Поэтому мы сможем отобразить часть данных таблицы в виде картограммы:</p>
@@ -502,17 +507,17 @@ sp.layout = list(&quot;sp.lines&quot;, riverline, col=&quot;lightblue&quot;, lwd
 <p>Кригинг - ключевой метод геостатистики для анализа пространственно-распределенных данных. Он основывается на гипотезе о пространственной однородности («стационарности 2-го порядка»). Важным преимуществом кригинга является то, что предсказывается не только среднее значение экологической переменной в точке, но и ее возможный разброс. Чаще всего результаты оформляются в виде предсказанных значений и ошибки предсказания.</p>
 <p>Интерполяция методом кригинга предполагает, что пространственные изменения значений экологической переменной Z(х) в точках х в общем случае являются суммой трех компонент:</p>
 <p><span class="math display">\[Z(x)= m(x)+e(x)+ \sigma\]</span></p>
-<ul>
+<ol style="list-style-type: decimal">
 <li>где m(x) - структурная (неслучайная) компонента, которая может быть описана какой-либо математической функцией;</li>
 <li>e(x) - случайная, но пространственно-коррелированная компонента. (Отклонения являются случайными, но связанными друг с другом пространственно). Предположения, которые делаются относительно данной компоненты: -среднее всех e(x)=0; - дисперсия значений e(x) и e(x+h) в любых точках x и (x+h) зависят от смещения h, то есть от расстояния между точками, но не зависят от местоположения точек;</li>
-<li>$$ - случайный шум, не связанный с общей тенденцией и не имеющий пространственной автокорреляции, называется еще остаточная ошибка.</li>
-</ul>
+<li><span class="math inline">\(\sigma\)</span> - случайный шум, не связанный с общей тенденцией и не имеющий пространственной автокорреляции, называется еще остаточная ошибка.</li>
+</ol>
 <p>В зависимости от природы m(x) различают следующие виды кригинга:</p>
-<ul>
-<li>ординарный: m – неизвестная константа, то есть неизвестное постоянное среднее всех значений Z(x);</li>
+<ol style="list-style-type: decimal">
+<li>ординарный: m – неизвестная константа, то есть неизвестное постоянное среднее всех значений <span class="math inline">\(Z(x)\)</span>;</li>
 <li>простой: m – известная константа (среднее);</li>
 <li>универсальный: m – некоторая детерминистская функция, называемая трендом.</li>
-</ul>
+</ol>
 <p>В методе кригинга для определения неизвестного значения в некоторой точке значения исходных точек (опорных точек, точек пробоотбора), попавших в некую окрестность вокруг обрабатываемой точки, взвешиваются.</p>
 <p>В отличия метода обратных расстояний веса зависят не только от расстояния между опорной точкой и искомой, но и от пространственной структуры данных в целом (компонента e(x)).</p>
 <p>Поэтому кригинг включает 2 основные задачи:</p>
