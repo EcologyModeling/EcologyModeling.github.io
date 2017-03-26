@@ -154,7 +154,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="Part-1-topic-1.html">Введение в программирование на языке R</a>
     <a id="nav-lesson-15" href="Part-2-topic-2.html">Физические модели. Формализация и численные решения.</a>
-    <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
+    <a id="nav-lesson-2" href="Part-3-topic-1.html">Манипуляции над данными</a>
     <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
     <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
     <a id="nav-lesson-5" href="Part-5-topic-1.html">Дополнительные методы</a>
@@ -221,10 +221,10 @@ testing &lt;- PID[-train,]
 ## Classification tree:
 ## tree(formula = diabetes ~ ., data = training)
 ## Variables actually used in tree construction:
-## [1] &quot;glucose&quot;  &quot;age&quot;      &quot;mass&quot;     &quot;pedigree&quot;
-## Number of terminal nodes:  10 
-## Residual mean deviance:  0.8793 = 531.1 / 604 
-## Misclassification error rate: 0.2199 = 135 / 614</code></pre>
+## [1] &quot;glucose&quot;  &quot;mass&quot;     &quot;age&quot;      &quot;pedigree&quot; &quot;pregnant&quot;
+## Number of terminal nodes:  13 
+## Residual mean deviance:  0.8459 = 508.4 / 601 
+## Misclassification error rate: 0.1987 = 122 / 614</code></pre>
 <pre class="r"><code>plot(our.big.tree)
 text(our.big.tree)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
@@ -242,7 +242,7 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <pre class="r"><code> # let&#39;s test its accuracy
  pruned.preds &lt;- predict(pruned.tree, newdata=testing, type=&quot;class&quot;)
  accuracy(pruned.preds, testing[,9])</code></pre>
-<pre><code>## [1] 0.7922078</code></pre>
+<pre><code>## [1] 0.7597403</code></pre>
 <p>Дерево настолько простое, что его легко запомнить медицинский персонал и достигает той же точности, что и громоздкое дерево на рисунке предыдущей попытки: 71%! В данном случае супер точность наверное и не достижима, особенно потому, что простейший классификатор достигает 65% точности. Тем не менее, тот факт, что значительно лучший классификатор можно построить из двух простых правил - в точности следуя логике, применяемой врачами, это именно то, поле где деревья решений имеют огромное превосходство относительно других методов. Представьте, что по результатам ваших исследований вам нужно дать заказчику очень простой и понятный набор рекомендаций, ничего лучше дерева принятия решений вам не найти</p>
 </div>
 <div id="-" class="section level3">

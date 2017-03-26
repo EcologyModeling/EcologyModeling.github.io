@@ -154,7 +154,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="Part-1-topic-1.html">Введение в программирование на языке R</a>
     <a id="nav-lesson-15" href="Part-2-topic-2.html">Физические модели. Формализация и численные решения.</a>
-    <a id="nav-lesson-2" href="Part-3-topic-1.html">Выбор и оценка статистических методов моделирования </a>
+    <a id="nav-lesson-2" href="Part-3-topic-1.html">Манипуляции над данными</a>
     <a id="nav-lesson-3" href="Part-4-topic-1.html">Создание моделей линейной регрессии</a>
     <a id="nav-lesson-4" href="Part-4-topic-2.html">Модели логистической регрессии</a>
     <a id="nav-lesson-5" href="Part-5-topic-1.html">Дополнительные методы</a>
@@ -445,6 +445,7 @@ summary(y.lm)</code></pre>
 <p>As follows from the presented results, free term customized model (Intercept) exactly coincides with an average value of the data (135.16 mmHg. calendar) and the standard deviation of the residues of the model (Residual standard error) coincides with the standard deviation of these data (16.96 mm Hg. calendar). Importantly, however, we also calculated estimates of the standard error of the average value equal to 1.696 (see column Std. Error to the intersection with a line (Intercept)). By definition, the standard error of a parameter is the standard deviation of the [normal] distribution of values of this parameter, calculated on samples of equal size from the same population. We can use this fact to account for uncertainty in the point estimates of the model parameters when generating new data. So, knowing the sample parameter estimates and their standard errors, we can: a) generate a few possible values for these parameters (i.e., to create multiple implementations of the same model, varying the values of parameters a) and b) to generate new data based on each of these alternative implementations of the model.</p>
 <pre class="r"><code>library(arm)</code></pre>
 <pre><code>## Loading required package: MASS</code></pre>
+<pre><code>## Warning: package &#39;MASS&#39; was built under R version 3.3.3</code></pre>
 <pre><code>## Loading required package: Matrix</code></pre>
 <pre><code>## Loading required package: lme4</code></pre>
 <pre><code>## 

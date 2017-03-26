@@ -1,5 +1,5 @@
 ---
-title: "Выбор и оценка статистических методов моделирования"
+title: "Манипуляции над данными, работа с таблицами"
 output:
   html_document:
     highlight: textmate
@@ -8,17 +8,22 @@ output:
       before_body: [include_header.html, include_lessons_nav.html]
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-<div class="alert alert-danger" role="alert"> Раздел находится в разработке !</div>
 
 ## Пакет dplyr
 
 Моделирование в той или иной форме является составной частью более сложного процесса, через который проходит любой исследователь работающий с реальными данными -  анализ данных. Не вдаваясь глубоко в подробности в данном разделе будет рассмотрен начальный этап анализа данных - преобразования или манипуляции с данными (data-manipulation).
 
-В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Одним из самых популярных подобных пакетов является пакет dplyr из целой "вселенной" пакетов tydiverse от известного разработчика Хадли Викхема.
+В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Давайте рассмотрим ряд из самых популярных подобных пакетов  из целой "вселенной" пакетов tydiverse от известного разработчика Хадли Викхема.
 
 ```{r}
 library("tidyverse")
 library("nycflights13")
+library("tidyr")
+library("stringr")
+library("dplyr")
+library("tibble")
+library("readr")
+
 ```
 Изучение пакета dplyr мы начнем со следующих функций:
 
@@ -30,26 +35,26 @@ library("nycflights13")
   * group_by()
   
   
-filter() allows you to subset observations based on their values. The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all flights on January 1st with:
+Filter () позволяет выбрать подмножество наблюдений(строк), основанных на их значениях(по значениям в отдельных колонках). Первый аргумент функции - это имя таблицы данных. Второй и последующие аргументы - это выражения, которые фильтруют фрейм данных, которые должны в результате выдавать логический вектор. Рассмотрим данные по времени и датам вылетов из набора данных flights, которые мы подключили с пакетом nycflights13, и выберем все рейсы с 1 января:
 
 ```{r}
 
 filter(flights, month == 1, day == 1)
 ```
 
-The following code finds all flights that departed in November or December:
+Следующий код находит все рейсы, отправленные в ноябре или декабре:
 
 ```{r}
 filter(flights, month == 11 | month == 12)
 ```
 
-A useful shorthand for this problem is x %in% y. This will select every row where x is one of the values in y. We could use it to rewrite the preceding code:
+Полезным конструкцией для решения подобных  проблем является x %in% y. Она выберет каждую строку, где x является одним из значений y. Мы могли бы использовать его для перезаписи предыдущего кода:
 
 ```{r}
 nov_dec <- filter(flights, month %in% c(11, 12))
 ```
 
-arrange() works similarly to filter() except that instead of selecting rows, it changes their order. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns:
+arrange()  работает аналогично filter(), за исключением того, что вместо выбора строк изменяется их порядок. Он принимает таблицу данных и набор имен столбцов (или более сложных выражений) для упорядочения. Если вы укажете более одного имени столбца, каждый дополнительный столбец будет использоваться для разрыва связей в значениях предыдущих столбцов:
 
 ```{r}
 arrange(flights, year, month, day)
@@ -58,7 +63,7 @@ arrange(flights, desc(arr_delay))
 
 Функция desc() говорит о том, что колонку нужно пересортировать от большего к меньшему
 
-It’s not uncommon to get datasets with hundreds or even thousands of variables. In this case, the first challenge is often narrowing in on the variables you’re actually interested in. select() allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.
+Это не редкость, когда приходиться работать с наборами данных с сотнями или даже тысячами переменных. В этом случае первая задача часто сводится к получению таблицы с набором переменных, которые вам действительно интересны. Select() позволяет быстро получить полезное подмножество, используя операции, основанные на именах переменных.
 
 ```{r}
 select(flights, year, month, day)
@@ -71,184 +76,199 @@ select(flights, year:day)
 select(flights, -(year:day))
 ```
 
-Besides selecting sets of existing columns, it’s often useful to add new columns that are functions of existing columns. That’s the job of mutate().
-mutate() always adds new columns at the end of your dataset so we’ll start by creating a narrower dataset so we can see the new variables. Remember that when you’re in RStudio, the easiest way to see all the columns is View():
+Помимо выбора наборов существующих столбцов, часто полезно добавлять новые столбцы, которые являются функциями существующих столбцов. Это задача функции mutate().
 
 ```{r}
 flights_sml <- select(flights, year:day, ends_with("delay"), distance, air_time )
 mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)
 ```
 
-The last key verb is summarize(). It collapses a data frame to a single row:
+Последний ключевой глагол - summarize((). Он сворачивает фрейм данных в одну строку:
 
 ```{r}
 summarize(flights, delay = mean(dep_delay, na.rm = TRUE))
 ```
 
-summarize() is not terribly useful unless we pair it with group_by(). This changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group.” For example, if we applied exactly the same code to a data frame grouped by date, we get the average delay per date:
+Функция summarize() не очень полезна, если мы будем сипользовать ее без group_by (). Она изменяет единицу анализа от полного набора данных к отдельным группам. Затем, когда вы используете функции dplyr в сгруппированном фрейме данных, они будут автоматически применяться «по группам». Например, если мы применили точно такой же код к таблице данных, сгруппированным по дате, мы получим среднюю задержку на дату:
 
 ```{r}
 by_day <- group_by(flights, year, month, day)
 summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))
 ```
 
-Together group_by() and summarize() provide one of the tools that you’ll use most commonly when working with dplyr: grouped summaries. But before we go any further with this, we need to introduce a powerful new idea: the pipe.
+Вместе функции group_by() и summarize() предоставляют один из инструментов, который вы будете использовать наиболее часто при работе с dplyr: сгруппированные заключения по данными в виде вектора. Но прежде чем мы пойдем дальше, нам нужно ввести новую мощную идею: пайпинг(сборка команды в последовательности - трубы).
 
-Imagine that we want to explore the relationship between the distance and average delay for each location. Using what you know about dplyr, you might write code like this:
+Представьте, что мы хотим изучить связь между расстоянием и средней задержкой для каждого местоположения. Используя то, что вы знаете о dplyr, вы можете написать код следующим образом:
+
+Оператор папинга %>% очень удобен для объединения нескольких функций dplyr в последовательность операций. Обратите внимание, что каждый раз, когда мы хотели применить более одной функции, последовательность вкладывается в последовательности вложенных вызовов функций, которые очень трудно читать, например:
+
+```{}
+third(second(first(x)))
+```
+
+Это сильно отличается от того, как мы думаем и представляем себе последовательность операций. Оператор %>% позволяет вам выполнять последовательность операции  слева направо, т. е.
+
+```{}
+First (x) %>% second %>% third
+```
+
+Например, последние наши действия можно теперь записать более наглядным образом:
+
+```{r}
+group_by(flights, year, month, day) %>% summarize( delay = mean(dep_delay, na.rm = TRUE))
+```
+
+##Разбор возможностей пакетов на примере реальных данных
+
+Возьмем данные из второй задачи по регресиионному линейному анализу и попытаемся подготовить их корелляционному анализу. Воспользуемся функцией read_csv из пакета readr. Она во многои сходна с хорошо известной вам read.csv, но обладает рядом полезных параметров, которые мы попытаемся для себя использовать
+
+```{r}
+tbl = read_csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1")
+tbl
+```
+
+Первое на что вы должны обратить внимание, это то, что полученный в результате объект не является привычным нам data.frame, а некой новой структурой типа 
+tibble. Точнее, на самом деле он является и data.frame тоже и в этом легко убедиться:
+
+```{r}
+class(tbl)
+```
+
+Дело в том, что пакет readr использует пакет tibble из набора tidyverse и преобразует все таблицы в tibble. С tibble вы можете пользоваться 99% всех функций, которыми вы пользовались с data.frame, но помимо этого, он обладает огромным количеством улучшений и "украшательств". Первое из них, это то, как выглядит вывод таблицы. Теперь вы видите только ту ее часть, что помещается на вашем экране, а все остальная информация дается сжато.
+
+Если вернуться к нашей таблице, то мы увидим ряд проблем связанных с ее неправильной организацией. Во первых, первая строчка не содержит имена переменных, а содержит некоторые к ним комментарии, в то время как имена переменных находятся во второй строчке. Соответственно мы должны при чтении файла пропустить первую строчку и начать считывать файл только со второй. Именно для этого большинство функций чтения имеют параметр skip:
+
+```{r}
+tbl = read_csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", skip =1)
+tbl
+```
+
+Как мы видим, теперь проблема решена. Обратите внимание, что readr при чтении таблицы выдает большое количество предупреждений, но при этом продолжает работать. Основная идея авторов заключалась в том, чтобы с одной стороны сделать функцию работающей с самыми сложными и неадекватными данными, но при этом с высокими требованиями к качеству организации данных. Что является взаимноисключающими требованиями, поэтому функции пакета работают с практически любыми данными, но выдают большое количество предупреждений и рекомендаций по их качеству, плюс, например в нашем случае, совершают ряд действий для решения проблем - например переименовывают переменные.
+
+Продолжим изучение нашей таблицы данных. Благодаря подробной выдаче tibble легко заметить, что  все переменные в таблице имеют тип char, что не соответствует действительности. Причиной этого явлется первая строчка таблицы, которая вместо данных содержит их размерность. В принципе удаление строчки не представляет проблемы и мы могли бы избавится от нее стандартным образом tbl = tbl[-1,]. Но это не отменит того факта, что все колонки у нас в талице теперь типа char. Функции пакета readr позволяют нам решить многие проблемы еще на фазе чтения. Воспользуемся параметром comment, который заставляет readr игнорировать все строчки, содержащие определенный символ, легко заметить, что в нашем случае это будет символ "["
+
+```{r}
+tbl = read_csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", skip = 1, comment=c("["))
+tbl
+```
+
+Проблема с типами колонок теперь решена, но мешавшая нам строчка осталась, содержит она только NA и теперь мы точно можем от нее избавиться. Говоря об NA давайте вспомним, что полученные нами данные являются машинно сгенерированными и для обозначения отсутствия данных генератором использовалось значение -9999. Это значение несет в себе информацию аналогичную значению NA в R, а значит мы должны найти и заменить все такие значения. Это действие тоже можно проделать еще на стадии считывания файла
+
+```{r}
+tbl = read_csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", skip = 1, na =c("","NA","-9999","-9999.0"), comment=c("["))
+tbl = tbl[-1,]
+tbl
+```
+
+Теперь данные имеют адекватный вид и мы сделали все, что можно еще на стадии их прочтения. Давайте внимательнее посмотрим на сами переменные и для этого воспользуеся функцией glimpse(), которая более наглядно представляет каждую отдельную переменную, жертуя при этом предсталение строчек данных
+
+```{r}
+glimpse(tbl)
+```
+
+При внимательном рассмотрении можно заметить, что переменная roll содержит только NA, а потому будет только мешать нам при анализе. Избавимся от нее с помощью функции select:
+
+```{r}
+tbl = select(tbl, -(roll))
+```
+
+В нашей таблице довольно много переменных типа char, которые содержат повторяющиеся значения, т.к. их текст, как таковой нас не интересует, преобразуем их все в факторы:
+
+```{r}
+tbl = tbl %>% mutate_if(is.character, factor)
+```
+
+Здесь мы использовали функию mutate_if которая делает преобразование над колонкой - factor() при полученни значения TRUE от функции первого параметра - is.character().
+
+Следующее действие не совершенно не обязательно, но в определенных условиях может сильно упростить вам жизнь. Дело в том, что многие функции, которые работаю с множествами переменных могу рассматривать знаки в именах переменных, как действия над ними, что будет приводить к ошибкам. Так, например, у нас в таблице есть переменные "(z-d)/L", " u*","x_90% " и т.д. Формально этого лучше избегать и использовать только буквы, цифры, нижнее подчеркивание и точки. Т.к. большинство данных, с которыми вам придется работать не будут соответствовать этим критериям, то попытаемся научиться решать эту проблему используя наши данные.
+
+Для этого мы используем функцию str_replace_all из пакета stringr. Она позволяет, использую довольно простой синтаксис, заменить ненужные нам символы:
+
+```{r}
+names(tbl) =  str_replace_all(names(tbl), "[!]","_emph_")
+```
+
+В данном примере, мы говорим, что теперь все имена таблицы должны быть некоторым вектором строк от функции str_replace_all, которая в свою очередь берет все имена из таблицы tbl, заменяет в них все ! на "_emph_" и возвращает их  в виде вектора. Все довольно наглядно, но проблема в том, что нам нужно сделать такое последовательно много раз(т.к. нам нужно избавиться не только от !), что приведет к совершенно не читаемому результату. Поэтому воспользуеися оператором пайппинга
+
+```{r}
+names(tbl) = names(tbl) %>% 
+  str_replace_all("[!]","_emph_") %>% 
+  str_replace_all("[?]","_quest_") %>% 
+  str_replace_all("[*]","_star_") %>% 
+  str_replace_all("[+]","_plus_") %>%
+  str_replace_all("[-]","_minus_") %>%
+  str_replace_all("[@]","_at_") %>%
+  str_replace_all("[$]","_dollar_") %>%
+  str_replace_all("[#]","_hash_") %>%
+  str_replace_all("[/]","_div_") %>%
+  str_replace_all("[%]","_perc_") %>%
+  str_replace_all("[&]","_amp_") %>%
+  str_replace_all("[\\^]","_power_") %>%
+  str_replace_all("[()]","_") 
+glimpse(tbl)
+```
+
+Функция cor работает только с численными данными, поэтому, чтобы перейти к корелляционному анализу нужно выбрать все переменные типа numeric. Для этого воспользуемся двумя функциями - is.numeric(), которая выдает TRUE в случае если вектор является численныи и sapply(), которая берет каждую колонку таблицы, передает ее в функию в виде вектора(в нашем случае этой функцией будет is.numeric) и выдает результат в виде вектора длинной равной количеству колонок в таблице. Давайте проверим, что получится
+
+```{r}
+sapply(tbl,is.numeric)
+```
+
+Для каждой колонки таблицы мы получили значение правда, если она является численной и ложь, если не является. Осталось подставить этот вектор в саму таблицу и получить таблицу состояющую только из интересующих нас колонок
+
+```{r}
+tbl_numeric = tbl[,sapply(tbl,is.numeric) ]
+```
+
+При этом очень легко получить таблицу содержащую все остальные колонки
+
+```{r}
+tbl_non_numeric = tbl[,!sapply(tbl,is.numeric) ]
+```
+
+Теперь мы можем переходить к корелляционному анализу (если вы не помните, что это мы подробно рассмотрим его в следующей части):
+
+```{r}
+cor_td = cor(tbl_numeric)
+cor_td
+```
+
+Ничего не вышло, проблема в том, что почти каждая из переменных содержит пропуски, а это приводит к тому, что невозможно провести попарную ковариацию, что ячляется первой частью корелляционного анализа. Это означает, что нам необходимо избаиться от все строк где есть хоть одно значение NA. Воспользуемся для этого готовой функцией drop_na()
+
+```{r}
+cor_td = cor(drop_na(tbl_numeric))
+cor_td
+```
+
+Полученные результаты довольно тяжело интерпретировать т.к. они выдаются в виде матрицы, поэтому преобразуем матрицу в таблицу, выберем интересующий нас столбец, а из него возьмем только те имена строк(переменных) для которых значения коэффициента детерминации было больше 0,1 (личная прихоть) 
+
+```{r}
+cor_td = cor(drop_na(tbl_numeric)) %>% as.data.frame %>% select(co2_flux)
+vars = row.names(cor_td)[cor_td$co2_flux^2 > .1] %>% na.exclude
+```
+
+Несколько советов для регрессионного анализа. Собрать все переменные из вектора с именнами переменных в одну формулу можно следующим образом:
+```{r}
+formula = as.formula(paste("co2_flux~", paste(vars,collapse = "+"), sep=""))
+formula
+```
+
+Создать произвольные(возможно пересекающиеся) обучающую и тестирующую выборки можно с помощью команды sample_n из пакета dplyr
+
+```{r}
+teaching_tbl = sample_n(tbl, floor(length(tbl$date)*.7))
+testing_tbl = sample_n(tbl, floor(length(tbl$date)*.3))
+```
+
+Если вы хотите сделать непересекающиеся подвыборки, то это можно сделать базовым набором функций
+
+```{r}
+row_numbers = 1:length(tbl$date)
+teach = sample(row_numbers, floor(length(tbl$date)*.7))
+test = row_numbers[-teach]
+
+teaching_tbl_unq = tbl[teach,]
+testing_tbl_unq = tbl[test,]
+```
 
 
-
-###Классификация данных
-
-+------------------------------+------------------------------------------+
-|*Machine learning terminology*|*Typical Algorithm*                       |
-+------------------------------+------------------------------------------+
-|Classification: assigning     | Decision trees                           |
-|known labels to objects       | Naive Bayes                              |
-|                              | Logistic regression (witha threshold)    |
-|                              | Support vector machines                  |
-+------------------------------+------------------------------------------+
-|Regression: predicting or     | Linear regression                        |
-|forecasting numerical         | Logistic regression                      |
-|values                        |                                          |
-+------------------------------+------------------------------------------+
-|Association rules:            | Apriori                                  | 
-|finding objects that          |                                          |
-|tend to appear in             |                                          |
-|the data together             |                                          |
-+------------------------------+------------------------------------------+
-|Clustering: finding groups of | K-means                                  |
-|objects that are more similar |                                          |
-|to each other than to objects |                                          |
-|in other groups               |                                          |
-+------------------------------+------------------------------------------+
-|Nearest neighbor: predicting  | Nearest neighbor                         |
-|property of a datum based on  |                                          |  
-|the datum or data that are    |                                          |
-|most similar to it            |                                          |
-+------------------------------+------------------------------------------+
-
-
-When building a model, the first thing to check is if the model even works on the data
-it was trained from. In this section, we do this by introducing quantitative measures of
-model performance. From an evaluation point of view, we group model types this way.
-
-1. Classification
-2. Scoring
-3. Probability estimation
-4. Raking
-5. Clustering
- 
-+------------+------------------------------------------------------------------------------------+
-|Null model  |A null model is the best model of a very simple form you’re trying to outperform.   |
-|            |The two most typical null model choices are a model that is a single                |
-|            |constant (returns the same answer for all situations) or a model that is            |
-|            |independent (doesn’t record any important relation or interaction between           |
-|            |inputs and outputs). We use null models to lower-bound desired performance,         |
-|            |so we usually compare to a best null model. For example, in a categorical           |
-|            |problem, the null model would always return the most popular                        |
-|            |category (as this is the easy guess that is least often wrong); for a score         |
-|            |model, the null model is often the average of all the outcomes (as this has         |
-|            |the least square deviation from all of the outcomes); and so on. The idea is        |
-|            |this: if you’re not out-performing the null model, you’re not delivering value.     |
-|            |Note that it can be hard to do as good as the best null model, because even         |
-|            |though the null model is simple, it’s privileged to know the overall distribution   |
-|            |of the items it will be quizzed on. We always assume the null model                 |
-|            |we’re comparing to is the best of all possible null models.                         |
-+------------+------------------------------------------------------------------------------------+
-|Bayes rate  |A Bayes rate model (also sometimes called a saturated model) is a best              |
-|model       |possible model given the data at hand. The Bayes rate model is the perfect          |
-|            |model and it only makes mistakes when there are multiple examples with              |
-|            |the exact same set of known facts (same xs) but different outcomes (different       |
-|            |ys). It isn’t always practical to construct the Bayes rate model, but we            |
-|            |invoke it as an upper bound on a model evaluation score.                            |
-|            |If we feel our model is performing significantly above the null model rate and      |
-|            |is approaching the Bayes rate, then we can stop tuning. When we have a lot          |
-|            |of data and very few modeling features, we can estimate the Bayes error             |
-|            |rate. Another way to estimate the Bayes rate is to ask several different people     |
-|            |to score the same small sample of your data; the found inconsistency                |
-|            |rate can be an estimate of the Bayes rate.a                                         |
-+------------+------------------------------------------------------------------------------------+
- 
- 
- 
-
-+---------------------------+-------------------------------+---------------------------------------+ 
-|                           |Prediction=NEGATIVE            |Prediction=POSITIVE                    |
-+---------------------------+-------------------------------+---------------------------------------+ 
-|Truth mark=NOT IN CATEGORY |True negatives (TN) cM[1,1]=264|False positives (FP) cM[1,2]=14        |
-+---------------------------+-------------------------------+---------------------------------------+ 
-|Truth mark=IN CATEGORY     |False negatives (FN) cM[2,1]=22| True positives (TP) cM[2,2]=158       |
-+---------------------------+-------------------------------+---------------------------------------+
-
-
-
-+-------------+---------------------+
-|Measure      | Formula             |
-+-------------+---------------------+
-|Accuracy     |(TP+TN)/(TP+FP+TN+FN)|
-+-------------+---------------------+
-|Precision    |TP/(TP+FP)           |
-+-------------+---------------------+
-|Recall       |TP/(TP+FN)           |
-+-------------+---------------------+
-|Sensitivity  |TP/(TP+FN)           |
-+-------------+---------------------+
-|Specificity  |TN/(TN+FP)           |
-+-------------+---------------------+
-
-###Make a table
-+------------+------------------------------------------------------------------------------------+
-|Measure     |Typical business need Follow-up question Accuracy “We need most of our decisions to |
-|            |be correct.”“Can we tolerate being wrong 5% of the time? And do users see mistakes  |
-|            | like spam marked as non-spam or non-spam marked as spam as being equivalent?”      |
-+------------+------------------------------------------------------------------------------------+
-|Precision   |“Most of what we marked as spam had darn well better be spam.” That would guarantee |
-|            |that most of what is in the spam folder is in fact spam but it isn’t the best way to| 
-|            |measure what fraction of the user’s legitimate email is lost. We could cheat on this| 
-|            |goal by sending all our users a bunch of easy-to-identify spam that we correctly    |
-|            |identify. Maybe we really want good specificity.”                                   |
-+------------+------------------------------------------------------------------------------------+
-|Recall      | “We want to cut down on the amount of spam a user sees by a factor of 10 (eliminate|
-|            | 90% of the spam).” “If 10% of the spam gets through, will the user see mostly      |
-|            | non-spam mail or mostly spam? Will this result in a good user experience?”         |
-+------------+------------------------------------------------------------------------------------+
-|Sensitivity |“We have to cut a lot of spam, otherwise  the user won’t see a benefit.”            |
-|            |“If we cut spam down to 1% of what it is now,would that be a good user experience?” |
-|            |                                                                                    |
-+------------+------------------------------------------------------------------------------------+
-|Specificity |“We must be at least three nines on legitimate email; the user must see at least    |         
-|            | 99.9%of their non-spam email.” “Will the user tolerate missing 0.1% of their       |
-|            |legitimate email, and should we keep a spam folder the user can look at?”           |
-+------------+------------------------------------------------------------------------------------+
- 
-
-CORRELATION
-Correlation is very helpful in checking if variables are potentially useful in a model. Be
-advised that there are at least three calculations that go by the name of correlation:
-Pearson, Spearman, and Kendall (see help(cor)). The Pearson coefficient checks for
-linear relations, the Spearman coefficient checks for rank or ordered relations, and
-the Kendall coefficient checks for degree of voting agreement. Each of these coefficients
-performs a progressively more drastic transform than the one before and has
-well-known direct significance tests (see help(cor.test)).
-
-***DON’T USE CORRELATION TO EVALUATE MODEL QUALITY IN PRODUCTION***
-
-It’s tempting to use correlation to measure model quality, but we advise against it.
-The problem is this: correlation ignores shifts and scaling factors. So correlation
-is actually computing if there is any shift and rescaling of your predictor
-that is a good predictor. This isn’t a problem for training data (as these predictions
-tend to not have a systematic bias in shift or scaling by design) but
-can mask systematic errors that may arise when a model is used in production.
-
-
-***THE WORST POSSIBLE MODELING OUTCOME***
-The worst possible modeling outcome is not failing to find a good model. The worst possible modeling outcome
-is thinking you have a good model when you don’t. One of the easiest
-ways to accidentally build such a deficient model is to have an instrumental or
-independent variable that is in fact a subtle function of the outcome. Such
-variables can easily leak into your training data, especially when you have no
-knowledge or control of variable meaning preparation. The point is this: such
-variables won’t actually be available in a real deployment and often are in
-training data packaged up by others.
-2
