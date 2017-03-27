@@ -9,4 +9,10 @@ output:
       after_body: [include_footer.html]
 ---
 
+<iframe width="640" height="360" src="https://www.youtube.com/embed/X6bYzHm88sg?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/d4Knr7iDDMU?rel=0" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/D3F4nsGkIXY?rel=0" frameborder="0" allowfullscreen></iframe>
+
 <ul class="nav nav-pills nav-stacked nav-docs"><li><a href="http://r.psylab.info/library/">Библиотека материалов по R</a></li><li><a href="http://datacamp.com">Datacamp - обучение R</a></li><li> <a href="http://www.ievbras.ru/ecostat/Kiril/R/Mastitsky%20and%20Shitikov%202014.pdf">Учебник по R от Мастицкого и Шитикова</a></li></ul>
