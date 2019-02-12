@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -20,8 +20,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -70,7 +72,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
+<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
 </head>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,14 +111,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -547,8 +615,8 @@ ratio=summary(dna)/sum(summary(dna))</code></pre>
 <p>sample: * mixing * generating</p>
 <pre class="r"><code>dna=factor(rep(c(&quot;T&quot;,&quot;G&quot;,&quot;C&quot;,&quot;A&quot;),c(16,38,6,10)))
 sample(dna)</code></pre>
-<pre><code>##  [1] G C T C G A T G C T G G G T G A G G G T G G T G A G G G G A G G G G G
-## [36] G A A G A C G G T T G G A T T G A G T T G G G T G T C G G T T A G G C
+<pre><code>##  [1] G G G G G T G G T G T G G A T G T A G T C G G G G G G G T G G G A G G
+## [36] T C A G C G G A T G C G T G A G T T G G A G G T A G T G A A C T C T G
 ## Levels: A C G T</code></pre>
 <pre class="r"><code>dna</code></pre>
 <pre><code>##  [1] T T T T T T T T T T T T T T T T G G G G G G G G G G G G G G G G G G G
@@ -559,16 +627,16 @@ sample(dna)</code></pre>
 # а вот следующий код будет работать, т.к. replace=TRUE генерирует выборки любого 
 # размера исходя из пропопрций элемнтов данной выборки
 sample(dna,size=84, replace=TRUE)</code></pre>
-<pre><code>##  [1] G G G G G G C G G T G T G T T G G T G G G T T G G A G G T G G G G G C
-## [36] G G G T T T G G G C C T T G G G G T T A G G G A G C G G G G T G G T T
-## [71] C G G G T C G A T G G A G T
+<pre><code>##  [1] G A G T A A C A T T G G T G T C G A T G C G G A G G G A G T G G G G T
+## [36] G G A G G T G G T T G A G G A G G G T G G G T G T T G T G T T G G T T
+## [71] G G G T G G T T G G G G T G
 ## Levels: A C G T</code></pre>
 <pre class="r"><code>sampledna=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;C&quot;), size=10000,replace=TRUE)
 ratio=summary(factor(sampledna))/length(sampledna)
 ratio2=summary(factor(dna))/length(dna)
 ratio</code></pre>
 <pre><code>##      A      C      G      T 
-## 0.2483 0.2526 0.2465 0.2526</code></pre>
+## 0.2430 0.2525 0.2561 0.2484</code></pre>
 <pre class="r"><code>ratio2</code></pre>
 <pre><code>##          A          C          G          T 
 ## 0.14285714 0.08571429 0.54285714 0.22857143</code></pre>
@@ -601,18 +669,19 @@ union(x,y)</code></pre>
 ratio=summary(factor(dna2))/length(dna2)
 ratio</code></pre>
 <pre><code>##         A         C         G         T 
-## 0.1667908 0.1664576 0.5000435 0.1667082</code></pre>
+## 0.1671323 0.1667110 0.4994286 0.1667280</code></pre>
 <pre class="r"><code>dna2=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;C&quot;), size=3826513,prob=c(.5/3,.5/3,.5,.5/3),replace=TRUE)
 ratio=summary(factor(dna2))/length(dna2)
 ratio</code></pre>
 <pre><code>##         A         C         G         T 
-## 0.1664001 0.1668597 0.4996646 0.1670756</code></pre>
+## 0.1667536 0.1665388 0.5001049 0.1666026</code></pre>
 </div>
 </div>
 <div id="data-frames--" class="section level1">
 <h1>## Data frames -Таблицы</h1>
 <div id="--" class="section level4">
 <h4>Выборки из таблиц</h4>
+<div class="fold o">
 <pre class="r"><code>iris[iris$Species==c(&quot;setosa&quot;,&quot;virginica&quot;),]</code></pre>
 <pre><code>##     Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
 ## 1            5.1         3.5          1.4         0.2    setosa
@@ -665,6 +734,8 @@ ratio</code></pre>
 ## 146          6.7         3.0          5.2         2.3 virginica
 ## 148          6.5         3.0          5.2         2.0 virginica
 ## 150          5.9         3.0          5.1         1.8 virginica</code></pre>
+</div>
+<div class="fold o">
 <pre class="r"><code>iris[iris$Species==&quot;setosa&quot; | iris$Species==&quot;virginica&quot;,c(&quot;Petal.Length&quot;,&quot;Species&quot;)]</code></pre>
 <pre><code>##     Petal.Length   Species
 ## 1            1.4    setosa
@@ -768,6 +839,7 @@ ratio</code></pre>
 ## 149          5.4 virginica
 ## 150          5.1 virginica</code></pre>
 </div>
+</div>
 <div id="---" class="section level4">
 <h4>Основные типы структур данных</h4>
 <table>
@@ -782,7 +854,7 @@ ratio</code></pre>
 <tr class="odd">
 <td>Vector</td>
 <td>c()</td>
-<td><span class="math display">\[i\]</span> -position or logic</td>
+<td>[i] -position or logic</td>
 </tr>
 <tr class="even">
 <td>Factor</td>
@@ -792,17 +864,17 @@ ratio</code></pre>
 <tr class="odd">
 <td>Matrix</td>
 <td>matrix()</td>
-<td><span class="math display">\[row,col\]</span>; <span class="math display">\[i\]</span> - positional logical</td>
+<td>[row,col]; [i] - positional logical</td>
 </tr>
 <tr class="even">
 <td>List</td>
 <td>list()</td>
-<td><span class="math display">\[\[i\]</span>], $</td>
+<td>[[i]], $</td>
 </tr>
 <tr class="odd">
 <td>dataframe</td>
 <td>data.frame()</td>
-<td><span class="math display">\[,\]</span> $</td>
+<td>[,] $</td>
 </tr>
 </tbody>
 </table>
@@ -946,7 +1018,7 @@ if ((x[i]^2+y[i]^2)&gt;1)
 }
 Pi=4*Nr/(Ns+Nr)
 Pi</code></pre>
-<pre><code>## [1] 3.1428</code></pre>
+<pre><code>## [1] 3.14068</code></pre>
 <pre><code>## [1] 3.139</code></pre>
 <div class="section level4">
 <h4>Красиво</h4>
@@ -965,7 +1037,7 @@ plot(pis,type=&quot;l&quot;)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-2.png" /><!-- --></p>
 <pre class="r"><code>mean(pis)</code></pre>
-<pre><code>## [1] 3.139107</code></pre>
+<pre><code>## [1] 3.142131</code></pre>
 <pre><code>## [1] NA</code></pre>
 </div>
 <div id="-iris-data.frame---------------------" class="section level4">
@@ -1834,22 +1906,22 @@ library(ggplot2)</code></pre>
 <div id="-geom_point--geom_smooth--" class="section level1">
 <h1>Добавим geom_point() и geom_smooth() через символ +</h1>
 <pre class="r"><code>ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39;</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <pre class="r"><code># The plot you created in the previous exercise
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point() +
   geom_smooth()</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39;</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <pre class="r"><code># Copy the above command but show only the smooth line
 ggplot(diamonds, aes(x = carat, y = price)) +  geom_smooth()</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39;</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <pre class="r"><code># Copy the above command and assign the correct value to col in aes()
 ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
   geom_smooth()</code></pre>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39;</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <pre class="r"><code># Keep the color settings from previous command. Plot only the points with argument alpha.
 ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
@@ -1923,7 +1995,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

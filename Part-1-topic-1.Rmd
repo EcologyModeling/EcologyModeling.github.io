@@ -642,27 +642,29 @@ ratio
 
 #### Выборки из таблиц
 
+<div class="fold o">
 ```{r}
 iris[iris$Species==c("setosa","virginica"),]
 ```
+</div>
 
 
-
+<div class="fold o">
 ```{r}
 iris[iris$Species=="setosa" | iris$Species=="virginica",c("Petal.Length","Species")]
 ```
-
+</div>
 
 
 #### Основные типы структур данных
 
 | Type      | Function     | Options                                 |
 |-----------|--------------|-----------------------------------------|
-| Vector    | c()          | \[i\] -position or logic                |
-| Factor    | factor()     | \[\] - position or logic                |
-| Matrix    | matrix()     | \[row,col\]; \[i\] - positional logical |
-| List      | list()       | \[\[i\]\], $                            |
-| dataframe | data.frame() | \[,\] $                                 |
+| Vector    | c()          | [i] -position or logic                  |
+| Factor    | factor()     | [] - position or logic                  |
+| Matrix    | matrix()     | [row,col]; [i] - positional logical     |
+| List      | list()       | [[i]], $                                |
+| dataframe | data.frame() | [,] $                                   |
 
 #### Виды у которых Petal.Length&gt;2 но &lt;3, вывести виды и количество попадений в условия
 
