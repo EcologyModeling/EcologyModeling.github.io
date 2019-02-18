@@ -1,0 +1,516 @@
+---
+title: "Введение в R. Часть 3"
+author: "А. М. Ярославцев"
+output:
+  rmdshower::shower_presentation:
+    self_contained: false
+    katex: true
+    ratio: 16x10
+    css: styles.css
+---
+
+# Введение в R. Ч3.
+
+
+---
+
+## Циклы с подсчетом повторов - for
+
+for (i in от:до) { действия}
+
+```{r}
+y=c()
+for (i in 1:10)
+{
+  x=i+2
+  y=c(y,x)
+}
+y
+```
+
+---
+ 
+```{r}
+l = list(1:10,-2:10,-9:-3,400:1000, 120:190)
+mn=c()
+for (i in 1:length(l))
+  {
+    mn=c(mn,mean(l[[i]]))
+  }
+mn
+```
+
+---
+
+## Пример 1 - Вычисление числа пи методом Монте-Карло
+ * Число пи = 3,14592653 - отношение длины окружности к ее диаметру
+ * Функция runif (a, min, max) - создает a случайных равнораспределенных  чисел от min до max
+
+Попробуйте запустить алгоритм для разных а, например, 3, 10, 100, 100000
+
+---
+
+```{r}
+a=100000
+x=runif(a,-1,1) 
+y=runif(a,-1,1) 
+Pi=0 ; Nr=0 ; Ns=0
+
+for (i in 1:a)
+{
+if ((x[i]^2+y[i]^2)>1)
+  { 
+    Ns=Ns+1
+     }
+  else
+  {
+    Nr=Nr+1
+     }
+}
+Pi=4*Nr/(Ns+Nr); Pi
+```
+
+--- 
+
+## Визуализация алгоритма вычисления числа пи
+
+Нарисуйте графики для 100, 1000, 3000 и 10000 итераций
+
+```{r}
+pis=c()
+for (i in seq(10,3000,10))
+    { x=runif(i,-1,1)
+      y=runif(i,-1,1)
+      z=table(x^2+y^2<=1)
+      my_p=4*z[2]/i
+      pis=c(pis,my_p)
+    }
+mean(pis)
+```
+
+---
+
+```{r}
+
+plot(pis,type="l")
+```
+
+---
+
+```{r}
+hist(pis,nclas=100)
+```
+
+---
+
+## Пример 2 - создание списка, содержащего матрицу
+
+* Взяв таблицу данных iris, получить список (list), 
+* содержащий матрицы 2 x 2 для каждого объекта (строки): 
+     + значение 1-го признака, 
+     + значение 2-го признака, 
+     + сумма всех значений признака 1 минус значение для данной строки, 
+     + сумма всех значений признака 1 минус значение для данной строки  
+     
+     
+---
+
+
+```{r}
+iris[1:6,]
+
+```
+
+---
+
+* функция sum() подсчитывает сумму всех значений
+* функция dim(v)=c(2,2) задает размерность переменной v
+
+
+```{r}
+l=list()
+for (i in 1:length(iris[,1]))
+  {
+   v=c(iris[i,1],sum(iris[,1])-iris[i,1],iris[i,2],sum(iris[,2])-iris[i,2])
+  # print(v)
+   dim(v)=c(2,2)
+  # print(v)
+   l2=list(v)
+   l=c(l,l2)
+   }
+
+```
+
+---
+
+```{r}
+
+l[1:3]
+
+```
+
+---
+
+## Функции группы Apply
+
+Функции группы apply()  позволяют применить какую-либо функцию к массивам большой размерности:
+
+* apply (data.frame(), 1 or 2, FUNCTION) 
+* 1 - применить к строке или 
+* 2- столбцу
+
+---
+
+* lapply(list, FUNCTION) - аналогичная функция, в качестве результата выдает список
+* sapply(list, FUNCTION) - аналогичная функция, в качестве результата выдает вектор
+* tapply(vector,factor, FUN) - выбирает и группирует строки по градациям фактора и применяет функцию к каждой полученной группе
+
+---
+
+```{r}
+apply(iris[,1:4],2,sum)
+```
+
+
+```{r}
+tapply(iris$Sepal.Length, iris$Species, sum)
+```
+
+---
+
+## Базовая графика - функция plot(x,y)
+
+```{r}
+
+plot(5:10)
+```
+
+---
+
+```{r}
+x=c(2,4, 6, 8, 11,12,15)
+y=c(3, 5, 6, 5,4, 6, 4)
+plot(x,y)
+```
+
+---
+
+```{r}
+plot(x,y, type="l")
+```
+
+---
+
+```{r}
+plot(x,y, type="b")
+```
+
+---
+
+```{r}
+plot(x,y,type="h")
+```
+
+---
+
+```{r}
+plot(x,y,type="s", col=rgb(.90,.10,.10,.9))
+```
+
+---
+
+```{r}
+ # подписи и заголовок
+ plot(x,y,main="Title",xlab="X",ylab="Y")
+```
+
+
+---
+
+```{r}
+
+ # графики с разным размером, цветом и формой символов
+# plot(x,y,pch=16,col="red")
+# plot(x,y,pch=8,cex =3, col="black")
+ plot(x,y,pch=16,cex =10, col="blue")
+# plot(x,y,pch=19,cex =5, col="green")
+```
+
+---
+
+```{r} 
+
+
+#графики с разными границами на осях  
+#plot(x,y,col="red",xlim=c(2,5),ylim=c(0,10))
+ plot(x,y,col="red",xlim=c(-3,20),ylim=c(0,20))
+```
+
+---
+
+```{r} 
+ 
+ #графики с разными линиями 
+# plot(x, y,  type= "l", lty=5,lwd=5,  col ="blue") 
+ plot(x, y,  type= "l", lty=9,lwd=7,  col ="green") 
+```
+
+---
+
+```{r} 
+ 
+ 
+ #посмотреть текущие настройки 
+ par()
+
+```
+
+---
+
+```{r} 
+
+ #сделать подписи к осям красными
+ par(col.lab="red") # par(col.lab="brown")
+ hist(mtcars$mpg, col="green")  #нарисовать график с новыми настройками
+ 
+```
+
+---
+
+```{r} 
+ #размер текста и символов
+ plot(mtcars$mpg~mtcars$wt,main="Normal title")
+```
+
+---
+
+```{r} 
+ #увеличение заголовка
+ plot(mtcars$mpg~mtcars$wt,main="Huge title",cex.main=3)
+```
+
+---
+
+```{r} 
+ #увеличение текста по осям
+ plot(mtcars$mpg~mtcars$wt,main="title",cex.axis=3)
+```
+
+---
+
+```{r}
+ #увеличение подписей по осям
+ plot(mtcars$mpg~mtcars$wt,main="title",cex.lab=1.8)
+ 
+```
+
+---
+
+```{r}  
+ #построение матрицы диаграмм рассеивания 
+ pairs(mtcars[,c(1,3,5,6)],main="Simple Scatterplot Matrix")
+
+```
+
+---
+
+```{r}  
+ 
+ #круговая диаграмма 
+ Texture=c(3,15,62,8,6,6)
+ names(Texture)=c("средний песок","мелкий песок","крупная пыль","средняя пыль","мелкая пыль","ил")
+ pie(Texture, cex = 0.6, radius = 0.9, init.angle = -10, 
+  main = "Гран. состав гор. A1 агросерой почвы", col = c(2:8))
+
+```
+
+---
+
+```{r}
+ #комбинация графиков
+ par(mfrow=c(2,2));  plot(mtcars$wt,mtcars$mpg) 
+ plot(mtcars$wt,mtcars$disp);  hist(mtcars$wt); boxplot(mtcars$wt)
+ # снятие комбинации графиков
+ par(mfrow=c(1,1))
+```
+
+
+
+
+---
+
+```{r}
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type="h")
+```
+
+---
+
+```{r}
+plot(seq(-10,10,.01), sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="h", xlim=c(-20,20), ylim=c(-5,5))
+```
+
+---
+
+```{r}
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="h", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)")
+```
+
+---
+
+```{r}
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="l", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=.4)
+```
+
+---
+
+```{r}
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="l", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=4, lty=4)
+```
+
+---
+
+```{r}
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="b", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=4, lty=4, pch=4)
+```
+
+---
+
+```{r}
+####Добавление линий на график
+plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type="l")
+lines(seq(-10,10,.01),rep(c(0),2001), type="l", col="red")
+```
+
+---
+
+```{r}
+x=(seq(-10,10,.01))
+plot(x, (1-x^2)^.5, type="l",ylim=c(1,-1), xlim=c(-1,1))
+lines(x, -((1-x^2)^.5)); lines(rep(c(0),401),seq(-2,2,.01))
+lines(seq(-2,2,.01),rep(c(0),401))
+```
+
+---
+
+## Пакет ggplot2 
+
+
+```{r}
+#install.packages("ggplot2")
+library(ggplot2)
+```
+
+---
+
+Cодержимое данных mtcars посмотрим с помощью функции str()
+
+```{r}
+str(mtcars)
+```
+
+---
+
+```{r}
+ggplot(mtcars, aes(x = cyl, y = mpg)) +
+  geom_point()
+```
+
+---
+
+```{r}
+# Построим график рассматривая cyl как фактор
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_point()
+```
+
+---
+
+
+```{r}
+
+#Точечная диаграмма
+ggplot(mtcars, aes(x = wt, y = mpg)) +   geom_point()
+```
+
+---
+
+
+
+
+```{r}
+# ggplot умеет автоматически создавать легенды для категориальных переменных, например когда вы задаете ее цветом точек.
+ggplot(mtcars, aes(x = wt, y = mpg, col = disp)) +
+  geom_point()
+```
+
+---
+
+
+```{r}
+#Точкам можно задавать размер
+ggplot(mtcars, aes(x = wt, y = mpg, size = disp)) +
+  geom_point()
+```
+
+---
+
+
+
+```{r}
+# Добавим geom\_point() и geom\_smooth() через символ +
+ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()
+```
+
+---
+
+```{r}
+# Построим график
+ggplot(diamonds, aes(x = carat, y = price)) +
+  geom_point() +  geom_smooth()
+```
+
+---
+
+```{r}
+# Покажем только сглаженную линию
+ggplot(diamonds, aes(x = carat, y = price)) +  geom_smooth()
+```
+
+---
+
+```{r}
+# Зададим правильное значение  col из aes()
+ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
+  geom_smooth()
+```
+
+---
+
+```{r}
+# Сохранием настройки из предыдущей команды. Нарисуем только точки с указанным значением alpha.
+ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
+  geom_point(alpha = 0.4)
+```
+
+---
+
+```{r}
+# Создадим объекты, содержащие данные и слои aes: dia_plot
+dia_plot = ggplot(diamonds, aes(x = carat, y = price))
+
+# Добавим слой  geom с точками geom_point()
+
+dia_plot + geom_point()
+```
+
+---
+
+```{r}
+#Добавим тот же  geom layer, но со значениеями aes() внутри
+
+dia_plot + geom_point(aes(col=clarity))
+```
+
+
+
+

@@ -896,7 +896,7 @@ code, .code {
       font: 14px/1.5em "Fira Code";
       font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
       text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
-      width: 30em;
+      width: 60em;
       margin: 5em auto;
       white-space: pre-wrap;
       word-break: break-all;
