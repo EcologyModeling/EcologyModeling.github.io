@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -72,7 +72,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
+<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
 </head>
 
@@ -183,10 +183,10 @@ $(document).ready(function () {
 
 
 
-<div id="rStudioHeader" class="alwaysShrunk">
+<!--<div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
 
 
@@ -203,6 +203,43 @@ $(document).ready(function () {
     </div>
   </div>
 </div>
+-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">Математическое моделирование в экологии</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Занятия<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+
+                <li><a href="Part-1-topic-1.html">Введение в R</a></li>
+                <li><a href="Part-2-topic-2.html">Физические модели</a></li>
+                <li><a href="Part-3-topic-1.html">Манипуляции над данными</a></li>
+                <li><a href="Part-4-topic-1.html">Линейная регрессия</a></li>
+                <li><a href="Part-4-topic-2.html">Логистическая регрессия</a></li>
+                <li><a href="Part-5-topic-1.html">Рандомизация и бутстреп</a></li>
+                
+              </ul>
+            </li>
+            <li><a href="Tests.html" target="_blank">Задания</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="materials.html" target="_blank">Материалы</a></li>
+            <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+                <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
+          </ul>
+    </div>
+  </div>
+</div>
+
 
 <style type="text/css">
 #TOC {
@@ -226,23 +263,62 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
   display: none;
 }
 </style>
-<div id="homeContent">
-  <div class="band full blue first rightText">
-    <div class="bandContent vCenter">
-      <div class="blurb">
-        <div class="tagline">Добро пожаловать!</div>
-        <div>Данный ресурс посвящен ряду очных курсов под общим названием "Математическое моделрование и проекктирование в экологии". Курс читается для магистрантов первого года обучения Факультета почвоведения, агрохимии и экологии. На данном сайте будут публиковаться тексты проходимых занятий и материалы необходимые для успешного прохождения данного курса.</div>
-      </div>
-    </div>
-    <img class="imageOne" src="images/bandOne.png"/>
-  </div>
+<div class="jumbotron text-center">
+  <h1>Математическое моделрование и проектирование в экологии</h1>
+  <p>С помощью языка R и среды разработки RStudio</p> 
+</div>
+<section class="success" id="welcome">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Добро пожаловать!</h2> 
+                <hr class="star-light">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10 text-justify">
+                <p>Данный ресурс посвящен ряду очных курсов под общим названием "Математическое моделрование и проектирование в экологии". Курс читается для магистрантов первого года обучения Факультета почвоведения, агрохимии и экологии. На данном сайте будут публиковаться тексты проходимых занятий и материалы необходимые для успешного прохождения данного курса.</p>
+                <p>В связи с невероятно быстро растущей популярностью и очень широким полем текущего применения языка R в экологии и ряд других научных и прикладных областей деятельности, моделированние в данном курсе будет изучатся на языке R. Язык довольно специфичен, но при этом относительно прост в освоении даже для людей не знакомых с программированием. В связи со свободной формой его распространения (open source) и интерес со сторонны гигантов рынка программного обеспечения на данный момент язык обладает хорошо развитой инфраструктурой и невероятно широким набором библиотек. Все необходимые операции по установке и настройке среды разработки для языка R описаны в соответствующем разделе.</p>
+                
+            </div>
+        </div>
+        <div class="row">
 
-  <div class="band full gray1 second leftText">
-    <div class="bandContent vCenter">
-      <div class="blurb long">
-        <div>В связи с невероятно быстро растущей популярностью и очень широким полем текущего применения языка R в экологии и ряд других научных и прикладных областей деятельности, моделированние в данном курсе будет изучатся на языке R. Язык довольно специфичен, но при этом относительно прост в освоении даже для людей не знакомых с программированием. В связи со свободной формой его распространения (open source) и интерес со сторонны гигантов рынка программного обеспечения на данный момент язык обладает хорошо развитой инфраструктурой и невероятно широким набором библиотек. Все необходимые операции по установке и настройке среды разработки для языка R описаны в соответствующем разделе. </div>
-      </div>
+        </div>
     </div>
+</section>
+<section  id="history">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Как пользоваться этим ресурсом</h2> 
+                <hr class="star-light">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10 text-justify">
+                <p>Для успешного прохождения курса вам необходимо вы полнить 4 основных задания, которые вы можете найти в соответствующем разделе. Помочь вам в этом должны дополнительные материалы и теоретические введения с практическими примерами. Наиболее оптимальной нам кажется следующая последовательность действий</p>
+                <ol>
+                  <li>Посмотрите видеоурок "Установка R,Rstudio и настройка GitHub"</li>
+                  <li>Установите R,Rstudio и настройте GitHub, создав перед этим свой аккаунт по инструкции</li>
+                  <li>Прочитайте раздел "Введение в R"</li>
+                  <li>Попытайтесь выполнить задания если вы уверены, что разобрались с базовым синтаксисом</li>
+                  <li>Прочитайте раздел "Манипуляции с данными"</li>
+                  <li>Ознакомьтесь с презентациями по набору пакетов Tidyverse</li>
+                  <li>Приступайте к выполнению задания №1</li>
+                  <li>Прочитайте раздел "Создание моделей линейной регрессии"</li>
+                  <li>Перечитайте раздел "Манипуляции с данными"</li>
+                  <li>Посмотрите лекцию "Корелляция и линейная регрессия"</li>
+                  <li>Приступайте к выполнению задания №2</li>
+                </ol>
+                
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+</section>
 
 <div class="fluid-row" id="header">
 
@@ -265,39 +341,31 @@ $("#pageContent").removeClass("standardPadding");
     
   </div>
 
-<!-- <div class="band full third rightText">
-    <img class="imageThree" src="images/bandThree2.png"/>
-    <div class="bandContent vCenter">
-      <div class="blurb">
-        <div>
-          R Markdown supports dozens of static and dynamic output formats including
-          <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">MS Word</a>, <a href="beamer_presentation_format.html">Beamer</a>, <a href="ioslides_presentation_format.html">HTML5 slides</a>, <a href="tufte_handout_format.html">Tufte-style handouts</a>, <a href="https://bookdown.org">books</a>, <a href="flexdashboard/">dashboards</a>,
-          <a href="authoring_shiny.html">shiny applications</a>, <a href="https://github.com/rstudio/rticles">scientific articles</a>, <a href="rmarkdown_websites.html">websites</a>, and more.
-        </div>
-        <div class="actions">
-          <div><a href="lesson-1.html"><button class="bigButton getStarted">Get Started</button></a></div>
-          <div><a href="gallery.html"><button class="bigButton gallery">See Gallery</button></a></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>-->
+
 
 
 
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 

@@ -1,5 +1,54 @@
+/*Fira Code*/
+@font-face{
+    font-family: 'Fira Code';
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Light.eot');
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Light.eot') format('embedded-opentype'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Light.woff2') format('woff2'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff/FiraCode-Light.woff') format('woff'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Fira Code';
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Regular.eot');
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Regular.eot') format('embedded-opentype'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Regular.woff2') format('woff2'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff/FiraCode-Regular.woff') format('woff'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Fira Code';
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Medium.eot');
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Medium.eot') format('embedded-opentype'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Medium.woff2') format('woff2'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff/FiraCode-Medium.woff') format('woff'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Fira Code';
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Bold.eot');
+    src: url('https://github.com/tonsky/FiraCode/raw/master/distr/eot/FiraCode-Bold.eot') format('embedded-opentype'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff2/FiraCode-Bold.woff2') format('woff2'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/woff/FiraCode-Bold.woff') format('woff'),
+         url('https://github.com/tonsky/FiraCode/raw/master/distr/ttf/FiraCode-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+
+
+/******************/ 
 body {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: "PT Sans", Helvetica, Arial, sans-serif;
   background-color:#fff;
 
   font-weight: normal;
@@ -220,11 +269,11 @@ p {
   text-decoration: none;
 }
 
-#rStudioHeader #menu .menuItem.gitHub {
+.menuItem.gitHub {
   width: 20px;
   height: 20px;
   padding: 0px;
-  margin: 0px 0px 0px 10px;
+  margin: 20px 0px 0px 10px;
 
   background-image: url(../images/gitHubLogo.svg);
   background-repeat: no-repeat;
@@ -234,7 +283,7 @@ p {
   vertical-align: bottom;
 }
 
-#rStudioHeader #menu .menuItem.gitHubText {
+.menuItem.gitHubText {
   display: none;
 }
 
@@ -493,76 +542,7 @@ p {
   background-color: #75aadb;
 }
 
-#rStudioFooter {
-  position: relative;
-  z-index: 2;
 
-  box-sizing: border-box;
-  height: 91px;
-}
-
-#rStudioFooter.band {
-
-  background-color: #75aadb;
-  padding: 30px 5%;
-  margin-top:64px;
-  color: #fff;
-
-  font-weight: 300;
-  font-size: 12px;
-
-  line-height: 25px;
-}
-
-#rStudioFooter .bandContent {
-  color: #fff;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  line-height: 20px;
-}
-
-#rStudioFooter .bandContent #copyright {
-  flex-shrink: 5;
-}
-
-#rStudioFooter .bandContent #logos {
-  flex-shrink: 1;
-}
-
-#rStudioFooter .bandContent .footerLogo {
-  display: inline-block;
-  height: 25px;
-  width: 25px;
-
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: center center;
-
-  margin: 0 8px;
-}
-
-#rStudioFooter .bandContent #logos .footerLogo:last-child {
-  margin-right: 0px;
-}
-
-#rStudioFooter .bandContent .footerLogo.twitter {
-  background-image: url(../images/twitterLogo.svg);
-}
-
-#rStudioFooter .bandContent .footerLogo.gitHub {
-  background-image: url(../images/gitHubLogo2.svg);
-}
-
-#rStudioFooter .bandContent .footerLogo.linkedIn {
-  background-image: url(../images/linkedInLogo.svg);
-}
-
-#rStudioFooter .bandContent .footerLogo.facebook {
-  background-image: url(../images/facebookLogo.svg);
-}
 
 .screenshot {
   border: 1px solid #ccc;
@@ -889,3 +869,35 @@ iframe.scale65 {
 pre.plot {
   background-color: white !important;
 }
+.jumbotron {
+  min-height:600px;
+  background-image:url('../images/jumbo_back.jpg');
+  margin-bottom: 0px; 
+}
+.jumbotron h1,.jumbotron p{
+  color:white;
+}
+.jumbotron h1 {
+  margin-top:3em;
+}
+section{
+  padding:2em 1em;
+}
+section.success {
+    color: #fff;
+    background: #18bc9c;
+}
+
+section p {
+  font-size:20px;
+}
+
+code, .code {
+      font: 14px/1.5em "Fira Code";
+      font-feature-settings: "calt" 1;  /* Enable ligatures for IE 10+, Edge */
+      text-rendering: optimizeLegibility; /* Force ligatures for Webkit, Blink, Gecko */
+      width: 30em;
+      margin: 5em auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }

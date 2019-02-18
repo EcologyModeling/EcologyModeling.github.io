@@ -1,13 +1,13 @@
 output_dir: '.'
 output:
   html_document:
-    theme: paper
+    theme: flatly
     highlight: textmate
     toc_depth: 3
     toc_float:
       collapsed: false
     includes:
       in_header: include_head.html
-      before_body: include_header.html
+      before_body: include_header_new.html
       after_body: include_footer.html
     css: css/envmodel.css

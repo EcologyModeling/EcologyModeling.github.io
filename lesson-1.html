@@ -4,25 +4,25 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
 
 
 
-<title>Введение</title>
+<title>Р’РІРµРґРµРЅРёРµ</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,13 +183,12 @@ $(document).ready(function () {
 
 
 
-
 <div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
-
+ 
 
     <div id="menu">
       <div id="menuToggler"></div>
@@ -178,13 +246,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 
-<h1 class="title toc-ignore">Введение</h1>
+<h1 class="title toc-ignore">Р’РІРµРґРµРЅРёРµ</h1>
 
 </div>
 
 
-<div id="---r" class="section level1">
-<h1>Введение в язык R</h1>
+<div id="r" class="section level1">
+<h1>Р’РІРµРґРµРЅРёРµ РІ СЏР·С‹Рє R</h1>
 <ul>
 <li>Large Data Sets</li>
 <li>Modeling and simulations</li>
@@ -227,16 +295,16 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Plotting</li>
 <li>Sequencing</li>
 </ul>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
 <td>#### Check graphics system</td>
 </tr>
 <tr class="even">
-<td><code>r plot(density(rnorm(100)), col = &quot;red&quot;)</code></td>
+<td><code>r plot(density(rnorm(100)), col = "red")</code></td>
 </tr>
 <tr class="odd">
 <td><img src="lesson-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></td>
@@ -249,9 +317,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <pre class="r"><code>x = 5
 x &lt;- 5
 assign(&quot;x&quot;, 5)</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -300,9 +368,9 @@ dynam</code></pre>
 <p>Tagged: log(base=base,x)</p>
 <pre class="r"><code>log(base = 10, x)</code></pre>
 <pre><code>## [1] 0.0000000 0.4771213 0.7781513 0.8450980</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -342,9 +410,9 @@ dynam</code></pre>
 <pre class="r"><code>x = 10/(5 - 5)
 x</code></pre>
 <pre><code>## [1] Inf</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -378,9 +446,9 @@ x</code></pre>
 <h4>Length function</h4>
 <pre class="r"><code>length(x)</code></pre>
 <pre><code>## [1] 6</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -431,9 +499,9 @@ length(x)</code></pre>
 ## [34] 54.18 53.76 53.30 52.80 52.26 51.68 51.06 50.40 49.70 48.96 48.18
 ## [45] 47.36 46.50 45.60 44.66 43.68 42.66 41.60 40.50 39.36 38.18 36.96
 ## [56] 35.70 34.40 33.06 31.68 30.26 28.80 27.30</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -443,10 +511,10 @@ length(x)</code></pre>
 <td>rep(x, times=)</td>
 </tr>
 <tr class="odd">
-<td><code>r x = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;) rep(x, 4)</code></td>
+<td><code>r x = c("A", "B", "C") rep(x, 4)</code></td>
 </tr>
 <tr class="even">
-<td><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></td>
+<td><code>##  [1] "A" "B" "C" "A" "B" "C" "A" "B" "C" "A" "B" "C"</code></td>
 </tr>
 </tbody>
 </table>
@@ -462,9 +530,9 @@ mode(x)</code></pre>
 <pre><code>## [1] &quot;logical&quot;</code></pre>
 <pre class="r"><code>mode(mode(x))</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -540,9 +608,9 @@ x = 1:3
 x = c(5, x)
 x</code></pre>
 <pre><code>## [1] 5 1 2 3</code></pre>
-<table style="width:6%;">
+<table style="width:7%;">
 <colgroup>
-<col width="5%" />
+<col width="6%" />
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -555,13 +623,13 @@ x</code></pre>
 <td><code>## NULL</code></td>
 </tr>
 <tr class="even">
-<td><code>r names(x) &lt;- c(&quot;Fisrt&quot;, &quot;Second&quot;, &quot;Third&quot;, &quot;Forth&quot;, &quot;First&quot;) names(x)</code></td>
+<td><code>r names(x) &lt;- c("Fisrt", "Second", "Third", "Forth", "First") names(x)</code></td>
 </tr>
 <tr class="odd">
-<td><code>## [1] &quot;Fisrt&quot;  &quot;Second&quot; &quot;Third&quot;  &quot;Forth&quot;  &quot;First&quot;</code></td>
+<td><code>## [1] "Fisrt"  "Second" "Third"  "Forth"  "First"</code></td>
 </tr>
 <tr class="even">
-<td><code>r x[&quot;First&quot;]</code></td>
+<td><code>r x["First"]</code></td>
 </tr>
 <tr class="odd">
 <td><code>## First ##     5</code></td>
@@ -612,16 +680,24 @@ order(x)</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -646,7 +722,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

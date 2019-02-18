@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,13 +183,12 @@ $(document).ready(function () {
 
 
 
-
 <div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
-
+ 
 
     <div id="menu">
       <div id="menuToggler"></div>
@@ -183,33 +251,33 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<pre><code>## # A tibble: 1,379 &lt;U+00D7&gt; 6
-##        earn height    sex     race    ed   age
-##       &lt;dbl&gt;  &lt;dbl&gt; &lt;fctr&gt;   &lt;fctr&gt; &lt;int&gt; &lt;int&gt;
-## 1  79571.30  73.89   male    white    16    49
-## 2  96396.99  66.23 female    white    16    62
-## 3  48710.67  63.77 female    white    16    33
-## 4  80478.10  63.22 female    other    16    95
-## 5  82089.35  63.08 female    white    17    43
-## 6  15313.35  64.53 female    white    15    30
-## 7  47104.17  61.54 female    white    12    53
-## 8  50960.05  73.29   male    white    17    50
-## 9   3212.65  72.24   male hispanic    15    25
-## 10 42996.64  72.40   male    white    12    30
+<pre><code>## # A tibble: 1,379 x 6
+##      earn height sex    race        ed   age
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##  1 79571.   73.9 male   white       16    49
+##  2 96397.   66.2 female white       16    62
+##  3 48711.   63.8 female white       16    33
+##  4 80478.   63.2 female other       16    95
+##  5 82089.   63.1 female white       17    43
+##  6 15313.   64.5 female white       15    30
+##  7 47104.   61.5 female white       12    53
+##  8 50960.   73.3 male   white       17    50
+##  9  3213.   72.2 male   hispanic    15    25
+## 10 42997.   72.4 male   white       12    30
 ## # ... with 1,369 more rows</code></pre>
-<pre><code>## # A tibble: 48 &lt;U+00D7&gt; 5
-##          state   abbr   low murder tc2009
-##         &lt;fctr&gt; &lt;fctr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1      Alabama     AL   -27    7.1 4337.5
-## 2       Alaska     AK   -80    3.2 3567.1
-## 3      Arizona     AZ   -40    5.5 3725.2
-## 4     Arkansas     AR   -29    6.3 4415.4
-## 5   California     CA   -45    5.4 3201.6
-## 6     Colorado     CO   -61    3.2 3024.5
-## 7  Connecticut     CT   -32    3.0 2646.3
-## 8     Delaware     DE   -17    4.6 3996.8
-## 9      Florida     FL    -2    5.5 4453.7
-## 10     Georgia     GA   -17    6.0 4180.6
+<pre><code>## # A tibble: 48 x 5
+##    state       abbr    low murder tc2009
+##    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Alabama     AL      -27    7.1  4338.
+##  2 Alaska      AK      -80    3.2  3567.
+##  3 Arizona     AZ      -40    5.5  3725.
+##  4 Arkansas    AR      -29    6.3  4415.
+##  5 California  CA      -45    5.4  3202.
+##  6 Colorado    CO      -61    3.2  3024.
+##  7 Connecticut CT      -32    3    2646.
+##  8 Delaware    DE      -17    4.6  3997.
+##  9 Florida     FL       -2    5.5  4454.
+## 10 Georgia     GA      -17    6    4181.
 ## # ... with 38 more rows</code></pre>
 <pre><code>## tc2009 ~ low</code></pre>
 <pre><code>## [1] &quot;formula&quot;</code></pre>
@@ -223,37 +291,37 @@ options(stringsAsFactors = FALSE)</code></pre>
 <pre class="r"><code>wages &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/s/oq4dc134y8xdyce/wages.csv?dl=0&quot;)
 
 tbl_df(wages)</code></pre>
-<pre><code>## # A tibble: 1,379 &lt;U+00D7&gt; 6
-##        earn height    sex     race    ed   age
-##       &lt;dbl&gt;  &lt;dbl&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1  79571.30  73.89   male    white    16    49
-## 2  96396.99  66.23 female    white    16    62
-## 3  48710.67  63.77 female    white    16    33
-## 4  80478.10  63.22 female    other    16    95
-## 5  82089.35  63.08 female    white    17    43
-## 6  15313.35  64.53 female    white    15    30
-## 7  47104.17  61.54 female    white    12    53
-## 8  50960.05  73.29   male    white    17    50
-## 9   3212.65  72.24   male hispanic    15    25
-## 10 42996.64  72.40   male    white    12    30
+<pre><code>## # A tibble: 1,379 x 6
+##      earn height sex    race        ed   age
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##  1 79571.   73.9 male   white       16    49
+##  2 96397.   66.2 female white       16    62
+##  3 48711.   63.8 female white       16    33
+##  4 80478.   63.2 female other       16    95
+##  5 82089.   63.1 female white       17    43
+##  6 15313.   64.5 female white       15    30
+##  7 47104.   61.5 female white       12    53
+##  8 50960.   73.3 male   white       17    50
+##  9  3213.   72.2 male   hispanic    15    25
+## 10 42997.   72.4 male   white       12    30
 ## # ... with 1,369 more rows</code></pre>
 <p>Another set of data trying to verify the existence of a relationship between climate and crime in various U.S. States.</p>
 <pre class="r"><code>crime &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/s/cecck1nuo217zy1/crime.csv?dl=0&quot;)
 
 tbl_df(crime)</code></pre>
-<pre><code>## # A tibble: 48 &lt;U+00D7&gt; 5
-##          state  abbr   low murder tc2009
-##          &lt;chr&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1      Alabama    AL   -27    7.1 4337.5
-## 2       Alaska    AK   -80    3.2 3567.1
-## 3      Arizona    AZ   -40    5.5 3725.2
-## 4     Arkansas    AR   -29    6.3 4415.4
-## 5   California    CA   -45    5.4 3201.6
-## 6     Colorado    CO   -61    3.2 3024.5
-## 7  Connecticut    CT   -32    3.0 2646.3
-## 8     Delaware    DE   -17    4.6 3996.8
-## 9      Florida    FL    -2    5.5 4453.7
-## 10     Georgia    GA   -17    6.0 4180.6
+<pre><code>## # A tibble: 48 x 5
+##    state       abbr    low murder tc2009
+##    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Alabama     AL      -27    7.1  4338.
+##  2 Alaska      AK      -80    3.2  3567.
+##  3 Arizona     AZ      -40    5.5  3725.
+##  4 Arkansas    AR      -29    6.3  4415.
+##  5 California  CA      -45    5.4  3202.
+##  6 Colorado    CO      -61    3.2  3024.
+##  7 Connecticut CT      -32    3    2646.
+##  8 Delaware    DE      -17    4.6  3997.
+##  9 Florida     FL       -2    5.5  4454.
+## 10 Georgia     GA      -17    6    4181.
 ## # ... with 38 more rows</code></pre>
 <p>You already have a General idea of regression and some equation <span class="math inline">\(y_{i}=N\big(\alpha+\beta_{i}x_{i}+\sigma\big)\)</span>, which in General terms describes. Actually, that is not difficult to notice that the dependence is linear, this linear regression equation. This is the easiest of all possible options, but because it is the most clear. So we’ll start with him.</p>
 <p>In the future we will examine other variants of regression, and even if you in your study it is immediately clear that your data is not described by a linear dependence,it is strongly recommended nachinaet his study with linear dependencies.</p>
@@ -264,9 +332,9 @@ tbl_df(crime)</code></pre>
 <table>
 <colgroup>
 <col width="25%" />
-<col width="27%" />
+<col width="28%" />
 <col width="31%" />
-<col width="15%" />
+<col width="14%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -385,7 +453,7 @@ tbl_df(crime)</code></pre>
 <p>We construct a graph, zavisimoti predicted by values of the independent variable is low, use this function predict()</p>
 <pre class="r"><code>qplot(low, predict(mod), data = crime, geom = &quot;line&quot;)</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>Logically, for building this graph we used geom = “line”, which is equivalent to using the <code>+geom_line()</code>, because our dependence is linear and is exactly the type of graph that we want to. Meanwhile, ggplot allows us to build a model of the model directly when creating graphics, and, oddly enough, we’ve done this in previous lessons. For this there is already well-known to us geometry <code>geom_smooth()</code>. However to get similar to the previous graph, we need to explicitly declare your functions, the type of geometry that we have ispolzovali, i.e. <code>geom_smooth(method=lm)</code>, respectively ggplot will know that our model will have obsi view <code>lm(x~y, crime)</code>. Add a parameter <code>se=FALSE</code> will remove the confidence intervals, which often mislead than help.</p>
+<p>Logically, for building this graph we used geom = “line”, which is equivalent to using the <code>+geom_line()</code>, because our dependence is linear and is exactly the type of graph that we want to. Meanwhile, ggplot allows us to build a model of the model directly when creating graphics, and, oddly enough, we’ve done this in previous lessons. For this there is already well-known to us geometry <code>geom_smooth()</code>. However to get similar to the previous graph, we need to explicitly declare your functions, the type of geometry that we have ispolzovali, i.e. <code>geom_smooth(method=lm)</code>, respectively ggplot will know that our model will have obsi view <code>lm(x~y, crime)</code>. Add a parameter <code>se=FALSE</code> will remove the confidence intervals, which often mislead than help.</p>
 <pre class="r"><code>qplot(low, tc2009, data = crime) + 
   geom_smooth(method = lm)</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
@@ -477,20 +545,20 @@ qplot(height, earn, data = w1) + geom_smooth(method = lm, se = F)</code></pre>
 </ul>
 <div id="parametric-statistics" class="section level3">
 <h3>Parametric statistics</h3>
-<p>If the model satisfies a number of assumptions, it is possible to calculate the probability of observing a certain β, even while the true β=0. If you remember your College statistics, you will realize that we are just many other words have formulated the null hypothesis for regressionnogo analysis. Which consisted in the fact that the General slope of the regression line β is equal to zero.</p>
+<p>If the model satisfies a number of assumptions, it is possible to calculate the probability of observing a certain ОІ, even while the true ОІ=0. If you remember your College statistics, you will realize that we are just many other words have formulated the null hypothesis for regressionnogo analysis. Which consisted in the fact that the General slope of the regression line ОІ is equal to zero.</p>
 <p>In order to understand this deeper, let’s consider a specific example. To do this go back to the model based on earnings growth: <code>hmod</code>:</p>
 <p><code>{r} summary(hmod)</code></p>
 <p>Consider the details offered to us the results. <code># Estimate Std. Error t value Pr(&gt;|t|)</code> <code># 2387 211 height 11.312 &lt;2e-16 ***</code></p>
 <p>The probability that <span class="math inline">\(\beta_{height} &gt;= 2387\)</span> under the condition that the true <span class="math inline">\(\beta=0\)</span> in the example presented to us is almost equal to 2E-16 (almost 0). Or in other words, the probability of the null hypothesis of equal vvelichine extremely small, and therefore we can say that <span class="math inline">\(\beta\)</span> not equal to zero.</p>
-<p>To be precise, low p-values ( &lt; 0.05) may be the result of the following events 1. We have a very unrepresentative sample 2. The true β of the General population is not equal to 0 3. Our model is in principle not correct</p>
-<p>There is a logical question, but if we have proved that β is not zero, then what is it equal. Unfortunately we have no other information other than that obtained from the model, so it is safest to assume that β = 2387.</p>
-<p>Note, however, that we found the most probable point value of β in repeated measurements may be different. To characterize this uncertainty, it is necessary to calculate the confidence interval does not contradict the available data, the range of values in which the true value of our values with a certain probability (e.g. 95%). Roughly assess the limits of confidence interval, assuming approximately 95% of all values of the distribution of estimates of β lie in the range of ±2<span class="math inline">\(SE{\beta}\)</span> relative to its average value, where <span class="math inline">\(SE{\beta}\)</span> – standard error of the parameter β. However, the uncertainty exists in the estimation of the parameter β, but the estimation of its standard deviation for the corresponding normal distribution. Without going into detail, we note that in connection with this circumstance the more accurate bounds of the confidence interval will give the calculations based on the properties of student’s t - distribution. Then the 95% confidence interval for the parameter β will be: β ± <span class="math inline">\(t_{0.975}SE{\beta}\)</span>, where <span class="math inline">\(t_{0.975}\)</span> – 0.975-quantile t-distribution with (n - p) degrees of freedom, n is the sample size and p is the number of model parameters.</p>
+<p>To be precise, low p-values ( &lt; 0.05) may be the result of the following events 1. We have a very unrepresentative sample 2. The true ОІ of the General population is not equal to 0 3. Our model is in principle not correct</p>
+<p>There is a logical question, but if we have proved that ОІ is not zero, then what is it equal. Unfortunately we have no other information other than that obtained from the model, so it is safest to assume that ОІ = 2387.</p>
+<p>Note, however, that we found the most probable point value of ОІ in repeated measurements may be different. To characterize this uncertainty, it is necessary to calculate the confidence interval does not contradict the available data, the range of values in which the true value of our values with a certain probability (e.g. 95%). Roughly assess the limits of confidence interval, assuming approximately 95% of all values of the distribution of estimates of ОІ lie in the range of В±2<span class="math inline">\(SE{\beta}\)</span> relative to its average value, where <span class="math inline">\(SE{\beta}\)</span> вЂ“ standard error of the parameter ОІ. However, the uncertainty exists in the estimation of the parameter ОІ, but the estimation of its standard deviation for the corresponding normal distribution. Without going into detail, we note that in connection with this circumstance the more accurate bounds of the confidence interval will give the calculations based on the properties of student’s t - distribution. Then the 95% confidence interval for the parameter ОІ will be: ОІ В± <span class="math inline">\(t_{0.975}SE{\beta}\)</span>, where <span class="math inline">\(t_{0.975}\)</span> вЂ“ 0.975-quantile t-distribution with (n - p) degrees of freedom, n is the sample size and p is the number of model parameters.</p>
 <p>Get the most from the interval for a given precision is possible with the following command:</p>
 <pre class="r"><code>confint(hmod, level = 0.95)</code></pre>
 <pre><code>##                   2.5 %     97.5 %
 ## (Intercept) -154135.798 -98910.920
 ## height         1973.228   2801.163</code></pre>
-<p>Once again, given us the figures mean that we can with 95% probability to assert that the value of β is in the us range from 1973.228 to 2801.163.</p>
+<p>Once again, given us the figures mean that we can with 95% probability to assert that the value of ОІ is in the us range from 1973.228 to 2801.163.</p>
 <p>Let’s consider again the data on the relationship between temperature and crime</p>
 <pre class="r"><code>mod &lt;- lm(tc2009 ~ low, data = crime)
 summary(mod)</code></pre>
@@ -548,16 +616,24 @@ summary(mod)</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -582,7 +658,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

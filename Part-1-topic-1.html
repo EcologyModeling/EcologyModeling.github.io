@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -72,7 +72,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
+<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
 </head>
 
@@ -183,10 +183,10 @@ $(document).ready(function () {
 
 
 
-<div id="rStudioHeader" class="alwaysShrunk">
+<!--<div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
 
 
@@ -203,6 +203,43 @@ $(document).ready(function () {
     </div>
   </div>
 </div>
+-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">Математическое моделирование в экологии</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Занятия<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+
+                <li><a href="Part-1-topic-1.html">Введение в R</a></li>
+                <li><a href="Part-2-topic-2.html">Физические модели</a></li>
+                <li><a href="Part-3-topic-1.html">Манипуляции над данными</a></li>
+                <li><a href="Part-4-topic-1.html">Линейная регрессия</a></li>
+                <li><a href="Part-4-topic-2.html">Логистическая регрессия</a></li>
+                <li><a href="Part-5-topic-1.html">Рандомизация и бутстреп</a></li>
+                
+              </ul>
+            </li>
+            <li><a href="Tests.html" target="_blank">Задания</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="materials.html" target="_blank">Материалы</a></li>
+            <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+                <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
+          </ul>
+    </div>
+  </div>
+</div>
+
 
 <style type="text/css">
 #TOC {
@@ -251,7 +288,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="-1" class="section level1">
+<div id="section" class="section level1">
 <h1>Семинар 1</h1>
 <p>Для чего используется R</p>
 <ul>
@@ -269,7 +306,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Эконометрика</li>
 </ul>
 <hr />
-<div id="--------r" class="section level4">
+<div id="r" class="section level4">
 <h4>3 уровня организации языков и где на них <strong>находится R</strong></h4>
 <ul>
 <li><strong>Высокиоуровневые</strong> vs Низкоуровневые</li>
@@ -278,7 +315,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </ul>
 <hr />
 </div>
-<div id="--r" class="section level4">
+<div id="r-1" class="section level4">
 <h4>Структура языка R</h4>
 <ul>
 <li>Основой был язык S</li>
@@ -286,7 +323,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </ul>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-1" class="section level4">
 <h4>Особые задачи</h4>
 <ul>
 <li>Multiple testing</li>
@@ -298,13 +335,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </ul>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-2" class="section level4">
 <h4>Графическая подсистема</h4>
 <pre class="r"><code>plot(density(rnorm(100)),col=&quot;red&quot;)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="---" class="section level4">
+<div id="section-3" class="section level4">
 <h4>Способы задания переменной значения</h4>
 <pre class="r"><code>x=5
 x&lt;-5
@@ -313,13 +350,13 @@ x</code></pre>
 <pre><code>## [1] 5</code></pre>
 <hr />
 </div>
-<div id="---" class="section level4">
+<div id="section-4" class="section level4">
 <h4>Команды и базовые функции</h4>
 <p>function c()</p>
 <pre class="r"><code>x&lt;-c(1,3,6,7);</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-5" class="section level4">
 <h4>Типы векторов</h4>
 <ul>
 <li>numerical</li>
@@ -330,7 +367,7 @@ x</code></pre>
 <pre class="r"><code>char&lt;-c(&quot;8&quot;,&quot;edge&quot;,&quot;turn8k&quot;);
 logic&lt;-c(TRUE,FALSE,TRUE,FALSE)</code></pre>
 </div>
-<div id="-" class="section level3">
+<div id="section-6" class="section level3">
 <h3>Динамическая типизация</h3>
 <pre class="r"><code>dynam&lt;-c(8,&quot;dds&quot;, TRUE)
 dynam&lt;-c(1,0,1,1,TRUE)
@@ -338,7 +375,7 @@ dynam</code></pre>
 <pre><code>## [1] 1 0 1 1 1</code></pre>
 <p><strong>Приоритет Char-&gt;integer-&gt;Logic</strong></p>
 <hr />
-<div class="section level4">
+<div id="section-7" class="section level4">
 <h4>Функции</h4>
 <p>x=function(arg1,arg2,…)</p>
 <p>Invocation - function call</p>
@@ -355,7 +392,7 @@ dynam</code></pre>
 <pre><code>## [1] 0.0000000 0.4771213 0.7781513 0.8450980</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-8" class="section level4">
 <h4>Логические операции</h4>
 <blockquote>
 <p>,&lt;,&lt;=,&gt;=,==</p>
@@ -369,7 +406,7 @@ x&lt;5</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-9" class="section level4">
 <h4>Маетматические операции</h4>
 <p>+, -, *, /, ^, sin(), cos(), sqrt(), log()</p>
 <pre class="r"><code>x^10</code></pre>
@@ -377,13 +414,13 @@ x&lt;5</code></pre>
 <hr />
 </div>
 </div>
-<div class="section level3">
+<div id="section-10" class="section level3">
 <h3>Задание</h3>
 <pre class="r"><code>x=10/(5-5)
 x</code></pre>
 <pre><code>## [1] Inf</code></pre>
 <hr />
-<div id="---recycling-rule" class="section level4">
+<div id="recycling-rule" class="section level4">
 <h4>Правила повтора векторов (Recycling Rule)</h4>
 <pre class="r"><code>x&lt;-c(2,4,5,3,-4,0)
 x*5</code></pre>
@@ -401,7 +438,7 @@ x*z</code></pre>
 <pre class="r"><code>length(x)</code></pre>
 <pre><code>## [1] 6</code></pre>
 </div>
-<div id="--" class="section level4">
+<div id="section-11" class="section level4">
 <h4>Больше базовых функций</h4>
 <p>log(), mean(), min(), max(), sum(), prod(), abs()</p>
 <pre class="r"><code>x&lt;-c(3,4,6,-7,8)
@@ -410,7 +447,7 @@ mean</code></pre>
 <pre><code>## [1] 2.8</code></pre>
 <hr />
 </div>
-<div class="section level4">
+<div id="section-12" class="section level4">
 <h4>Последовательности</h4>
 <pre class="r"><code>x=2:10
 y=5:1
@@ -426,7 +463,7 @@ x</code></pre>
 <pre><code>## [1]  -5  -6  -7  -8  -9 -10</code></pre>
 <hr />
 </div>
-<div id="-1" class="section level4">
+<div id="section-13" class="section level4">
 <h4>Последовательности</h4>
 <p>seq(from=,to=,by=)</p>
 <pre class="r"><code>z=seq(2,5,.5)
@@ -445,7 +482,7 @@ length(x)</code></pre>
 ## [56] 35.70 34.40 33.06 31.68 30.26 28.80 27.30</code></pre>
 <hr />
 </div>
-<div id="-2" class="section level4">
+<div id="section-14" class="section level4">
 <h4>Последовательности</h4>
 <p>rep(x, times=)</p>
 <pre class="r"><code>x=c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;)
@@ -453,7 +490,7 @@ rep(x,4)</code></pre>
 <pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;A&quot; &quot;B&quot; &quot;C&quot;</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-15" class="section level4">
 <h4>Логические вектора</h4>
 <p>mode(x)</p>
 <pre class="r"><code>x&lt;-1:10
@@ -466,7 +503,7 @@ mode(x)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-16" class="section level4">
 <h4>Индексация векторов</h4>
 <p>В R нумерация элементов начинается с 1</p>
 <pre class="r"><code>x=1:20
@@ -491,7 +528,7 @@ x[y]</code></pre>
 <pre><code>##  [1]  1  3  5  7  9 11 13 15 17 19</code></pre>
 <hr />
 </div>
-<div id="---" class="section level4">
+<div id="section-17" class="section level4">
 <h4>Добавление элементов к вектору</h4>
 <pre class="r"><code>vector&lt;-c()
 v2&lt;-c(TRUE,FALSE,TRUE,TRUE,FALSE,TRUE)
@@ -503,7 +540,7 @@ x</code></pre>
 <pre><code>## [1] 5 1 2 3</code></pre>
 <hr />
 </div>
-<div id="--" class="section level4">
+<div id="section-18" class="section level4">
 <h4>Имена элементов векторов</h4>
 <pre class="r"><code>x=1:5
 names(x)</code></pre>
@@ -516,7 +553,7 @@ names(x)</code></pre>
 ##      1</code></pre>
 <hr />
 </div>
-<div id="-" class="section level4">
+<div id="section-19" class="section level4">
 <h4>Свойства векторов</h4>
 <p>length() names() mode()</p>
 <hr />
@@ -527,7 +564,7 @@ x[length(x)]</code></pre>
 <pre><code>## [1] 100</code></pre>
 <hr />
 </div>
-<div id="-sort--order" class="section level4">
+<div id="sort--order" class="section level4">
 <h4>Функции sort и order</h4>
 <pre class="r"><code>x&lt;-c(-10,2,78,34,-98,23,0,-8)
 order(x)</code></pre>
@@ -540,9 +577,9 @@ order(x)</code></pre>
 </div>
 </div>
 </div>
-<div id="-2" class="section level1">
+<div id="section-20" class="section level1">
 <h1>Семинар 2</h1>
-<div id=".-----------" class="section level4">
+<div id="section-21" class="section level4">
 <h4>Задание. Получите из данного вектора вектор в котором будет обратный порядок элементов</h4>
 <pre class="r"><code>a&lt;-seq(-8,10,.5)
 a</code></pre>
@@ -555,11 +592,11 @@ x</code></pre>
 ## [15]  3.0  2.5  2.0  1.5  1.0  0.5  0.0 -0.5 -1.0 -1.5 -2.0 -2.5 -3.0 -3.5
 ## [29] -4.0 -4.5 -5.0 -5.5 -6.0 -6.5 -7.0 -7.5 -8.0</code></pre>
 </div>
-<div id=".---99----" class="section level4">
+<div id="section-22" class="section level4">
 <h4>Задание. Вставьте число 99 в середину данного вектора</h4>
 <pre class="r"><code>y=c(a[1:round(length(a)/2)],99,a[(round(length(a)/2)+1):length(a)])</code></pre>
 </div>
-<div id=".---arcoscosxx" class="section level4">
+<div id="arcoscosxx" class="section level4">
 <h4>Задание. Докажите, что arcos(cos(x))=x</h4>
 <pre class="r"><code>x=0:3
 y=acos(cos(x))
@@ -573,7 +610,7 @@ sort(x)</code></pre>
 ##    e^cos(0) 
 ##   2.7182818</code></pre>
 </div>
-<div id="--1" class="section level4">
+<div id="section-23" class="section level4">
 <h4>Логические операции</h4>
 <ul>
 <li><strong><em>! = not</em></strong></li>
@@ -584,7 +621,7 @@ sort(x)</code></pre>
 <pre class="r"><code>x=seq(-10,10,.01)
 y=x[(x&gt;-10 &amp; x&lt; -3) | (x&gt;0 &amp; x&lt;6 &amp; x!=3)]</code></pre>
 </div>
-<div id="---summary" class="section level4">
+<div id="summary" class="section level4">
 <h4>Факторы и функция summary()</h4>
 <p>x = factor(“Mouse”)</p>
 <pre class="r"><code>f=c(rep(&quot;mouse&quot;,3),rep(&quot;rat&quot;,2),rep(&quot;fly&quot;,11))
@@ -604,19 +641,19 @@ summary(x)</code></pre>
 <pre><code>## Mean 
 ##  5.5</code></pre>
 </div>
-<div id="---------" class="section level4">
+<div id="section-24" class="section level4">
 <h4>Задание посчитайте долю каждого нуклеотида в векторе содержащем последовательность ДНК</h4>
 <pre class="r"><code>dna=factor(rep(c(&quot;T&quot;,&quot;G&quot;,&quot;C&quot;,&quot;A&quot;),c(16,38,6,10)))
 ratio=summary(dna)/sum(summary(dna))</code></pre>
 </div>
-<div id="-sample" class="section level4">
+<div id="sample" class="section level4">
 <h4>Функция sample()</h4>
 <p>Создает подвыборку из выборки, в том числе путем перемешивания</p>
 <p>sample: * mixing * generating</p>
 <pre class="r"><code>dna=factor(rep(c(&quot;T&quot;,&quot;G&quot;,&quot;C&quot;,&quot;A&quot;),c(16,38,6,10)))
 sample(dna)</code></pre>
-<pre><code>##  [1] G G G G G T G G T G T G G A T G T A G T C G G G G G G G T G G G A G G
-## [36] T C A G C G G A T G C G T G A G T T G G A G G T A G T G A A C T C T G
+<pre><code>##  [1] T G T A T G G G T T T G G A C G G G A G G G A G T G G G C G G G T G C
+## [36] A A A G G G T T G C G T G G G T T G G G C G G G G C G G T T A T G A A
 ## Levels: A C G T</code></pre>
 <pre class="r"><code>dna</code></pre>
 <pre><code>##  [1] T T T T T T T T T T T T T T T T G G G G G G G G G G G G G G G G G G G
@@ -627,21 +664,21 @@ sample(dna)</code></pre>
 # а вот следующий код будет работать, т.к. replace=TRUE генерирует выборки любого 
 # размера исходя из пропопрций элемнтов данной выборки
 sample(dna,size=84, replace=TRUE)</code></pre>
-<pre><code>##  [1] G A G T A A C A T T G G T G T C G A T G C G G A G G G A G T G G G G T
-## [36] G G A G G T G G T T G A G G A G G G T G G G T G T T G T G T T G G T T
-## [71] G G G T G G T T G G G G T G
+<pre><code>##  [1] G A G A C T G G T T T T G G G G G T T G G G G G G A T G G G A G T A G
+## [36] G A A A G G G G G G T C T G G C T G T G A G T T C T T G A T A A T C G
+## [71] G G T T A G A G G G T C T G
 ## Levels: A C G T</code></pre>
 <pre class="r"><code>sampledna=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;C&quot;), size=10000,replace=TRUE)
 ratio=summary(factor(sampledna))/length(sampledna)
 ratio2=summary(factor(dna))/length(dna)
 ratio</code></pre>
 <pre><code>##      A      C      G      T 
-## 0.2430 0.2525 0.2561 0.2484</code></pre>
+## 0.2517 0.2533 0.2462 0.2488</code></pre>
 <pre class="r"><code>ratio2</code></pre>
 <pre><code>##          A          C          G          T 
 ## 0.14285714 0.08571429 0.54285714 0.22857143</code></pre>
 </div>
-<div id="-unionxyintersectxysetdiffxy" class="section level4">
+<div id="unionxyintersectxysetdiffxy" class="section level4">
 <h4>Функции union(x,y),intersect(x,y),setdiff(x,y)</h4>
 <pre class="r"><code>x=1:10
 y=6:14
@@ -654,32 +691,32 @@ union(x,y)</code></pre>
 <pre class="r"><code>setdiff(y,x)</code></pre>
 <pre><code>## [1] 11 12 13 14</code></pre>
 </div>
-<div id="----" class="section level4">
+<div id="section-25" class="section level4">
 <h4>Уничтожение всех переменных в памяти</h4>
 <pre class="r"><code>rm(list=ls())</code></pre>
 </div>
-<div id="-cumsum" class="section level4">
+<div id="cumsum" class="section level4">
 <h4>Функция cumsum()</h4>
 <pre class="r"><code>cumsum(1:10)</code></pre>
 <pre><code>##  [1]  1  3  6 10 15 21 28 36 45 55</code></pre>
 </div>
-<div id=".-------" class="section level4">
+<div id="section-26" class="section level4">
 <h4>Задание. Создайте длинные последовательности с заданными пропорциями элементов</h4>
 <pre class="r"><code>dna2=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;G&quot;,&quot;G&quot;,&quot;C&quot;), size=3826513,replace=TRUE)
 ratio=summary(factor(dna2))/length(dna2)
 ratio</code></pre>
 <pre><code>##         A         C         G         T 
-## 0.1671323 0.1667110 0.4994286 0.1667280</code></pre>
+## 0.1669063 0.1664437 0.4997359 0.1669141</code></pre>
 <pre class="r"><code>dna2=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;C&quot;), size=3826513,prob=c(.5/3,.5/3,.5,.5/3),replace=TRUE)
 ratio=summary(factor(dna2))/length(dna2)
 ratio</code></pre>
 <pre><code>##         A         C         G         T 
-## 0.1667536 0.1665388 0.5001049 0.1666026</code></pre>
+## 0.1664411 0.1669460 0.5000689 0.1665441</code></pre>
 </div>
 </div>
 <div id="data-frames--" class="section level1">
 <h1>## Data frames -Таблицы</h1>
-<div id="--" class="section level4">
+<div id="section-27" class="section level4">
 <h4>Выборки из таблиц</h4>
 <div class="fold o">
 <pre class="r"><code>iris[iris$Species==c(&quot;setosa&quot;,&quot;virginica&quot;),]</code></pre>
@@ -840,7 +877,7 @@ ratio</code></pre>
 ## 150          5.1 virginica</code></pre>
 </div>
 </div>
-<div id="---" class="section level4">
+<div id="section-28" class="section level4">
 <h4>Основные типы структур данных</h4>
 <table>
 <thead>
@@ -879,13 +916,13 @@ ratio</code></pre>
 </tbody>
 </table>
 </div>
-<div id="---petal.length2--3-------" class="section level4">
+<div id="petal.length2--3-------" class="section level4">
 <h4>Виды у которых Petal.Length&gt;2 но &lt;3, вывести виды и количество попадений в условия</h4>
 <pre class="r"><code>summary(factor(iris[(iris$Petal.Length&gt;2 &amp; iris$Petal.Length&lt;6),&quot;Species&quot; ]))</code></pre>
 <pre><code>## versicolor  virginica 
 ##         50         39</code></pre>
 </div>
-<div id="----functioning" class="section level4">
+<div id="functioning" class="section level4">
 <h4>Создание функций - Functioning</h4>
 <pre class="r"><code>my_func = function(p) 
   {
@@ -908,7 +945,7 @@ mathses(2,3)</code></pre>
 <pre><code>##      summ       log       exp 
 ##   5.00000   0.69897 148.41316</code></pre>
 </div>
-<div id="-" class="section level4">
+<div id="section-29" class="section level4">
 <h4>Проверки условий</h4>
 <pre class="r"><code>mf = function(p)
   {
@@ -960,7 +997,7 @@ mydistribution(3,.4)</code></pre>
 <pre><code>## [1] 0.0864</code></pre>
 </div>
 </div>
-<div id="-3-----" class="section level1">
+<div id="section-30" class="section level1">
 <h1>Семинар 3 - циклы и графика</h1>
 <div id="for------" class="section level4">
 <h4>For - циклы с подсчетом повторов</h4>
@@ -993,10 +1030,10 @@ mn</code></pre>
 <pre><code>## [1]   5.5   4.0  -6.0 700.0 155.0</code></pre>
 <pre><code>## [1]   5.5   4.0  -6.0 700.0 155.0</code></pre>
 </div>
-<div id="----" class="section level4">
+<div id="section-31" class="section level4">
 <h4>Вычисление числа Пи методом Монтекарло</h4>
 </div>
-<div class="section level3">
+<div id="section-32" class="section level3">
 <h3>Просто</h3>
 <pre class="r"><code>x=runif(100000,-1,1)
 y=runif(100000,-1,1)
@@ -1018,9 +1055,9 @@ if ((x[i]^2+y[i]^2)&gt;1)
 }
 Pi=4*Nr/(Ns+Nr)
 Pi</code></pre>
-<pre><code>## [1] 3.14068</code></pre>
+<pre><code>## [1] 3.14032</code></pre>
 <pre><code>## [1] 3.139</code></pre>
-<div class="section level4">
+<div id="section-33" class="section level4">
 <h4>Красиво</h4>
 <pre class="r"><code>pis=c()
 for (i in seq(10,10000,10))
@@ -1037,12 +1074,13 @@ plot(pis,type=&quot;l&quot;)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-2.png" /><!-- --></p>
 <pre class="r"><code>mean(pis)</code></pre>
-<pre><code>## [1] 3.142131</code></pre>
+<pre><code>## [1] 3.139909</code></pre>
 <pre><code>## [1] NA</code></pre>
 </div>
-<div id="-iris-data.frame---------------------" class="section level4">
+<div id="iris-data.frame---------------------" class="section level4">
 <h4>Взяв iris data.frame, для первых двух колонок получить список содержащий матрицы для каждого ряда со значениями строки и суммы колоник без учета данных строки</h4>
 <p>iris<span class="math display">\[1\]</span></p>
+<div class="fold o">
 <pre class="r"><code>l=list()
 for (i in 1:length(iris[,1]))
   {
@@ -1802,7 +1840,8 @@ l</code></pre>
 ## [1,]   5.9   3.0
 ## [2,] 870.6 455.6</code></pre>
 </div>
-<div id="-apply" class="section level4">
+</div>
+<div id="apply" class="section level4">
 <h4>Функция Apply</h4>
 <p>apply (data.frame(), 1 or 2, FUNCTION) 1 - функция будет применена к каждой строке 2 - к каждой колонке</p>
 <p>lapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает список sapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает вектор tapply(vector,factor, FUN) - выбирает и группирует строки по градациям фактора и применяет функцию к каждой полученной группе</p>
@@ -1813,7 +1852,7 @@ l</code></pre>
 <pre><code>##     setosa versicolor  virginica 
 ##      250.3      296.8      329.4</code></pre>
 </div>
-<div id="-----plotxy" class="section level4">
+<div id="plotxy" class="section level4">
 <h4>Базовая графика - функция plot(x,y)</h4>
 <pre class="r"><code>x=c(2,8,6)
 y=c(3,7,9)
@@ -1855,12 +1894,12 @@ lines(seq(-2,2,.01),rep(c(0),401))</code></pre>
 </div>
 </div>
 </div>
-<div id="-ggplot2" class="section level1">
+<div id="ggplot2" class="section level1">
 <h1>Пакет ggplot2</h1>
 <pre class="r"><code>#install.packages(&quot;ggplot2&quot;)
 library(ggplot2)</code></pre>
 </div>
-<div id="----mtcars----str" class="section level1">
+<div id="mtcars----str" class="section level1">
 <h1>Давайте посмотрим на содержимое mtcars с помощью функции str()</h1>
 <pre class="r"><code>str(mtcars)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
@@ -1879,13 +1918,13 @@ library(ggplot2)</code></pre>
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 </div>
-<div id="----cyl--" class="section level1">
+<div id="cyl--" class="section level1">
 <h1>Давайте построим график рассматривая cyl как фактор</h1>
 <pre class="r"><code>ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 </div>
-<div id="-" class="section level1">
+<div id="section-34" class="section level1">
 <h1>Точечная диаграмма</h1>
 <pre class="r"><code>ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point()</code></pre>
@@ -1897,13 +1936,13 @@ library(ggplot2)</code></pre>
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 </div>
-<div id="---" class="section level1">
+<div id="section-35" class="section level1">
 <h1>Точкам можно задавать размер</h1>
 <pre class="r"><code>ggplot(mtcars, aes(x = wt, y = mpg, size = disp)) +
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 </div>
-<div id="-geom_point--geom_smooth--" class="section level1">
+<div id="geom_point--geom_smooth--" class="section level1">
 <h1>Добавим geom_point() и geom_smooth() через символ +</h1>
 <pre class="r"><code>ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
@@ -1961,16 +2000,24 @@ dia_plot + geom_point(aes(col=clarity))</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 

@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,13 +183,12 @@ $(document).ready(function () {
 
 
 
-
 <div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
-
+ 
 
     <div id="menu">
       <div id="menuToggler"></div>
@@ -275,9 +343,14 @@ describe(PE)</code></pre>
 <p>Upload data for issledovaniy consequences of concussion of the brain caused by sports-related injuries, which includes survey data as a reference gruppoy and groups of athletes who suffered from concussion.</p>
 <pre class="r"><code>impact=read.csv(&quot;https://dl.dropboxusercontent.com/s/7ubjig9z5hmv858/impact.csv?dl=0&quot;)
 describe(impact)</code></pre>
+<pre><code>## Warning in describe(impact): NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
 <pre><code>##            vars  n  mean    sd median trimmed   mad   min   max range
 ## subject       1 40 20.50 11.69  20.50   20.50 14.83  1.00 40.00 39.00
-## condition*    2 40  1.50  0.51   1.50    1.50  0.74  1.00  2.00  1.00
+## condition*    2 40   NaN    NA     NA     NaN    NA   Inf  -Inf  -Inf
 ## vermem1       3 40 89.75  6.44  91.00   90.44  6.67 75.00 98.00 23.00
 ## vismem1       4 40 74.88  8.60  75.00   74.97  9.64 59.00 91.00 32.00
 ## vms1          5 40 34.03  3.90  33.50   34.02  3.62 26.29 41.87 15.58
@@ -292,7 +365,7 @@ describe(impact)</code></pre>
 ## sym2         14 40 13.88 15.32   7.00   12.38 10.38  0.00 43.00 43.00
 ##             skew kurtosis   se
 ## subject     0.00    -1.29 1.85
-## condition*  0.00    -2.05 0.08
+## condition*    NA       NA   NA
 ## vermem1    -0.70    -0.51 1.02
 ## vismem1    -0.11    -0.96 1.36
 ## vms1        0.08    -0.75 0.62
@@ -309,10 +382,22 @@ describe(impact)</code></pre>
 <pre class="r"><code>entirecorr &lt;- round(cor(impact$vismem2,impact$vermem2),2)</code></pre>
 <p>Use the describeBy command from the package psych let’s see descriptive statistics for variables in this table, grouped by categories of the variable condition - the condition of the respondents. Ie view descriptive statistics for the control and target groups.</p>
 <pre class="r"><code>describeBy(impact, impact$condition)</code></pre>
-<pre><code>## $concussed
+<pre><code>## Warning in FUN(data[x, , drop = FALSE], ...): NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
+<pre><code>## Warning in FUN(data[x, , drop = FALSE], ...): NAs introduced by coercion</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## Warning in FUN(newX[, i], ...): no non-missing arguments to max; returning
+## -Inf</code></pre>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: concussed
 ##            vars  n  mean    sd median trimmed   mad   min   max range
 ## subject       1 20 30.50  5.92  30.50   30.50  7.41 21.00 40.00 19.00
-## condition*    2 20  1.00  0.00   1.00    1.00  0.00  1.00  1.00  0.00
+## condition*    2 20   NaN    NA     NA     NaN    NA   Inf  -Inf  -Inf
 ## vermem1       3 20 89.65  7.17  92.50   90.56  5.93 75.00 97.00 22.00
 ## vismem1       4 20 74.75  8.03  74.00   74.25  8.15 63.00 91.00 28.00
 ## vms1          5 20 33.20  3.62  33.09   33.27  3.32 26.29 39.18 12.89
@@ -327,7 +412,7 @@ describe(impact)</code></pre>
 ## sym2         14 20 27.65  9.07  27.00   27.75 11.12 13.00 43.00 30.00
 ##             skew kurtosis   se
 ## subject     0.00    -1.38 1.32
-## condition*   NaN      NaN 0.00
+## condition*    NA       NA   NA
 ## vermem1    -0.79    -0.70 1.60
 ## vismem1     0.45    -0.72 1.80
 ## vms1       -0.13    -0.78 0.81
@@ -340,11 +425,11 @@ describe(impact)</code></pre>
 ## rt2         1.09    -0.10 0.05
 ## ic2         0.39    -0.28 0.57
 ## sym2       -0.11    -1.25 2.03
-## 
-## $control
+## -------------------------------------------------------- 
+## group: control
 ##            vars  n  mean   sd median trimmed  mad   min   max range  skew
 ## subject       1 20 10.50 5.92  10.50   10.50 7.41  1.00 20.00 19.00  0.00
-## condition*    2 20  2.00 0.00   2.00    2.00 0.00  2.00  2.00  0.00   NaN
+## condition*    2 20   NaN   NA     NA     NaN   NA   Inf  -Inf  -Inf    NA
 ## vermem1       3 20 89.85 5.82  90.00   90.31 7.41 78.00 98.00 20.00 -0.41
 ## vismem1       4 20 75.00 9.34  77.00   75.50 9.64 59.00 88.00 29.00 -0.46
 ## vms1          5 20 34.86 4.09  34.39   34.85 4.92 27.36 41.87 14.51  0.09
@@ -359,7 +444,7 @@ describe(impact)</code></pre>
 ## sym2         14 20  0.10 0.31   0.00    0.00 0.00  0.00  1.00  1.00  2.47
 ##            kurtosis   se
 ## subject       -1.38 1.32
-## condition*      NaN 0.00
+## condition*       NA   NA
 ## vermem1       -0.87 1.30
 ## vismem1       -1.27 2.09
 ## vms1          -1.19 0.91
@@ -371,10 +456,7 @@ describe(impact)</code></pre>
 ## vms2          -0.77 1.44
 ## rt2            0.06 0.04
 ## ic2           -0.32 0.52
-## sym2           4.32 0.07
-## 
-## attr(,&quot;call&quot;)
-## by.data.frame(data = x, INDICES = group, FUN = describe, type = type)</code></pre>
+## sym2           4.32 0.07</code></pre>
 <p>Make 2 sub-samples: control(control) and contused(concussed)</p>
 <pre class="r"><code>control &lt;- subset(impact, condition==&quot;control&quot;)
 concussed &lt;- subset(impact, condition==&quot;concussed&quot;)</code></pre>
@@ -389,7 +471,7 @@ correlations</code></pre>
 </div>
 <div id="linear-regression.-theory" class="section level2">
 <h2>Linear regression. Theory</h2>
-<p>As an example, consider the systolic blood pressure in people (expressed in mm Hg). It is obvious that blood pressure level cannot be the same for all people – during the examination of a random sample, we almost always will see some variation of the values of this variable, although some values will occur the bowl to the other. We form a sample of a possible distribution of 100 values of blood pressure (we will not specify the mechanism for receiving the data and assume that this is a real measurement from a real randomly selected people, differing in age, sex, body weight, and perhaps some other characteristics):</p>
+<p>As an example, consider the systolic blood pressure in people (expressed in mm Hg). It is obvious that blood pressure level cannot be the same for all people вЂ“ during the examination of a random sample, we almost always will see some variation of the values of this variable, although some values will occur the bowl to the other. We form a sample of a possible distribution of 100 values of blood pressure (we will not specify the mechanism for receiving the data and assume that this is a real measurement from a real randomly selected people, differing in age, sex, body weight, and perhaps some other characteristics):</p>
 <pre class="r"><code>y &lt;- c( 109.14, 117.55, 106.76, 115.26, 117.13, 125.39, 121.03, 114.03, 124.83, 113.92, 122.04, 109.41, 131.61, 103.93, 116.64, 117.06, 111.73, 120.41, 112.98, 101.20, 120.19, 128.53, 120.14, 108.70, 130.77, 110.16, 129.07, 123.46, 130.02, 130.31, 135.06, 129.17, 137.08, 107.62, 139.77, 121.47, 130.95, 138.15, 114.31, 134.58, 135.86, 138.49, 110.01, 127.80, 122.57, 136.99, 139.53, 127.34, 132.26, 120.85, 124.99, 133.36, 142.46, 123.58, 145.05, 127.83, 140.42, 149.64, 151.01, 135.69, 138.25, 127.24, 135.55, 142.76, 146.67, 146.33, 137.00, 145.00, 143.98, 143.81, 159.92, 160.97, 157.45, 145.68, 129.98, 137.45, 151.22, 136.10, 150.60, 148.79, 167.93, 160.85, 146.28, 145.97, 135.59, 156.62, 153.12, 165.96, 160.94, 168.87, 167.64, 154.64, 152.46, 149.03, 159.56, 149.31, 153.56, 170.87, 163.52, 150.97)
 
 c(mean(y), sd(y)) # mean &amp; sd</code></pre>
@@ -400,21 +482,15 @@ c(mean(y), sd(y)) # mean &amp; sd</code></pre>
 ## 
 ## data:  y
 ## W = 0.98263, p-value = 0.2121</code></pre>
-<pre class="r"><code>library(ggplot2) # graphical distribution</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ggplot2&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:psych&#39;:
-## 
-##     %+%, alpha</code></pre>
-<pre class="r"><code>ggplot(data = data.frame(y), aes(x = y)) + geom_histogram() +
+<pre class="r"><code>library(ggplot2) # graphical distribution
+ggplot(data = data.frame(y), aes(x = y)) + geom_histogram() +
 ylab(&quot;Frequency&quot;) + xlab(&quot;Pressure , mm. Hg&quot;)</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="lesson-105_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<p>Greek letters μ and σ denote the true (also General) settings models that are usually unknown to us. However, we can estimate parameter values at a corresponding sample statistics. Thus, in the case of more than 100 values of systolic blood pressure, selective mean and standard deviation are 135.16 mm Hg. and 16.96 mm Hg. respectively. Assuming that the data really come from a normally distributed population, we can write our model in the form yi ~ N(135.16, 16.96). This model can be used to predict blood pressure, but for all people predicted value will be same and will be equal to μ.The usual way of writing this model is as follows:</p>
+<p>Greek letters Ој and Пѓ denote the true (also General) settings models that are usually unknown to us. However, we can estimate parameter values at a corresponding sample statistics. Thus, in the case of more than 100 values of systolic blood pressure, selective mean and standard deviation are 135.16 mm Hg. and 16.96 mm Hg. respectively. Assuming that the data really come from a normally distributed population, we can write our model in the form yi ~ N(135.16, 16.96). This model can be used to predict blood pressure, but for all people predicted value will be same and will be equal to Ој.The usual way of writing this model is as follows:</p>
 <p><span class="math inline">\(y_{i}=135.16+\epsilon_{i}\)</span>,</p>
 <p>where ei is the remnants of a model having a normal distribution with a mean of 0 and a standard deviation of 16.96: ei ~ N(0, 16.96). Balances are calculated as the difference between the actually observed values of the variable Y and the values predicted by the model (in this example, ei = yi - 135.16). On the other hand this record is nothing like linear regression model which has no predictor, which is often called the “null model” or “null model” (eng. null models).</p>
-<div id="in-essence-the-statistical-model-is-a-simplified-mathematical-representation-of-a-process-that-we-believe-has-led-to-the-generation-of-the-observed-values-of-the-variable-under-study.-this-means-that-we-can-use-the-model-to-simulate-simulation-ie-procedures-that-simulate-the-modeled-process-and-allows-thereby-artificially-generate-new-values-of-the-variable-under-study-which-we-hope-will-have-the-properties-of-real-data." class="section level4">
-<h4>In essence, the statistical model is a simplified mathematical representation of a process that, we believe, has led to the generation of the observed values of the variable under study. This means that we can use the model to simulate (simulation) – ie procedures that simulate the modeled process and allows thereby artificially generate new values of the variable under study, which we hope will have the properties of real data.</h4>
+<p>####In essence, the statistical model is a simplified mathematical representation of a process that, we believe, has led to the generation of the observed values of the variable under study. This means that we can use the model to simulate (simulation) вЂ“ ie procedures that simulate the modeled process and allows thereby artificially generate new values of the variable under study, which we hope will have the properties of real data.</p>
 <p>New data on the basis of this simple model can be easily generated in R with function rnorm():</p>
 <pre class="r"><code>set.seed(101) # for reproducible result
 y.new.1 &lt;- rnorm(n = 100, mean = 135.16, sd = 16.96)
@@ -424,7 +500,7 @@ y.new.2 &lt;- 135.16 + rnorm(n = 100, mean = 0, sd = 16.96)</code></pre>
 <p>Check identical if both vectors?</p>
 <pre class="r"><code>all(y.new.1 == y.new.2)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Now you need to remember that the parameters of our null model are only point estimates of the true parameters, and that there will always be uncertainty about how accurately these sample point estimates. In the above commands, this uncertainty was not taken into account: when creating vectors y.new.1 and y.new.2 the sample estimates of the mean and standard deviation of blood pressure were considered as the parameters of the population. Depending on the task, this approach may be sufficient. However, we will take another step and try to take into account the uncertainty in the point estimates of the model parameters. In simulations, we use the function lm(), which is designed to fit linear regression models. There is nothing surprising here – after all, we already know that our simple model of blood pressure can be considered as a linear regression model which has no predictor:</p>
+<p>Now you need to remember that the parameters of our null model are only point estimates of the true parameters, and that there will always be uncertainty about how accurately these sample point estimates. In the above commands, this uncertainty was not taken into account: when creating vectors y.new.1 and y.new.2 the sample estimates of the mean and standard deviation of blood pressure were considered as the parameters of the population. Depending on the task, this approach may be sufficient. However, we will take another step and try to take into account the uncertainty in the point estimates of the model parameters. In simulations, we use the function lm(), which is designed to fit linear regression models. There is nothing surprising here вЂ“ after all, we already know that our simple model of blood pressure can be considered as a linear regression model which has no predictor:</p>
 <pre class="r"><code>y.lm &lt;- lm(y ~ 1) # the formula to evaluate only a free member
 summary(y.lm)</code></pre>
 <pre><code>## 
@@ -443,20 +519,8 @@ summary(y.lm)</code></pre>
 ## 
 ## Residual standard error: 16.96 on 99 degrees of freedom</code></pre>
 <p>As follows from the presented results, free term customized model (Intercept) exactly coincides with an average value of the data (135.16 mmHg. calendar) and the standard deviation of the residues of the model (Residual standard error) coincides with the standard deviation of these data (16.96 mm Hg. calendar). Importantly, however, we also calculated estimates of the standard error of the average value equal to 1.696 (see column Std. Error to the intersection with a line (Intercept)). By definition, the standard error of a parameter is the standard deviation of the [normal] distribution of values of this parameter, calculated on samples of equal size from the same population. We can use this fact to account for uncertainty in the point estimates of the model parameters when generating new data. So, knowing the sample parameter estimates and their standard errors, we can: a) generate a few possible values for these parameters (i.e., to create multiple implementations of the same model, varying the values of parameters a) and b) to generate new data based on each of these alternative implementations of the model.</p>
-<pre class="r"><code>library(arm)</code></pre>
-<pre><code>## Loading required package: MASS</code></pre>
-<pre><code>## Warning: package &#39;MASS&#39; was built under R version 3.3.3</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## Loading required package: lme4</code></pre>
-<pre><code>## 
-## arm (Version 1.9-3, built: 2016-11-21)</code></pre>
-<pre><code>## Working directory is E:/YandexDisk/Jobs/EDDY/Environmental Modelling/Modelling site/EcologyModeling.github.io</code></pre>
-<pre><code>## 
-## Attaching package: &#39;arm&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:psych&#39;:
-## 
-##     logit, rescale, sim</code></pre>
-<pre class="r"><code>set.seed(102) # for reproducible result
+<pre class="r"><code>library(arm)
+set.seed(102) # for reproducible result
 y.sim &lt;- sim(y.lm, 5)</code></pre>
 <p>y.sim an object of class S4, which contains slots coef (coefficients of the model) and the sigma (STD. deviation of residues of the model):</p>
 <pre class="r"><code>str(y.sim)</code></pre>
@@ -539,7 +603,6 @@ y &lt;- rnorm(100, mean = 97.078 + 0.949*x, 9.563)</code></pre>
 <p>The last model conceived to demonstrate the principles under discussion, was used as the “true” (eng. true model) in the sense that it described a General population. In other words, we assumed that we had the ability to simultaneously measure the pressure of all of the existing people and the obtained data describes this “true” model. In a real situation neither the structure of the (systematic part + residues) nor the values of the parameters of the true model, the researcher usually unknown.</p>
 <p>All he has is a set of experimental data, often unrepresentative and highly “noisy”. With this information and a good understanding of the phenomenon under study (in the sense of what the predictors considered important enough for consideration), the researcher can only hope to approach the structure of the true model and estimate its parameters with a certain accuracy. Unfortunately, such success is not always guaranteed.</p>
 </div>
-</div>
 
 </div> <!-- lessonContent -->
 </div> <!-- lessonPage -->
@@ -560,16 +623,24 @@ y &lt;- rnorm(100, mean = 97.078 + 0.949*x, 9.563)</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -594,7 +665,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

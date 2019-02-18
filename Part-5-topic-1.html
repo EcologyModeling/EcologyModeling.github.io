@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,11 +183,10 @@ $(document).ready(function () {
 
 
 
-
-<div id="rStudioHeader" class="alwaysShrunk">
+<!--<div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
 
 
@@ -135,6 +203,43 @@ $(document).ready(function () {
     </div>
   </div>
 </div>
+-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">Математическое моделирование в экологии</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Занятия<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+
+                <li><a href="Part-1-topic-1.html">Введение в R</a></li>
+                <li><a href="Part-2-topic-2.html">Физические модели</a></li>
+                <li><a href="Part-3-topic-1.html">Манипуляции над данными</a></li>
+                <li><a href="Part-4-topic-1.html">Линейная регрессия</a></li>
+                <li><a href="Part-4-topic-2.html">Логистическая регрессия</a></li>
+                <li><a href="Part-5-topic-1.html">Рандомизация и бутстреп</a></li>
+                
+              </ul>
+            </li>
+            <li><a href="Tests.html" target="_blank">Задания</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="materials.html" target="_blank">Материалы</a></li>
+            <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+                <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
+          </ul>
+    </div>
+  </div>
+</div>
+
 
 <style type="text/css">
 #TOC {
@@ -183,7 +288,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="--" class="section level3">
+<div id="section" class="section level3">
 <h3>Деревья принятия решений</h3>
 <p>Теперь мы перейдем к одному из легко интерпретируемых и наиболее популярных методов классификации: деревья решений. Деревья решений, которые выглядят как перевернутое дерево с основанием сверху и кроной внизу, играют важную роль в ситуациях, когда задачи классификации должны быть предельно прозрачными и легко интерпретируемыми. Метод довольно грациозно обрабатывает как непрерывные, так и категориальные предикторы, выбросы и несоответствующие предикторы. Наконец, общие идеи алгоритмов, которые создают деревья решений, достаточно интуитивно понятны, хотя детали могут иногда осложнить ситуацию.</p>
 <div class="figure">
@@ -221,10 +326,10 @@ testing &lt;- PID[-train,]
 ## Classification tree:
 ## tree(formula = diabetes ~ ., data = training)
 ## Variables actually used in tree construction:
-## [1] &quot;glucose&quot;  &quot;mass&quot;     &quot;age&quot;      &quot;pedigree&quot; &quot;pregnant&quot;
-## Number of terminal nodes:  13 
-## Residual mean deviance:  0.8459 = 508.4 / 601 
-## Misclassification error rate: 0.1987 = 122 / 614</code></pre>
+## [1] &quot;glucose&quot;  &quot;mass&quot;     &quot;age&quot;      &quot;pedigree&quot; &quot;insulin&quot;  &quot;pressure&quot;
+## Number of terminal nodes:  12 
+## Residual mean deviance:  0.8826 = 531.3 / 602 
+## Misclassification error rate: 0.2117 = 130 / 614</code></pre>
 <pre class="r"><code>plot(our.big.tree)
 text(our.big.tree)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
@@ -242,10 +347,10 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <pre class="r"><code> # let&#39;s test its accuracy
  pruned.preds &lt;- predict(pruned.tree, newdata=testing, type=&quot;class&quot;)
  accuracy(pruned.preds, testing[,9])</code></pre>
-<pre><code>## [1] 0.7597403</code></pre>
+<pre><code>## [1] 0.7922078</code></pre>
 <p>Дерево настолько простое, что его легко запомнить медицинский персонал и достигает той же точности, что и громоздкое дерево на рисунке предыдущей попытки: 71%! В данном случае супер точность наверное и не достижима, особенно потому, что простейший классификатор достигает 65% точности. Тем не менее, тот факт, что значительно лучший классификатор можно построить из двух простых правил - в точности следуя логике, применяемой врачами, это именно то, поле где деревья решений имеют огромное превосходство относительно других методов. Представьте, что по результатам ваших исследований вам нужно дать заказчику очень простой и понятный набор рекомендаций, ничего лучше дерева принятия решений вам не найти</p>
 </div>
-<div id="-" class="section level3">
+<div id="section-1" class="section level3">
 <h3>Случайный лес</h3>
 <p>Одним из способов смягчения недостатков моделей дерева решений является бутстрап агрегация или бэггинг (суммирование - сумкирование). При бэггинге вы извлекаете в “сумки” образцы бутстрапа(случайные образцы с заменой) из ваших данных. По каждому образцу вы строите модель дерева решений. Конечная модель - это среднее из всех индивидуальных деревьев решений. Чтобы сделать это пространное объяснение более конкретным, предположим, что x является входной переменной, <span class="math inline">\(y_{i}(x)\)</span> - выход i-го дерева, <span class="math inline">\(c(y_{1}(x), y_{2}(x) , ... y_{n}(x))\)</span> - вектор отдельных выходов, а <span class="math inline">\(y\)</span> - выход конечной модели:</p>
 <ul>
@@ -253,7 +358,7 @@ plot(cv.results$size, cv.results$dev, type=&quot;b&quot;)</code></pre>
 <li>При классификации конечная модель присваивает классу, получившему наибольшее количество голосов от отдельных деревьев.</li>
 </ul>
 <p>Деревья решений методом бэггинга стабилизируют окончательную модель, уменьшая дисперсию; Это повышает точность. Набор деревьев полученный беггингом также менее подвержен оверфиттингу.</p>
-<div id="--" class="section level4">
+<div id="section-2" class="section level4">
 <h4>Классификаторы при беггинге</h4>
 <p>Доказательства того, что беггинг уменьшает дисперсию, действительны только для регрессии и для оценки вероятностей классов, но не для классификаторов (моделей, которые возвращают членство в классе, а не вероятности класса). Бэггинг и без того плохого классификатора может сделать его еще хуже. Таким образом, вы определенно хотите работать над оценочными вероятностями класса, если они вообще возможны. Но можно показать, что для деревьев CART (что является реализацией дерева решений в R) при ряде допщуений бэггинг имеет тенденцию повышать точность классификатора.</p>
 <p>Набор данных Spambase является хорошим образцом для демонстрации бэггинга. Набор данных состоит из 4600 документов и 57 их черт, которые описывают частоту определенных ключевых слов и символов. Сначала мы подготовим дерево решений, чтобы оценить вероятность того, что данный документ является спамом, а затем мы оценим отклонение дерева и его точность прогнозирования.</p>
@@ -306,7 +411,7 @@ accuracyMeasures(predict.bag(treelist, newdata=spamTrain), spamTrain$spam==&quot
 ## 1 bagging, test 0.9126638 0.7819273 0.5266863</code></pre>
 <p>Как видите, бэггинг повышает точность и F1, а также уменьшает отклонения от учебных и тестовых наборов по сравнению с единым деревом решений (мы увидим прямое сравнение результатов немного позже). Прогресс еще больше впечатляет на тестовом наборе: у модели с бэггингом меньше ошибок обобщения, чем у единичного дерева решений. Мы можем еще больше повысить производительность модели, перейдя от бэггинга к методу случайных лесов.</p>
 </div>
-<div id="-------" class="section level4">
+<div id="section-3" class="section level4">
 <h4>Использование метода случайных лесов для дальнейшего улучшения прогнозирования</h4>
 <p>При бэггинге деревья строятся с использованием рандомизированных наборов данных, но каждое дерево строится с учетом одного и того же набора функций. Это означает, что все отдельные деревья могут использовать очень похожие наборы функций (возможно, в другом порядке или с разными значениями разделения). Следовательно, отдельные деревья будут иметь тенденцию к чрезмерной корреляции друг с другом. Если есть ряд независимых переменных, для которых единичное дерево будет склонно совершать ошибки, то и все возможные деревья, вероятно, тоже будут ошибаются на этих участках, уменьшая нашу возможность исправления. Метод случайного леса пытается де-коррелировать деревья путем рандомизации набора переменных, которые разрешено использовать каждому дереву. Для каждого отдельного дерева в ансамбле метод случайного леса выполняет следующие действия:</p>
 <ol style="list-style-type: decimal">
@@ -321,57 +426,56 @@ accuracyMeasures(predict.bag(treelist, newdata=spamTrain), spamTrain$spam==&quot
 <p>Окончательный набор деревьев затем подвергается беггингу, чтобы сформулировать предсказание Это довольно сложно, но, к счастью, все это делается с помощью одной командой</p>
 <p>По умолчанию функция randomForest () в R выводит mtry = p / 3 переменных в каждом узле для деревьев регрессии и m = sqrt(p) переменных для деревьев классификации. Теоретически, случайные леса не очень чувствительны к значению mtry. При меньших значениях деревья будут расти быстрее; Но если у вас есть очень большое количество переменных на выбор, из которых только небольшая часть действительно полезна, то лучше использовать большее значение mtry, так как при большом mtry вы, с большей вероятностью выберете некоторые полезные переменные на каком либо из шагов процедуры выращивания деревьев. Продолжая использовать данные по спаму, давайте построим модель используя метод случайных лесов.</p>
 <pre class="r"><code>library(randomForest)</code></pre>
-<pre><code>## Warning: package &#39;randomForest&#39; was built under R version 3.3.3</code></pre>
-<pre><code>## randomForest 4.6-12</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
 <pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
 <pre class="r"><code>set.seed(5123512)
 fmodel &lt;- randomForest(x=spamTrain[,spamVars],
-                       y=spamTrain$spam,
+                       y=as.factor(spamTrain$spam),
                       ntree=100,
                       nodesize=7,
                       importance=T)
 accuracyMeasures(predict(fmodel, newdata=spamTrain[,spamVars],type=&#39;prob&#39;)[,&#39;spam&#39;], spamTrain$spam==&quot;spam&quot;,name=&quot;random forest, train&quot;)</code></pre>
 <pre><code>##                  model  accuracy        f1  dev.norm
-## 1 random forest, train 0.9884142 0.9706611 0.1428786</code></pre>
+## 1 random forest, train 0.9884142 0.9706611 0.1439711</code></pre>
 <pre class="r"><code>accuracyMeasures(predict(fmodel, newdata=spamTest[,spamVars],type=&#39;prob&#39;)[,&#39;spam&#39;], spamTest$spam==&quot;spam&quot;,name=&quot;random forest, test&quot;)</code></pre>
-<pre><code>##                 model  accuracy        f1  dev.norm
-## 1 random forest, test 0.9541485 0.8845029 0.3972416</code></pre>
+<pre><code>##                 model  accuracy        f1 dev.norm
+## 1 random forest, test 0.9497817 0.8734057 0.301078</code></pre>
 <p>Модель оказалась значительно лучше, чем две предыдущие модели в процессе обучения и тестирования. Но ошибка обобщения случайного леса была сопоставима с ошибкой одного дерева решений (и почти вдвое больше, чем у модели в мешках).</p>
 </div>
-<div id="--" class="section level4">
+<div id="section-4" class="section level4">
 <h4>Выявление значимости переменных</h4>
 <p>Полезной особенностью функции randomForest() является ее вычисление важности для каждой переменной. Поскольку алгоритм использует большое количество выборок бутстрапа, каждая точка данных x имеет соответствующий набор образцов вне пакета: те образцы, которые не содержат точку x. Данные не попавшие в выборку беггингом могут быть использованы аналогично N-кратной перекрестной проверке, для оценки точности каждого дерева в ансамбле.</p>
 <p>Для оценки «важности» переменной v значения переменных случайным образом переставляются в выборках вне выборки беггингом, и оценивается соответствующее снижение точности каждого дерева. Если среднее уменьшение по всем деревьям велико, то переменная считается важной - ее значение имеет большое значение для прогнозирования результата. Если среднее уменьшение невелико, то переменная не имеет большого значения для результата. Алгоритм также измеряет снижение чистоты узла, которое происходит при расщеплении по перестановленной переменной (как эта переменная влияет на качество дерева).</p>
 <p>Мы можем рассчитать важность переменной, установив значение = T в вызове функции randomForest (), а затем вызывая функции important () и varImpPlot ().</p>
 <pre class="r"><code>varImp &lt;- importance(fmodel)
 varImp[1:10, ]</code></pre>
-<pre><code>##                     non-spam       spam MeanDecreaseAccuracy
-## word.freq.make      2.096811  3.7304353             4.334207
-## word.freq.address   3.603167  3.9967031             4.977452
-## word.freq.all       2.799456  4.9527834             4.924958
-## word.freq.3d        3.000273  0.4125932             2.917972
-## word.freq.our       9.037946  7.9421391            10.731509
-## word.freq.over      5.879377  4.2402613             5.751371
-## word.freq.remove   16.637390 13.9331691            17.753122
-## word.freq.internet  7.301055  4.4458342             7.947515
-## word.freq.order     3.937897  4.3587883             4.866540
-## word.freq.mail      5.022432  3.4701224             6.103929
+<pre><code>##                     non-spam      spam MeanDecreaseAccuracy
+## word.freq.make      1.656795  3.432962             3.067899
+## word.freq.address   2.631231  3.800668             3.632077
+## word.freq.all       3.279517  6.235651             6.137927
+## word.freq.3d        3.900232  1.286917             3.753238
+## word.freq.our       9.966034 10.160010            12.039651
+## word.freq.over      4.657285  4.183888             4.894526
+## word.freq.remove   19.172764 14.020182            20.229958
+## word.freq.internet  7.595305  5.246213             8.036892
+## word.freq.order     3.167008  2.505777             3.065529
+## word.freq.mail      3.820764  2.786041             4.869502
 ##                    MeanDecreaseGini
-## word.freq.make             5.877954
-## word.freq.address         10.081640
-## word.freq.all             23.524720
-## word.freq.3d               1.550635
-## word.freq.our             52.569163
-## word.freq.over            11.820391
-## word.freq.remove         174.126926
-## word.freq.internet        22.578106
-## word.freq.order           11.809265
-## word.freq.mail            11.127200</code></pre>
+## word.freq.make             8.131240
+## word.freq.address          9.971055
+## word.freq.all             27.744061
+## word.freq.3d               1.453879
+## word.freq.our             59.215337
+## word.freq.over            13.362416
+## word.freq.remove         158.008043
+## word.freq.internet        22.025964
+## word.freq.order            8.062485
+## word.freq.mail            11.605088</code></pre>
 <pre class="r"><code>varImpPlot(fmodel, type=1)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Знание того, какие переменные являются наиболее важными (или, по крайней мере, какие переменные в наибольшей степени вносят вклад в структуру базовых деревьев решений), может помочь вам с уменьшением количества переменных. Это полезно не только для построения меньших, более быстрых деревьев, но и для выбора переменных, которые будут использоваться другим алгоритмом моделирования, если это необходимо. Мы можем уменьшить число переменных в этом примере спама с 57 до 25, не потеряв в качестве конечной модели.</p>
 <pre class="r"><code>selVars &lt;- names(sort(varImp[,1], decreasing=T))[1:25]
-fsel &lt;- randomForest(x=spamTrain[,selVars],y=spamTrain$spam,
+fsel &lt;- randomForest(x=spamTrain[,selVars],y=as.factor(spamTrain$spam),
 ntree=100,
 nodesize=7,
 importance=T)
@@ -379,15 +483,15 @@ accuracyMeasures(predict(fsel,
 newdata=spamTrain[,selVars],type=&#39;prob&#39;)[,&#39;spam&#39;],
 spamTrain$spam==&quot;spam&quot;,name=&quot;RF small, train&quot;)</code></pre>
 <pre><code>##             model  accuracy        f1  dev.norm
-## 1 RF small, train 0.9864832 0.9658047 0.1379438</code></pre>
+## 1 RF small, train 0.9862419 0.9651595 0.1382523</code></pre>
 <pre class="r"><code>accuracyMeasures(predict(fsel,
 newdata=spamTest[,selVars],type=&#39;prob&#39;)[,&#39;spam&#39;],
 spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre>
 <pre><code>##            model  accuracy        f1  dev.norm
-## 1 RF small, test 0.9497817 0.8742775 0.3985712</code></pre>
+## 1 RF small, test 0.9585153 0.8956005 0.4963935</code></pre>
 <p>Меньшая модель работает точно так же, как и модель предложенная методом случайного леса, построенная с использованием всех 57 переменных.</p>
 </div>
-<div id="------" class="section level4">
+<div id="section-5" class="section level4">
 <h4>Подводя итоги блуждания Беггинса в случайном лесу</h4>
 <p>Вот что вы должны помнить о мешках и случайных лесах:</p>
 <ul>
@@ -400,10 +504,10 @@ spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre
 </ul>
 </div>
 </div>
-<div id="-" class="section level2">
+<div id="section-6" class="section level2">
 <h2>Методы геостатистики</h2>
 <p>Пойма долины реки Геул, расположенной на юге Нидерландов, сильно загрязнена тяжелыми металлами. Из-за развития в прошлом металлодобывающей промышленности произошло загрязнение аллювиальных почв свинцом, цинком и кадмием. Каждый раз, когда река затапливала долину, на речных берегах откладывались загрязненные отложения. Загрязняющие вещества могут затруднять использование этих земель, поэтому требуются подробные карты, где показаны зоны с высокой концентрацией тяжелых металлов.</p>
-<div class="section level4">
+<div id="section-7" class="section level4">
 <h4>Данные</h4>
 <p>Данные, которые мы будем использовать для построения карт:</p>
 <ul>
@@ -420,22 +524,23 @@ spamTest$spam == &quot;spam&quot;, name=&quot;RF small, test&quot; )</code></pre
 <pre class="r"><code>## подключаем необходимые пакеты
 library(sp)
 library(sf)</code></pre>
-<pre><code>## Linking to GEOS 3.5.0, GDAL 2.1.1, proj.4 4.9.3</code></pre>
+<pre><code>## Linking to GEOS 3.6.1, GDAL 2.2.3, PROJ 4.9.3</code></pre>
 <pre class="r"><code>library(rgdal)</code></pre>
-<pre><code>## rgdal: version: 1.2-5, (SVN revision 648)
+<pre><code>## rgdal: version: 1.3-6, (SVN revision 773)
 ##  Geospatial Data Abstraction Library extensions to R successfully loaded
-##  Loaded GDAL runtime: GDAL 2.0.1, released 2015/09/15
+##  Loaded GDAL runtime: GDAL 2.2.3, released 2017/11/20
 ##  Path to GDAL shared files: C:/RLibraries/rgdal/gdal
-##  Loaded PROJ.4 runtime: Rel. 4.9.2, 08 September 2015, [PJ_VERSION: 492]
+##  GDAL binary built with GEOS: TRUE 
+##  Loaded PROJ.4 runtime: Rel. 4.9.3, 15 August 2016, [PJ_VERSION: 493]
 ##  Path to PROJ.4 shared files: C:/RLibraries/rgdal/proj
-##  Linking to sp version: 1.2-4</code></pre>
+##  Linking to sp version: 1.3-1</code></pre>
 <pre class="r"><code>library(maptools)</code></pre>
 <pre><code>## Checking rgeos availability: TRUE</code></pre>
 <pre class="r"><code>library(gstat)
 library(rgeos)</code></pre>
-<pre><code>## rgeos version: 0.3-22, (SVN revision 544)
-##  GEOS runtime version: 3.5.0-CAPI-1.9.0 r4084 
-##  Linking to sp version: 1.2-4 
+<pre><code>## rgeos version: 0.4-2, (SVN revision 581)
+##  GEOS runtime version: 3.6.1-CAPI-1.10.1 
+##  Linking to sp version: 1.3-1 
 ##  Polygon checking: TRUE</code></pre>
 <pre class="r"><code>library(MASS)</code></pre>
 <p>Загрузим данные с формами территории изучаемой местности:</p>
@@ -463,10 +568,8 @@ download.file(&quot;https://www.dropbox.com/s/73htull4j5u3mlr/river_line.dbf?dl=
 download.file(&quot;https://www.dropbox.com/s/ffo94fswywjezl9/river_line.prj?dl=1&quot;, destfile = &quot;./river_line.pr&quot;, mode=&quot;wb&quot;)
 
 
-studarea &lt;- readShapePoly(&quot;mask_aoi_shp.shp&quot;)</code></pre>
-<pre><code>## Warning: use rgdal::readOGR or sf::st_read</code></pre>
-<pre class="r"><code>riverline &lt;- readShapeLines(&quot;river_line.shp&quot;)</code></pre>
-<pre><code>## Warning: use rgdal::readOGR or sf::st_read</code></pre>
+studarea &lt;- readShapePoly(&quot;mask_aoi_shp.shp&quot;)
+riverline &lt;- readShapeLines(&quot;river_line.shp&quot;)</code></pre>
 <p>Теперь объединим на одном рисунке и полигон, показывающий изучаемую территорию, и линию реки. Для этого объединим объекты в список:</p>
 <pre class="r"><code>spplot(geul, zcol = &quot;pb&quot;, xlim = c(190000,192000), ylim = c(314000,316000), cex = 1.5, main = &quot;Pb data&quot;,
 key.space = list(x = 0.02, y = 0.26, corner = c(0,1)),
@@ -482,7 +585,7 @@ vgpb &lt;- variogram(gpb)
 vgmpb &lt;- vgm(nugget = 5000, psill = 25000, range = 400, model = &quot;Sph&quot;)
 vgmpb &lt;- fit.variogram(vgpb, vgmpb, fit.method=7)</code></pre>
 </div>
-<div id="-----" class="section level4">
+<div id="section-8" class="section level4">
 <h4>Интерполяция точечных данных методом обратных расстояний</h4>
 <p>Метод обратных расстояний или метод обратных взвешенных расстояний (IDW - Inverse Distance Weighting) предполагает, что объекты, которые находятся поблизости, более похожи, чем объекты, удаленные друг от друга; при этом каждая точка пробоотбора оказывает «локальное влияние», которое уменьшается с увеличением расстояния. При расчете значения в точке, где не было пробоотбора, используются точки, значения показателя в которых известны, при этом вес точек стремительно уменьшается как функция от расстояния. Поэтому метод носит название обратных взвешенных расстояний. Интерполяция методом обратных расстояний осуществляется с помощью функции krige из библиотеки gstat. В результате интерполяции создается, так называемый «грид-файл», где значения предсказываются в узлах регулярной сетки. В качестве параметров функции krige указывается зависимая переменная с помощью параметра formula, задаются координаты и исходные данные с помощью параметра locations и подгружается маска, где указаны границы участка, с помощью параметра newdata. Маска - это текстовый фрейм, в котором указано, сколько нужно получить строк, сколько столбцов, координаты первой точки (левого верхнего угла); число, обозначающее, что нет данных (-9999) и далее приведена матрица, где единицами отмечены точки, в которых должны быть предсказаны значения, а числом -9999 помечены точки, где значения предсказывать не нужно, так как они выходят за границы участка.</p>
 <p>Затем запускаем команду krige, позволяющую провести интерполяцию методом обратных расстояний. Значения будут предсказаны только в точках, которые помечены единицами в маске.</p>
@@ -502,7 +605,7 @@ mask &lt;- readGDAL(&quot;geul_mask.txt&quot;)</code></pre>
 sp.layout = list(&quot;sp.lines&quot;, riverline, col=&quot;lightblue&quot;, lwd=2))</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
 </div>
-<div id="------" class="section level4">
+<div id="section-9" class="section level4">
 <h4>Интерполяция точечных данных методом ординарного кригинга (теория)</h4>
 <p>Кригинг - ключевой метод геостатистики для анализа пространственно-распределенных данных. Он основывается на гипотезе о пространственной однородности («стационарности 2-го порядка»). Важным преимуществом кригинга является то, что предсказывается не только среднее значение экологической переменной в точке, но и ее возможный разброс. Чаще всего результаты оформляются в виде предсказанных значений и ошибки предсказания.</p>
 <p>Интерполяция методом кригинга предполагает, что пространственные изменения значений экологической переменной Z(х) в точках х в общем случае являются суммой трех компонент:</p>
@@ -525,15 +628,13 @@ sp.layout = list(&quot;sp.lines&quot;, riverline, col=&quot;lightblue&quot;, lwd
 <li>установить пространственную структуру данных - подобрать к данным модель пространственной изменчивости (семивариограмму);</li>
 <li>провести интерполяцию, используя параметры модели семивариограммы.</li>
 </ol>
-</div>
-<div id="------" class="section level4">
-<h4>Построение семивариограммы и подбор оптимальных параметров модели</h4>
+<p>####Построение семивариограммы и подбор оптимальных параметров модели</p>
 <p>Семивариограмма (или вариограмма) - это функция, которая связывает различие в значениях опорных точек и расстояние, на которое они отстоят друг от друга. Она служит средством для исследования пространственной автокорреляции (то есть пространственных связей) между точками. По оси x откладывается расстояние между точками (в метрах, км или др.). По оси y – усредненная дисперсия разности значений в точках, находящихся на данном расстоянии. Если по оси y отложена дисперсия для разности всех пар точек, то такой график называется «вариационное облако».</p>
 <pre class="r"><code>vgpb1 = variogram(gpb, cloud=TRUE)
 plot (vgpb1)</code></pre>
 <p><img src="Part-5-topic-1_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
-<div id="-" class="section level4">
+<div id="section-10" class="section level4">
 <h4>Ординарный кригинг</h4>
 <p>Используйте команду fit.variogram для того, чтобы подобрать оптимальные параметры семивариограммы. Интерполяцию методом ординарного кригинга можно провести с помощью функции krige из библиотеки gstat. Одним из аргументов является, как уже отмечалось ранее, newdata, где вы определяете пространственные границы экстраполяции. Для этого можно использовать данные файла geul_mask.txt. Среди параметров обязательным является model, задающий параметры модели семивариограммы.</p>
 <pre class="r"><code>mask &lt;- readGDAL(&quot;geul_mask.txt&quot;)</code></pre>
@@ -576,16 +677,24 @@ names(geul.krig)</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -610,7 +719,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

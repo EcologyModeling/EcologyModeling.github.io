@@ -15,7 +15,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -23,7 +23,7 @@
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -73,7 +73,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
+<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
 </head>
 
@@ -184,10 +184,10 @@ $(document).ready(function () {
 
 
 
-<div id="rStudioHeader" class="alwaysShrunk">
+<!--<div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
 
 
@@ -204,6 +204,43 @@ $(document).ready(function () {
     </div>
   </div>
 </div>
+-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">Математическое моделирование в экологии</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Занятия<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+
+                <li><a href="Part-1-topic-1.html">Введение в R</a></li>
+                <li><a href="Part-2-topic-2.html">Физические модели</a></li>
+                <li><a href="Part-3-topic-1.html">Манипуляции над данными</a></li>
+                <li><a href="Part-4-topic-1.html">Линейная регрессия</a></li>
+                <li><a href="Part-4-topic-2.html">Логистическая регрессия</a></li>
+                <li><a href="Part-5-topic-1.html">Рандомизация и бутстреп</a></li>
+                
+              </ul>
+            </li>
+            <li><a href="Tests.html" target="_blank">Задания</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="materials.html" target="_blank">Материалы</a></li>
+            <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+                <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
+          </ul>
+    </div>
+  </div>
+</div>
+
 
 <style type="text/css">
 #TOC {
@@ -229,7 +266,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="--r" class="section level2">
+<div id="r" class="section level2">
 <h2>Введение в R</h2>
 <ol style="list-style-type: decimal">
 <li><p>Вычислить среднее для каждой колонки таблицы iris, за исключением колонки “Species” и соберите результат в список (list).</p></li>
@@ -242,14 +279,14 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li><p>По данным таблицы ‘diamonds’(пакет ggplot2 ) почитайте среднюю стоимость цены карата для бриллиантов дороже 1000$ для каждой категории яркости (clarity).</p></li>
 </ol>
 </div>
-<div id="---" class="section level2">
+<div id="section" class="section level2">
 <h2>Регрессионный и корелляционный анализы</h2>
 <ol style="list-style-type: decimal">
 <li><p>Написать собственную функцию, которая бы для двух векторов одинакового объема считала бы коэффициент корелляции Спирмена <span class="math inline">\(r = 1 - \frac{6\sum_{i=1}^N d^2}{n(n^2 - 1)}\)</span>. Для получения рангов ипользуйте функцию rank. Дополнительные балы для тех, кто сможет исользовать функцую match вместо rank.</p></li>
 <li><p>Используя данные по <a href="https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1">ссылке</a>, постройте оптимальную линейную модель множественной регрессии для co2_flux используя только данные летних месяцев. В данных вместо значения NA используется значения -9999, исправьте это действием подобным data[data == -9999] = NA. Для выбора нужных суток используйте переменную DOY - день года (1 января - DOY = 1)</p></li>
 </ol>
 </div>
-<div id="-1-----" class="section level2">
+<div id="section-1" class="section level2">
 <h2>Задание 1 - Манипуляции с данными</h2>
 <p>Исользуя пример ниже, где для столицы 71 региона скачиваются все имеющиеся климатические данные(ежедневные осадки и среднедневные температуры) для 20 близлежайших метеостанций, рассчитайте урожайность для указанного вам региона (координаты столицы найдите самостоятельно) по приведенным ниже уравнениям.</p>
 <p><strong>Внимание все переменные в скачаных данных представлены в десятых долях единиц.</strong></p>
@@ -473,7 +510,7 @@ di
 </tbody>
 </table>
 <p><strong>ВНИМАНИЕ! Для успешного решения задачи внимательно прочитайте раздел “Манипуляции над данными” и просмотрите презентации по tidyverse !</strong></p>
-<div id="-121-" class="section level4">
+<div id="section-2" class="section level4">
 <h4>для 121 группы</h4>
 <ol style="list-style-type: decimal">
 <li>Бородина Кира – для региона 32 рассчитайте урожайность пшеницы в 2015 году, взяв для рассчета средние суммы активных температур за предыдущие 5 лет, с 11 ближайших метеостанций</li>
@@ -492,7 +529,7 @@ di
 <li>Чалве Джеф – для региона 8 рассчитайте урожайность пшеницы в 2000 году, взяв для рассчета средние суммы активных температур за предыдущие 7 лет, с 10 ближайших метеостанций но убирая из рассчета активных температур дни с температурой выше 27 градусов</li>
 </ol>
 </div>
-<div id="-122-" class="section level4">
+<div id="section-3" class="section level4">
 <h4>для 122 группы</h4>
 <ol style="list-style-type: decimal">
 <li>Габечая Валерия – для региона 30 рассчитайте урожайность пшеницы в 2001 году, взяв для рассчета средние суммы активных температур за предыдущие 8 лет, с 12 ближайших метеостанций но рассчитав колонку di самостоятельно, как долю месяца, когда среднедневные температуры были выше 8 градусов, но учитывая, что посев не может начаться раньше середины апреля, а вегетация составляет 3 месяца</li>
@@ -505,7 +542,7 @@ di
 <li>Петрова Полина – для региона 16 рассчитайте урожайность пшеницы в 2011 году, взяв для рассчета средние суммы активных температур за текущий год, с 25 ближайших метеостанций но убирая из рассчета активных температур дни с температурой ниже 10 градусов</li>
 </ol>
 </div>
-<div id="-123-" class="section level4">
+<div id="section-4" class="section level4">
 <h4>для 123 группы</h4>
 <ol style="list-style-type: decimal">
 <li>Завалихина Юлия – для региона 56 рассчитайте урожайность пшеницы в период с 2007 по 2015 год взяв для рассчета средние суммы активных температур за эти годы, с метеостанций на расстоянии от 50 до 250 км<br />
@@ -520,7 +557,7 @@ di
 <li>Чиркова Анастасия – для региона 54 рассчитайте урожайность пшеницы в период с 2010 по 2013 год взяв для рассчета средние суммы активных температур за эти годы, с 25 ближайших метеостанций</li>
 </ol>
 </div>
-<div id="-124-" class="section level4">
+<div id="section-5" class="section level4">
 <h4>для 124 группы</h4>
 <ol style="list-style-type: decimal">
 <li>Антоненко Алексей – для региона 22 рассчитайте урожайность пшеницы в 2014 году, взяв для рассчета средние суммы активных температур за текущий год, с 20 ближайших метеостанций но рассчитав колонку di самостоятельно, как долю месяца, когда среднедневные температуры были выше 7 градусов, но учитывая, что посев не может начаться раньше середины апреля, а вегетация составляет 4 месяца</li>
@@ -555,16 +592,24 @@ di
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 

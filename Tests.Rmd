@@ -5,7 +5,7 @@ output:
     toc_float: false
     highlight: textmate
     includes:
-      before_body: [include_header.html]
+      before_body: [include_header_new.html]
       after_body: [include_footer.html]
 ---
 

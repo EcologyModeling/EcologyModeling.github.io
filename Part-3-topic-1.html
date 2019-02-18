@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,11 +183,10 @@ $(document).ready(function () {
 
 
 
-
-<div id="rStudioHeader" class="alwaysShrunk">
+<!--<div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
 
 
@@ -135,6 +203,43 @@ $(document).ready(function () {
     </div>
   </div>
 </div>
+-->
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">Математическое моделирование в экологии</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Занятия<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+
+                <li><a href="Part-1-topic-1.html">Введение в R</a></li>
+                <li><a href="Part-2-topic-2.html">Физические модели</a></li>
+                <li><a href="Part-3-topic-1.html">Манипуляции над данными</a></li>
+                <li><a href="Part-4-topic-1.html">Линейная регрессия</a></li>
+                <li><a href="Part-4-topic-2.html">Логистическая регрессия</a></li>
+                <li><a href="Part-5-topic-1.html">Рандомизация и бутстреп</a></li>
+                
+              </ul>
+            </li>
+            <li><a href="Tests.html" target="_blank">Задания</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="materials.html" target="_blank">Материалы</a></li>
+            <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
+                <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
+          </ul>
+    </div>
+  </div>
+</div>
+
 
 <style type="text/css">
 #TOC {
@@ -183,12 +288,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="-dplyr" class="section level2">
+<div id="dplyr" class="section level2">
 <h2>Пакет dplyr</h2>
 <p>Моделирование в той или иной форме является составной частью более сложного процесса, через который проходит любой исследователь работающий с реальными данными - анализ данных. Не вдаваясь глубоко в подробности в данном разделе будет рассмотрен начальный этап анализа данных - преобразования или манипуляции с данными (data-manipulation).</p>
 <p>В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Давайте рассмотрим ряд из самых популярных подобных пакетов из целой “вселенной” пакетов tydiverse от известного разработчика Хадли Викхема.</p>
-<pre class="r"><code>library(&quot;tidyverse&quot;)
-library(&quot;nycflights13&quot;)
+<pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
+<pre><code>## -- Attaching packages ----------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --</code></pre>
+<pre><code>## v ggplot2 3.1.0       v purrr   0.3.0  
+## v tibble  2.0.1       v dplyr   0.8.0.1
+## v tidyr   0.8.2       v stringr 1.4.0  
+## v readr   1.3.1       v forcats 0.4.0</code></pre>
+<pre><code>## -- Conflicts -------------------------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(&quot;nycflights13&quot;)
 library(&quot;tidyr&quot;)
 library(&quot;stringr&quot;)
 library(&quot;dplyr&quot;)
@@ -205,18 +318,18 @@ library(&quot;readr&quot;)</code></pre>
 </ul>
 <p>Filter () позволяет выбрать подмножество наблюдений(строк), основанных на их значениях(по значениям в отдельных колонках). Первый аргумент функции - это имя таблицы данных. Второй и последующие аргументы - это выражения, которые фильтруют фрейм данных, которые должны в результате выдавать логический вектор. Рассмотрим данные по времени и датам вылетов из набора данных flights, которые мы подключили с пакетом nycflights13, и выберем все рейсы с 1 января:</p>
 <pre class="r"><code>filter(flights, month == 1, day == 1)</code></pre>
-<pre><code>## # A tibble: 842 &lt;U+00D7&gt; 19
+<pre><code>## # A tibble: 842 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1   2013     1     1      517            515         2      830
-## 2   2013     1     1      533            529         4      850
-## 3   2013     1     1      542            540         2      923
-## 4   2013     1     1      544            545        -1     1004
-## 5   2013     1     1      554            600        -6      812
-## 6   2013     1     1      554            558        -4      740
-## 7   2013     1     1      555            600        -5      913
-## 8   2013     1     1      557            600        -3      709
-## 9   2013     1     1      557            600        -3      838
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
 ## 10  2013     1     1      558            600        -2      753
 ## # ... with 832 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
 ## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
@@ -224,18 +337,18 @@ library(&quot;readr&quot;)</code></pre>
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Следующий код находит все рейсы, отправленные в ноябре или декабре:</p>
 <pre class="r"><code>filter(flights, month == 11 | month == 12)</code></pre>
-<pre><code>## # A tibble: 55,403 &lt;U+00D7&gt; 19
+<pre><code>## # A tibble: 55,403 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1   2013    11     1        5           2359         6      352
-## 2   2013    11     1       35           2250       105      123
-## 3   2013    11     1      455            500        -5      641
-## 4   2013    11     1      539            545        -6      856
-## 5   2013    11     1      542            545        -3      831
-## 6   2013    11     1      549            600       -11      912
-## 7   2013    11     1      550            600       -10      705
-## 8   2013    11     1      554            600        -6      659
-## 9   2013    11     1      554            600        -6      826
+##  1  2013    11     1        5           2359         6      352
+##  2  2013    11     1       35           2250       105      123
+##  3  2013    11     1      455            500        -5      641
+##  4  2013    11     1      539            545        -6      856
+##  5  2013    11     1      542            545        -3      831
+##  6  2013    11     1      549            600       -11      912
+##  7  2013    11     1      550            600       -10      705
+##  8  2013    11     1      554            600        -6      659
+##  9  2013    11     1      554            600        -6      826
 ## 10  2013    11     1      554            600        -6      749
 ## # ... with 55,393 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
 ## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
@@ -245,36 +358,36 @@ library(&quot;readr&quot;)</code></pre>
 <pre class="r"><code>nov_dec &lt;- filter(flights, month %in% c(11, 12))</code></pre>
 <p>arrange() работает аналогично filter(), за исключением того, что вместо выбора строк изменяется их порядок. Он принимает таблицу данных и набор имен столбцов (или более сложных выражений) для упорядочения. Если вы укажете более одного имени столбца, каждый дополнительный столбец будет использоваться для разрыва связей в значениях предыдущих столбцов:</p>
 <pre class="r"><code>arrange(flights, year, month, day)</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 19
+<pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1   2013     1     1      517            515         2      830
-## 2   2013     1     1      533            529         4      850
-## 3   2013     1     1      542            540         2      923
-## 4   2013     1     1      544            545        -1     1004
-## 5   2013     1     1      554            600        -6      812
-## 6   2013     1     1      554            558        -4      740
-## 7   2013     1     1      555            600        -5      913
-## 8   2013     1     1      557            600        -3      709
-## 9   2013     1     1      557            600        -3      838
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
 ## 10  2013     1     1      558            600        -2      753
 ## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
 ## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <pre class="r"><code>arrange(flights, desc(arr_delay))</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 19
+<pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1   2013     1     9      641            900      1301     1242
-## 2   2013     6    15     1432           1935      1137     1607
-## 3   2013     1    10     1121           1635      1126     1239
-## 4   2013     9    20     1139           1845      1014     1457
-## 5   2013     7    22      845           1600      1005     1044
-## 6   2013     4    10     1100           1900       960     1342
-## 7   2013     3    17     2321            810       911      135
-## 8   2013     7    22     2257            759       898      121
-## 9   2013    12     5      756           1700       896     1058
+##  1  2013     1     9      641            900      1301     1242
+##  2  2013     6    15     1432           1935      1137     1607
+##  3  2013     1    10     1121           1635      1126     1239
+##  4  2013     9    20     1139           1845      1014     1457
+##  5  2013     7    22      845           1600      1005     1044
+##  6  2013     4    10     1100           1900       960     1342
+##  7  2013     3    17     2321            810       911      135
+##  8  2013     7    22     2257            759       898      121
+##  9  2013    12     5      756           1700       896     1058
 ## 10  2013     5     3     1133           2055       878     1250
 ## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
 ## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
@@ -283,49 +396,49 @@ library(&quot;readr&quot;)</code></pre>
 <p>Функция desc() говорит о том, что колонку нужно пересортировать от большего к меньшему</p>
 <p>Это не редкость, когда приходиться работать с наборами данных с сотнями или даже тысячами переменных. В этом случае первая задача часто сводится к получению таблицы с набором переменных, которые вам действительно интересны. Select() позволяет быстро получить полезное подмножество, используя операции, основанные на именах переменных.</p>
 <pre class="r"><code>select(flights, year, month, day)</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 3
+<pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1   2013     1     1
-## 2   2013     1     1
-## 3   2013     1     1
-## 4   2013     1     1
-## 5   2013     1     1
-## 6   2013     1     1
-## 7   2013     1     1
-## 8   2013     1     1
-## 9   2013     1     1
+##  1  2013     1     1
+##  2  2013     1     1
+##  3  2013     1     1
+##  4  2013     1     1
+##  5  2013     1     1
+##  6  2013     1     1
+##  7  2013     1     1
+##  8  2013     1     1
+##  9  2013     1     1
 ## 10  2013     1     1
 ## # ... with 336,766 more rows</code></pre>
 <p>Интересной особенностью является возможностью выбирать ряд колонок меж двух заданных</p>
 <pre class="r"><code>select(flights, year:day)</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 3
+<pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
-## 1   2013     1     1
-## 2   2013     1     1
-## 3   2013     1     1
-## 4   2013     1     1
-## 5   2013     1     1
-## 6   2013     1     1
-## 7   2013     1     1
-## 8   2013     1     1
-## 9   2013     1     1
+##  1  2013     1     1
+##  2  2013     1     1
+##  3  2013     1     1
+##  4  2013     1     1
+##  5  2013     1     1
+##  6  2013     1     1
+##  7  2013     1     1
+##  8  2013     1     1
+##  9  2013     1     1
 ## 10  2013     1     1
 ## # ... with 336,766 more rows</code></pre>
 <pre class="r"><code>select(flights, -(year:day))</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 16
+<pre><code>## # A tibble: 336,776 x 16
 ##    dep_time sched_dep_time dep_delay arr_time sched_arr_time arr_delay
 ##       &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
-## 1       517            515         2      830            819        11
-## 2       533            529         4      850            830        20
-## 3       542            540         2      923            850        33
-## 4       544            545        -1     1004           1022       -18
-## 5       554            600        -6      812            837       -25
-## 6       554            558        -4      740            728        12
-## 7       555            600        -5      913            854        19
-## 8       557            600        -3      709            723       -14
-## 9       557            600        -3      838            846        -8
+##  1      517            515         2      830            819        11
+##  2      533            529         4      850            830        20
+##  3      542            540         2      923            850        33
+##  4      544            545        -1     1004           1022       -18
+##  5      554            600        -6      812            837       -25
+##  6      554            558        -4      740            728        12
+##  7      555            600        -5      913            854        19
+##  8      557            600        -3      709            723       -14
+##  9      557            600        -3      838            846        -8
 ## 10      558            600        -2      753            745         8
 ## # ... with 336,766 more rows, and 10 more variables: carrier &lt;chr&gt;,
 ## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
@@ -333,44 +446,43 @@ library(&quot;readr&quot;)</code></pre>
 <p>Помимо выбора наборов существующих столбцов, часто полезно добавлять новые столбцы, которые являются функциями существующих столбцов. Это задача функции mutate().</p>
 <pre class="r"><code>flights_sml &lt;- select(flights, year:day, ends_with(&quot;delay&quot;), distance, air_time )
 mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)</code></pre>
-<pre><code>## # A tibble: 336,776 &lt;U+00D7&gt; 9
-##     year month   day dep_delay arr_delay distance air_time  gain    speed
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-## 1   2013     1     1         2        11     1400      227     9 370.0441
-## 2   2013     1     1         4        20     1416      227    16 374.2731
-## 3   2013     1     1         2        33     1089      160    31 408.3750
-## 4   2013     1     1        -1       -18     1576      183   -17 516.7213
-## 5   2013     1     1        -6       -25      762      116   -19 394.1379
-## 6   2013     1     1        -4        12      719      150    16 287.6000
-## 7   2013     1     1        -5        19     1065      158    24 404.4304
-## 8   2013     1     1        -3       -14      229       53   -11 259.2453
-## 9   2013     1     1        -3        -8      944      140    -5 404.5714
-## 10  2013     1     1        -2         8      733      138    10 318.6957
+<pre><code>## # A tibble: 336,776 x 9
+##     year month   day dep_delay arr_delay distance air_time  gain speed
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  2013     1     1         2        11     1400      227     9  370.
+##  2  2013     1     1         4        20     1416      227    16  374.
+##  3  2013     1     1         2        33     1089      160    31  408.
+##  4  2013     1     1        -1       -18     1576      183   -17  517.
+##  5  2013     1     1        -6       -25      762      116   -19  394.
+##  6  2013     1     1        -4        12      719      150    16  288.
+##  7  2013     1     1        -5        19     1065      158    24  404.
+##  8  2013     1     1        -3       -14      229       53   -11  259.
+##  9  2013     1     1        -3        -8      944      140    -5  405.
+## 10  2013     1     1        -2         8      733      138    10  319.
 ## # ... with 336,766 more rows</code></pre>
 <p>Последний ключевой глагол - summarize((). Он сворачивает фрейм данных в одну строку:</p>
 <pre class="r"><code>summarize(flights, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## # A tibble: 1 &lt;U+00D7&gt; 1
-##      delay
-##      &lt;dbl&gt;
-## 1 12.63907</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   delay
+##   &lt;dbl&gt;
+## 1  12.6</code></pre>
 <p>Функция summarize() не очень полезна, если мы будем сипользовать ее без group_by (). Она изменяет единицу анализа от полного набора данных к отдельным группам. Затем, когда вы используете функции dplyr в сгруппированном фрейме данных, они будут автоматически применяться «по группам». Например, если мы применили точно такой же код к таблице данных, сгруппированным по дате, мы получим среднюю задержку на дату:</p>
 <pre class="r"><code>by_day &lt;- group_by(flights, year, month, day)
 summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## Source: local data frame [365 x 4]
-## Groups: year, month [?]
-## 
-##     year month   day     delay
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
-## 1   2013     1     1 11.548926
-## 2   2013     1     2 13.858824
-## 3   2013     1     3 10.987832
-## 4   2013     1     4  8.951595
-## 5   2013     1     5  5.732218
-## 6   2013     1     6  7.148014
-## 7   2013     1     7  5.417204
-## 8   2013     1     8  2.553073
-## 9   2013     1     9  2.276477
-## 10  2013     1    10  2.844995
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.5 
+##  2  2013     1     2 13.9 
+##  3  2013     1     3 11.0 
+##  4  2013     1     4  8.95
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.55
+##  9  2013     1     9  2.28
+## 10  2013     1    10  2.84
 ## # ... with 355 more rows</code></pre>
 <p>Вместе функции group_by() и summarize() предоставляют один из инструментов, который вы будете использовать наиболее часто при работе с dplyr: сгруппированные заключения по данными в виде вектора. Но прежде чем мы пойдем дальше, нам нужно ввести новую мощную идею: пайпинг(сборка команды в последовательности - трубы).</p>
 <p>Представьте, что мы хотим изучить связь между расстоянием и средней задержкой для каждого местоположения. Используя то, что вы знаете о dplyr, вы можете написать код следующим образом:</p>
@@ -380,25 +492,22 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>First (x) %&gt;% second %&gt;% third</code></pre>
 <p>Например, последние наши действия можно теперь записать более наглядным образом:</p>
 <pre class="r"><code>group_by(flights, year, month, day) %&gt;% summarize( delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## Source: local data frame [365 x 4]
-## Groups: year, month [?]
-## 
-##     year month   day     delay
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
-## 1   2013     1     1 11.548926
-## 2   2013     1     2 13.858824
-## 3   2013     1     3 10.987832
-## 4   2013     1     4  8.951595
-## 5   2013     1     5  5.732218
-## 6   2013     1     6  7.148014
-## 7   2013     1     7  5.417204
-## 8   2013     1     8  2.553073
-## 9   2013     1     9  2.276477
-## 10  2013     1    10  2.844995
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.5 
+##  2  2013     1     2 13.9 
+##  3  2013     1     3 11.0 
+##  4  2013     1     4  8.95
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.55
+##  9  2013     1     9  2.28
+## 10  2013     1    10  2.84
 ## # ... with 355 more rows</code></pre>
-</div>
-<div id="------" class="section level2">
-<h2>Разбор возможностей пакетов на примере реальных данных</h2>
+<p>##Разбор возможностей пакетов на примере реальных данных</p>
 <p>Возьмем данные из второй задачи по регресиионному линейному анализу и попытаемся подготовить их корелляционному анализу. Воспользуемся функцией read_csv из пакета readr. Она во многои сходна с хорошо известной вам read.csv, но обладает рядом полезных параметров, которые мы попытаемся для себя использовать</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;)</code></pre>
 <pre><code>## Warning: Missing column names filled in: &#39;X2&#39; [2], &#39;X3&#39; [3], &#39;X4&#39; [4],
@@ -426,32 +535,31 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 8742 parsing failures.
-## row col    expected      actual
-##   1  -- 125 columns 131 columns
-##   2  -- 125 columns 131 columns
-##   3  -- 125 columns 131 columns
-##   4  -- 125 columns 131 columns
-##   5  -- 125 columns 131 columns
-## ... ... ........... ...........
+## row col    expected      actual                                                         file
+##   1  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
+##   2  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
+##   3  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
+##   4  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
+##   5  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
+## ... ... ........... ........... ............................................................
 ## See problems(...) for more details.</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,742 &lt;U+00D7&gt; 125
-##                         file_info           X2      X3        X4      X5
-##                             &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-## 1                        filename         date    time       DOY daytime
-## 2                            &lt;NA&gt; [yyyy-mm-dd] [HH:MM] [ddd.ddd]   [T/F]
-## 3  2013-05-13T183000_AIU-0833.ghg   2013-05-13   19:00   133.791       T
-## 4  2013-05-13T190000_AIU-0833.ghg   2013-05-13   19:30   133.812       F
-## 5  2013-05-13T193000_AIU-0833.ghg   2013-05-13   20:00   133.833       F
-## 6  2013-05-13T200000_AIU-0833.ghg   2013-05-13   20:30   133.854       F
-## 7  2013-05-13T203000_AIU-0833.ghg   2013-05-13   21:00   133.874       F
-## 8  2013-05-13T210000_AIU-0833.ghg   2013-05-13   21:30   133.895       F
-## 9  2013-05-13T213000_AIU-0833.ghg   2013-05-13   22:00   133.916       F
-## 10 2013-05-13T220000_AIU-0833.ghg   2013-05-13   22:30   133.937       F
-## # ... with 8,732 more rows, and 120 more variables: X6 &lt;chr&gt;, X7 &lt;chr&gt;,
-## #   corrected_fluxes_and_quality_flags &lt;chr&gt;, X9 &lt;chr&gt;, X10 &lt;chr&gt;,
-## #   X11 &lt;chr&gt;, X12 &lt;chr&gt;, X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;,
-## #   X17 &lt;chr&gt;, X18 &lt;chr&gt;, X19 &lt;chr&gt;, X20 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;,
+<pre><code>## # A tibble: 8,742 x 125
+##    file_info X2    X3    X4    X5    X6    X7    corrected_fluxe~ X9   
+##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;
+##  1 filename  date  time  DOY   dayt~ file~ used~ Tau              qc_T~
+##  2 &lt;NA&gt;      [yyy~ [HH:~ [ddd~ [T/F] [#]   [#]   [kg+1m-1s-2]     [#]  
+##  3 2013-05-~ 2013~ 19:00 133.~ T     36000 36000 6.1421563557279~ 1    
+##  4 2013-05-~ 2013~ 19:30 133.~ F     36000 36000 5.4505740676589~ 4    
+##  5 2013-05-~ 2013~ 20:00 133.~ F     36000 36000 6.3575995727091~ 1    
+##  6 2013-05-~ 2013~ 20:30 133.~ F     36000 36000 2.7864866398925~ 1    
+##  7 2013-05-~ 2013~ 21:00 133.~ F     36000 36000 5.2068050915970~ 9    
+##  8 2013-05-~ 2013~ 21:30 133.~ F     36000 36000 2.2669079711154~ 5    
+##  9 2013-05-~ 2013~ 22:00 133.~ F     36000 36000 1.1717808154933~ 1    
+## 10 2013-05-~ 2013~ 22:30 133.~ F     36000 36000 2.4471305498879~ 4    
+## # ... with 8,732 more rows, and 116 more variables: X10 &lt;chr&gt;, X11 &lt;chr&gt;,
+## #   X12 &lt;chr&gt;, X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;, X17 &lt;chr&gt;,
+## #   X18 &lt;chr&gt;, X19 &lt;chr&gt;, X20 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;,
 ## #   storage_fluxes &lt;chr&gt;, X24 &lt;chr&gt;, X25 &lt;chr&gt;, X26 &lt;chr&gt;,
 ## #   vertical_advection_fluxes &lt;chr&gt;, X28 &lt;chr&gt;,
 ## #   gas_densities_concentrations_and_timelags &lt;chr&gt;, X30 &lt;chr&gt;, X31 &lt;chr&gt;,
@@ -469,10 +577,11 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## #   statistical_flags &lt;chr&gt;, X89 &lt;chr&gt;, X90 &lt;chr&gt;, X91 &lt;chr&gt;, X92 &lt;chr&gt;,
 ## #   X93 &lt;chr&gt;, X94 &lt;chr&gt;, X95 &lt;chr&gt;, X96 &lt;chr&gt;, X97 &lt;chr&gt;, X98 &lt;chr&gt;,
 ## #   X99 &lt;chr&gt;, spikes &lt;chr&gt;, X101 &lt;chr&gt;, X102 &lt;chr&gt;, X103 &lt;chr&gt;,
-## #   X104 &lt;chr&gt;, X105 &lt;chr&gt;, ...</code></pre>
+## #   X104 &lt;chr&gt;, X105 &lt;chr&gt;, `diagnostic_flags_LI-7200` &lt;chr&gt;, X107 &lt;chr&gt;,
+## #   X108 &lt;chr&gt;, X109 &lt;chr&gt;, ...</code></pre>
 <p>Первое на что вы должны обратить внимание, это то, что полученный в результате объект не является привычным нам data.frame, а некой новой структурой типа tibble. Точнее, на самом деле он является и data.frame тоже и в этом легко убедиться:</p>
 <pre class="r"><code>class(tbl)</code></pre>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre><code>## [1] &quot;spec_tbl_df&quot; &quot;tbl_df&quot;      &quot;tbl&quot;         &quot;data.frame&quot;</code></pre>
 <p>Дело в том, что пакет readr использует пакет tibble из набора tidyverse и преобразует все таблицы в tibble. С tibble вы можете пользоваться 99% всех функций, которыми вы пользовались с data.frame, но помимо этого, он обладает огромным количеством улучшений и “украшательств”. Первое из них, это то, как выглядит вывод таблицы. Теперь вы видите только ту ее часть, что помещается на вашем экране, а все остальная информация дается сжато.</p>
 <p>Если вернуться к нашей таблице, то мы увидим ряд проблем связанных с ее неправильной организацией. Во первых, первая строчка не содержит имена переменных, а содержит некоторые к ним комментарии, в то время как имена переменных находятся во второй строчке. Соответственно мы должны при чтении файла пропустить первую строчку и начать считывать файл только со второй. Именно для этого большинство функций чтения имеют параметр skip:</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip =1)</code></pre>
@@ -486,23 +595,22 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,741 &lt;U+00D7&gt; 131
-##                          filename         date    time       DOY daytime
-##                             &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;
-## 1                            &lt;NA&gt; [yyyy-mm-dd] [HH:MM] [ddd.ddd]   [T/F]
-## 2  2013-05-13T183000_AIU-0833.ghg   2013-05-13   19:00   133.791       T
-## 3  2013-05-13T190000_AIU-0833.ghg   2013-05-13   19:30   133.812       F
-## 4  2013-05-13T193000_AIU-0833.ghg   2013-05-13   20:00   133.833       F
-## 5  2013-05-13T200000_AIU-0833.ghg   2013-05-13   20:30   133.854       F
-## 6  2013-05-13T203000_AIU-0833.ghg   2013-05-13   21:00   133.874       F
-## 7  2013-05-13T210000_AIU-0833.ghg   2013-05-13   21:30   133.895       F
-## 8  2013-05-13T213000_AIU-0833.ghg   2013-05-13   22:00   133.916       F
-## 9  2013-05-13T220000_AIU-0833.ghg   2013-05-13   22:30   133.937       F
-## 10 2013-05-13T223000_AIU-0833.ghg   2013-05-13   23:00   133.958       F
-## # ... with 8,731 more rows, and 126 more variables: file_records &lt;chr&gt;,
-## #   used_records &lt;chr&gt;, Tau &lt;chr&gt;, qc_Tau &lt;chr&gt;, rand_err_Tau &lt;chr&gt;,
-## #   H &lt;chr&gt;, qc_H &lt;chr&gt;, rand_err_H &lt;chr&gt;, LE &lt;chr&gt;, qc_LE &lt;chr&gt;,
-## #   rand_err_LE &lt;chr&gt;, co2_flux &lt;chr&gt;, qc_co2_flux &lt;chr&gt;,
+<pre><code>## # A tibble: 8,741 x 131
+##    filename date  time  DOY   daytime file_records used_records Tau  
+##    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;
+##  1 &lt;NA&gt;     [yyy~ [HH:~ [ddd~ [T/F]   [#]          [#]          [kg+~
+##  2 2013-05~ 2013~ 19:00 133.~ T       36000        36000        6.14~
+##  3 2013-05~ 2013~ 19:30 133.~ F       36000        36000        5.45~
+##  4 2013-05~ 2013~ 20:00 133.~ F       36000        36000        6.35~
+##  5 2013-05~ 2013~ 20:30 133.~ F       36000        36000        2.78~
+##  6 2013-05~ 2013~ 21:00 133.~ F       36000        36000        5.20~
+##  7 2013-05~ 2013~ 21:30 133.~ F       36000        36000        2.26~
+##  8 2013-05~ 2013~ 22:00 133.~ F       36000        36000        1.17~
+##  9 2013-05~ 2013~ 22:30 133.~ F       36000        36000        2.44~
+## 10 2013-05~ 2013~ 23:00 133.~ F       36000        36000        9.27~
+## # ... with 8,731 more rows, and 123 more variables: qc_Tau &lt;chr&gt;,
+## #   rand_err_Tau &lt;chr&gt;, H &lt;chr&gt;, qc_H &lt;chr&gt;, rand_err_H &lt;chr&gt;, LE &lt;chr&gt;,
+## #   qc_LE &lt;chr&gt;, rand_err_LE &lt;chr&gt;, co2_flux &lt;chr&gt;, qc_co2_flux &lt;chr&gt;,
 ## #   rand_err_co2_flux &lt;chr&gt;, h2o_flux &lt;chr&gt;, qc_h2o_flux &lt;chr&gt;,
 ## #   rand_err_h2o_flux &lt;chr&gt;, H_strg &lt;chr&gt;, LE_strg &lt;chr&gt;, co2_strg &lt;chr&gt;,
 ## #   h2o_strg &lt;chr&gt;, `co2_v-adv` &lt;chr&gt;, `h2o_v-adv` &lt;chr&gt;,
@@ -528,7 +636,7 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
 ## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;chr&gt;,
 ## #   v_spikes &lt;chr&gt;, w_spikes &lt;chr&gt;, ts_spikes &lt;chr&gt;, co2_spikes &lt;chr&gt;,
-## #   h2o_spikes &lt;chr&gt;, ...</code></pre>
+## #   h2o_spikes &lt;chr&gt;, head_detect &lt;chr&gt;, t_out &lt;chr&gt;, t_in &lt;chr&gt;, ...</code></pre>
 <p>Как мы видим, теперь проблема решена. Обратите внимание, что readr при чтении таблицы выдает большое количество предупреждений, но при этом продолжает работать. Основная идея авторов заключалась в том, чтобы с одной стороны сделать функцию работающей с самыми сложными и неадекватными данными, но при этом с высокими требованиями к качеству организации данных. Что является взаимноисключающими требованиями, поэтому функции пакета работают с практически любыми данными, но выдают большое количество предупреждений и рекомендаций по их качеству, плюс, например в нашем случае, совершают ряд действий для решения проблем - например переименовывают переменные.</p>
 <p>Продолжим изучение нашей таблицы данных. Благодаря подробной выдаче tibble легко заметить, что все переменные в таблице имеют тип char, что не соответствует действительности. Причиной этого явлется первая строчка таблицы, которая вместо данных содержит их размерность. В принципе удаление строчки не представляет проблемы и мы могли бы избавится от нее стандартным образом tbl = tbl[-1,]. Но это не отменит того факта, что все колонки у нас в талице теперь типа char. Функции пакета readr позволяют нам решить многие проблемы еще на фазе чтения. Воспользуемся параметром comment, который заставляет readr игнорировать все строчки, содержащие определенный символ, легко заметить, что в нашем случае это будет символ “[”</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, comment=c(&quot;[&quot;))</code></pre>
@@ -561,40 +669,39 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 1 parsing failure.
-## row col    expected    actual
-##   1  -- 131 columns 1 columns</code></pre>
+## row col    expected    actual                                                         file
+##   1  -- 131 columns 1 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,741 &lt;U+00D7&gt; 131
-##                          filename       date     time     DOY daytime
-##                             &lt;chr&gt;     &lt;date&gt;   &lt;time&gt;   &lt;dbl&gt;   &lt;chr&gt;
-## 1                            &lt;NA&gt;       &lt;NA&gt;       NA      NA    &lt;NA&gt;
-## 2  2013-05-13T183000_AIU-0833.ghg 2013-05-13 19:00:00 133.791       T
-## 3  2013-05-13T190000_AIU-0833.ghg 2013-05-13 19:30:00 133.812       F
-## 4  2013-05-13T193000_AIU-0833.ghg 2013-05-13 20:00:00 133.833       F
-## 5  2013-05-13T200000_AIU-0833.ghg 2013-05-13 20:30:00 133.854       F
-## 6  2013-05-13T203000_AIU-0833.ghg 2013-05-13 21:00:00 133.874       F
-## 7  2013-05-13T210000_AIU-0833.ghg 2013-05-13 21:30:00 133.895       F
-## 8  2013-05-13T213000_AIU-0833.ghg 2013-05-13 22:00:00 133.916       F
-## 9  2013-05-13T220000_AIU-0833.ghg 2013-05-13 22:30:00 133.937       F
-## 10 2013-05-13T223000_AIU-0833.ghg 2013-05-13 23:00:00 133.958       F
-## # ... with 8,731 more rows, and 126 more variables: file_records &lt;dbl&gt;,
-## #   used_records &lt;dbl&gt;, Tau &lt;dbl&gt;, qc_Tau &lt;dbl&gt;, rand_err_Tau &lt;dbl&gt;,
-## #   H &lt;dbl&gt;, qc_H &lt;dbl&gt;, rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;, qc_LE &lt;dbl&gt;,
-## #   rand_err_LE &lt;dbl&gt;, co2_flux &lt;dbl&gt;, qc_co2_flux &lt;dbl&gt;,
-## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;,
-## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
-## #   h2o_strg &lt;dbl&gt;, `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;,
-## #   co2_molar_density &lt;dbl&gt;, co2_mole_fraction &lt;dbl&gt;,
-## #   co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, co2_def_timelag &lt;chr&gt;,
-## #   h2o_molar_density &lt;dbl&gt;, h2o_mole_fraction &lt;dbl&gt;,
-## #   h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;, h2o_def_timelag &lt;chr&gt;,
-## #   sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;, air_pressure &lt;dbl&gt;,
-## #   air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;, air_molar_volume &lt;dbl&gt;,
-## #   water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;, specific_humidity &lt;dbl&gt;,
-## #   RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;, u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;,
-## #   w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;, w_rot &lt;dbl&gt;,
-## #   wind_speed &lt;dbl&gt;, max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;, yaw &lt;dbl&gt;,
-## #   pitch &lt;dbl&gt;, roll &lt;dbl&gt;, `u*` &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;,
+<pre><code>## # A tibble: 8,741 x 131
+##    filename date       time    DOY daytime file_records used_records
+##    &lt;chr&gt;    &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+##  1 &lt;NA&gt;     NA            NA   NA  &lt;NA&gt;              NA           NA
+##  2 2013-05~ 2013-05-13 19:00  134. T              36000        36000
+##  3 2013-05~ 2013-05-13 19:30  134. F              36000        36000
+##  4 2013-05~ 2013-05-13 20:00  134. F              36000        36000
+##  5 2013-05~ 2013-05-13 20:30  134. F              36000        36000
+##  6 2013-05~ 2013-05-13 21:00  134. F              36000        36000
+##  7 2013-05~ 2013-05-13 21:30  134. F              36000        36000
+##  8 2013-05~ 2013-05-13 22:00  134. F              36000        36000
+##  9 2013-05~ 2013-05-13 22:30  134. F              36000        36000
+## 10 2013-05~ 2013-05-13 23:00  134. F              36000        36000
+## # ... with 8,731 more rows, and 124 more variables: Tau &lt;dbl&gt;,
+## #   qc_Tau &lt;dbl&gt;, rand_err_Tau &lt;dbl&gt;, H &lt;dbl&gt;, qc_H &lt;dbl&gt;,
+## #   rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;, qc_LE &lt;dbl&gt;, rand_err_LE &lt;dbl&gt;,
+## #   co2_flux &lt;dbl&gt;, qc_co2_flux &lt;dbl&gt;, rand_err_co2_flux &lt;dbl&gt;,
+## #   h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;, rand_err_h2o_flux &lt;dbl&gt;,
+## #   H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;, h2o_strg &lt;dbl&gt;,
+## #   `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
+## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;,
+## #   co2_def_timelag &lt;chr&gt;, h2o_molar_density &lt;dbl&gt;,
+## #   h2o_mole_fraction &lt;dbl&gt;, h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;,
+## #   h2o_def_timelag &lt;chr&gt;, sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;,
+## #   air_pressure &lt;dbl&gt;, air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;,
+## #   air_molar_volume &lt;dbl&gt;, water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;,
+## #   specific_humidity &lt;dbl&gt;, RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;,
+## #   u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;, w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;,
+## #   w_rot &lt;dbl&gt;, wind_speed &lt;dbl&gt;, max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;,
+## #   yaw &lt;dbl&gt;, pitch &lt;dbl&gt;, roll &lt;dbl&gt;, `u*` &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;,
 ## #   `(z-d)/L` &lt;dbl&gt;, bowen_ratio &lt;dbl&gt;, `T*` &lt;dbl&gt;, model &lt;chr&gt;,
 ## #   x_peak &lt;dbl&gt;, x_offset &lt;dbl&gt;, `x_10%` &lt;dbl&gt;, `x_30%` &lt;dbl&gt;,
 ## #   `x_50%` &lt;dbl&gt;, `x_70%` &lt;dbl&gt;, `x_90%` &lt;dbl&gt;, un_Tau &lt;dbl&gt;,
@@ -606,7 +713,7 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
 ## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;dbl&gt;,
 ## #   v_spikes &lt;dbl&gt;, w_spikes &lt;dbl&gt;, ts_spikes &lt;dbl&gt;, co2_spikes &lt;dbl&gt;,
-## #   h2o_spikes &lt;dbl&gt;, ...</code></pre>
+## #   h2o_spikes &lt;dbl&gt;, head_detect &lt;dbl&gt;, t_out &lt;dbl&gt;, ...</code></pre>
 <p>Проблема с типами колонок теперь решена, но мешавшая нам строчка осталась, содержит она только NA и теперь мы точно можем от нее избавиться. Говоря об NA давайте вспомним, что полученные нами данные являются машинно сгенерированными и для обозначения отсутствия данных генератором использовалось значение -9999. Это значение несет в себе информацию аналогичную значению NA в R, а значит мы должны найти и заменить все такие значения. Это действие тоже можно проделать еще на стадии считывания файла</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, na =c(&quot;&quot;,&quot;NA&quot;,&quot;-9999&quot;,&quot;-9999.0&quot;), comment=c(&quot;[&quot;))</code></pre>
 <pre><code>## Warning: Duplicated column names deduplicated: &#39;skweness_kurtosis&#39; =&gt;
@@ -620,61 +727,59 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ##   date = col_date(format = &quot;&quot;),
 ##   time = col_time(format = &quot;&quot;),
 ##   daytime = col_logical(),
-##   file_records = col_integer(),
-##   used_records = col_integer(),
-##   qc_Tau = col_integer(),
-##   qc_H = col_integer(),
-##   qc_LE = col_integer(),
-##   qc_co2_flux = col_integer(),
-##   qc_h2o_flux = col_integer(),
 ##   co2_def_timelag = col_logical(),
 ##   h2o_def_timelag = col_logical(),
-##   roll = col_character(),
+##   roll = col_logical(),
 ##   model = col_character(),
 ##   spikes = col_character(),
 ##   amplitude_resolution = col_character(),
 ##   drop_out = col_character(),
 ##   absolute_limits = col_character(),
-##   skweness_kurtosis = col_character()
-##   # ... with 23 more columns
+##   skweness_kurtosis = col_character(),
+##   skweness_kurtosis_1 = col_character(),
+##   discontinuities = col_character(),
+##   discontinuities_1 = col_character(),
+##   timelag = col_character(),
+##   timelag_1 = col_character(),
+##   attack_angle = col_character(),
+##   non_steady_wind = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 1 parsing failure.
-## row col    expected    actual
-##   1  -- 131 columns 1 columns</code></pre>
+## row col    expected    actual                                                         file
+##   1  -- 131 columns 1 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;</code></pre>
 <pre class="r"><code>tbl = tbl[-1,]
 tbl</code></pre>
-<pre><code>## # A tibble: 8,740 &lt;U+00D7&gt; 131
-##                          filename       date     time     DOY daytime
-##                             &lt;chr&gt;     &lt;date&gt;   &lt;time&gt;   &lt;dbl&gt;   &lt;lgl&gt;
-## 1  2013-05-13T183000_AIU-0833.ghg 2013-05-13 19:00:00 133.791    TRUE
-## 2  2013-05-13T190000_AIU-0833.ghg 2013-05-13 19:30:00 133.812   FALSE
-## 3  2013-05-13T193000_AIU-0833.ghg 2013-05-13 20:00:00 133.833   FALSE
-## 4  2013-05-13T200000_AIU-0833.ghg 2013-05-13 20:30:00 133.854   FALSE
-## 5  2013-05-13T203000_AIU-0833.ghg 2013-05-13 21:00:00 133.874   FALSE
-## 6  2013-05-13T210000_AIU-0833.ghg 2013-05-13 21:30:00 133.895   FALSE
-## 7  2013-05-13T213000_AIU-0833.ghg 2013-05-13 22:00:00 133.916   FALSE
-## 8  2013-05-13T220000_AIU-0833.ghg 2013-05-13 22:30:00 133.937   FALSE
-## 9  2013-05-13T223000_AIU-0833.ghg 2013-05-13 23:00:00 133.958   FALSE
-## 10 2013-05-13T230000_AIU-0833.ghg 2013-05-13 23:30:00 133.979   FALSE
-## # ... with 8,730 more rows, and 126 more variables: file_records &lt;int&gt;,
-## #   used_records &lt;int&gt;, Tau &lt;dbl&gt;, qc_Tau &lt;int&gt;, rand_err_Tau &lt;dbl&gt;,
-## #   H &lt;dbl&gt;, qc_H &lt;int&gt;, rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;, qc_LE &lt;int&gt;,
-## #   rand_err_LE &lt;dbl&gt;, co2_flux &lt;dbl&gt;, qc_co2_flux &lt;int&gt;,
-## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;int&gt;,
-## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
-## #   h2o_strg &lt;dbl&gt;, `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;,
-## #   co2_molar_density &lt;dbl&gt;, co2_mole_fraction &lt;dbl&gt;,
-## #   co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, co2_def_timelag &lt;lgl&gt;,
-## #   h2o_molar_density &lt;dbl&gt;, h2o_mole_fraction &lt;dbl&gt;,
-## #   h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;, h2o_def_timelag &lt;lgl&gt;,
-## #   sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;, air_pressure &lt;dbl&gt;,
-## #   air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;, air_molar_volume &lt;dbl&gt;,
-## #   water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;, specific_humidity &lt;dbl&gt;,
-## #   RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;, u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;,
-## #   w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;, w_rot &lt;dbl&gt;,
-## #   wind_speed &lt;dbl&gt;, max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;, yaw &lt;dbl&gt;,
-## #   pitch &lt;dbl&gt;, roll &lt;chr&gt;, `u*` &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;,
+<pre><code>## # A tibble: 8,740 x 131
+##    filename date       time    DOY daytime file_records used_records
+##    &lt;chr&gt;    &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+##  1 2013-05~ 2013-05-13 19:00  134. TRUE           36000        36000
+##  2 2013-05~ 2013-05-13 19:30  134. FALSE          36000        36000
+##  3 2013-05~ 2013-05-13 20:00  134. FALSE          36000        36000
+##  4 2013-05~ 2013-05-13 20:30  134. FALSE          36000        36000
+##  5 2013-05~ 2013-05-13 21:00  134. FALSE          36000        36000
+##  6 2013-05~ 2013-05-13 21:30  134. FALSE          36000        36000
+##  7 2013-05~ 2013-05-13 22:00  134. FALSE          36000        36000
+##  8 2013-05~ 2013-05-13 22:30  134. FALSE          36000        36000
+##  9 2013-05~ 2013-05-13 23:00  134. FALSE          36000        36000
+## 10 2013-05~ 2013-05-13 23:30  134. FALSE          36000        36000
+## # ... with 8,730 more rows, and 124 more variables: Tau &lt;dbl&gt;,
+## #   qc_Tau &lt;dbl&gt;, rand_err_Tau &lt;dbl&gt;, H &lt;dbl&gt;, qc_H &lt;dbl&gt;,
+## #   rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;, qc_LE &lt;dbl&gt;, rand_err_LE &lt;dbl&gt;,
+## #   co2_flux &lt;dbl&gt;, qc_co2_flux &lt;dbl&gt;, rand_err_co2_flux &lt;dbl&gt;,
+## #   h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;, rand_err_h2o_flux &lt;dbl&gt;,
+## #   H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;, h2o_strg &lt;dbl&gt;,
+## #   `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
+## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;,
+## #   co2_def_timelag &lt;lgl&gt;, h2o_molar_density &lt;dbl&gt;,
+## #   h2o_mole_fraction &lt;dbl&gt;, h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;,
+## #   h2o_def_timelag &lt;lgl&gt;, sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;,
+## #   air_pressure &lt;dbl&gt;, air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;,
+## #   air_molar_volume &lt;dbl&gt;, water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;,
+## #   specific_humidity &lt;dbl&gt;, RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;,
+## #   u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;, w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;,
+## #   w_rot &lt;dbl&gt;, wind_speed &lt;dbl&gt;, max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;,
+## #   yaw &lt;dbl&gt;, pitch &lt;dbl&gt;, roll &lt;lgl&gt;, `u*` &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;,
 ## #   `(z-d)/L` &lt;dbl&gt;, bowen_ratio &lt;dbl&gt;, `T*` &lt;dbl&gt;, model &lt;chr&gt;,
 ## #   x_peak &lt;dbl&gt;, x_offset &lt;dbl&gt;, `x_10%` &lt;dbl&gt;, `x_30%` &lt;dbl&gt;,
 ## #   `x_50%` &lt;dbl&gt;, `x_70%` &lt;dbl&gt;, `x_90%` &lt;dbl&gt;, un_Tau &lt;dbl&gt;,
@@ -684,10 +789,11 @@ tbl</code></pre>
 ## #   absolute_limits &lt;chr&gt;, skweness_kurtosis &lt;chr&gt;,
 ## #   skweness_kurtosis_1 &lt;chr&gt;, discontinuities &lt;chr&gt;,
 ## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
-## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;int&gt;,
-## #   v_spikes &lt;int&gt;, w_spikes &lt;int&gt;, ts_spikes &lt;int&gt;, co2_spikes &lt;int&gt;,
-## #   h2o_spikes &lt;int&gt;, ...</code></pre>
+## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;dbl&gt;,
+## #   v_spikes &lt;dbl&gt;, w_spikes &lt;dbl&gt;, ts_spikes &lt;dbl&gt;, co2_spikes &lt;dbl&gt;,
+## #   h2o_spikes &lt;dbl&gt;, head_detect &lt;dbl&gt;, t_out &lt;dbl&gt;, ...</code></pre>
 <p>Теперь данные имеют адекватный вид и мы сделали все, что можно еще на стадии их прочтения. Давайте внимательнее посмотрим на сами переменные и для этого воспользуеся функцией glimpse(), которая более наглядно представляет каждую отдельную переменную, жертуя при этом предсталение строчек данных</p>
+<div class="fold o">
 <pre class="r"><code>glimpse(tbl)</code></pre>
 <pre><code>## Observations: 8,740
 ## Variables: 131
@@ -696,29 +802,29 @@ tbl</code></pre>
 ## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:...
 ## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 1...
 ## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FAL...
-## $ file_records             &lt;int&gt; 36000, 36000, 36000, 36000, 36000, 36...
-## $ used_records             &lt;int&gt; 36000, 36000, 36000, 36000, 36000, 36...
+## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36...
+## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36...
 ## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996...
-## $ qc_Tau                   &lt;int&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1...
+## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1...
 ## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706...
 ## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -...
-## $ qc_H                     &lt;int&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1...
+## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1...
 ## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.70188...
 ## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.1...
-## $ qc_LE                    &lt;int&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
+## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
 ## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.18...
 ## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -...
-## $ qc_co2_flux              &lt;int&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1...
+## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1...
 ## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0...
 ## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1...
-## $ qc_h2o_flux              &lt;int&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
+## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
 ## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0...
 ## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083...
 ## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
 ## $ co2_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
 ## $ h2o_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
-## $ co2_v-adv                &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655...
-## $ h2o_v-adv                &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324...
+## $ `co2_v-adv`              &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655...
+## $ `h2o_v-adv`              &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324...
 ## $ co2_molar_density        &lt;dbl&gt; 15.22140, 15.14026, 15.15888, 15.2295...
 ## $ co2_mole_fraction        &lt;dbl&gt; 387.7888, 385.6089, 386.1619, 386.255...
 ## $ co2_mixing_ratio         &lt;dbl&gt; 391.1283, 389.0639, 389.5689, 389.916...
@@ -753,21 +859,21 @@ tbl</code></pre>
 ## $ wind_dir                 &lt;dbl&gt; 125.54225, 134.75812, 100.98258, 59.6...
 ## $ yaw                      &lt;dbl&gt; 99.45775, 90.24188, 124.01742, 165.36...
 ## $ pitch                    &lt;dbl&gt; 0.46295896, 0.38917246, -0.18815060, ...
-## $ roll                     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
-## $ u*                       &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0...
+## $ roll                     &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N...
+## $ `u*`                     &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0...
 ## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0...
 ## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 1...
-## $ (z-d)/L                  &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0...
+## $ `(z-d)/L`                &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0...
 ## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -...
-## $ T*                       &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363...
+## $ `T*`                     &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363...
 ## $ model                    &lt;chr&gt; &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;...
 ## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.6503...
 ## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.00...
-## $ x_10%                    &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.0000...
-## $ x_30%                    &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.0000...
-## $ x_50%                    &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.0000...
-## $ x_70%                    &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.000...
-## $ x_90%                    &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00...
+## $ `x_10%`                  &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.0000...
+## $ `x_30%`                  &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.0000...
+## $ `x_50%`                  &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.0000...
+## $ `x_70%`                  &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.000...
+## $ `x_90%`                  &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00...
 ## $ un_Tau                   &lt;dbl&gt; 0.060389779, 0.053604219, 0.062551825...
 ## $ Tau_scf                  &lt;dbl&gt; 1.017085, 1.016818, 1.016373, 1.01944...
 ## $ un_H                     &lt;dbl&gt; -14.685845, -18.459793, -21.498517, -...
@@ -790,31 +896,31 @@ tbl</code></pre>
 ## $ timelag_1                &lt;chr&gt; &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100...
 ## $ attack_angle             &lt;chr&gt; &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;H...
 ## $ non_steady_wind          &lt;chr&gt; &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF0&quot;, &quot;H...
-## $ u_spikes                 &lt;int&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9,...
-## $ v_spikes                 &lt;int&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, ...
-## $ w_spikes                 &lt;int&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4...
-## $ ts_spikes                &lt;int&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9,...
-## $ co2_spikes               &lt;int&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5,...
-## $ h2o_spikes               &lt;int&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23,...
-## $ head_detect              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ t_out                    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ t_in                     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ aux_in                   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ delta_p                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ chopper                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ detector                 &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ pll                      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ sync                     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ mean_value               &lt;int&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 8...
+## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9,...
+## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, ...
+## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4...
+## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9,...
+## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5,...
+## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23,...
+## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 8...
 ## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0...
 ## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0...
 ## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0...
 ## $ ts_var                   &lt;dbl&gt; 0.46585066, 0.14925435, 0.04129100, 0...
 ## $ co2_var                  &lt;dbl&gt; 1.8118416, 1.7002642, 1.2321601, 1.01...
 ## $ h2o_var                  &lt;dbl&gt; 0.214627215, 0.355580722, 0.246317085...
-## $ w/ts_cov                 &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833...
-## $ w/co2_cov                &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769...
-## $ w/h2o_cov                &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511...
+## $ `w/ts_cov`               &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833...
+## $ `w/co2_cov`              &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769...
+## $ `w/h2o_cov`              &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511...
 ## $ co2                      &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.8977...
 ## $ h2o                      &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.137...
 ## $ co2_1                    &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.255...
@@ -822,15 +928,17 @@ tbl</code></pre>
 ## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.9275...
 ## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.9674...
 ## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476...</code></pre>
+</div>
 <p>При внимательном рассмотрении можно заметить, что переменная roll содержит только NA, а потому будет только мешать нам при анализе. Избавимся от нее с помощью функции select:</p>
 <pre class="r"><code>tbl = select(tbl, -(roll))</code></pre>
 <p>В нашей таблице довольно много переменных типа char, которые содержат повторяющиеся значения, т.к. их текст, как таковой нас не интересует, преобразуем их все в факторы:</p>
 <pre class="r"><code>tbl = tbl %&gt;% mutate_if(is.character, factor)</code></pre>
 <p>Здесь мы использовали функию mutate_if которая делает преобразование над колонкой - factor() при полученни значения TRUE от функции первого параметра - is.character().</p>
-<p>Следующее действие не совершенно не обязательно, но в определенных условиях может сильно упростить вам жизнь. Дело в том, что многие функции, которые работаю с множествами переменных могу рассматривать знаки в именах переменных, как действия над ними, что будет приводить к ошибкам. Так, например, у нас в таблице есть переменные “(z-d)/L”, &quot; u*“,”x_90% &quot; и т.д. Формально этого лучше избегать и использовать только буквы, цифры, нижнее подчеркивание и точки. Т.к. большинство данных, с которыми вам придется работать не будут соответствовать этим критериям, то попытаемся научиться решать эту проблему используя наши данные.</p>
+<p>Следующее действие не совершенно не обязательно, но в определенных условиях может сильно упростить вам жизнь. Дело в том, что многие функции, которые работаю с множествами переменных могу рассматривать знаки в именах переменных, как действия над ними, что будет приводить к ошибкам. Так, например, у нас в таблице есть переменные “(z-d)/L”, " u*“,”x_90% " и т.д. Формально этого лучше избегать и использовать только буквы, цифры, нижнее подчеркивание и точки. Т.к. большинство данных, с которыми вам придется работать не будут соответствовать этим критериям, то попытаемся научиться решать эту проблему используя наши данные.</p>
 <p>Для этого мы используем функцию str_replace_all из пакета stringr. Она позволяет, использую довольно простой синтаксис, заменить ненужные нам символы:</p>
 <pre class="r"><code>names(tbl) =  str_replace_all(names(tbl), &quot;[!]&quot;,&quot;_emph_&quot;)</code></pre>
 <p>В данном примере, мы говорим, что теперь все имена таблицы должны быть некоторым вектором строк от функции str_replace_all, которая в свою очередь берет все имена из таблицы tbl, заменяет в них все ! на “<em>emph</em>” и возвращает их в виде вектора. Все довольно наглядно, но проблема в том, что нам нужно сделать такое последовательно много раз(т.к. нам нужно избавиться не только от !), что приведет к совершенно не читаемому результату. Поэтому воспользуеися оператором пайппинга</p>
+<div class="fold o">
 <pre class="r"><code>names(tbl) = names(tbl) %&gt;% 
   str_replace_all(&quot;[!]&quot;,&quot;_emph_&quot;) %&gt;% 
   str_replace_all(&quot;[?]&quot;,&quot;_quest_&quot;) %&gt;% 
@@ -848,27 +956,27 @@ tbl</code></pre>
 glimpse(tbl)</code></pre>
 <pre><code>## Observations: 8,740
 ## Variables: 130
-## $ filename                 &lt;fctr&gt; 2013-05-13T183000_AIU-0833.ghg, 2013...
+## $ filename                 &lt;fct&gt; 2013-05-13T183000_AIU-0833.ghg, 2013-...
 ## $ date                     &lt;date&gt; 2013-05-13, 2013-05-13, 2013-05-13, ...
 ## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:...
 ## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 1...
 ## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FAL...
-## $ file_records             &lt;int&gt; 36000, 36000, 36000, 36000, 36000, 36...
-## $ used_records             &lt;int&gt; 36000, 36000, 36000, 36000, 36000, 36...
+## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36...
+## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36...
 ## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996...
-## $ qc_Tau                   &lt;int&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1...
+## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1...
 ## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706...
 ## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -...
-## $ qc_H                     &lt;int&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1...
+## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1...
 ## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.70188...
 ## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.1...
-## $ qc_LE                    &lt;int&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
+## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
 ## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.18...
 ## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -...
-## $ qc_co2_flux              &lt;int&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1...
+## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1...
 ## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0...
 ## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1...
-## $ qc_h2o_flux              &lt;int&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
+## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1...
 ## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0...
 ## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083...
 ## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
@@ -913,10 +1021,10 @@ glimpse(tbl)</code></pre>
 ## $ u_star_                  &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0...
 ## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0...
 ## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 1...
-## $ _z_minus_d__div_L        &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0...
+## $ `_z_minus_d__div_L`      &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0...
 ## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -...
 ## $ T_star_                  &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363...
-## $ model                    &lt;fctr&gt; kljun_04, kljun_04, kljun_04, korman...
+## $ model                    &lt;fct&gt; kljun_04, kljun_04, kljun_04, kormann...
 ## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.6503...
 ## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.00...
 ## $ x_10_perc_               &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.0000...
@@ -934,34 +1042,34 @@ glimpse(tbl)</code></pre>
 ## $ co2_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.14840...
 ## $ un_h2o_flux              &lt;dbl&gt; 1.73827695, 1.92386853, 1.63428246, 1...
 ## $ h2o_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.14840...
-## $ spikes                   &lt;fctr&gt; HF00000099, HF00000099, HF00000099, ...
-## $ amplitude_resolution     &lt;fctr&gt; HF00000099, HF00000099, HF00000099, ...
-## $ drop_out                 &lt;fctr&gt; HF00000099, HF00000099, HF00000099, ...
-## $ absolute_limits          &lt;fctr&gt; HF00000099, HF00000099, HF00000099, ...
-## $ skweness_kurtosis        &lt;fctr&gt; HF00000099, HF00000099, HF00000099, ...
-## $ skweness_kurtosis_1      &lt;fctr&gt; SF00101199, SF00111099, SF00100099, ...
-## $ discontinuities          &lt;fctr&gt; HF00000000, HF00000000, HF00000000, ...
-## $ discontinuities_1        &lt;fctr&gt; SF00000000, SF00000000, SF00000000, ...
-## $ timelag                  &lt;fctr&gt; HF0100, HF0100, HF0100, HF0100, HF01...
-## $ timelag_1                &lt;fctr&gt; SF0100, SF0100, SF0100, SF0100, SF01...
-## $ attack_angle             &lt;fctr&gt; HF0, HF0, HF0, HF0, HF0, HF0, HF0, H...
-## $ non_steady_wind          &lt;fctr&gt; HF1, HF1, HF1, HF1, HF0, HF0, HF0, H...
-## $ u_spikes                 &lt;int&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9,...
-## $ v_spikes                 &lt;int&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, ...
-## $ w_spikes                 &lt;int&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4...
-## $ ts_spikes                &lt;int&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9,...
-## $ co2_spikes               &lt;int&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5,...
-## $ h2o_spikes               &lt;int&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23,...
-## $ head_detect              &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ t_out                    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ t_in                     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ aux_in                   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ delta_p                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ chopper                  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ detector                 &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ pll                      &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ sync                     &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ mean_value               &lt;int&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 8...
+## $ spikes                   &lt;fct&gt; HF00000099, HF00000099, HF00000099, H...
+## $ amplitude_resolution     &lt;fct&gt; HF00000099, HF00000099, HF00000099, H...
+## $ drop_out                 &lt;fct&gt; HF00000099, HF00000099, HF00000099, H...
+## $ absolute_limits          &lt;fct&gt; HF00000099, HF00000099, HF00000099, H...
+## $ skweness_kurtosis        &lt;fct&gt; HF00000099, HF00000099, HF00000099, H...
+## $ skweness_kurtosis_1      &lt;fct&gt; SF00101199, SF00111099, SF00100099, S...
+## $ discontinuities          &lt;fct&gt; HF00000000, HF00000000, HF00000000, H...
+## $ discontinuities_1        &lt;fct&gt; SF00000000, SF00000000, SF00000000, S...
+## $ timelag                  &lt;fct&gt; HF0100, HF0100, HF0100, HF0100, HF010...
+## $ timelag_1                &lt;fct&gt; SF0100, SF0100, SF0100, SF0100, SF010...
+## $ attack_angle             &lt;fct&gt; HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF...
+## $ non_steady_wind          &lt;fct&gt; HF1, HF1, HF1, HF1, HF0, HF0, HF0, HF...
+## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9,...
+## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, ...
+## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4...
+## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9,...
+## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5,...
+## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23,...
+## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 8...
 ## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0...
 ## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0...
 ## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0...
@@ -978,7 +1086,9 @@ glimpse(tbl)</code></pre>
 ## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.9275...
 ## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.9674...
 ## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476...</code></pre>
+</div>
 <p>Функция cor работает только с численными данными, поэтому, чтобы перейти к корелляционному анализу нужно выбрать все переменные типа numeric. Для этого воспользуемся двумя функциями - is.numeric(), которая выдает TRUE в случае если вектор является численныи и sapply(), которая берет каждую колонку таблицы, передает ее в функию в виде вектора(в нашем случае этой функцией будет is.numeric) и выдает результат в виде вектора длинной равной количеству колонок в таблице. Давайте проверим, что получится</p>
+<div class="fold o">
 <pre class="r"><code>sapply(tbl,is.numeric)</code></pre>
 <pre><code>##                 filename                     date                     time 
 ##                    FALSE                    FALSE                    FALSE 
@@ -1068,11 +1178,13 @@ glimpse(tbl)</code></pre>
 ##                     TRUE                     TRUE                     TRUE 
 ##                 flowrate 
 ##                     TRUE</code></pre>
+</div>
 <p>Для каждой колонки таблицы мы получили значение правда, если она является численной и ложь, если не является. Осталось подставить этот вектор в саму таблицу и получить таблицу состояющую только из интересующих нас колонок</p>
 <pre class="r"><code>tbl_numeric = tbl[,sapply(tbl,is.numeric) ]</code></pre>
 <p>При этом очень легко получить таблицу содержащую все остальные колонки</p>
 <pre class="r"><code>tbl_non_numeric = tbl[,!sapply(tbl,is.numeric) ]</code></pre>
 <p>Теперь мы можем переходить к корелляционному анализу (если вы не помните, что это мы подробно рассмотрим его в следующей части):</p>
+<div class="fold o">
 <pre class="r"><code>cor_td = cor(tbl_numeric)
 cor_td</code></pre>
 <pre><code>##                          DOY file_records used_records Tau qc_Tau
@@ -3875,7 +3987,9 @@ cor_td</code></pre>
 ## co2_signal_strength_7200                       NA       NA
 ## h2o_signal_strength_7200                        1       NA
 ## flowrate                                       NA        1</code></pre>
+</div>
 <p>Ничего не вышло, проблема в том, что почти каждая из переменных содержит пропуски, а это приводит к тому, что невозможно провести попарную ковариацию, что ячляется первой частью корелляционного анализа. Это означает, что нам необходимо избаиться от все строк где есть хоть одно значение NA. Воспользуемся для этого готовой функцией drop_na()</p>
+<div class="fold o">
 <pre class="r"><code>cor_td = cor(drop_na(tbl_numeric))</code></pre>
 <pre><code>## Warning in cor(drop_na(tbl_numeric)): the standard deviation is zero</code></pre>
 <pre class="r"><code>cor_td</code></pre>
@@ -8023,6 +8137,7 @@ cor_td</code></pre>
 ## co2_signal_strength_7200  0.587320589
 ## h2o_signal_strength_7200  0.584487987
 ## flowrate                  1.000000000</code></pre>
+</div>
 <p>Полученные результаты довольно тяжело интерпретировать т.к. они выдаются в виде матрицы, поэтому преобразуем матрицу в таблицу, выберем интересующий нас столбец, а из него возьмем только те имена строк(переменных) для которых значения коэффициента детерминации было больше 0,1 (личная прихоть)</p>
 <pre class="r"><code>cor_td = cor(drop_na(tbl_numeric)) %&gt;% as.data.frame %&gt;% select(co2_flux)</code></pre>
 <pre><code>## Warning in cor(drop_na(tbl_numeric)): the standard deviation is zero</code></pre>
@@ -8067,16 +8182,24 @@ testing_tbl_unq = tbl[test,]</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -8101,7 +8224,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

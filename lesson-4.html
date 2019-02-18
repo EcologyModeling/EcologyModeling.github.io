@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -15,14 +15,14 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
-
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
@@ -34,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -93,8 +95,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -103,9 +111,70 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -114,13 +183,12 @@ $(document).ready(function () {
 
 
 
-
 <div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
 
-      <a class="productName" href="index.html">Математическое моделрование в экологии
+      <a class="productName" href="index.html">Математическое моделирование в экологии
 </a>
-
+ 
 
     <div id="menu">
       <div id="menuToggler"></div>
@@ -183,33 +251,33 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<pre><code>## # A tibble: 1,379 &lt;U+00D7&gt; 6
-##        earn height    sex     race    ed   age
-##       &lt;dbl&gt;  &lt;dbl&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt;
-## 1  79571.30  73.89   male    white    16    49
-## 2  96396.99  66.23 female    white    16    62
-## 3  48710.67  63.77 female    white    16    33
-## 4  80478.10  63.22 female    other    16    95
-## 5  82089.35  63.08 female    white    17    43
-## 6  15313.35  64.53 female    white    15    30
-## 7  47104.17  61.54 female    white    12    53
-## 8  50960.05  73.29   male    white    17    50
-## 9   3212.65  72.24   male hispanic    15    25
-## 10 42996.64  72.40   male    white    12    30
+<pre><code>## # A tibble: 1,379 x 6
+##      earn height sex    race        ed   age
+##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##  1 79571.   73.9 male   white       16    49
+##  2 96397.   66.2 female white       16    62
+##  3 48711.   63.8 female white       16    33
+##  4 80478.   63.2 female other       16    95
+##  5 82089.   63.1 female white       17    43
+##  6 15313.   64.5 female white       15    30
+##  7 47104.   61.5 female white       12    53
+##  8 50960.   73.3 male   white       17    50
+##  9  3213.   72.2 male   hispanic    15    25
+## 10 42997.   72.4 male   white       12    30
 ## # ... with 1,369 more rows</code></pre>
-<pre><code>## # A tibble: 48 &lt;U+00D7&gt; 5
-##          state  abbr   low murder tc2009
-##          &lt;chr&gt; &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1      Alabama    AL   -27    7.1 4337.5
-## 2       Alaska    AK   -80    3.2 3567.1
-## 3      Arizona    AZ   -40    5.5 3725.2
-## 4     Arkansas    AR   -29    6.3 4415.4
-## 5   California    CA   -45    5.4 3201.6
-## 6     Colorado    CO   -61    3.2 3024.5
-## 7  Connecticut    CT   -32    3.0 2646.3
-## 8     Delaware    DE   -17    4.6 3996.8
-## 9      Florida    FL    -2    5.5 4453.7
-## 10     Georgia    GA   -17    6.0 4180.6
+<pre><code>## # A tibble: 48 x 5
+##    state       abbr    low murder tc2009
+##    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Alabama     AL      -27    7.1  4338.
+##  2 Alaska      AK      -80    3.2  3567.
+##  3 Arizona     AZ      -40    5.5  3725.
+##  4 Arkansas    AR      -29    6.3  4415.
+##  5 California  CA      -45    5.4  3202.
+##  6 Colorado    CO      -61    3.2  3024.
+##  7 Connecticut CT      -32    3    2646.
+##  8 Delaware    DE      -17    4.6  3997.
+##  9 Florida     FL       -2    5.5  4454.
+## 10 Georgia     GA      -17    6    4181.
 ## # ... with 38 more rows</code></pre>
 <pre><code>## tc2009 ~ low</code></pre>
 <pre><code>## [1] &quot;formula&quot;</code></pre>
@@ -519,7 +587,7 @@ coef(m4)</code></pre>
 <li>’<em>’ Short account of all possible interactions between variables. The code y ~ x </em> z * w is equivalent to y ~ x + z + w + x:z + x:w + z:w + x:z:w.</li>
 <li>‘^’ Denotes the interaction of a certain level. The code y ~ (x + z + w)^2 is equivalent to y ~ x + z + w + x:z + x:w + z:w.</li>
 <li>‘.’ Brief notation indicating all other variables in the table except for the dependent variable. For example, if the table contains variables x, y, z, and w, then the code y ~ . is equivalent to y ~ x + z + w.</li>
-<li>The ‘-’ sign miinus removes a variable from the formula. For example, y ~ (x + z + w)^2 – x w equivalent to y ~ x + z + w + x:z + z:w.</li>
+<li>The ‘-’ sign miinus removes a variable from the formula. For example, y ~ (x + z + w)^2 вЂ“ x w equivalent to y ~ x + z + w + x:z + z:w.</li>
 <li>‘-1’ Removes the first coefficient, causing the graph of the model function to pass through the origin .</li>
 <li>‘I()’ Elements within the braces are interpreted numerically. For example, y ~ x + (z + w)^2 is equivalent to y ~ x + z + w + z:w. But, the code y ~ x + I((z + w)^2) is equivalent to y ~ x + h, where h is a new variable obtained by squaring the sum of z and w.</li>
 <li>‘function’ is Any mathematical function can be used in the formula. For example, log(y) ~ x + z + w will attempt to describe the dependence of log(y) from x, z, and w.</li>
@@ -542,7 +610,7 @@ coef(m4)</code></pre>
 <p>Then, the probability that at least one p-value &lt; 0.05 = 0.05. The probability that at least one of the two p-values &lt; 0.05 = 0.098. … … … The probability that at least one of the twenty p-values &lt; 0.05 = 0.64</p>
 <p>In order not to reject real impact on your model variables as a result of this effect, it is recommended to use one of the following approaches</p>
 <ol style="list-style-type: decimal">
-<li>To use a lower α value to determine significance (for example equal to α / p)</li>
+<li>To use a lower О± value to determine significance (for example equal to О± / p)</li>
 <li>To check out first what the whole model is statistically significant and therefore make the decision to exclude one of the variables.</li>
 </ol>
 <p>For example, for the model m4</p>
@@ -625,16 +693,24 @@ coef(m4)</code></pre>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
-<div id="rStudioFooter" class="band full">
+<!-- <div id="rStudioFooter" class="band full">
 <div class="bandContent">
   <div id="copyright">Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем - <a href="http://lamp-lab.ru">ЛАМП</a></div>
   <div id="logos">
-  <!-- <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>-->
-  <!-- <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>-->
-  <!-- <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>-->
-  <!--  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a> -->
+<a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+  <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+   <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+  <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
   </div>
 </div>
+</div> -->
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2019 - Создано с помощью R в Лаборатории Агроэкологического Мониторинга и Прогнозирования экосистем -
+      <a href="http://lamp-lab.ru">ЛАМП</a>
+      </p>
+    </div>
 </div>
 
 
@@ -659,7 +735,7 @@ $(document).ready(function () {
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
