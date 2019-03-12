@@ -1,2 +1,2 @@
-# -environemental-modelling.github.io
-Environmental modelling courses for RUDN
+# ecologymodelling.github.io
+Environmental modelling courses for Timacad
