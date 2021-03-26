@@ -6,13 +6,11 @@ output:
     includes:
       before_body: [include_header_new.html, include_header_navpage.html, include_buggy_intro.html]
 ---
- 
 
 ```{js}
 $("#rStudioHeader").removeClass("alwaysShrunk");
 $("#pageContent").removeClass("standardPadding");
 ```
-
 
 <!--html_preserve-->
 

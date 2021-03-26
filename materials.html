@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Материалы</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -27,12 +37,18 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -45,38 +61,11 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
-<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
-</head>
+<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
-<body>
+
 
 <style type = "text/css">
 .main-container {
@@ -84,13 +73,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -104,11 +88,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -118,7 +103,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -154,6 +138,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -166,20 +151,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -230,8 +212,16 @@ $(document).ready(function () {
                 
               </ul>
             </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Презентации<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="presentations/Lecture__1_intr_R_rus.html">Введение в R</a></li>
+                <li><a href="presentations/Lecture__2_Frames_functions_rus.html">Таблицы и функции</a></li>
+                <li><a href="presentations/Lecture_3_graphs.html">Графика</a></li>
+              </ul>
+            </li>
             <li><a href="Tests.html" target="_blank">Задания</a></li>
-            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank"></a>Pres</li>
             <li><a href="materials.html" target="_blank">Материалы</a></li>
             <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
                 <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
@@ -256,7 +246,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -271,14 +261,14 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </iframe>
 <iframe width="640" height="360" src="https://www.youtube.com/embed/D3F4nsGkIXY?rel=0" frameborder="0" allowfullscreen>
 </iframe>
-<div id="section" class="section level1">
+<div id="презентации" class="section level1">
 <h1>Презентации</h1>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20tidyverse.pptx">Введение в tidyverse</a></p>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%98%D0%BC%D0%BF%D0%BE%D1%80%D1%82%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Импорт данных в tidyverse</a></p>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B2%20tidyverse.pptx">Создание графиков</a></p>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Трансформация данных</a></p>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%9E%D1%87%D0%B8%D1%81%D1%82%D0%BA%D0%B0%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Очистка данных</a></p>
-<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/blob/master/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%BC%D0%B8%20%D1%82%D0%B8%D0%BF%D0%B0%D0%BC%D0%B8%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Работа с разными типами данных</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B2%20tidyverse.pptx">Введение в tidyverse</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%98%D0%BC%D0%BF%D0%BE%D1%80%D1%82%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Импорт данных в tidyverse</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%BE%D0%B2%20%D0%B2%20tidyverse.pptx">Создание графиков</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8F%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Трансформация данных</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%9E%D1%87%D0%B8%D1%81%D1%82%D0%BA%D0%B0%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Очистка данных</a></p>
+<p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%BC%D0%B8%20%D1%82%D0%B8%D0%BF%D0%B0%D0%BC%D0%B8%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%20%D0%B2%20tidyverse.pptx">Работа с разными типами данных</a></p>
 <p><a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/%D0%98%D1%82%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B2%20tidyverse.pptx">Итерации</a></p>
 <ul class="nav nav-pills nav-stacked nav-docs">
 <li>
@@ -317,6 +307,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
+ 
+
+
 
 </div>
 
@@ -324,7 +317,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -332,6 +325,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

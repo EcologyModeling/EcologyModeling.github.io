@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Multiple regression modelling</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -27,12 +37,18 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -45,38 +61,11 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
-<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
-</head>
+<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
-<body>
+
 
 <style type = "text/css">
 .main-container {
@@ -84,13 +73,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -104,11 +88,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -118,7 +103,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -154,6 +138,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -166,20 +151,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -241,8 +223,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>-->
   </div>
   <div class="lessonContent">
+    
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -426,10 +409,8 @@ coef(d1)</code></pre>
 ##    4358.7578    -429.8933    -901.2158     225.4999    -376.9979</code></pre>
 <pre class="r"><code>d2 &lt;- lm(price ~ cut + carat, data = diamonds)
 coef(d2)</code></pre>
-<pre><code>##  (Intercept)      cutGood     cutIdeal   cutPremium cutVery Good 
-##    -3875.470     1120.332     1800.924     1439.077     1510.135 
-##        carat 
-##     7871.082</code></pre>
+<pre><code>##  (Intercept)      cutGood     cutIdeal   cutPremium cutVery Good        carat 
+##    -3875.470     1120.332     1800.924     1439.077     1510.135     7871.082</code></pre>
 <p>If we look at the data model does not account for the weight of a diamond, we will see a strange picture, when the value of a diamond with the perfect agranco much less than that of a diamond with good and very good cut. But if you consider the weight (and therefore size) of the diamond, then everything falls into place. Diamonds with ideal avrankou in this model are more expensive, but given their “carat”.</p>
 <p>Described above is perfectly visible in the following graph:</p>
 <pre class="r"><code>qplot(carat, predict(d2), data = diamonds, color = cut, geom = &quot;line&quot;)</code></pre>
@@ -455,20 +436,20 @@ coef(m3)</code></pre>
 ## lm(formula = earn ~ height + sex + race + ed + age, data = wages)
 ## 
 ## Coefficients:
-## (Intercept)       height    sexfemale    racewhite    raceblack  
-##    -74354.2        632.7     -17552.5       4592.8       2086.1  
-##   raceother           ed          age  
-##      1708.3       4382.1        287.5</code></pre>
+## (Intercept)       height    sexfemale    racewhite    raceblack    raceother  
+##    -74354.2        632.7     -17552.5       4592.8       2086.1       1708.3  
+##          ed          age  
+##      4382.1        287.5</code></pre>
 <pre class="r"><code>lm(earn ~ ., data = wages)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = earn ~ ., data = wages)
 ## 
 ## Coefficients:
-## (Intercept)       height    sexfemale    racewhite    raceblack  
-##    -74354.2        632.7     -17552.5       4592.8       2086.1  
-##   raceother           ed          age  
-##      1708.3       4382.1        287.5</code></pre>
+## (Intercept)       height    sexfemale    racewhite    raceblack    raceother  
+##    -74354.2        632.7     -17552.5       4592.8       2086.1       1708.3  
+##          ed          age  
+##      4382.1        287.5</code></pre>
 <p>Such a recording, with the use of the mark . you can modify it taking away from the individual variables:</p>
 <pre class="r"><code>lm(earn ~ height + sex + race + ed, data = wages)</code></pre>
 <pre><code>## 
@@ -476,20 +457,20 @@ coef(m3)</code></pre>
 ## lm(formula = earn ~ height + sex + race + ed, data = wages)
 ## 
 ## Coefficients:
-## (Intercept)       height    sexfemale    racewhite    raceblack  
-##    -46648.9        440.6     -18036.5       6128.5       2915.6  
-##   raceother           ed  
-##      3379.3       4159.8</code></pre>
+## (Intercept)       height    sexfemale    racewhite    raceblack    raceother  
+##    -46648.9        440.6     -18036.5       6128.5       2915.6       3379.3  
+##          ed  
+##      4159.8</code></pre>
 <pre class="r"><code>lm(earn ~ . - age, data = wages)</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = earn ~ . - age, data = wages)
 ## 
 ## Coefficients:
-## (Intercept)       height    sexfemale    racewhite    raceblack  
-##    -46648.9        440.6     -18036.5       6128.5       2915.6  
-##   raceother           ed  
-##      3379.3       4159.8</code></pre>
+## (Intercept)       height    sexfemale    racewhite    raceblack    raceother  
+##    -46648.9        440.6     -18036.5       6128.5       2915.6       3379.3  
+##          ed  
+##      4159.8</code></pre>
 </div>
 </div>
 <div id="interaction-terms-between-variables" class="section level1">
@@ -587,7 +568,7 @@ coef(m4)</code></pre>
 <li>’<em>’ Short account of all possible interactions between variables. The code y ~ x </em> z * w is equivalent to y ~ x + z + w + x:z + x:w + z:w + x:z:w.</li>
 <li>‘^’ Denotes the interaction of a certain level. The code y ~ (x + z + w)^2 is equivalent to y ~ x + z + w + x:z + x:w + z:w.</li>
 <li>‘.’ Brief notation indicating all other variables in the table except for the dependent variable. For example, if the table contains variables x, y, z, and w, then the code y ~ . is equivalent to y ~ x + z + w.</li>
-<li>The ‘-’ sign miinus removes a variable from the formula. For example, y ~ (x + z + w)^2 вЂ“ x w equivalent to y ~ x + z + w + x:z + z:w.</li>
+<li>The ‘-’ sign miinus removes a variable from the formula. For example, y ~ (x + z + w)^2 – x w equivalent to y ~ x + z + w + x:z + z:w.</li>
 <li>‘-1’ Removes the first coefficient, causing the graph of the model function to pass through the origin .</li>
 <li>‘I()’ Elements within the braces are interpreted numerically. For example, y ~ x + (z + w)^2 is equivalent to y ~ x + z + w + z:w. But, the code y ~ x + I((z + w)^2) is equivalent to y ~ x + h, where h is a new variable obtained by squaring the sum of z and w.</li>
 <li>‘function’ is Any mathematical function can be used in the formula. For example, log(y) ~ x + z + w will attempt to describe the dependence of log(y) from x, z, and w.</li>
@@ -610,7 +591,7 @@ coef(m4)</code></pre>
 <p>Then, the probability that at least one p-value &lt; 0.05 = 0.05. The probability that at least one of the two p-values &lt; 0.05 = 0.098. … … … The probability that at least one of the twenty p-values &lt; 0.05 = 0.64</p>
 <p>In order not to reject real impact on your model variables as a result of this effect, it is recommended to use one of the following approaches</p>
 <ol style="list-style-type: decimal">
-<li>To use a lower О± value to determine significance (for example equal to О± / p)</li>
+<li>To use a lower α value to determine significance (for example equal to α / p)</li>
 <li>To check out first what the whole model is statistically significant and therefore make the decision to exclude one of the variables.</li>
 </ol>
 <p>For example, for the model m4</p>
@@ -714,6 +695,9 @@ coef(m4)</code></pre>
 </div>
 
 
+ 
+
+
 
 </div>
 
@@ -721,7 +705,7 @@ coef(m4)</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -729,6 +713,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

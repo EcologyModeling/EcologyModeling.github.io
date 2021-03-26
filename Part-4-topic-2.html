@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Модели логистической регрессии</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -27,12 +37,18 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -45,38 +61,11 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
-<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
-</head>
+<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
-<body>
+
 
 <style type = "text/css">
 .main-container {
@@ -84,13 +73,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -104,11 +88,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -118,7 +103,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -154,6 +138,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -166,20 +151,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -230,8 +212,16 @@ $(document).ready(function () {
                 
               </ul>
             </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Презентации<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="presentations/Lecture__1_intr_R_rus.html">Введение в R</a></li>
+                <li><a href="presentations/Lecture__2_Frames_functions_rus.html">Таблицы и функции</a></li>
+                <li><a href="presentations/Lecture_3_graphs.html">Графика</a></li>
+              </ul>
+            </li>
             <li><a href="Tests.html" target="_blank">Задания</a></li>
-            <li><a href="presentations/Introduction_R.html" target="_blank">Презентации</a></li>
+            <li><a href="presentations/Introduction_R.html" target="_blank"></a>Pres</li>
             <li><a href="materials.html" target="_blank">Материалы</a></li>
             <li><a class="menuItem gitHub" href="https://github.com/environemental-modelling/environemental-modelling.github.io"></a>
                 <a class="menuItem gitHubText" href="https://github.com/environemental-modelling/environemental-modelling.github.io">Исходники в GitHub</a></li>
@@ -278,8 +268,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>-->
   </div>
   <div class="lessonContent">
+    
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -297,7 +288,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
   margin:2em;
   }
 </style>
-<div id="section" class="section level3">
+<div id="классификация-данных" class="section level3">
 <h3>Классификация данных</h3>
 <table>
 <colgroup>
@@ -332,12 +323,12 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </tbody>
 </table>
 </div>
-<div id="section-1" class="section level3">
+<div id="тестовая-и-обучающая-выборка" class="section level3">
 <h3>Тестовая и обучающая выборка</h3>
 <p>Когда вы строите модель, чтобы делать прогнозы, как наша модель для прогнозирования вероятности медицинского страхования, вам нужны данные для построения модели. Вам также понадобятся данные для проверки того делает ли наша модель верные предсказания на новых данных. Первая выборка называется обучающей, а второй набор называется тестировочным. Обучающий набор данных, это тот который вы “скармливаете” модели, так что алгоритм может установить правильные параметры, чтобы наиболее точно предсказать результат зависимой переменной. Тестовый набор данных, вы используете для “скармливания” результирующей модели, чтобы убедиться, что предсказания модели являются точными.</p>
 <p>Многие авторы рекомендуют тестировочное/калибровочное/обучающее разбиение, что тоже хорошо. Мы предлагаем следующее: разбить данные на обучающие/тестировочные в начале, не использовать тестировочные данные до конца моделирования, и если вам нужны калибровочные данные, переразбить их из обучающего подмножества .</p>
 </div>
-<div id="section-2" class="section level3">
+<div id="коррелляции-при-моделировании" class="section level3">
 <h3>Коррелляции при моделировании</h3>
 <p>Корреляции очень полезно при проверке, являются ли переменные потенциально полезными для модели. Помните, что есть по крайней мере три подхода, которые известны под именем корреляции: Пирсона, Спирмена и Кендалла (см. help(cor)). Пирсона применяют для линейных отношений, Спирмана для ранговых или сильно ненормальных данных. Каждый из этих коэффициентов выполняет все более радикальные преобразования над исходными данными, и имеет хорошо разработанные тесты для оценки точности (см. help(кор.тест)).</p>
 <p><strong><em>НЕ ИСПОЛЬЗУЙТЕ КОЭФФИЦИЕНТ КОРЕЛЛЯЦИИ ДЛЯ ОЦЕНКИ КАЧЕСТВА РЕАЛЬНЫХ МОДЕЛЕЙ</em></strong></p>
@@ -369,7 +360,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </tbody>
 </table>
 </div>
-<div id="section-3" class="section level3">
+<div id="таблица-сопряженности" class="section level3">
 <h3>Таблица сопряженности</h3>
 <table>
 <colgroup>
@@ -396,7 +387,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </tbody>
 </table>
 </div>
-<div id="section-4" class="section level3">
+<div id="таблица-метрик-качества-модели" class="section level3">
 <h3>Таблица метрик качества модели</h3>
 <table style="width:57%;">
 <colgroup>
@@ -427,7 +418,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </tbody>
 </table>
 </div>
-<div id="section-5" class="section level3">
+<div id="разъяснение" class="section level3">
 <h3>Разъяснение</h3>
 <table>
 <colgroup>
@@ -462,11 +453,11 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </tbody>
 </table>
 </div>
-<div id="section-6" class="section level2">
+<div id="логистическая-регрессия" class="section level2">
 <h2>Логистическая регрессия</h2>
 <p>Логистическая регрессия является наиболее важным (и, вероятно, наиболее часто используемым) элементом класса моделей, называемых обобщенными линейными моделями. В отличие от линейной регрессии, логистическая регрессия может непосредственно предсказывать значения, которые ограничены интервалом (0,1), таким как вероятности. Это новый метод предсказания вероятностей или коэффициентов, и, подобно линейной регрессии, коэффициенты модели логистической регрессии можно рассматривать как рекомендации. Это также хороший первый выбор для задач двоичной классификации.</p>
 <p>В этом разделе мы будем использовать пример из медицинской классификации (прогнозирующий, потребуется ли новорожденному дополнительное медицинское обслуживание) для проработки всех этапов создания и использования модели логистической регрессии.</p>
-<div id="section-7" class="section level3">
+<div id="понимая-логистическую-регрессию" class="section level3">
 <h3>Понимая логистическую регрессию</h3>
 <p>Логистическая регрессия предсказывает вероятность того, что объект принадлежит определенной категории, например, вероятность того, что полет будет задержан. Когда x[i,] представляет собой строку входных данных (например, место и время полета, время года, погода, авиаперевозчик), логистическая регрессия находит фиктивную функцию f(x) такую, что</p>
 <p><span class="math display">\[P_{y_{[i]} в классе} \sim f_{(x_{[i,]})} = s(a+b_{[1]} x_{[i,1]} + ... b_{[n]} x_{[i,n]})\]</span></p>
@@ -477,27 +468,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p>Такого рода дети встречаются довольно редко, поэтому больницам не хочется тратиться на дополнительное аварийно-спасательное оборудование для каждой поставки. С другой стороны, детям в группе риска может понадобиться помощь при этом очень быстро нужно, поэтому превентивная подготовка может спасти жизнь. Целью данного исследования является попытка выявление ситуаций с повышенной вероятностью риска загодя, для того чтобы ресурсы были распределены точно и загодя.</p>
 <pre class="r"><code>sdata = read.csv(&quot;https://www.dropbox.com/s/lx9celfieswn4vq/NatalRisk.csv?dl=1&quot;)
 head(sdata)</code></pre>
-<pre><code>##      X PWGT UPREVIS CIG_REC    GESTREC3 DPLURAL ULD_MECO ULD_PRECIP
-## 1 2136  155      14   FALSE &gt;= 37 weeks  single     TRUE      FALSE
-## 2 2137  140      13   FALSE &gt;= 37 weeks  single    FALSE      FALSE
-## 3 2138  151      15   FALSE &gt;= 37 weeks  single    FALSE      FALSE
-## 4 2139  118       4   FALSE &gt;= 37 weeks  single    FALSE      FALSE
-## 5 2140  134      11   FALSE &gt;= 37 weeks  single    FALSE      FALSE
-## 6 2141  117      18   FALSE &gt;= 37 weeks  single     TRUE      FALSE
-##   ULD_BREECH URF_DIAB URF_CHYPER URF_PHYPER URF_ECLAM atRisk DBWT
-## 1      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 3714
-## 2      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 3715
-## 3      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 3447
-## 4      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 3175
-## 5      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 4038
-## 6      FALSE    FALSE      FALSE      FALSE     FALSE  FALSE 3410
-##   ORIGRANDGROUP
-## 1             2
-## 2             4
-## 3             2
-## 4             6
-## 5            10
-## 6             7</code></pre>
+<pre><code>##      X PWGT UPREVIS CIG_REC    GESTREC3 DPLURAL ULD_MECO ULD_PRECIP ULD_BREECH
+## 1 2136  155      14   FALSE &gt;= 37 weeks  single     TRUE      FALSE      FALSE
+## 2 2137  140      13   FALSE &gt;= 37 weeks  single    FALSE      FALSE      FALSE
+## 3 2138  151      15   FALSE &gt;= 37 weeks  single    FALSE      FALSE      FALSE
+## 4 2139  118       4   FALSE &gt;= 37 weeks  single    FALSE      FALSE      FALSE
+## 5 2140  134      11   FALSE &gt;= 37 weeks  single    FALSE      FALSE      FALSE
+## 6 2141  117      18   FALSE &gt;= 37 weeks  single     TRUE      FALSE      FALSE
+##   URF_DIAB URF_CHYPER URF_PHYPER URF_ECLAM atRisk DBWT ORIGRANDGROUP
+## 1    FALSE      FALSE      FALSE     FALSE  FALSE 3714             2
+## 2    FALSE      FALSE      FALSE     FALSE  FALSE 3715             4
+## 3    FALSE      FALSE      FALSE     FALSE  FALSE 3447             2
+## 4    FALSE      FALSE      FALSE     FALSE  FALSE 3175             6
+## 5    FALSE      FALSE      FALSE     FALSE  FALSE 4038            10
+## 6    FALSE      FALSE      FALSE     FALSE  FALSE 3410             7</code></pre>
 <pre class="r"><code>train &lt;- sdata[sdata$ORIGRANDGROUP&lt;=5,]
 test &lt;- sdata[sdata$ORIGRANDGROUP&gt;5,]</code></pre>
 <p>Командой для построения модели логистической регрессии в R является модель glm(). В нашем случае зависимой переменной Y является логическая (булевая) переменная atRisk; все другие переменные в табл. 7.1 представлены независимыми переменными х. Формула для построения модели для прогнозирования atRisk с помощью этих переменных достаточно длинна для линейной записи; поэтому создадим формулу командами показаными в следующем листинге.</p>
@@ -529,16 +513,15 @@ ggplot(train, aes(x=pred, color=atRisk, linetype=atRisk)) + geom_density()</code
 <p>Чтобы использовать модель в качестве классификатора, вы должны выбрать пороговое значение; Баллы выше порога будут классифицироваться как положительные,а те, что ниже, как отрицательные. Когда вы выбираете пороговое значение, вы пытаетесь сбалансировать точность классификатора (какая доля прогнозируемых положительных результатов являются истинно положительными) и его отзыв (сколько из истинных положительных значений находит классификатор)</p>
 <p>Если распределения баллов положительных и отрицательных примеров хорошо разделены, как показано на рисунке, мы можем выбрать соответствующий порог в «долине» между двумя пиками. В данном случае два распределения не очень хорошо разделены, что указывает на то, что модель не может построить классификатор, который одновременно обеспечивает хороший отзыв и хорошую точность.Но мы можем создать классификатор, который идентифицирует подмножество ситуаций с более высоким уровнем рождаемости в группе риска, поэтому предварительное выделение ресурсов для этих ситуаций может быть рекомендовано. Мы будем называть отношение точности классификатора к средней скорости срабатывания коэффициентом обогащения. Чем выше мы устанавливаем порог, тем более точным будет классификатор (мы определим набор ситуаций с гораздо более высоким чем средний уровнем точности определения родов с повышенным риском);одновременно мы также будем чаще пропускать(не классифицировать) ситуации, связанные с риском. При выборе порога мы будем использовать обучающий набор, так как выбор порога является частью построения классификатора.</p>
 <p>Затем мы можем использовать тестовый набор для оценки производительности классифицируюшей модели . Чтобы помочь подобрать порог, мы можем использовать график, см ниже, который показывает обвременно обогащение и отзыв как функции от пороговго значения. На рисунке, вы видите, что более высокие пороги приводят к более точной классификации, за счет упущения(неправильной классификации) большого количества случаев; Более низкий порог выявит больше критических ситуаций при родах за счет множества ложных срабатываний. Наилучший компромисс между точностью и отзывом зависит от объема ресурсов, которым располагает больница для распределения и сколько их можно оставить в резерве (или перераспределить) для ситуаций, которые пропустил классификатор. Хорошим выбором может стать порог в 0,02 (что, кстати, и составляет общий показатель рождаемости в группах риска). Получающийся классификатор будет идентифицировать набор потенциальных ситуаций с повышенным риском, который обнаруживают примерно половину всех реальных ситуаций, связанных с риском, с истинным положительным уровнем в 2,5 раза выше, чем в среднем(обнаруживаются такие ситуации).</p>
-<pre class="r"><code>library(ROCR)</code></pre>
-<pre><code>## Loading required package: gplots</code></pre>
+<pre class="r"><code>library(ROCR)
+library(ggplot2)
+library(gplots)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;gplots&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:stats&#39;:
 ## 
 ##     lowess</code></pre>
-<pre class="r"><code>library(ggplot2)
-library(gplots)
-library(grid) # Load grid library (you’ll need this  for the nplot function below).
+<pre class="r"><code>library(grid) # Load grid library (you’ll need this  for the nplot function below).
 predObj &lt;- prediction(train$pred, train$atRisk) # Create ROCR prediction object
 precObj &lt;- performance(predObj, measure=&quot;prec&quot;) # Create ROCR object to calculate precision as a function of threshold
 recObj &lt;- performance(predObj, measure=&quot;rec&quot;)# Create ROCR object to calculate recall as a function of threshold.
@@ -598,7 +581,7 @@ enrich</code></pre>
 <p>Отрицательные коэффициенты, которые являются статистически значимыми, соответствуют переменным, которые отрицательно коррелируют с шансами (и, следовательно, с вероятностью) положительного результата (т.е. того, что ребенок находится в группе риска). Положительные коэффициенты, которые являются статистически значимыми, положительно коррелируют с шансами положительного результата. Как и в случае линейной регрессии, каждая категориальная переменная расширяется до набора индикаторных переменных. Если исходная переменная имеет n уровней, будет n-1 индикаторных переменных; оставшийся 1 уровень включен в свободный член.</p>
 <p>Например, переменная DPLURAL имеет три уровня, соответствующих родам одного ребенка, двойняшкам и тройняшкам или выше. Модель логистической регрессии имеет два соответствующих коэффициента: DPLURALtwin и DPLURALtriplet или выше. Контрольный уровень - обычные роды. Оба коэффициента DPLURAL являются положительными, что указывает на то, что роды нескольких детей имеют более высокие шансы быть подверженными риску, чем обычные роды, при прочих равных условиях.</p>
 </div>
-<div id="section-8" class="section level3">
+<div id="интерпретируя-коэффициенты" class="section level3">
 <h3>ИНТЕРПРЕТИРУЯ КОЭФФИЦИЕНТЫ</h3>
 <p>Интерпретация значений коэффициентов является немного более сложным, в случае с логистической регрессией, чем в случае с линейной регрессией. Если коэффициент для переменной x[,k] равен b[k], то коэффициенты положительного результата умножаются на коэффициент exp(b[k]) для каждого изменения x[,k] на единицу.</p>
 <p>Коэффициент для GESTREC3 &lt;37 недель (для недоношенного ребенка) составляет 1,545183. Так что для недоношенного ребенка вероятность оказаться в опасности равна exp(1,545183) = 4,68883 раз выше по сравнению с младенцем, рожденным в течение полного срока, при условии, что все остальные входные переменные остаются неизменными. В качестве примера предположим, что для полноценного ребенка с определенными характеристиками существует вероятность 1% риска (вероятность равна p / (1-p) или 0,01 / 0,99 = 0,0101); Тогда шансы(odds) для недоношенного малыша с такими же характеристиками составляют 0,0101 * 4,68883 = 0,047. Это соответствует вероятности риска = шанс/ (1 + шанс), или 0,047 / 1,047 - около 4,5%.</p>
@@ -717,7 +700,7 @@ print(pr2.test)</code></pre>
 <pre><code>## [1] 0.07760427</code></pre>
 <p>Модель объясняет только 7,7-8,7% отклонения; Это не очень хорошая прогностическая модель (вам следовало бы заподозрить это уже на пред рисунке). Это говорит нам о том, что мы еще не определили все факторы, которые фактически предсказывают рождение детей с повышенным риском. Метод оценки Фишера представляет собой метод итеративной оптимизации, аналогичный методу Ньютона, который использует glm() для нахождения наилучших коэффициентов для модели логистической регрессии. Вы должны ожидать, что он сходится примерно через шесть-восемь итераций. Если итераций больше, чем это, тогда алгоритм может не совпадать, и модель может оказаться недействительной.</p>
 </div>
-<div id="section-9" class="section level3">
+<div id="разделение-и-квази-разделение" class="section level3">
 <h3>Разделение и квази-разделение</h3>
 <p>Вероятной причиной несведение является разделение или квази-разделение: одна из переменных модели или некоторая комбинация переменных модели предсказывает исход отлично, по крайней мере,на подмножестве обучающих данных. Вы могли бы подумать, что это хорошо, но по иронии судьбы логистическая регрессия терпит неудачу, когда переменные слишком хороши в предсказании. В идеале glm() выдаст предупреждение, когда обнаружит разделение или квази-разделение:</p>
 <p>К сожалению, есть ситуации, когда кажется, что никаких предупреждений не выдается, но есть и другие предупреждающие знаки:</p>
@@ -728,7 +711,7 @@ print(pr2.test)</code></pre>
 </ul>
 <p>Если вы видите какой-либо из этих признаков, модель подозрительна. Чтобы попытаться решить проблему, удалите все переменные с необычно большими коэффициентами; Они, вероятно, вызывают разделение.</p>
 </div>
-<div id="section-10" class="section level3">
+<div id="что-вы-должны-помнить-о-логистической-регрессии" class="section level3">
 <h3>Что вы должны помнить о логистической регрессии:</h3>
 <ul>
 <li>Логистическая регрессия - это метод статистического моделирования для двоичной классификации.</li>
@@ -784,6 +767,9 @@ print(pr2.test)</code></pre>
 </div>
 
 
+ 
+
+
 
 </div>
 
@@ -791,7 +777,7 @@ print(pr2.test)</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -799,6 +785,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

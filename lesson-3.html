@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>Linear regression</title>
 
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -27,12 +37,18 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -45,38 +61,11 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
-<link rel="stylesheet" href="css\envmodel.css" type="text/css" />
 
-</head>
+<link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
-<body>
+
 
 <style type = "text/css">
 .main-container {
@@ -84,13 +73,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -104,11 +88,12 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -118,7 +103,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -154,6 +138,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -166,20 +151,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -241,8 +223,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>-->
   </div>
   <div class="lessonContent">
+    
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -251,6 +234,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
+<pre><code>## Warning: `tbl_df()` was deprecated in dplyr 1.0.0.
+## Please use `tibble::as_tibble()` instead.</code></pre>
 <pre><code>## # A tibble: 1,379 x 6
 ##      earn height sex    race        ed   age
 ##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
@@ -415,26 +400,22 @@ tbl_df(crime)</code></pre>
 ## 3758.975 2763.201 3174.499 3607.444 3217.794 3455.913 3066.263 2828.143</code></pre>
 <p>The function resid() (or the remnants of the deviations) will count the difference between each existing value of the output variable predicted by your model the result of (what you believed previous function).</p>
 <pre class="r"><code>resid(mod)</code></pre>
-<pre><code>##            1            2            3            4            5 
-##   665.114163  1042.018405   334.228411   786.308663   -81.135339 
-##            6            7            8            9           10 
-##    88.120658  -917.849587   107.941665   240.132917   291.741665 
-##           11           12           13           14           15 
-##  -573.828580  -702.426592   194.439412  -508.540840   270.428411 
-##           16           17           18           19           20 
-##  -631.913338   538.694415  -692.793590   397.428411  -704.407838 
-##           21           22           23           24           25 
-##   207.848160  -202.963835   531.928411    86.345907   -55.540840 
-##           26           27           28           29           30 
-##   590.500910  -786.540840 -1134.355088  1344.300910  -818.204590 
-##           31           32           33           34           35 
-##   622.844912  -725.826592   282.481162   475.814163   160.589909 
-##           36           37           38           39           40 
-##  -739.577089  -844.780336   716.636165  -975.121091   868.450413 
-##           41           42           43           44           45 
-##   749.625164   761.798657  -597.299090  -921.344087   866.106410 
-##           46           47           48 
-##  -418.513338  -193.962841     5.056907</code></pre>
+<pre><code>##            1            2            3            4            5            6 
+##   665.114163  1042.018405   334.228411   786.308663   -81.135339    88.120658 
+##            7            8            9           10           11           12 
+##  -917.849587   107.941665   240.132917   291.741665  -573.828580  -702.426592 
+##           13           14           15           16           17           18 
+##   194.439412  -508.540840   270.428411  -631.913338   538.694415  -692.793590 
+##           19           20           21           22           23           24 
+##   397.428411  -704.407838   207.848160  -202.963835   531.928411    86.345907 
+##           25           26           27           28           29           30 
+##   -55.540840   590.500910  -786.540840 -1134.355088  1344.300910  -818.204590 
+##           31           32           33           34           35           36 
+##   622.844912  -725.826592   282.481162   475.814163   160.589909  -739.577089 
+##           37           38           39           40           41           42 
+##  -844.780336   716.636165  -975.121091   868.450413   749.625164   761.798657 
+##           43           44           45           46           47           48 
+##  -597.299090  -921.344087   866.106410  -418.513338  -193.962841     5.056907</code></pre>
 </div>
 <div id="interpret-data-models" class="section level3">
 <h3>Interpret data models</h3>
@@ -456,9 +437,11 @@ tbl_df(crime)</code></pre>
 <p>Logically, for building this graph we used geom = “line”, which is equivalent to using the <code>+geom_line()</code>, because our dependence is linear and is exactly the type of graph that we want to. Meanwhile, ggplot allows us to build a model of the model directly when creating graphics, and, oddly enough, we’ve done this in previous lessons. For this there is already well-known to us geometry <code>geom_smooth()</code>. However to get similar to the previous graph, we need to explicitly declare your functions, the type of geometry that we have ispolzovali, i.e. <code>geom_smooth(method=lm)</code>, respectively ggplot will know that our model will have obsi view <code>lm(x~y, crime)</code>. Add a parameter <code>se=FALSE</code> will remove the confidence intervals, which often mislead than help.</p>
 <pre class="r"><code>qplot(low, tc2009, data = crime) + 
   geom_smooth(method = lm)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre class="r"><code>qplot(low, tc2009, data = crime) +
   geom_smooth(se = FALSE, method = lm)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p><strong><em>Important</em></strong>. By default R tries to add <span class="math inline">\(\alpha\)</span> in every linear model . Ie R model builds on the assumption that <span class="math inline">\(\alpha\)</span> is not equal to 0. Meanwhile, we can force R to build a model based on the fact that <span class="math inline">\(\alpha\)</span> is equal to 0. I.e. schedule of our funkyyy must necessarily pass through the coordinates (0, 0).</p>
 <p>To R came from the fact that <span class="math inline">\(\alpha\)</span> is equal to 0 in the model formula need to add 0 or -1. Add to formula +1 makes R cost model is based on the fact that <span class="math inline">\(\alpha\)</span> is not equal to 0. Consider the following examples:</p>
@@ -515,6 +498,7 @@ coef(hmod)</code></pre>
 <p>Another fairly simple conclusion from our Moodle is that uvelichenie growth 1 inch should lead to a rise in revenues of $2387.20 per year.</p>
 <pre class="r"><code>qplot(height, earn, data = wages, alpha = I(1/4)) +
 geom_smooth(se = FALSE, method = lm) + theme_bw()</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-19-1.png" width="672" /> ##### Let’s sum up a little</p>
 <p>The fit of the model R consists of 3 stages:</p>
 <ol style="list-style-type: decimal">
@@ -531,9 +515,11 @@ geom_smooth(se = FALSE, method = lm) + theme_bw()</code></pre>
 <p>Let’s load the data which contain absolutely 100 randomly selected values from the previous nubra data and plot obtained data.</p>
 <pre class="r"><code>w1 &lt;- read.csv(&quot;https://dl.dropboxusercontent.com/s/qnybbt5sxiedsd7/w1.csv?dl=0&quot;)
 qplot(height, earn, data = w1) + geom_smooth(method = lm, se = F)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Construct a similar chart for the whole amount of available data.</p>
 <pre class="r"><code>qplot(height, earn, data = wages) + geom_smooth(method = lm, se = F)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lesson-3_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Let us ask ourselves the question of what will happen if we take another sample? Whether <span class="math inline">\(\beta\)</span> = <span class="math inline">\(\beta\)</span> if we take another sample? Probably not. Whether <span class="math inline">\(\beta\)</span> = 0, if we take another sample? Possible.</p>
 <p>You should make an important digression. The value of <span class="math inline">\(\beta\)</span> = 0 is very different in its importance for us from all other values, because it would mean that changing the independent variable does not change the dependent variable. In other words, it will mean that we have no communication between our peremennymi.</p>
@@ -545,20 +531,20 @@ qplot(height, earn, data = w1) + geom_smooth(method = lm, se = F)</code></pre>
 </ul>
 <div id="parametric-statistics" class="section level3">
 <h3>Parametric statistics</h3>
-<p>If the model satisfies a number of assumptions, it is possible to calculate the probability of observing a certain ОІ, even while the true ОІ=0. If you remember your College statistics, you will realize that we are just many other words have formulated the null hypothesis for regressionnogo analysis. Which consisted in the fact that the General slope of the regression line ОІ is equal to zero.</p>
+<p>If the model satisfies a number of assumptions, it is possible to calculate the probability of observing a certain β, even while the true β=0. If you remember your College statistics, you will realize that we are just many other words have formulated the null hypothesis for regressionnogo analysis. Which consisted in the fact that the General slope of the regression line β is equal to zero.</p>
 <p>In order to understand this deeper, let’s consider a specific example. To do this go back to the model based on earnings growth: <code>hmod</code>:</p>
 <p><code>{r} summary(hmod)</code></p>
 <p>Consider the details offered to us the results. <code># Estimate Std. Error t value Pr(&gt;|t|)</code> <code># 2387 211 height 11.312 &lt;2e-16 ***</code></p>
 <p>The probability that <span class="math inline">\(\beta_{height} &gt;= 2387\)</span> under the condition that the true <span class="math inline">\(\beta=0\)</span> in the example presented to us is almost equal to 2E-16 (almost 0). Or in other words, the probability of the null hypothesis of equal vvelichine extremely small, and therefore we can say that <span class="math inline">\(\beta\)</span> not equal to zero.</p>
-<p>To be precise, low p-values ( &lt; 0.05) may be the result of the following events 1. We have a very unrepresentative sample 2. The true ОІ of the General population is not equal to 0 3. Our model is in principle not correct</p>
-<p>There is a logical question, but if we have proved that ОІ is not zero, then what is it equal. Unfortunately we have no other information other than that obtained from the model, so it is safest to assume that ОІ = 2387.</p>
-<p>Note, however, that we found the most probable point value of ОІ in repeated measurements may be different. To characterize this uncertainty, it is necessary to calculate the confidence interval does not contradict the available data, the range of values in which the true value of our values with a certain probability (e.g. 95%). Roughly assess the limits of confidence interval, assuming approximately 95% of all values of the distribution of estimates of ОІ lie in the range of В±2<span class="math inline">\(SE{\beta}\)</span> relative to its average value, where <span class="math inline">\(SE{\beta}\)</span> вЂ“ standard error of the parameter ОІ. However, the uncertainty exists in the estimation of the parameter ОІ, but the estimation of its standard deviation for the corresponding normal distribution. Without going into detail, we note that in connection with this circumstance the more accurate bounds of the confidence interval will give the calculations based on the properties of student’s t - distribution. Then the 95% confidence interval for the parameter ОІ will be: ОІ В± <span class="math inline">\(t_{0.975}SE{\beta}\)</span>, where <span class="math inline">\(t_{0.975}\)</span> вЂ“ 0.975-quantile t-distribution with (n - p) degrees of freedom, n is the sample size and p is the number of model parameters.</p>
+<p>To be precise, low p-values ( &lt; 0.05) may be the result of the following events 1. We have a very unrepresentative sample 2. The true β of the General population is not equal to 0 3. Our model is in principle not correct</p>
+<p>There is a logical question, but if we have proved that β is not zero, then what is it equal. Unfortunately we have no other information other than that obtained from the model, so it is safest to assume that β = 2387.</p>
+<p>Note, however, that we found the most probable point value of β in repeated measurements may be different. To characterize this uncertainty, it is necessary to calculate the confidence interval does not contradict the available data, the range of values in which the true value of our values with a certain probability (e.g. 95%). Roughly assess the limits of confidence interval, assuming approximately 95% of all values of the distribution of estimates of β lie in the range of ±2<span class="math inline">\(SE{\beta}\)</span> relative to its average value, where <span class="math inline">\(SE{\beta}\)</span> – standard error of the parameter β. However, the uncertainty exists in the estimation of the parameter β, but the estimation of its standard deviation for the corresponding normal distribution. Without going into detail, we note that in connection with this circumstance the more accurate bounds of the confidence interval will give the calculations based on the properties of student’s t - distribution. Then the 95% confidence interval for the parameter β will be: β ± <span class="math inline">\(t_{0.975}SE{\beta}\)</span>, where <span class="math inline">\(t_{0.975}\)</span> – 0.975-quantile t-distribution with (n - p) degrees of freedom, n is the sample size and p is the number of model parameters.</p>
 <p>Get the most from the interval for a given precision is possible with the following command:</p>
 <pre class="r"><code>confint(hmod, level = 0.95)</code></pre>
 <pre><code>##                   2.5 %     97.5 %
 ## (Intercept) -154135.798 -98910.920
 ## height         1973.228   2801.163</code></pre>
-<p>Once again, given us the figures mean that we can with 95% probability to assert that the value of ОІ is in the us range from 1973.228 to 2801.163.</p>
+<p>Once again, given us the figures mean that we can with 95% probability to assert that the value of β is in the us range from 1973.228 to 2801.163.</p>
 <p>Let’s consider again the data on the relationship between temperature and crime</p>
 <pre class="r"><code>mod &lt;- lm(tc2009 ~ low, data = crime)
 summary(mod)</code></pre>
@@ -637,6 +623,9 @@ summary(mod)</code></pre>
 </div>
 
 
+ 
+
+
 
 </div>
 
@@ -644,7 +633,7 @@ summary(mod)</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -652,6 +641,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
