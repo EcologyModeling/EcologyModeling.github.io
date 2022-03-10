@@ -13,8 +13,8 @@
 
 <title>Физические модели. Формализация и численные решения.</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -274,7 +274,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 
-<h1 class="title toc-ignore">Физические модели. Формализация и численные решения.</h1>
+<h1 class="title toc-ignore">Физические модели. Формализация и численные
+решения.</h1>
 
 </div>
 
@@ -307,10 +308,9 @@ out &lt;- ode(y = state, times = time, func = lotkaVolterra, parms = parameters)
 ## Ploting
 out.df = as.data.frame(out) # required by ggplot: data object must be a data frame
 library(reshape2)</code></pre>
-<pre><code>## Warning: package &#39;reshape2&#39; was built under R version 4.0.3</code></pre>
 <pre><code>## 
-## Attaching package: &#39;reshape2&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## Присоединяю пакет: &#39;reshape2&#39;</code></pre>
+<pre><code>## Следующий объект скрыт от &#39;package:tidyr&#39;:
 ## 
 ##     smiths</code></pre>
 <pre class="r"><code>out.m = melt(out.df, id.vars=&#39;time&#39;) # this makes plotting easier by puting all variables in a single column

@@ -8,8 +8,8 @@ output:
       before_body: [include_header_new.html, include_lessons_nav.html]
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-Семинар  1
-========
+
+# Семинар 1
 
 Для чего используется R
 
@@ -60,7 +60,6 @@ output:
 plot(density(rnorm(100)),col="red")
 ```
 
-
 ------------------------------------------------------------------------
 
 #### Способы задания переменной значения
@@ -71,7 +70,6 @@ x<-5
 assign("x",5)
 x
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -106,8 +104,7 @@ dynam<-c(1,0,1,1,TRUE)
 dynam
 ```
 
-
-**Приоритет Char-&gt;integer-&gt;Logic**
+**Приоритет Char-\>integer-\>Logic**
 
 ------------------------------------------------------------------------
 
@@ -128,46 +125,40 @@ Invocation - function call
 log(x,10)
 ```
 
-
 Пример именных: log(base=base,x)
 
 ```{r}
 log(base=10,x)
 ```
 
-
 ------------------------------------------------------------------------
 
 #### Логические операции
 
-> ,&lt;,&lt;=,&gt;=,==
+> ,\<,\<=,\>=,==
 
 ```{r}
 x=10
 x<5
 ```
 
-
 ```{r}
 x>5
 ```
-
 
 ```{r}
 x==10
 ```
 
-
 ------------------------------------------------------------------------
 
 #### Маетматические операции
 
-+, -, \*, /, ^, sin(), cos(), sqrt(), log()
++, -, \*, /, \^, sin(), cos(), sqrt(), log()
 
 ```{r}
 x^10
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -178,7 +169,6 @@ x=10/(5-5)
 x
 ```
 
-
 ------------------------------------------------------------------------
 
 #### Правила повтора векторов (Recycling Rule)
@@ -188,26 +178,23 @@ x<-c(2,4,5,3,-4,0)
 x*5
 ```
 
-
 ```{r}
 y<-c(5,3)
 x*y
 ```
-
 
 ```{r}
 z<-c(1,2,3,4)
 x*z
 ```
 
+\#### Измерение длинны вектора
 
-#### Измерение длинны вектора</td>
+</td>
 
-```{r} 
+```{r}
 length(x)
 ```
-
-
 
 #### Больше базовых функций
 
@@ -218,7 +205,6 @@ x<-c(3,4,6,-7,8)
 mean = sum(x)/ length(x)
 mean
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -232,21 +218,17 @@ w=-5:-10
 x
 ```
 
-
 ```{r}
 y
 ```
-
 
 ```{r}
 z
 ```
 
-
 ```{r}
 w
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -261,16 +243,13 @@ y=seq(9,3,-.2)
 length(x)
 ```
 
-
 ```{r}
 length(y)
 ```
 
-
 ```{r}
 x*y
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -282,7 +261,6 @@ rep(x, times=)
 x=c("A","B","C")
 rep(x,4)
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -296,16 +274,13 @@ y<-x<=-5
 mode(x)
 ```
 
-
 ```{r}
 mode(y)
 ```
 
-
 ```{r}
 mode(mode(x))
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -318,47 +293,38 @@ x=1:20
 x[2]
 ```
 
-
 ```{r}
 x[0]
 ```
-
 
 ```{r}
 x[5:9]
 ```
 
-
 ```{r}
 x[c(3,7,8,9,20)]
 ```
-
 
 ```{r}
 x[-19]
 ```
 
-
 ```{r}
 x[-(1:6)]
 ```
-
 
 ```{r}
 x[x>10]
 ```
 
-
 ```{r}
 x[TRUE]
 ```
-
 
 ```{r}
 y=c(TRUE,FALSE)
 x[y]
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -374,8 +340,6 @@ x=c(5,x)
 x
 ```
 
-
-
 ------------------------------------------------------------------------
 
 #### Имена элементов векторов
@@ -385,19 +349,14 @@ x=1:5
 names(x)
 ```
 
-
-
 ```{r}
 names(x)<-c("Первый","Второй","Третий","Четвертый","Первый")
 names(x)
 ```
 
-
 ```{r}
 x["Первый"]
 ```
-
-
 
 ------------------------------------------------------------------------
 
@@ -411,13 +370,10 @@ length() names() mode()
 log(3) == log(3, base=exp(1))
 ```
 
-
-
 ```{r}
 x=seq(5,100,.1)
 x[length(x)]
 ```
-
 
 ------------------------------------------------------------------------
 
@@ -428,23 +384,17 @@ x<-c(-10,2,78,34,-98,23,0,-8)
 order(x)
 ```
 
-
-
 ```{r}
 sort(x)
 ```
-
-
 
 ```{r}
 sort(x) == x[order(x)]
 ```
 
-
 log(exp(1))
 
-Семинар 2
-===========
+# Семинар 2
 
 #### Задание. Получите из данного вектора вектор в котором будет обратный порядок элементов
 
@@ -453,14 +403,10 @@ a<-seq(-8,10,.5)
 a
 ```
 
-
-
 ```{r}
 x=a[length(a):1]
 x
 ```
-
-
 
 #### Задание. Вставьте число 99 в середину данного вектора
 
@@ -476,19 +422,16 @@ y=acos(cos(x))
 x==y
 ```
 
-
 ```{r}
 x=c(sin(10),log(5,8),log(3,exp(1)),log(38.6,10),cos(pi+1), exp(1)^(cos(0)),atan(+Inf))
 names(x)=c("sin(10)","log(5,8)","ln3","lg(38.6)","cos(pi+1)","e^cos(0)","arctn(+Inf)");
 sort(x)
 ```
 
-
-
 #### Логические операции
 
 -   ***! = not***
--   ***| = or***
+-   ***\| = or***
 -   ***& = and***
 
 A U B - объединение
@@ -509,13 +452,9 @@ x=factor(f)
 summary(x)
 ```
 
-
-
 ```{r}
 summary(f)
 ```
-
-
 
 ```{r}
 summary(1:10)
@@ -526,8 +465,6 @@ summary(1:10)
 ```{r}
 summary(1:10)[4]
 ```
-
-
 
 #### Задание посчитайте долю каждого нуклеотида в векторе содержащем последовательность ДНК
 
@@ -547,13 +484,9 @@ dna=factor(rep(c("T","G","C","A"),c(16,38,6,10)))
 sample(dna)
 ```
 
-
-
 ```{r}
 dna
 ```
-
-
 
 ```{r}
 # sample(dna,size=84, replace=FALSE) 
@@ -563,8 +496,6 @@ dna
 sample(dna,size=84, replace=TRUE)
 ```
 
-
-
 ```{r}
 sampledna=sample(c("A","T","G","C"), size=10000,replace=TRUE)
 ratio=summary(factor(sampledna))/length(sampledna)
@@ -572,13 +503,9 @@ ratio2=summary(factor(dna))/length(dna)
 ratio
 ```
 
-
-
 ```{r}
 ratio2
 ```
-
-
 
 #### Функции union(x,y),intersect(x,y),setdiff(x,y)
 
@@ -588,23 +515,17 @@ y=6:14
 union(x,y)
 ```
 
-
 ```{r}
 intersect(x,y)
 ```
-
-
 
 ```{r}
 setdiff(x,y)
 ```
 
-
 ```{r}
 setdiff(y,x)
 ```
-
-
 
 #### Уничтожение всех переменных в памяти
 
@@ -618,8 +539,6 @@ rm(list=ls())
 cumsum(1:10)
 ```
 
-
-
 #### Задание. Создайте длинные последовательности с заданными пропорциями элементов
 
 ```{r}
@@ -628,51 +547,43 @@ ratio=summary(factor(dna2))/length(dna2)
 ratio
 ```
 
-
 ```{r}
 dna2=sample(c("A","T","G","C"), size=3826513,prob=c(.5/3,.5/3,.5,.5/3),replace=TRUE)
 ratio=summary(factor(dna2))/length(dna2)
 ratio
 ```
 
-
-
-\#\# Data frames -Таблицы
-=========================
+# \## Data frames -Таблицы
 
 #### Выборки из таблиц
 
-<div class="fold o">
+::: {.fold .o}
 ```{r}
 iris[iris$Species==c("setosa","virginica"),]
 ```
-</div>
+:::
 
-
-<div class="fold o">
+::: {.fold .o}
 ```{r}
 iris[iris$Species=="setosa" | iris$Species=="virginica",c("Petal.Length","Species")]
 ```
-</div>
-
+:::
 
 #### Основные типы структур данных
 
-| Type      | Function     | Options                                 |
-|-----------|--------------|-----------------------------------------|
-| Vector    | c()          | [i] -position or logic                  |
-| Factor    | factor()     | [] - position or logic                  |
-| Matrix    | matrix()     | [row,col]; [i] - positional logical     |
-| List      | list()       | [[i]], $                                |
-| dataframe | data.frame() | [,] $                                   |
+| Type      | Function     | Options                             |
+|-----------|--------------|-------------------------------------|
+| Vector    | c()          | [i] -position or logic              |
+| Factor    | factor()     | [] - position or logic              |
+| Matrix    | matrix()     | [row,col]; [i] - positional logical |
+| List      | list()       | [[i]], \$                           |
+| dataframe | data.frame() | [,] \$                              |
 
-#### Виды у которых Petal.Length&gt;2 но &lt;3, вывести виды и количество попадений в условия
+#### Виды у которых Petal.Length\>2 но \<3, вывести виды и количество попадений в условия
 
 ```{r}
 summary(factor(iris[(iris$Petal.Length>2 & iris$Petal.Length<6),"Species" ]))
 ```
-
-
 
 #### Создание функций - Functioning
 
@@ -688,8 +599,6 @@ my_func = function(p)
 my_func(2)
 ```
 
-
-
 ```{r}
 mathses = function(p,q)
   {
@@ -699,8 +608,6 @@ mathses = function(p,q)
   }
 mathses(2,3)
 ```
-
-
 
 #### Проверки условий
 
@@ -721,8 +628,6 @@ mf = function(p)
 mf(-1)
 ```
 
-   
-
 ```{r}
 # gamma(x) gives !(x-1), we need to make function which makes true factorial
 myfactorial = function(p) 
@@ -735,8 +640,6 @@ myfactorial = function(p)
   
   myfactorial(5)
 ```
-
-   
 
 ```{r}
  myfactorial = function(p) 
@@ -762,9 +665,7 @@ myfactorial = function(p)
 mydistribution(3,.4)
 ```
 
-  
-Семинар 3 - циклы и графика
-===========================
+# Семинар 3 - циклы и графика
 
 #### For - циклы с подсчетом повторов
 
@@ -856,9 +757,9 @@ mean(pis)
 
 #### Взяв iris data.frame, для первых двух колонок получить список содержащий матрицы для каждого ряда со значениями строки и суммы колоник без учета данных строки
 
-iris\[1\]
+iris$$1$$
 
-<div class="fold o">
+::: {.fold .o}
 ```{r}
 l=list()
 for (i in 1:length(iris[,1]))
@@ -870,25 +771,21 @@ for (i in 1:length(iris[,1]))
   }
 l
 ```
-</div>
+:::
 
 #### Функция Apply
 
 apply (data.frame(), 1 or 2, FUNCTION) 1 - функция будет применена к каждой строке 2 - к каждой колонке
 
-lapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает список
-sapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает вектор
-tapply(vector,factor, FUN) - выбирает и группирует строки по градациям фактора и применяет функцию к каждой полученной группе
+lapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает список sapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает вектор tapply(vector,factor, FUN) - выбирает и группирует строки по градациям фактора и применяет функцию к каждой полученной группе
 
 ```{r}
 apply(iris[,1:4],2,sum)
 ```
 
-
 ```{r}
 tapply(iris$Sepal.Length, iris$Species, sum)
 ```
-
 
 #### Базовая графика - функция plot(x,y)
 
@@ -898,62 +795,49 @@ y=c(3,7,9)
 plot(5:10)
 ```
 
-
 ```{r}
 plot(x,y)
 ```
-
 
 ```{r}
 plot(x,y, type="l")
 ```
 
-
 ```{r}
 plot(x,y, type="b")
 ```
-
 
 ```{r}
 plot(x,y,type="h")
 ```
 
-
 ```{r}
 plot(x,y,type="s", col=rgb(.90,.10,.10,.9))
 ```
-
 
 ```{r}
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type="h")
 ```
 
-
 ```{r}
 plot(seq(-10,10,.01), sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="h", xlim=c(-20,20), ylim=c(-5,5))
 ```
-
 
 ```{r}
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="h", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)")
 ```
 
-
 ```{r}
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="l", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=.4)
 ```
-
 
 ```{r}
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="l", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=4, lty=4)
 ```
 
-
 ```{r}
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="b", xlim=c(-20,20), ylim=c(-5,5),main="My first cos(x)",xlab="x",ylab="sin(x)",lwd=4, lty=4, pch=4)
 ```
-
-
 
 ```{r}
 ####Линии
@@ -961,7 +845,6 @@ plot(seq(-10,10,.01),sin(seq(-10,10,.01)), col=rgb(.90,.10,.10,.9), type="b", xl
 plot(seq(-10,10,.01),sin(seq(-10,10,.01)), type="l")
 lines(seq(-10,10,.01),rep(c(0),2001), type="l", col="red")
 ```
-
 
 ```{r}
 x=(seq(-10,10,.01))
@@ -971,74 +854,57 @@ lines(rep(c(0),401),seq(-2,2,.01))
 lines(seq(-2,2,.01),rep(c(0),401))
 ```
 
-
-Пакет ggplot2 
-========================
+# Пакет ggplot2
 
 ```{r}
 #install.packages("ggplot2")
 library(ggplot2)
 ```
 
-Давайте посмотрим на содержимое mtcars с помощью функции str()
-========================================
+# Давайте посмотрим на содержимое mtcars с помощью функции str()
 
 ```{r}
 str(mtcars)
 ```
-
-
 
 ```{r}
 ggplot(mtcars, aes(x = cyl, y = mpg)) +
   geom_point()
 ```
 
-
-Давайте построим график рассматривая cyl как фактор
-=========================================================
+# Давайте построим график рассматривая cyl как фактор
 
 ```{r}
 ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
   geom_point()
 ```
 
-
-Точечная диаграмма
-====================================
+# Точечная диаграмма
 
 ```{r}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point()
 ```
 
-
-ggplot умеет автоматически создавать легенды для категориальных переменных, например когда вы задаете ею цвето точек.
-==================================================================================
+# ggplot умеет автоматически создавать легенды для категориальных переменных, например когда вы задаете ею цвето точек.
 
 ```{r}
 ggplot(mtcars, aes(x = wt, y = mpg, col = disp)) +
   geom_point()
 ```
 
-
-Точкам можно задавать размер
-============================================================================
+# Точкам можно задавать размер
 
 ```{r}
 ggplot(mtcars, aes(x = wt, y = mpg, size = disp)) +
   geom_point()
 ```
 
-
-Добавим geom\_point() и geom\_smooth() через символ +
-===========================================
+# Добавим geom_point() и geom_smooth() через символ +
 
 ```{r}
 ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()
 ```
-
-
 
 ```{r}
 # The plot you created in the previous exercise
@@ -1047,22 +913,16 @@ ggplot(diamonds, aes(x = carat, y = price)) +
   geom_smooth()
 ```
 
-
-
 ```{r}
 # Copy the above command but show only the smooth line
 ggplot(diamonds, aes(x = carat, y = price)) +  geom_smooth()
 ```
-
-
 
 ```{r}
 # Copy the above command and assign the correct value to col in aes()
 ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
   geom_smooth()
 ```
-
-
 
 ```{r}
 # Keep the color settings from previous command. Plot only the points with argument alpha.
@@ -1088,6 +948,3 @@ dia_plot + geom_point()
 
 dia_plot + geom_point(aes(col=clarity))
 ```
-
-
-

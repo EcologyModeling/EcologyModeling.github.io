@@ -13,8 +13,8 @@
 
 <title>Манипуляции с данными</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -236,18 +236,24 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="пакет-dplyr" class="section level2">
 <h2>Пакет dplyr</h2>
-<p>Моделирование в той или иной форме является составной частью более сложного процесса, через который проходит любой исследователь работающий с реальными данными - анализ данных. Не вдаваясь глубоко в подробности в данном разделе будет рассмотрен начальный этап анализа данных - преобразования или манипуляции с данными (data-manipulation).</p>
-<p>В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Одним из самых популярных подобных пакетов является пакет dplyr из целой “вселенной” пакетов tydiverse от известного разработчика Хадли Викхема.</p>
+<p>Моделирование в той или иной форме является составной частью более
+сложного процесса, через который проходит любой исследователь работающий
+с реальными данными - анализ данных. Не вдаваясь глубоко в подробности в
+данном разделе будет рассмотрен начальный этап анализа данных -
+преобразования или манипуляции с данными (data-manipulation).</p>
+<p>В целом мы уже рассматривали некоторые функции языка R, которые можно
+использовать для манипцляции данными, меж тем помимо классической
+парадигмы существует ряд широко распространненных пакетов, которые
+позволяют проводить ряд операций в более явном виде и используя меньше
+кода. Одним из самых популярных подобных пакетов является пакет dplyr из
+целой “вселенной” пакетов tydiverse от известного разработчика Хадли
+Викхема.</p>
 <pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v tibble  3.0.6     v dplyr   1.0.4
-## v tidyr   1.1.2     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.1
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v tibble  3.1.6     v dplyr   1.0.7
+## v tidyr   1.1.4     v stringr 1.4.0
+## v readr   2.1.1     v forcats 0.5.1
 ## v purrr   0.3.4</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.0.3</code></pre>
-<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.0.3</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.0.3</code></pre>
-<pre><code>## Warning: package &#39;forcats&#39; was built under R version 4.0.3</code></pre>
 <pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x ggplot2::%+%()   masks psych::%+%()
 ## x ggplot2::alpha() masks psych::alpha()
@@ -267,7 +273,10 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>summarize()</li>
 <li>group_by()</li>
 </ul>
-<p>filter() allows you to subset observations based on their values. The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all flights on January 1st with:</p>
+<p>filter() allows you to subset observations based on their values. The
+first argument is the name of the data frame. The second and subsequent
+arguments are the expressions that filter the data frame. For example,
+we can select all flights on January 1st with:</p>
 <pre class="r"><code>filter(flights, month == 1, day == 1)</code></pre>
 <pre><code>## # A tibble: 842 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -285,7 +294,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ## # ... with 832 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>The following code finds all flights that departed in November or December:</p>
+<p>The following code finds all flights that departed in November or
+December:</p>
 <pre class="r"><code>filter(flights, month == 11 | month == 12)</code></pre>
 <pre><code>## # A tibble: 55,403 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -303,9 +313,15 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ## # ... with 55,393 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>A useful shorthand for this problem is x %in% y. This will select every row where x is one of the values in y. We could use it to rewrite the preceding code:</p>
+<p>A useful shorthand for this problem is x %in% y. This will select
+every row where x is one of the values in y. We could use it to rewrite
+the preceding code:</p>
 <pre class="r"><code>nov_dec &lt;- filter(flights, month %in% c(11, 12))</code></pre>
-<p>arrange() works similarly to filter() except that instead of selecting rows, it changes their order. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns:</p>
+<p>arrange() works similarly to filter() except that instead of
+selecting rows, it changes their order. It takes a data frame and a set
+of column names (or more complicated expressions) to order by. If you
+provide more than one column name, each additional column will be used
+to break ties in the values of preceding columns:</p>
 <pre class="r"><code>arrange(flights, year, month, day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -340,8 +356,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ## # ... with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Функция desc() говорит о том, что колонку нужно пересортировать от большего к меньшему</p>
-<p>It’s not uncommon to get datasets with hundreds or even thousands of variables. In this case, the first challenge is often narrowing in on the variables you’re actually interested in. select() allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.</p>
+<p>Функция desc() говорит о том, что колонку нужно пересортировать от
+большего к меньшему</p>
+<p>It’s not uncommon to get datasets with hundreds or even thousands of
+variables. In this case, the first challenge is often narrowing in on
+the variables you’re actually interested in. select() allows you to
+rapidly zoom in on a useful subset using operations based on the names
+of the variables.</p>
 <pre class="r"><code>select(flights, year, month, day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
@@ -357,7 +378,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ##  9  2013     1     1
 ## 10  2013     1     1
 ## # ... with 336,766 more rows</code></pre>
-<p>Интересной особенностью является возможностью выбирать ряд колонок меж двух заданных</p>
+<p>Интересной особенностью является возможностью выбирать ряд колонок
+меж двух заданных</p>
 <pre class="r"><code>select(flights, year:day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
@@ -390,7 +412,12 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ## # ... with 336,766 more rows, and 9 more variables: flight &lt;int&gt;,
 ## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 ## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Besides selecting sets of existing columns, it’s often useful to add new columns that are functions of existing columns. That’s the job of mutate(). mutate() always adds new columns at the end of your dataset so we’ll start by creating a narrower dataset so we can see the new variables. Remember that when you’re in RStudio, the easiest way to see all the columns is View():</p>
+<p>Besides selecting sets of existing columns, it’s often useful to add
+new columns that are functions of existing columns. That’s the job of
+mutate(). mutate() always adds new columns at the end of your dataset so
+we’ll start by creating a narrower dataset so we can see the new
+variables. Remember that when you’re in RStudio, the easiest way to see
+all the columns is View():</p>
 <pre class="r"><code>flights_sml &lt;- select(flights, year:day, ends_with(&quot;delay&quot;), distance, air_time )
 mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)</code></pre>
 <pre><code>## # A tibble: 336,776 x 9
@@ -407,13 +434,19 @@ mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 
 ##  9  2013     1     1        -3        -8      944      140    -5  405.
 ## 10  2013     1     1        -2         8      733      138    10  319.
 ## # ... with 336,766 more rows</code></pre>
-<p>The last key verb is summarize(). It collapses a data frame to a single row:</p>
+<p>The last key verb is summarize(). It collapses a data frame to a
+single row:</p>
 <pre class="r"><code>summarize(flights, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   delay
 ##   &lt;dbl&gt;
 ## 1  12.6</code></pre>
-<p>summarize() is not terribly useful unless we pair it with group_by(). This changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group.” For example, if we applied exactly the same code to a data frame grouped by date, we get the average delay per date:</p>
+<p>summarize() is not terribly useful unless we pair it with group_by().
+This changes the unit of analysis from the complete dataset to
+individual groups. Then, when you use the dplyr verbs on a grouped data
+frame they’ll be automatically applied “by group.” For example, if we
+applied exactly the same code to a data frame grouped by date, we get
+the average delay per date:</p>
 <pre class="r"><code>by_day &lt;- group_by(flights, year, month, day)
 summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
@@ -432,8 +465,13 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ##  9  2013     1     9  2.28
 ## 10  2013     1    10  2.84
 ## # ... with 355 more rows</code></pre>
-<p>Together group_by() and summarize() provide one of the tools that you’ll use most commonly when working with dplyr: grouped summaries. But before we go any further with this, we need to introduce a powerful new idea: the pipe.</p>
-<p>Imagine that we want to explore the relationship between the distance and average delay for each location. Using what you know about dplyr, you might write code like this:</p>
+<p>Together group_by() and summarize() provide one of the tools that
+you’ll use most commonly when working with dplyr: grouped summaries. But
+before we go any further with this, we need to introduce a powerful new
+idea: the pipe.</p>
+<p>Imagine that we want to explore the relationship between the distance
+and average delay for each location. Using what you know about dplyr,
+you might write code like this:</p>
 </div>
 
 </div> <!-- lessonContent -->

@@ -13,8 +13,8 @@
 
 <title>Манипуляции над данными, работа с таблицами</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -274,15 +274,26 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 
-<h1 class="title toc-ignore">Манипуляции над данными, работа с таблицами</h1>
+<h1 class="title toc-ignore">Манипуляции над данными, работа с
+таблицами</h1>
 
 </div>
 
 
 <div id="пакет-dplyr" class="section level2">
 <h2>Пакет dplyr</h2>
-<p>Моделирование в той или иной форме является составной частью более сложного процесса, через который проходит любой исследователь работающий с реальными данными - анализ данных. Не вдаваясь глубоко в подробности в данном разделе будет рассмотрен начальный этап анализа данных - преобразования или манипуляции с данными (data-manipulation).</p>
-<p>В целом мы уже рассматривали некоторые функции языка R, которые можно использовать для манипцляции данными, меж тем помимо классической парадигмы существует ряд широко распространненных пакетов, которые позволяют проводить ряд операций в более явном виде и используя меньше кода. Давайте рассмотрим ряд из самых популярных подобных пакетов из целой “вселенной” пакетов tydiverse от известного разработчика Хадли Викхема.</p>
+<p>Моделирование в той или иной форме является составной частью более
+сложного процесса, через который проходит любой исследователь работающий
+с реальными данными - анализ данных. Не вдаваясь глубоко в подробности в
+данном разделе будет рассмотрен начальный этап анализа данных -
+преобразования или манипуляции с данными (data-manipulation).</p>
+<p>В целом мы уже рассматривали некоторые функции языка R, которые можно
+использовать для манипцляции данными, меж тем помимо классической
+парадигмы существует ряд широко распространненных пакетов, которые
+позволяют проводить ряд операций в более явном виде и используя меньше
+кода. Давайте рассмотрим ряд из самых популярных подобных пакетов из
+целой “вселенной” пакетов tydiverse от известного разработчика Хадли
+Викхема.</p>
 <pre class="r"><code>library(&quot;tidyverse&quot;)
 library(&quot;nycflights13&quot;)
 library(&quot;tidyr&quot;)
@@ -299,36 +310,49 @@ library(&quot;readr&quot;)</code></pre>
 <li>summarize()</li>
 <li>group_by()</li>
 </ul>
-<p>Но перед тем как начать работать с данными их было бы неплохо получить, для этого нам понадобиться пакет readr и его функция read_csv</p>
+<p>Но перед тем как начать работать с данными их было бы неплохо
+получить, для этого нам понадобиться пакет readr и его функция
+read_csv</p>
 <pre class="r"><code>greendb &lt;- read_csv(&quot;greendb.csv&quot;)</code></pre>
+<pre><code>## Rows: 841574 Columns: 7</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (2): species_ru, adm_region
+## dbl (3): objectid, height_m, d_trunk_m
+## lgl (2): species_l, d_canopy_m</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   objectid = col_double(),
-##   species_ru = col_character(),
-##   species_l = col_logical(),
-##   height_m = col_double(),
-##   d_trunk_m = col_double(),
-##   d_canopy_m = col_logical(),
-##   adm_region = col_character()
-## )</code></pre>
-<p>Функция позволяет читать csv файлы, которые представляют собой табличные данные, представленные в виде текста, разделенного запятыми. Каждая новая строчка текста соответсвует новой строчке таблицы, а колонки определяются разбиением запятыми.</p>
-<p>Скачать файл для самостоятельного изучения вы можете по этой <a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/greendb.csv">ссылке</a></p>
-<p>Если же вы хотите ускорить процесс функция read_csv позволяет считывать файлы по прямой ссылке в интернет источнике, поэтому вы можете спокойно использовать следующий код, но только не часто (скачать 76 Мб до сих пор не самая быстрая операция)</p>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Функция позволяет читать csv файлы, которые представляют собой
+табличные данные, представленные в виде текста, разделенного запятыми.
+Каждая новая строчка текста соответсвует новой строчке таблицы, а
+колонки определяются разбиением запятыми.</p>
+<p>Скачать файл для самостоятельного изучения вы можете по этой
+<a href="https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/greendb.csv">ссылке</a></p>
+<p>Если же вы хотите ускорить процесс функция read_csv позволяет
+считывать файлы по прямой ссылке в интернет источнике, поэтому вы можете
+спокойно использовать следующий код, но только не часто (скачать 76 Мб
+до сих пор не самая быстрая операция)</p>
 <pre class="r"><code>greendb &lt;- read_csv(&quot;https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/greendb.csv&quot;)</code></pre>
+<pre><code>## Rows: 841574 Columns: 7</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (2): species_ru, adm_region
+## dbl (3): objectid, height_m, d_trunk_m
+## lgl (2): species_l, d_canopy_m</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   objectid = col_double(),
-##   species_ru = col_character(),
-##   species_l = col_logical(),
-##   height_m = col_double(),
-##   d_trunk_m = col_double(),
-##   d_canopy_m = col_logical(),
-##   adm_region = col_character()
-## )</code></pre>
-<p>Таблица содержит базу данных зеленых насаждений Москвы и такие колонки как species_ru - название вида на русском языке, height_m - высота дерева в метрах, d_trunk_m - диаметр дерева в метрах, adm_region - административный район Москвы.</p>
-<p>Filter () позволяет выбрать подмножество наблюдений(строк), основанных на их значениях(по значениям в отдельных колонках). Первый аргумент функции - это имя таблицы данных. Второй и последующие аргументы - это выражения, которые фильтруют таблицу данных, которые должны в результате выдавать логический вектор. Давайте попытаемся найти все ели высота которых выше 10 метров и диаметр больше 0,4 метра.</p>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Таблица содержит базу данных зеленых насаждений Москвы и такие
+колонки как species_ru - название вида на русском языке, height_m -
+высота дерева в метрах, d_trunk_m - диаметр дерева в метрах, adm_region
+- административный район Москвы.</p>
+<p>Filter () позволяет выбрать подмножество наблюдений(строк),
+основанных на их значениях(по значениям в отдельных колонках). Первый
+аргумент функции - это имя таблицы данных. Второй и последующие
+аргументы - это выражения, которые фильтруют таблицу данных, которые
+должны в результате выдавать логический вектор. Давайте попытаемся найти
+все ели высота которых выше 10 метров и диаметр больше 0,4 метра.</p>
 <pre class="r"><code>filter(greendb, height_m == 10, d_trunk_m &gt; 0.4, species_ru == &quot;Ель колючая&quot; )</code></pre>
 <pre><code>## # A tibble: 3 x 7
 ##   objectid species_ru  species_l height_m d_trunk_m d_canopy_m adm_region       
@@ -336,7 +360,8 @@ library(&quot;readr&quot;)</code></pre>
 ## 1  4662600 Ель колючая NA              10      0.44 NA         район Щукино     
 ## 2  2337476 Ель колючая NA              10      0.44 NA         район Ново-Перед~
 ## 3  5060902 Ель колючая NA              10      0.44 NA         район Щукино</code></pre>
-<p>Следующий код находит все рейсы, отправленные в ноябре или декабре:</p>
+<p>Следующий код находит все рейсы, отправленные в ноябре или
+декабре:</p>
 <pre class="r"><code>filter(greendb, adm_region == &quot;район Щукино&quot; | species_ru == &quot;Ель колючая&quot;)</code></pre>
 <pre><code>## # A tibble: 38,654 x 7
 ##    objectid species_ru      species_l height_m d_trunk_m d_canopy_m adm_region  
@@ -352,9 +377,16 @@ library(&quot;readr&quot;)</code></pre>
 ##  9  3296342 Липа мелколист~ NA            15        0.46 NA         район Щукино
 ## 10  3297987 Липа мелколист~ NA            15        0.32 NA         район Щукино
 ## # ... with 38,644 more rows</code></pre>
-<p>Полезным конструкцией для решения подобных проблем является x %in% y. Она выберет каждую строку, где x является одним из значений y. Мы могли бы использовать его для перезаписи предыдущего кода:</p>
+<p>Полезным конструкцией для решения подобных проблем является x %in% y.
+Она выберет каждую строку, где x является одним из значений y. Мы могли
+бы использовать его для перезаписи предыдущего кода:</p>
 <pre class="r"><code>nov_dec &lt;- filter(flights, month %in% c(11, 12))</code></pre>
-<p>arrange() работает аналогично filter(), за исключением того, что вместо выбора строк изменяется их порядок. Он принимает таблицу данных и набор имен столбцов (или более сложных выражений) для упорядочения. Если вы укажете более одного имени столбца, каждый дополнительный столбец будет использоваться для разрыва связей в значениях предыдущих столбцов:</p>
+<p>arrange() работает аналогично filter(), за исключением того, что
+вместо выбора строк изменяется их порядок. Он принимает таблицу данных и
+набор имен столбцов (или более сложных выражений) для упорядочения. Если
+вы укажете более одного имени столбца, каждый дополнительный столбец
+будет использоваться для разрыва связей в значениях предыдущих
+столбцов:</p>
 <pre class="r"><code>arrange(flights, year, month, day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -389,8 +421,13 @@ library(&quot;readr&quot;)</code></pre>
 ## # ... with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Функция desc() говорит о том, что колонку нужно пересортировать от большего к меньшему</p>
-<p>Это не редкость, когда приходиться работать с наборами данных с сотнями или даже тысячами переменных. В этом случае первая задача часто сводится к получению таблицы с набором переменных, которые вам действительно интересны. Select() позволяет быстро получить полезное подмножество, используя операции, основанные на именах переменных.</p>
+<p>Функция desc() говорит о том, что колонку нужно пересортировать от
+большего к меньшему</p>
+<p>Это не редкость, когда приходиться работать с наборами данных с
+сотнями или даже тысячами переменных. В этом случае первая задача часто
+сводится к получению таблицы с набором переменных, которые вам
+действительно интересны. Select() позволяет быстро получить полезное
+подмножество, используя операции, основанные на именах переменных.</p>
 <pre class="r"><code>select(flights, year, month, day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
@@ -406,7 +443,8 @@ library(&quot;readr&quot;)</code></pre>
 ##  9  2013     1     1
 ## 10  2013     1     1
 ## # ... with 336,766 more rows</code></pre>
-<p>Интересной особенностью является возможностью выбирать ряд колонок меж двух заданных</p>
+<p>Интересной особенностью является возможностью выбирать ряд колонок
+меж двух заданных</p>
 <pre class="r"><code>select(flights, year:day)</code></pre>
 <pre><code>## # A tibble: 336,776 x 3
 ##     year month   day
@@ -439,7 +477,9 @@ library(&quot;readr&quot;)</code></pre>
 ## # ... with 336,766 more rows, and 9 more variables: flight &lt;int&gt;,
 ## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
 ## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Помимо выбора наборов существующих столбцов, часто полезно добавлять новые столбцы, которые являются функциями существующих столбцов. Это задача функции mutate().</p>
+<p>Помимо выбора наборов существующих столбцов, часто полезно добавлять
+новые столбцы, которые являются функциями существующих столбцов. Это
+задача функции mutate().</p>
 <pre class="r"><code>flights_sml &lt;- select(flights, year:day, ends_with(&quot;delay&quot;), distance, air_time )
 mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)</code></pre>
 <pre><code>## # A tibble: 336,776 x 9
@@ -456,13 +496,20 @@ mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 
 ##  9  2013     1     1        -3        -8      944      140    -5  405.
 ## 10  2013     1     1        -2         8      733      138    10  319.
 ## # ... with 336,766 more rows</code></pre>
-<p>Последний ключевой глагол - summarize((). Он сворачивает фрейм данных в одну строку:</p>
+<p>Последний ключевой глагол - summarize((). Он сворачивает фрейм данных
+в одну строку:</p>
 <pre class="r"><code>summarize(flights, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   delay
 ##   &lt;dbl&gt;
 ## 1  12.6</code></pre>
-<p>Функция summarize() не очень полезна, если мы будем сипользовать ее без group_by (). Она изменяет единицу анализа от полного набора данных к отдельным группам. Затем, когда вы используете функции dplyr в сгруппированном фрейме данных, они будут автоматически применяться «по группам». Например, если мы применили точно такой же код к таблице данных, сгруппированным по дате, мы получим среднюю задержку на дату:</p>
+<p>Функция summarize() не очень полезна, если мы будем сипользовать ее
+без group_by (). Она изменяет единицу анализа от полного набора данных к
+отдельным группам. Затем, когда вы используете функции dplyr в
+сгруппированном фрейме данных, они будут автоматически применяться «по
+группам». Например, если мы применили точно такой же код к таблице
+данных, сгруппированным по дате, мы получим среднюю задержку на
+дату:</p>
 <pre class="r"><code>by_day &lt;- group_by(flights, year, month, day)
 summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
@@ -481,13 +528,26 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ##  9  2013     1     9  2.28
 ## 10  2013     1    10  2.84
 ## # ... with 355 more rows</code></pre>
-<p>Вместе функции group_by() и summarize() предоставляют один из инструментов, который вы будете использовать наиболее часто при работе с dplyr: сгруппированные заключения по данными в виде вектора. Но прежде чем мы пойдем дальше, нам нужно ввести новую мощную идею: пайпинг(сборка команды в последовательности - трубы).</p>
-<p>Представьте, что мы хотим изучить связь между расстоянием и средней задержкой для каждого местоположения. Используя то, что вы знаете о dplyr, вы можете написать код следующим образом:</p>
-<p>Оператор папинга %&gt;% очень удобен для объединения нескольких функций dplyr в последовательность операций. Обратите внимание, что каждый раз, когда мы хотели применить более одной функции, последовательность вкладывается в последовательности вложенных вызовов функций, которые очень трудно читать, например:</p>
+<p>Вместе функции group_by() и summarize() предоставляют один из
+инструментов, который вы будете использовать наиболее часто при работе с
+dplyr: сгруппированные заключения по данными в виде вектора. Но прежде
+чем мы пойдем дальше, нам нужно ввести новую мощную идею: пайпинг(сборка
+команды в последовательности - трубы).</p>
+<p>Представьте, что мы хотим изучить связь между расстоянием и средней
+задержкой для каждого местоположения. Используя то, что вы знаете о
+dplyr, вы можете написать код следующим образом:</p>
+<p>Оператор папинга %&gt;% очень удобен для объединения нескольких
+функций dplyr в последовательность операций. Обратите внимание, что
+каждый раз, когда мы хотели применить более одной функции,
+последовательность вкладывается в последовательности вложенных вызовов
+функций, которые очень трудно читать, например:</p>
 <pre><code>third(second(first(x)))</code></pre>
-<p>Это сильно отличается от того, как мы думаем и представляем себе последовательность операций. Оператор %&gt;% позволяет вам выполнять последовательность операции слева направо, т. е.</p>
+<p>Это сильно отличается от того, как мы думаем и представляем себе
+последовательность операций. Оператор %&gt;% позволяет вам выполнять
+последовательность операции слева направо, т. е.</p>
 <pre><code>First (x) %&gt;% second %&gt;% third</code></pre>
-<p>Например, последние наши действия можно теперь записать более наглядным образом:</p>
+<p>Например, последние наши действия можно теперь записать более
+наглядным образом:</p>
 <pre class="r"><code>group_by(flights, year, month, day) %&gt;% summarize( delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 365 x 4
@@ -506,45 +566,30 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## 10  2013     1    10  2.84
 ## # ... with 355 more rows</code></pre>
 <p>##Разбор возможностей пакетов на примере реальных данных</p>
-<p>Возьмем данные из второй задачи по регресиионному линейному анализу и попытаемся подготовить их корелляционному анализу. Воспользуемся функцией read_csv из пакета readr. Она во многои сходна с хорошо известной вам read.csv, но обладает рядом полезных параметров, которые мы попытаемся для себя использовать</p>
+<p>Возьмем данные из второй задачи по регресиионному линейному анализу и
+попытаемся подготовить их корелляционному анализу. Воспользуемся
+функцией read_csv из пакета readr. Она во многои сходна с хорошо
+известной вам read.csv, но обладает рядом полезных параметров, которые
+мы попытаемся для себя использовать</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;)</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X2&#39; [2], &#39;X3&#39; [3], &#39;X4&#39; [4], &#39;X5&#39; [5],
-## &#39;X6&#39; [6], &#39;X7&#39; [7], &#39;X9&#39; [9], &#39;X10&#39; [10], &#39;X11&#39; [11], &#39;X12&#39; [12], &#39;X13&#39; [13],
-## &#39;X14&#39; [14], &#39;X15&#39; [15], &#39;X16&#39; [16], &#39;X17&#39; [17], &#39;X18&#39; [18], &#39;X19&#39; [19],
-## &#39;X20&#39; [20], &#39;X21&#39; [21], &#39;X22&#39; [22], &#39;X24&#39; [24], &#39;X25&#39; [25], &#39;X26&#39; [26],
-## &#39;X28&#39; [28], &#39;X30&#39; [30], &#39;X31&#39; [31], &#39;X32&#39; [32], &#39;X33&#39; [33], &#39;X34&#39; [34],
-## &#39;X35&#39; [35], &#39;X36&#39; [36], &#39;X37&#39; [37], &#39;X38&#39; [38], &#39;X40&#39; [40], &#39;X41&#39; [41],
-## &#39;X42&#39; [42], &#39;X43&#39; [43], &#39;X44&#39; [44], &#39;X45&#39; [45], &#39;X46&#39; [46], &#39;X47&#39; [47],
-## &#39;X48&#39; [48], &#39;X49&#39; [49], &#39;X50&#39; [50], &#39;X51&#39; [51], &#39;X53&#39; [53], &#39;X54&#39; [54],
-## &#39;X56&#39; [56], &#39;X57&#39; [57], &#39;X58&#39; [58], &#39;X59&#39; [59], &#39;X60&#39; [60], &#39;X62&#39; [62],
-## &#39;X63&#39; [63], &#39;X65&#39; [65], &#39;X66&#39; [66], &#39;X67&#39; [67], &#39;X68&#39; [68], &#39;X69&#39; [69],
-## &#39;X71&#39; [71], &#39;X72&#39; [72], &#39;X73&#39; [73], &#39;X74&#39; [74], &#39;X75&#39; [75], &#39;X76&#39; [76],
-## &#39;X77&#39; [77], &#39;X79&#39; [79], &#39;X80&#39; [80], &#39;X81&#39; [81], &#39;X82&#39; [82], &#39;X83&#39; [83],
-## &#39;X84&#39; [84], &#39;X85&#39; [85], &#39;X86&#39; [86], &#39;X87&#39; [87], &#39;X89&#39; [89], &#39;X90&#39; [90],
-## &#39;X91&#39; [91], &#39;X92&#39; [92], &#39;X93&#39; [93], &#39;X94&#39; [94], &#39;X95&#39; [95], &#39;X96&#39; [96],
-## &#39;X97&#39; [97], &#39;X98&#39; [98], &#39;X99&#39; [99], &#39;X101&#39; [101], &#39;X102&#39; [102], &#39;X103&#39; [103],
-## &#39;X104&#39; [104], &#39;X105&#39; [105], &#39;X107&#39; [107], &#39;X108&#39; [108], &#39;X109&#39; [109],
-## &#39;X110&#39; [110], &#39;X111&#39; [111], &#39;X112&#39; [112], &#39;X113&#39; [113], &#39;X114&#39; [114],
-## &#39;X117&#39; [117], &#39;X118&#39; [118], &#39;X119&#39; [119], &#39;X120&#39; [120], &#39;X121&#39; [121],
-## &#39;X123&#39; [123], &#39;X124&#39; [124]</code></pre>
+<pre><code>## New names:
+## * `` -&gt; ...2
+## * `` -&gt; ...3
+## * `` -&gt; ...4
+## * `` -&gt; ...5
+## * `` -&gt; ...6
+## * ...</code></pre>
+<pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<pre><code>## Rows: 8742 Columns: 125</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (125): file_info, ...2, ...3, ...4, ...5, ...6, ...7, corrected_fluxes_a...</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
-<pre><code>## Warning: 8742 parsing failures.
-## row col    expected      actual                                                         file
-##   1  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
-##   2  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
-##   3  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
-##   4  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
-##   5  -- 125 columns 131 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;
-## ... ... ........... ........... ............................................................
-## See problems(...) for more details.</code></pre>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl</code></pre>
 <pre><code>## # A tibble: 8,742 x 125
-##    file_info  X2     X3     X4    X5    X6    X7    corrected_fluxe~ X9    X10  
+##    file_info  ...2   ...3   ...4  ...5  ...6  ...7  corrected_fluxe~ ...9  ...10
 ##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
 ##  1 filename   date   time   DOY   dayt~ file~ used~ Tau              qc_T~ rand~
 ##  2 &lt;NA&gt;       [yyyy~ [HH:M~ [ddd~ [T/F] [#]   [#]   [kg+1m-1s-2]     [#]   [kg+~
@@ -556,41 +601,48 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ##  8 2013-05-1~ 2013-~ 21:30  133.~ F     36000 36000 2.2669079711154~ 5     1.17~
 ##  9 2013-05-1~ 2013-~ 22:00  133.~ F     36000 36000 1.1717808154933~ 1     1.81~
 ## 10 2013-05-1~ 2013-~ 22:30  133.~ F     36000 36000 2.4471305498879~ 4     5.40~
-## # ... with 8,732 more rows, and 115 more variables: X11 &lt;chr&gt;, X12 &lt;chr&gt;,
-## #   X13 &lt;chr&gt;, X14 &lt;chr&gt;, X15 &lt;chr&gt;, X16 &lt;chr&gt;, X17 &lt;chr&gt;, X18 &lt;chr&gt;,
-## #   X19 &lt;chr&gt;, X20 &lt;chr&gt;, X21 &lt;chr&gt;, X22 &lt;chr&gt;, storage_fluxes &lt;chr&gt;,
-## #   X24 &lt;chr&gt;, X25 &lt;chr&gt;, X26 &lt;chr&gt;, vertical_advection_fluxes &lt;chr&gt;,
-## #   X28 &lt;chr&gt;, gas_densities_concentrations_and_timelags &lt;chr&gt;, X30 &lt;chr&gt;,
-## #   X31 &lt;chr&gt;, X32 &lt;chr&gt;, X33 &lt;chr&gt;, X34 &lt;chr&gt;, X35 &lt;chr&gt;, X36 &lt;chr&gt;,
-## #   X37 &lt;chr&gt;, X38 &lt;chr&gt;, air_properties &lt;chr&gt;, X40 &lt;chr&gt;, X41 &lt;chr&gt;,
-## #   X42 &lt;chr&gt;, X43 &lt;chr&gt;, X44 &lt;chr&gt;, X45 &lt;chr&gt;, X46 &lt;chr&gt;, X47 &lt;chr&gt;,
-## #   X48 &lt;chr&gt;, X49 &lt;chr&gt;, X50 &lt;chr&gt;, X51 &lt;chr&gt;, unrotated_wind &lt;chr&gt;,
-## #   X53 &lt;chr&gt;, X54 &lt;chr&gt;, rotated_wind &lt;chr&gt;, X56 &lt;chr&gt;, X57 &lt;chr&gt;, X58 &lt;chr&gt;,
-## #   X59 &lt;chr&gt;, X60 &lt;chr&gt;, rotation_angles_for_tilt_correction &lt;chr&gt;, X62 &lt;chr&gt;,
-## #   X63 &lt;chr&gt;, turbulence &lt;chr&gt;, X65 &lt;chr&gt;, X66 &lt;chr&gt;, X67 &lt;chr&gt;, X68 &lt;chr&gt;,
-## #   X69 &lt;chr&gt;, footprint &lt;chr&gt;, X71 &lt;chr&gt;, X72 &lt;chr&gt;, X73 &lt;chr&gt;, X74 &lt;chr&gt;,
-## #   X75 &lt;chr&gt;, X76 &lt;chr&gt;, X77 &lt;chr&gt;, uncorrected_fluxes &lt;chr&gt;, X79 &lt;chr&gt;,
-## #   X80 &lt;chr&gt;, X81 &lt;chr&gt;, X82 &lt;chr&gt;, X83 &lt;chr&gt;, X84 &lt;chr&gt;, X85 &lt;chr&gt;,
-## #   X86 &lt;chr&gt;, X87 &lt;chr&gt;, statistical_flags &lt;chr&gt;, X89 &lt;chr&gt;, X90 &lt;chr&gt;,
-## #   X91 &lt;chr&gt;, X92 &lt;chr&gt;, X93 &lt;chr&gt;, X94 &lt;chr&gt;, X95 &lt;chr&gt;, X96 &lt;chr&gt;,
-## #   X97 &lt;chr&gt;, X98 &lt;chr&gt;, X99 &lt;chr&gt;, spikes &lt;chr&gt;, X101 &lt;chr&gt;, X102 &lt;chr&gt;,
-## #   X103 &lt;chr&gt;, X104 &lt;chr&gt;, X105 &lt;chr&gt;, diagnostic_flags_LI-7200 &lt;chr&gt;,
-## #   X107 &lt;chr&gt;, X108 &lt;chr&gt;, X109 &lt;chr&gt;, X110 &lt;chr&gt;, ...</code></pre>
-<p>Первое на что вы должны обратить внимание, это то, что полученный в результате объект не является привычным нам data.frame, а некой новой структурой типа tibble. Точнее, на самом деле он является и data.frame тоже и в этом легко убедиться:</p>
+## # ... with 8,732 more rows, and 115 more variables: ...11 &lt;chr&gt;, ...12 &lt;chr&gt;,
+## #   ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;, ...16 &lt;chr&gt;, ...17 &lt;chr&gt;,
+## #   ...18 &lt;chr&gt;, ...19 &lt;chr&gt;, ...20 &lt;chr&gt;, ...21 &lt;chr&gt;, ...22 &lt;chr&gt;,
+## #   storage_fluxes &lt;chr&gt;, ...24 &lt;chr&gt;, ...25 &lt;chr&gt;, ...26 &lt;chr&gt;,
+## #   vertical_advection_fluxes &lt;chr&gt;, ...28 &lt;chr&gt;,
+## #   gas_densities_concentrations_and_timelags &lt;chr&gt;, ...30 &lt;chr&gt;, ...31 &lt;chr&gt;,
+## #   ...32 &lt;chr&gt;, ...33 &lt;chr&gt;, ...34 &lt;chr&gt;, ...35 &lt;chr&gt;, ...36 &lt;chr&gt;, ...</code></pre>
+<p>Первое на что вы должны обратить внимание, это то, что полученный в
+результате объект не является привычным нам data.frame, а некой новой
+структурой типа tibble. Точнее, на самом деле он является и data.frame
+тоже и в этом легко убедиться:</p>
 <pre class="r"><code>class(tbl)</code></pre>
 <pre><code>## [1] &quot;spec_tbl_df&quot; &quot;tbl_df&quot;      &quot;tbl&quot;         &quot;data.frame&quot;</code></pre>
-<p>Дело в том, что пакет readr использует пакет tibble из набора tidyverse и преобразует все таблицы в tibble. С tibble вы можете пользоваться 99% всех функций, которыми вы пользовались с data.frame, но помимо этого, он обладает огромным количеством улучшений и “украшательств”. Первое из них, это то, как выглядит вывод таблицы. Теперь вы видите только ту ее часть, что помещается на вашем экране, а все остальная информация дается сжато.</p>
-<p>Если вернуться к нашей таблице, то мы увидим ряд проблем связанных с ее неправильной организацией. Во первых, первая строчка не содержит имена переменных, а содержит некоторые к ним комментарии, в то время как имена переменных находятся во второй строчке. Соответственно мы должны при чтении файла пропустить первую строчку и начать считывать файл только со второй. Именно для этого большинство функций чтения имеют параметр skip:</p>
+<p>Дело в том, что пакет readr использует пакет tibble из набора
+tidyverse и преобразует все таблицы в tibble. С tibble вы можете
+пользоваться 99% всех функций, которыми вы пользовались с data.frame, но
+помимо этого, он обладает огромным количеством улучшений и
+“украшательств”. Первое из них, это то, как выглядит вывод таблицы.
+Теперь вы видите только ту ее часть, что помещается на вашем экране, а
+все остальная информация дается сжато.</p>
+<p>Если вернуться к нашей таблице, то мы увидим ряд проблем связанных с
+ее неправильной организацией. Во первых, первая строчка не содержит
+имена переменных, а содержит некоторые к ним комментарии, в то время как
+имена переменных находятся во второй строчке. Соответственно мы должны
+при чтении файла пропустить первую строчку и начать считывать файл
+только со второй. Именно для этого большинство функций чтения имеют
+параметр skip:</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip =1)</code></pre>
-<pre><code>## Warning: Duplicated column names deduplicated: &#39;skweness_kurtosis&#39; =&gt;
-## &#39;skweness_kurtosis_1&#39; [93], &#39;discontinuities&#39; =&gt; &#39;discontinuities_1&#39; [95],
-## &#39;timelag&#39; =&gt; &#39;timelag_1&#39; [97], &#39;co2&#39; =&gt; &#39;co2_1&#39; [127], &#39;h2o&#39; =&gt; &#39;h2o_1&#39; [128]</code></pre>
+<pre><code>## New names:
+## * skweness_kurtosis -&gt; skweness_kurtosis...92
+## * skweness_kurtosis -&gt; skweness_kurtosis...93
+## * discontinuities -&gt; discontinuities...94
+## * discontinuities -&gt; discontinuities...95
+## * timelag -&gt; timelag...96
+## * ...</code></pre>
+<pre><code>## Rows: 8741 Columns: 131</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (131): filename, date, time, DOY, daytime, file_records, used_records, T...</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl</code></pre>
 <pre><code>## # A tibble: 8,741 x 131
 ##    filename   date   time  DOY   daytime file_records used_records Tau    qc_Tau
@@ -611,60 +663,47 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## #   rand_err_co2_flux &lt;chr&gt;, h2o_flux &lt;chr&gt;, qc_h2o_flux &lt;chr&gt;,
 ## #   rand_err_h2o_flux &lt;chr&gt;, H_strg &lt;chr&gt;, LE_strg &lt;chr&gt;, co2_strg &lt;chr&gt;,
 ## #   h2o_strg &lt;chr&gt;, co2_v-adv &lt;chr&gt;, h2o_v-adv &lt;chr&gt;, co2_molar_density &lt;chr&gt;,
-## #   co2_mole_fraction &lt;chr&gt;, co2_mixing_ratio &lt;chr&gt;, co2_time_lag &lt;chr&gt;,
-## #   co2_def_timelag &lt;chr&gt;, h2o_molar_density &lt;chr&gt;, h2o_mole_fraction &lt;chr&gt;,
-## #   h2o_mixing_ratio &lt;chr&gt;, h2o_time_lag &lt;chr&gt;, h2o_def_timelag &lt;chr&gt;,
-## #   sonic_temperature &lt;chr&gt;, air_temperature &lt;chr&gt;, air_pressure &lt;chr&gt;,
-## #   air_density &lt;chr&gt;, air_heat_capacity &lt;chr&gt;, air_molar_volume &lt;chr&gt;,
-## #   water_vapor_density &lt;chr&gt;, e &lt;chr&gt;, es &lt;chr&gt;, specific_humidity &lt;chr&gt;,
-## #   RH &lt;chr&gt;, VPD &lt;chr&gt;, Tdew &lt;chr&gt;, u_unrot &lt;chr&gt;, v_unrot &lt;chr&gt;,
-## #   w_unrot &lt;chr&gt;, u_rot &lt;chr&gt;, v_rot &lt;chr&gt;, w_rot &lt;chr&gt;, wind_speed &lt;chr&gt;,
-## #   max_speed &lt;chr&gt;, wind_dir &lt;chr&gt;, yaw &lt;chr&gt;, pitch &lt;chr&gt;, roll &lt;chr&gt;,
-## #   u* &lt;chr&gt;, TKE &lt;chr&gt;, L &lt;chr&gt;, (z-d)/L &lt;chr&gt;, bowen_ratio &lt;chr&gt;, T* &lt;chr&gt;,
-## #   model &lt;chr&gt;, x_peak &lt;chr&gt;, x_offset &lt;chr&gt;, x_10% &lt;chr&gt;, x_30% &lt;chr&gt;,
-## #   x_50% &lt;chr&gt;, x_70% &lt;chr&gt;, x_90% &lt;chr&gt;, un_Tau &lt;chr&gt;, Tau_scf &lt;chr&gt;,
-## #   un_H &lt;chr&gt;, H_scf &lt;chr&gt;, un_LE &lt;chr&gt;, LE_scf &lt;chr&gt;, un_co2_flux &lt;chr&gt;,
-## #   co2_scf &lt;chr&gt;, un_h2o_flux &lt;chr&gt;, h2o_scf &lt;chr&gt;, spikes &lt;chr&gt;,
-## #   amplitude_resolution &lt;chr&gt;, drop_out &lt;chr&gt;, absolute_limits &lt;chr&gt;,
-## #   skweness_kurtosis &lt;chr&gt;, skweness_kurtosis_1 &lt;chr&gt;, discontinuities &lt;chr&gt;,
-## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
-## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;chr&gt;, v_spikes &lt;chr&gt;,
-## #   w_spikes &lt;chr&gt;, ts_spikes &lt;chr&gt;, co2_spikes &lt;chr&gt;, h2o_spikes &lt;chr&gt;,
-## #   head_detect &lt;chr&gt;, t_out &lt;chr&gt;, t_in &lt;chr&gt;, aux_in &lt;chr&gt;, ...</code></pre>
-<p>Как мы видим, теперь проблема решена. Обратите внимание, что readr при чтении таблицы выдает большое количество предупреждений, но при этом продолжает работать. Основная идея авторов заключалась в том, чтобы с одной стороны сделать функцию работающей с самыми сложными и неадекватными данными, но при этом с высокими требованиями к качеству организации данных. Что является взаимноисключающими требованиями, поэтому функции пакета работают с практически любыми данными, но выдают большое количество предупреждений и рекомендаций по их качеству, плюс, например в нашем случае, совершают ряд действий для решения проблем - например переименовывают переменные.</p>
-<p>Продолжим изучение нашей таблицы данных. Благодаря подробной выдаче tibble легко заметить, что все переменные в таблице имеют тип char, что не соответствует действительности. Причиной этого явлется первая строчка таблицы, которая вместо данных содержит их размерность. В принципе удаление строчки не представляет проблемы и мы могли бы избавится от нее стандартным образом tbl = tbl[-1,]. Но это не отменит того факта, что все колонки у нас в талице теперь типа char. Функции пакета readr позволяют нам решить многие проблемы еще на фазе чтения. Воспользуемся параметром comment, который заставляет readr игнорировать все строчки, содержащие определенный символ, легко заметить, что в нашем случае это будет символ “[”</p>
+## #   co2_mole_fraction &lt;chr&gt;, co2_mixing_ratio &lt;chr&gt;, co2_time_lag &lt;chr&gt;, ...</code></pre>
+<p>Как мы видим, теперь проблема решена. Обратите внимание, что readr
+при чтении таблицы выдает большое количество предупреждений, но при этом
+продолжает работать. Основная идея авторов заключалась в том, чтобы с
+одной стороны сделать функцию работающей с самыми сложными и
+неадекватными данными, но при этом с высокими требованиями к качеству
+организации данных. Что является взаимноисключающими требованиями,
+поэтому функции пакета работают с практически любыми данными, но выдают
+большое количество предупреждений и рекомендаций по их качеству, плюс,
+например в нашем случае, совершают ряд действий для решения проблем -
+например переименовывают переменные.</p>
+<p>Продолжим изучение нашей таблицы данных. Благодаря подробной выдаче
+tibble легко заметить, что все переменные в таблице имеют тип char, что
+не соответствует действительности. Причиной этого явлется первая строчка
+таблицы, которая вместо данных содержит их размерность. В принципе
+удаление строчки не представляет проблемы и мы могли бы избавится от нее
+стандартным образом tbl = tbl[-1,]. Но это не отменит того факта, что
+все колонки у нас в талице теперь типа char. Функции пакета readr
+позволяют нам решить многие проблемы еще на фазе чтения. Воспользуемся
+параметром comment, который заставляет readr игнорировать все строчки,
+содержащие определенный символ, легко заметить, что в нашем случае это
+будет символ “[”</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, comment=c(&quot;[&quot;))</code></pre>
-<pre><code>## Warning: Duplicated column names deduplicated: &#39;skweness_kurtosis&#39; =&gt;
-## &#39;skweness_kurtosis_1&#39; [93], &#39;discontinuities&#39; =&gt; &#39;discontinuities_1&#39; [95],
-## &#39;timelag&#39; =&gt; &#39;timelag_1&#39; [97], &#39;co2&#39; =&gt; &#39;co2_1&#39; [127], &#39;h2o&#39; =&gt; &#39;h2o_1&#39; [128]</code></pre>
+<pre><code>## New names:
+## * skweness_kurtosis -&gt; skweness_kurtosis...92
+## * skweness_kurtosis -&gt; skweness_kurtosis...93
+## * discontinuities -&gt; discontinuities...94
+## * discontinuities -&gt; discontinuities...95
+## * timelag -&gt; timelag...96
+## * ...</code></pre>
+<pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<pre><code>## Rows: 8741 Columns: 131</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr   (17): filename, daytime, co2_def_timelag, h2o_def_timelag, model, spik...
+## dbl  (112): DOY, file_records, used_records, Tau, qc_Tau, rand_err_Tau, H, q...
+## date   (1): date
+## time   (1): time</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_double(),
-##   filename = col_character(),
-##   date = col_date(format = &quot;&quot;),
-##   time = col_time(format = &quot;&quot;),
-##   daytime = col_character(),
-##   co2_def_timelag = col_character(),
-##   h2o_def_timelag = col_character(),
-##   model = col_character(),
-##   spikes = col_character(),
-##   amplitude_resolution = col_character(),
-##   drop_out = col_character(),
-##   absolute_limits = col_character(),
-##   skweness_kurtosis = col_character(),
-##   skweness_kurtosis_1 = col_character(),
-##   discontinuities = col_character(),
-##   discontinuities_1 = col_character(),
-##   timelag = col_character(),
-##   timelag_1 = col_character(),
-##   attack_angle = col_character(),
-##   non_steady_wind = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
-<pre><code>## Warning: 1 parsing failure.
-## row col    expected    actual                                                         file
-##   1  -- 131 columns 1 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;</code></pre>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl</code></pre>
 <pre><code>## # A tibble: 8,741 x 131
 ##    filename    date       time    DOY daytime file_records used_records      Tau
@@ -685,60 +724,35 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;,
 ## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
 ## #   h2o_strg &lt;dbl&gt;, co2_v-adv &lt;dbl&gt;, h2o_v-adv &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
-## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;,
-## #   co2_def_timelag &lt;chr&gt;, h2o_molar_density &lt;dbl&gt;, h2o_mole_fraction &lt;dbl&gt;,
-## #   h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;, h2o_def_timelag &lt;chr&gt;,
-## #   sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;, air_pressure &lt;dbl&gt;,
-## #   air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;, air_molar_volume &lt;dbl&gt;,
-## #   water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;, specific_humidity &lt;dbl&gt;,
-## #   RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;, u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;,
-## #   w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;, w_rot &lt;dbl&gt;, wind_speed &lt;dbl&gt;,
-## #   max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;, yaw &lt;dbl&gt;, pitch &lt;dbl&gt;, roll &lt;dbl&gt;,
-## #   u* &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;, (z-d)/L &lt;dbl&gt;, bowen_ratio &lt;dbl&gt;, T* &lt;dbl&gt;,
-## #   model &lt;chr&gt;, x_peak &lt;dbl&gt;, x_offset &lt;dbl&gt;, x_10% &lt;dbl&gt;, x_30% &lt;dbl&gt;,
-## #   x_50% &lt;dbl&gt;, x_70% &lt;dbl&gt;, x_90% &lt;dbl&gt;, un_Tau &lt;dbl&gt;, Tau_scf &lt;dbl&gt;,
-## #   un_H &lt;dbl&gt;, H_scf &lt;dbl&gt;, un_LE &lt;dbl&gt;, LE_scf &lt;dbl&gt;, un_co2_flux &lt;dbl&gt;,
-## #   co2_scf &lt;dbl&gt;, un_h2o_flux &lt;dbl&gt;, h2o_scf &lt;dbl&gt;, spikes &lt;chr&gt;,
-## #   amplitude_resolution &lt;chr&gt;, drop_out &lt;chr&gt;, absolute_limits &lt;chr&gt;,
-## #   skweness_kurtosis &lt;chr&gt;, skweness_kurtosis_1 &lt;chr&gt;, discontinuities &lt;chr&gt;,
-## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
-## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;dbl&gt;, v_spikes &lt;dbl&gt;,
-## #   w_spikes &lt;dbl&gt;, ts_spikes &lt;dbl&gt;, co2_spikes &lt;dbl&gt;, h2o_spikes &lt;dbl&gt;,
-## #   head_detect &lt;dbl&gt;, t_out &lt;dbl&gt;, t_in &lt;dbl&gt;, ...</code></pre>
-<p>Проблема с типами колонок теперь решена, но мешавшая нам строчка осталась, содержит она только NA и теперь мы точно можем от нее избавиться. Говоря об NA давайте вспомним, что полученные нами данные являются машинно сгенерированными и для обозначения отсутствия данных генератором использовалось значение -9999. Это значение несет в себе информацию аналогичную значению NA в R, а значит мы должны найти и заменить все такие значения. Это действие тоже можно проделать еще на стадии считывания файла</p>
+## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, ...</code></pre>
+<p>Проблема с типами колонок теперь решена, но мешавшая нам строчка
+осталась, содержит она только NA и теперь мы точно можем от нее
+избавиться. Говоря об NA давайте вспомним, что полученные нами данные
+являются машинно сгенерированными и для обозначения отсутствия данных
+генератором использовалось значение -9999. Это значение несет в себе
+информацию аналогичную значению NA в R, а значит мы должны найти и
+заменить все такие значения. Это действие тоже можно проделать еще на
+стадии считывания файла</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, na =c(&quot;&quot;,&quot;NA&quot;,&quot;-9999&quot;,&quot;-9999.0&quot;), comment=c(&quot;[&quot;))</code></pre>
-<pre><code>## Warning: Duplicated column names deduplicated: &#39;skweness_kurtosis&#39; =&gt;
-## &#39;skweness_kurtosis_1&#39; [93], &#39;discontinuities&#39; =&gt; &#39;discontinuities_1&#39; [95],
-## &#39;timelag&#39; =&gt; &#39;timelag_1&#39; [97], &#39;co2&#39; =&gt; &#39;co2_1&#39; [127], &#39;h2o&#39; =&gt; &#39;h2o_1&#39; [128]</code></pre>
+<pre><code>## New names:
+## * skweness_kurtosis -&gt; skweness_kurtosis...92
+## * skweness_kurtosis -&gt; skweness_kurtosis...93
+## * discontinuities -&gt; discontinuities...94
+## * discontinuities -&gt; discontinuities...95
+## * timelag -&gt; timelag...96
+## * ...</code></pre>
+<pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
+<pre><code>## Rows: 8741 Columns: 131</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr   (14): filename, model, spikes, amplitude_resolution, drop_out, absolut...
+## dbl  (111): DOY, file_records, used_records, Tau, qc_Tau, rand_err_Tau, H, q...
+## lgl    (4): daytime, co2_def_timelag, h2o_def_timelag, roll
+## date   (1): date
+## time   (1): time</code></pre>
 <pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_double(),
-##   filename = col_character(),
-##   date = col_date(format = &quot;&quot;),
-##   time = col_time(format = &quot;&quot;),
-##   daytime = col_logical(),
-##   co2_def_timelag = col_logical(),
-##   h2o_def_timelag = col_logical(),
-##   roll = col_logical(),
-##   model = col_character(),
-##   spikes = col_character(),
-##   amplitude_resolution = col_character(),
-##   drop_out = col_character(),
-##   absolute_limits = col_character(),
-##   skweness_kurtosis = col_character(),
-##   skweness_kurtosis_1 = col_character(),
-##   discontinuities = col_character(),
-##   discontinuities_1 = col_character(),
-##   timelag = col_character(),
-##   timelag_1 = col_character(),
-##   attack_angle = col_character(),
-##   non_steady_wind = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
-<pre><code>## Warning: 1 parsing failure.
-## row col    expected    actual                                                         file
-##   1  -- 131 columns 1 columns &#39;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&#39;</code></pre>
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl = tbl[-1,]
 tbl</code></pre>
 <pre><code>## # A tibble: 8,740 x 131
@@ -760,27 +774,12 @@ tbl</code></pre>
 ## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;,
 ## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
 ## #   h2o_strg &lt;dbl&gt;, co2_v-adv &lt;dbl&gt;, h2o_v-adv &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
-## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;,
-## #   co2_def_timelag &lt;lgl&gt;, h2o_molar_density &lt;dbl&gt;, h2o_mole_fraction &lt;dbl&gt;,
-## #   h2o_mixing_ratio &lt;dbl&gt;, h2o_time_lag &lt;dbl&gt;, h2o_def_timelag &lt;lgl&gt;,
-## #   sonic_temperature &lt;dbl&gt;, air_temperature &lt;dbl&gt;, air_pressure &lt;dbl&gt;,
-## #   air_density &lt;dbl&gt;, air_heat_capacity &lt;dbl&gt;, air_molar_volume &lt;dbl&gt;,
-## #   water_vapor_density &lt;dbl&gt;, e &lt;dbl&gt;, es &lt;dbl&gt;, specific_humidity &lt;dbl&gt;,
-## #   RH &lt;dbl&gt;, VPD &lt;dbl&gt;, Tdew &lt;dbl&gt;, u_unrot &lt;dbl&gt;, v_unrot &lt;dbl&gt;,
-## #   w_unrot &lt;dbl&gt;, u_rot &lt;dbl&gt;, v_rot &lt;dbl&gt;, w_rot &lt;dbl&gt;, wind_speed &lt;dbl&gt;,
-## #   max_speed &lt;dbl&gt;, wind_dir &lt;dbl&gt;, yaw &lt;dbl&gt;, pitch &lt;dbl&gt;, roll &lt;lgl&gt;,
-## #   u* &lt;dbl&gt;, TKE &lt;dbl&gt;, L &lt;dbl&gt;, (z-d)/L &lt;dbl&gt;, bowen_ratio &lt;dbl&gt;, T* &lt;dbl&gt;,
-## #   model &lt;chr&gt;, x_peak &lt;dbl&gt;, x_offset &lt;dbl&gt;, x_10% &lt;dbl&gt;, x_30% &lt;dbl&gt;,
-## #   x_50% &lt;dbl&gt;, x_70% &lt;dbl&gt;, x_90% &lt;dbl&gt;, un_Tau &lt;dbl&gt;, Tau_scf &lt;dbl&gt;,
-## #   un_H &lt;dbl&gt;, H_scf &lt;dbl&gt;, un_LE &lt;dbl&gt;, LE_scf &lt;dbl&gt;, un_co2_flux &lt;dbl&gt;,
-## #   co2_scf &lt;dbl&gt;, un_h2o_flux &lt;dbl&gt;, h2o_scf &lt;dbl&gt;, spikes &lt;chr&gt;,
-## #   amplitude_resolution &lt;chr&gt;, drop_out &lt;chr&gt;, absolute_limits &lt;chr&gt;,
-## #   skweness_kurtosis &lt;chr&gt;, skweness_kurtosis_1 &lt;chr&gt;, discontinuities &lt;chr&gt;,
-## #   discontinuities_1 &lt;chr&gt;, timelag &lt;chr&gt;, timelag_1 &lt;chr&gt;,
-## #   attack_angle &lt;chr&gt;, non_steady_wind &lt;chr&gt;, u_spikes &lt;dbl&gt;, v_spikes &lt;dbl&gt;,
-## #   w_spikes &lt;dbl&gt;, ts_spikes &lt;dbl&gt;, co2_spikes &lt;dbl&gt;, h2o_spikes &lt;dbl&gt;,
-## #   head_detect &lt;dbl&gt;, t_out &lt;dbl&gt;, t_in &lt;dbl&gt;, ...</code></pre>
-<p>Теперь данные имеют адекватный вид и мы сделали все, что можно еще на стадии их прочтения. Давайте внимательнее посмотрим на сами переменные и для этого воспользуеся функцией glimpse(), которая более наглядно представляет каждую отдельную переменную, жертуя при этом предсталение строчек данных</p>
+## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, ...</code></pre>
+<p>Теперь данные имеют адекватный вид и мы сделали все, что можно еще на
+стадии их прочтения. Давайте внимательнее посмотрим на сами переменные и
+для этого воспользуеся функцией glimpse(), которая более наглядно
+представляет каждую отдельную переменную, жертуя при этом предсталение
+строчек данных</p>
 <div class="fold o">
 <pre class="r"><code>glimpse(tbl)</code></pre>
 <pre><code>## Rows: 8,740
@@ -876,12 +875,12 @@ tbl</code></pre>
 ## $ amplitude_resolution     &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
 ## $ drop_out                 &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
 ## $ absolute_limits          &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ skweness_kurtosis        &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ skweness_kurtosis_1      &lt;chr&gt; &quot;SF00101199&quot;, &quot;SF00111099&quot;, &quot;SF00100099&quot;, &quot;SF~
-## $ discontinuities          &lt;chr&gt; &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF~
-## $ discontinuities_1        &lt;chr&gt; &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF~
-## $ timelag                  &lt;chr&gt; &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF01~
-## $ timelag_1                &lt;chr&gt; &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF01~
+## $ skweness_kurtosis...92   &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
+## $ skweness_kurtosis...93   &lt;chr&gt; &quot;SF00101199&quot;, &quot;SF00111099&quot;, &quot;SF00100099&quot;, &quot;SF~
+## $ discontinuities...94     &lt;chr&gt; &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF~
+## $ discontinuities...95     &lt;chr&gt; &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF~
+## $ timelag...96             &lt;chr&gt; &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF01~
+## $ timelag...97             &lt;chr&gt; &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF01~
 ## $ attack_angle             &lt;chr&gt; &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF~
 ## $ non_steady_wind          &lt;chr&gt; &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF~
 ## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,~
@@ -909,23 +908,45 @@ tbl</code></pre>
 ## $ `w/ts_cov`               &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.~
 ## $ `w/co2_cov`              &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.~
 ## $ `w/h2o_cov`              &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0~
-## $ co2                      &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
-## $ h2o                      &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
-## $ co2_1                    &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
-## $ h2o_1                    &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
+## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
+## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
+## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
+## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
 ## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94~
 ## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98~
 ## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0~</code></pre>
 </div>
-<p>При внимательном рассмотрении можно заметить, что переменная roll содержит только NA, а потому будет только мешать нам при анализе. Избавимся от нее с помощью функции select:</p>
+<p>При внимательном рассмотрении можно заметить, что переменная roll
+содержит только NA, а потому будет только мешать нам при анализе.
+Избавимся от нее с помощью функции select:</p>
 <pre class="r"><code>tbl = select(tbl, -(roll))</code></pre>
-<p>В нашей таблице довольно много переменных типа char, которые содержат повторяющиеся значения, т.к. их текст, как таковой нас не интересует, преобразуем их все в факторы:</p>
+<p>В нашей таблице довольно много переменных типа char, которые содержат
+повторяющиеся значения, т.к. их текст, как таковой нас не интересует,
+преобразуем их все в факторы:</p>
 <pre class="r"><code>tbl = tbl %&gt;% mutate_if(is.character, factor)</code></pre>
-<p>Здесь мы использовали функию mutate_if которая делает преобразование над колонкой - factor() при полученни значения TRUE от функции первого параметра - is.character().</p>
-<p>Следующее действие не совершенно не обязательно, но в определенных условиях может сильно упростить вам жизнь. Дело в том, что многие функции, которые работаю с множествами переменных могу рассматривать знаки в именах переменных, как действия над ними, что будет приводить к ошибкам. Так, например, у нас в таблице есть переменные “(z-d)/L”, " u*“,”x_90% " и т.д. Формально этого лучше избегать и использовать только буквы, цифры, нижнее подчеркивание и точки. Т.к. большинство данных, с которыми вам придется работать не будут соответствовать этим критериям, то попытаемся научиться решать эту проблему используя наши данные.</p>
-<p>Для этого мы используем функцию str_replace_all из пакета stringr. Она позволяет, использую довольно простой синтаксис, заменить ненужные нам символы:</p>
+<p>Здесь мы использовали функию mutate_if которая делает преобразование
+над колонкой - factor() при полученни значения TRUE от функции первого
+параметра - is.character().</p>
+<p>Следующее действие не совершенно не обязательно, но в определенных
+условиях может сильно упростить вам жизнь. Дело в том, что многие
+функции, которые работаю с множествами переменных могу рассматривать
+знаки в именах переменных, как действия над ними, что будет приводить к
+ошибкам. Так, например, у нас в таблице есть переменные “(z-d)/L”, ”
+u*“,”x_90% ” и т.д. Формально этого лучше избегать и использовать только
+буквы, цифры, нижнее подчеркивание и точки. Т.к. большинство данных, с
+которыми вам придется работать не будут соответствовать этим критериям,
+то попытаемся научиться решать эту проблему используя наши данные.</p>
+<p>Для этого мы используем функцию str_replace_all из пакета stringr.
+Она позволяет, использую довольно простой синтаксис, заменить ненужные
+нам символы:</p>
 <pre class="r"><code>names(tbl) =  str_replace_all(names(tbl), &quot;[!]&quot;,&quot;_emph_&quot;)</code></pre>
-<p>В данном примере, мы говорим, что теперь все имена таблицы должны быть некоторым вектором строк от функции str_replace_all, которая в свою очередь берет все имена из таблицы tbl, заменяет в них все ! на “<em>emph</em>” и возвращает их в виде вектора. Все довольно наглядно, но проблема в том, что нам нужно сделать такое последовательно много раз(т.к. нам нужно избавиться не только от !), что приведет к совершенно не читаемому результату. Поэтому воспользуеися оператором пайппинга</p>
+<p>В данном примере, мы говорим, что теперь все имена таблицы должны
+быть некоторым вектором строк от функции str_replace_all, которая в свою
+очередь берет все имена из таблицы tbl, заменяет в них все ! на
+“<em>emph</em>” и возвращает их в виде вектора. Все довольно наглядно,
+но проблема в том, что нам нужно сделать такое последовательно много
+раз(т.к. нам нужно избавиться не только от !), что приведет к совершенно
+не читаемому результату. Поэтому воспользуеися оператором пайппинга</p>
 <div class="fold o">
 <pre class="r"><code>names(tbl) = names(tbl) %&gt;% 
   str_replace_all(&quot;[!]&quot;,&quot;_emph_&quot;) %&gt;% 
@@ -1034,12 +1055,12 @@ glimpse(tbl)</code></pre>
 ## $ amplitude_resolution     &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
 ## $ drop_out                 &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
 ## $ absolute_limits          &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ skweness_kurtosis        &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ skweness_kurtosis_1      &lt;fct&gt; SF00101199, SF00111099, SF00100099, SF0010009~
-## $ discontinuities          &lt;fct&gt; HF00000000, HF00000000, HF00000000, HF0000000~
-## $ discontinuities_1        &lt;fct&gt; SF00000000, SF00000000, SF00000000, SF0000000~
-## $ timelag                  &lt;fct&gt; HF0100, HF0100, HF0100, HF0100, HF0100, HF110~
-## $ timelag_1                &lt;fct&gt; SF0100, SF0100, SF0100, SF0100, SF0100, SF110~
+## $ skweness_kurtosis...92   &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
+## $ skweness_kurtosis...93   &lt;fct&gt; SF00101199, SF00111099, SF00100099, SF0010009~
+## $ discontinuities...94     &lt;fct&gt; HF00000000, HF00000000, HF00000000, HF0000000~
+## $ discontinuities...95     &lt;fct&gt; SF00000000, SF00000000, SF00000000, SF0000000~
+## $ timelag...96             &lt;fct&gt; HF0100, HF0100, HF0100, HF0100, HF0100, HF110~
+## $ timelag...97             &lt;fct&gt; SF0100, SF0100, SF0100, SF0100, SF0100, SF110~
 ## $ attack_angle             &lt;fct&gt; HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, ~
 ## $ non_steady_wind          &lt;fct&gt; HF1, HF1, HF1, HF1, HF0, HF0, HF0, HF1, HF1, ~
 ## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,~
@@ -1067,15 +1088,22 @@ glimpse(tbl)</code></pre>
 ## $ w_div_ts_cov             &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.~
 ## $ w_div_co2_cov            &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.~
 ## $ w_div_h2o_cov            &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0~
-## $ co2                      &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
-## $ h2o                      &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
-## $ co2_1                    &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
-## $ h2o_1                    &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
+## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
+## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
+## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
+## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
 ## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94~
 ## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98~
 ## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0~</code></pre>
 </div>
-<p>Функция cor работает только с численными данными, поэтому, чтобы перейти к корелляционному анализу нужно выбрать все переменные типа numeric. Для этого воспользуемся двумя функциями - is.numeric(), которая выдает TRUE в случае если вектор является численныи и sapply(), которая берет каждую колонку таблицы, передает ее в функию в виде вектора(в нашем случае этой функцией будет is.numeric) и выдает результат в виде вектора длинной равной количеству колонок в таблице. Давайте проверим, что получится</p>
+<p>Функция cor работает только с численными данными, поэтому, чтобы
+перейти к корелляционному анализу нужно выбрать все переменные типа
+numeric. Для этого воспользуемся двумя функциями - is.numeric(), которая
+выдает TRUE в случае если вектор является численныи и sapply(), которая
+берет каждую колонку таблицы, передает ее в функию в виде вектора(в
+нашем случае этой функцией будет is.numeric) и выдает результат в виде
+вектора длинной равной количеству колонок в таблице. Давайте проверим,
+что получится</p>
 <div class="fold o">
 <pre class="r"><code>sapply(tbl,is.numeric)</code></pre>
 <pre><code>##                 filename                     date                     time 
@@ -1138,9 +1166,9 @@ glimpse(tbl)</code></pre>
 ##                     TRUE                     TRUE                    FALSE 
 ##     amplitude_resolution                 drop_out          absolute_limits 
 ##                    FALSE                    FALSE                    FALSE 
-##        skweness_kurtosis      skweness_kurtosis_1          discontinuities 
+##   skweness_kurtosis...92   skweness_kurtosis...93     discontinuities...94 
 ##                    FALSE                    FALSE                    FALSE 
-##        discontinuities_1                  timelag                timelag_1 
+##     discontinuities...95             timelag...96             timelag...97 
 ##                    FALSE                    FALSE                    FALSE 
 ##             attack_angle          non_steady_wind                 u_spikes 
 ##                    FALSE                    FALSE                     TRUE 
@@ -1160,18 +1188,23 @@ glimpse(tbl)</code></pre>
 ##                     TRUE                     TRUE                     TRUE 
 ##             w_div_ts_cov            w_div_co2_cov            w_div_h2o_cov 
 ##                     TRUE                     TRUE                     TRUE 
-##                      co2                      h2o                    co2_1 
+##                co2...125                h2o...126                co2...127 
 ##                     TRUE                     TRUE                     TRUE 
-##                    h2o_1 co2_signal_strength_7200 h2o_signal_strength_7200 
+##                h2o...128 co2_signal_strength_7200 h2o_signal_strength_7200 
 ##                     TRUE                     TRUE                     TRUE 
 ##                 flowrate 
 ##                     TRUE</code></pre>
 </div>
-<p>Для каждой колонки таблицы мы получили значение правда, если она является численной и ложь, если не является. Осталось подставить этот вектор в саму таблицу и получить таблицу состояющую только из интересующих нас колонок</p>
+<p>Для каждой колонки таблицы мы получили значение правда, если она
+является численной и ложь, если не является. Осталось подставить этот
+вектор в саму таблицу и получить таблицу состояющую только из
+интересующих нас колонок</p>
 <pre class="r"><code>tbl_numeric = tbl[,sapply(tbl,is.numeric) ]</code></pre>
-<p>При этом очень легко получить таблицу содержащую все остальные колонки</p>
+<p>При этом очень легко получить таблицу содержащую все остальные
+колонки</p>
 <pre class="r"><code>tbl_non_numeric = tbl[,!sapply(tbl,is.numeric) ]</code></pre>
-<p>Теперь мы можем переходить к корелляционному анализу (если вы не помните, что это мы подробно рассмотрим его в следующей части):</p>
+<p>Теперь мы можем переходить к корелляционному анализу (если вы не
+помните, что это мы подробно рассмотрим его в следующей части):</p>
 <div class="fold o">
 <pre class="r"><code>cor_td = cor(tbl_numeric)
 cor_td</code></pre>
@@ -1280,10 +1313,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              NA           NA           NA  NA     NA           NA
 ## w_div_co2_cov             NA           NA           NA  NA     NA           NA
 ## w_div_h2o_cov             NA           NA           NA  NA     NA           NA
-## co2                       NA           NA           NA  NA     NA           NA
-## h2o                       NA           NA           NA  NA     NA           NA
-## co2_1                     NA           NA           NA  NA     NA           NA
-## h2o_1                     NA           NA           NA  NA     NA           NA
+## co2...125                 NA           NA           NA  NA     NA           NA
+## h2o...126                 NA           NA           NA  NA     NA           NA
+## co2...127                 NA           NA           NA  NA     NA           NA
+## h2o...128                 NA           NA           NA  NA     NA           NA
 ## co2_signal_strength_7200  NA           NA           NA  NA     NA           NA
 ## h2o_signal_strength_7200  NA           NA           NA  NA     NA           NA
 ## flowrate                  NA           NA           NA  NA     NA           NA
@@ -1392,10 +1425,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             NA   NA         NA NA    NA          NA       NA
 ## w_div_co2_cov            NA   NA         NA NA    NA          NA       NA
 ## w_div_h2o_cov            NA   NA         NA NA    NA          NA       NA
-## co2                      NA   NA         NA NA    NA          NA       NA
-## h2o                      NA   NA         NA NA    NA          NA       NA
-## co2_1                    NA   NA         NA NA    NA          NA       NA
-## h2o_1                    NA   NA         NA NA    NA          NA       NA
+## co2...125                NA   NA         NA NA    NA          NA       NA
+## h2o...126                NA   NA         NA NA    NA          NA       NA
+## co2...127                NA   NA         NA NA    NA          NA       NA
+## h2o...128                NA   NA         NA NA    NA          NA       NA
 ## co2_signal_strength_7200 NA   NA         NA NA    NA          NA       NA
 ## h2o_signal_strength_7200 NA   NA         NA NA    NA          NA       NA
 ## flowrate                 NA   NA         NA NA    NA          NA       NA
@@ -1504,10 +1537,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                      NA                NA       NA          NA
 ## w_div_co2_cov                     NA                NA       NA          NA
 ## w_div_h2o_cov                     NA                NA       NA          NA
-## co2                               NA                NA       NA          NA
-## h2o                               NA                NA       NA          NA
-## co2_1                             NA                NA       NA          NA
-## h2o_1                             NA                NA       NA          NA
+## co2...125                         NA                NA       NA          NA
+## h2o...126                         NA                NA       NA          NA
+## co2...127                         NA                NA       NA          NA
+## h2o...128                         NA                NA       NA          NA
 ## co2_signal_strength_7200          NA                NA       NA          NA
 ## h2o_signal_strength_7200          NA                NA       NA          NA
 ## flowrate                          NA                NA       NA          NA
@@ -1616,10 +1649,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                            NA     NA      NA       NA       NA
 ## w_div_co2_cov                           NA     NA      NA       NA       NA
 ## w_div_h2o_cov                           NA     NA      NA       NA       NA
-## co2                                     NA     NA      NA       NA       NA
-## h2o                                     NA     NA      NA       NA       NA
-## co2_1                                   NA     NA      NA       NA       NA
-## h2o_1                                   NA     NA      NA       NA       NA
+## co2...125                               NA     NA      NA       NA       NA
+## h2o...126                               NA     NA      NA       NA       NA
+## co2...127                               NA     NA      NA       NA       NA
+## h2o...128                               NA     NA      NA       NA       NA
 ## co2_signal_strength_7200                NA     NA      NA       NA       NA
 ## h2o_signal_strength_7200                NA     NA      NA       NA       NA
 ## flowrate                                NA     NA      NA       NA       NA
@@ -1728,10 +1761,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                          NA              NA                NA
 ## w_div_co2_cov                         NA              NA                NA
 ## w_div_h2o_cov                         NA              NA                NA
-## co2                                   NA              NA                NA
-## h2o                                   NA              NA                NA
-## co2_1                                 NA              NA                NA
-## h2o_1                                 NA              NA                NA
+## co2...125                             NA              NA                NA
+## h2o...126                             NA              NA                NA
+## co2...127                             NA              NA                NA
+## h2o...128                             NA              NA                NA
 ## co2_signal_strength_7200              NA              NA                NA
 ## h2o_signal_strength_7200              NA              NA                NA
 ## flowrate                              NA              NA                NA
@@ -1840,10 +1873,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                            NA               NA           NA
 ## w_div_co2_cov                           NA               NA           NA
 ## w_div_h2o_cov                           NA               NA           NA
-## co2                                     NA               NA           NA
-## h2o                                     NA               NA           NA
-## co2_1                                   NA               NA           NA
-## h2o_1                                   NA               NA           NA
+## co2...125                               NA               NA           NA
+## h2o...126                               NA               NA           NA
+## co2...127                               NA               NA           NA
+## h2o...128                               NA               NA           NA
 ## co2_signal_strength_7200                NA               NA           NA
 ## h2o_signal_strength_7200                NA               NA           NA
 ## flowrate                                NA               NA           NA
@@ -1952,10 +1985,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                            NA                NA               NA
 ## w_div_co2_cov                           NA                NA               NA
 ## w_div_h2o_cov                           NA                NA               NA
-## co2                                     NA                NA               NA
-## h2o                                     NA                NA               NA
-## co2_1                                   NA                NA               NA
-## h2o_1                                   NA                NA               NA
+## co2...125                               NA                NA               NA
+## h2o...126                               NA                NA               NA
+## co2...127                               NA                NA               NA
+## h2o...128                               NA                NA               NA
 ## co2_signal_strength_7200                NA                NA               NA
 ## h2o_signal_strength_7200                NA                NA               NA
 ## flowrate                                NA                NA               NA
@@ -2064,10 +2097,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                       NA                NA              NA
 ## w_div_co2_cov                      NA                NA              NA
 ## w_div_h2o_cov                      NA                NA              NA
-## co2                                NA                NA              NA
-## h2o                                NA                NA              NA
-## co2_1                              NA                NA              NA
-## h2o_1                              NA                NA              NA
+## co2...125                          NA                NA              NA
+## h2o...126                          NA                NA              NA
+## co2...127                          NA                NA              NA
+## h2o...128                          NA                NA              NA
 ## co2_signal_strength_7200           NA                NA              NA
 ## h2o_signal_strength_7200           NA                NA              NA
 ## flowrate                           NA                NA              NA
@@ -2176,10 +2209,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                       NA          NA                NA
 ## w_div_co2_cov                      NA          NA                NA
 ## w_div_h2o_cov                      NA          NA                NA
-## co2                                NA          NA                NA
-## h2o                                NA          NA                NA
-## co2_1                              NA          NA                NA
-## h2o_1                              NA          NA                NA
+## co2...125                          NA          NA                NA
+## h2o...126                          NA          NA                NA
+## co2...127                          NA          NA                NA
+## h2o...128                          NA          NA                NA
 ## co2_signal_strength_7200           NA          NA                NA
 ## h2o_signal_strength_7200           NA          NA                NA
 ## flowrate                           NA          NA                NA
@@ -2288,10 +2321,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                           NA                  NA NA NA
 ## w_div_co2_cov                          NA                  NA NA NA
 ## w_div_h2o_cov                          NA                  NA NA NA
-## co2                                    NA                  NA NA NA
-## h2o                                    NA                  NA NA NA
-## co2_1                                  NA                  NA NA NA
-## h2o_1                                  NA                  NA NA NA
+## co2...125                              NA                  NA NA NA
+## h2o...126                              NA                  NA NA NA
+## co2...127                              NA                  NA NA NA
+## h2o...128                              NA                  NA NA NA
 ## co2_signal_strength_7200               NA                  NA NA NA
 ## h2o_signal_strength_7200               NA                  NA NA NA
 ## flowrate                               NA                  NA NA NA
@@ -2400,10 +2433,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                            NA NA  NA   NA      NA      NA      NA
 ## w_div_co2_cov                           NA NA  NA   NA      NA      NA      NA
 ## w_div_h2o_cov                           NA NA  NA   NA      NA      NA      NA
-## co2                                     NA NA  NA   NA      NA      NA      NA
-## h2o                                     NA NA  NA   NA      NA      NA      NA
-## co2_1                                   NA NA  NA   NA      NA      NA      NA
-## h2o_1                                   NA NA  NA   NA      NA      NA      NA
+## co2...125                               NA NA  NA   NA      NA      NA      NA
+## h2o...126                               NA NA  NA   NA      NA      NA      NA
+## co2...127                               NA NA  NA   NA      NA      NA      NA
+## h2o...128                               NA NA  NA   NA      NA      NA      NA
 ## co2_signal_strength_7200                NA NA  NA   NA      NA      NA      NA
 ## h2o_signal_strength_7200                NA NA  NA   NA      NA      NA      NA
 ## flowrate                                NA NA  NA   NA      NA      NA      NA
@@ -2512,10 +2545,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                NA    NA    NA         NA        NA       NA  NA
 ## w_div_co2_cov               NA    NA    NA         NA        NA       NA  NA
 ## w_div_h2o_cov               NA    NA    NA         NA        NA       NA  NA
-## co2                         NA    NA    NA         NA        NA       NA  NA
-## h2o                         NA    NA    NA         NA        NA       NA  NA
-## co2_1                       NA    NA    NA         NA        NA       NA  NA
-## h2o_1                       NA    NA    NA         NA        NA       NA  NA
+## co2...125                   NA    NA    NA         NA        NA       NA  NA
+## h2o...126                   NA    NA    NA         NA        NA       NA  NA
+## co2...127                   NA    NA    NA         NA        NA       NA  NA
+## h2o...128                   NA    NA    NA         NA        NA       NA  NA
 ## co2_signal_strength_7200    NA    NA    NA         NA        NA       NA  NA
 ## h2o_signal_strength_7200    NA    NA    NA         NA        NA       NA  NA
 ## flowrate                    NA    NA    NA         NA        NA       NA  NA
@@ -2624,10 +2657,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                NA      NA  NA NA                NA          NA
 ## w_div_co2_cov               NA      NA  NA NA                NA          NA
 ## w_div_h2o_cov               NA      NA  NA NA                NA          NA
-## co2                         NA      NA  NA NA                NA          NA
-## h2o                         NA      NA  NA NA                NA          NA
-## co2_1                       NA      NA  NA NA                NA          NA
-## h2o_1                       NA      NA  NA NA                NA          NA
+## co2...125                   NA      NA  NA NA                NA          NA
+## h2o...126                   NA      NA  NA NA                NA          NA
+## co2...127                   NA      NA  NA NA                NA          NA
+## h2o...128                   NA      NA  NA NA                NA          NA
 ## co2_signal_strength_7200    NA      NA  NA NA                NA          NA
 ## h2o_signal_strength_7200    NA      NA  NA NA                NA          NA
 ## flowrate                    NA      NA  NA NA                NA          NA
@@ -2736,10 +2769,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  NA     NA       NA         NA         NA
 ## w_div_co2_cov                 NA     NA       NA         NA         NA
 ## w_div_h2o_cov                 NA     NA       NA         NA         NA
-## co2                           NA     NA       NA         NA         NA
-## h2o                           NA     NA       NA         NA         NA
-## co2_1                         NA     NA       NA         NA         NA
-## h2o_1                         NA     NA       NA         NA         NA
+## co2...125                     NA     NA       NA         NA         NA
+## h2o...126                     NA     NA       NA         NA         NA
+## co2...127                     NA     NA       NA         NA         NA
+## h2o...128                     NA     NA       NA         NA         NA
 ## co2_signal_strength_7200      NA     NA       NA         NA         NA
 ## h2o_signal_strength_7200      NA     NA       NA         NA         NA
 ## flowrate                      NA     NA       NA         NA         NA
@@ -2848,10 +2881,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                     NA         NA         NA     NA      NA   NA
 ## w_div_co2_cov                    NA         NA         NA     NA      NA   NA
 ## w_div_h2o_cov                    NA         NA         NA     NA      NA   NA
-## co2                              NA         NA         NA     NA      NA   NA
-## h2o                              NA         NA         NA     NA      NA   NA
-## co2_1                            NA         NA         NA     NA      NA   NA
-## h2o_1                            NA         NA         NA     NA      NA   NA
+## co2...125                        NA         NA         NA     NA      NA   NA
+## h2o...126                        NA         NA         NA     NA      NA   NA
+## co2...127                        NA         NA         NA     NA      NA   NA
+## h2o...128                        NA         NA         NA     NA      NA   NA
 ## co2_signal_strength_7200         NA         NA         NA     NA      NA   NA
 ## h2o_signal_strength_7200         NA         NA         NA     NA      NA   NA
 ## flowrate                         NA         NA         NA     NA      NA   NA
@@ -2960,10 +2993,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                NA    NA     NA          NA      NA          NA
 ## w_div_co2_cov               NA    NA     NA          NA      NA          NA
 ## w_div_h2o_cov               NA    NA     NA          NA      NA          NA
-## co2                         NA    NA     NA          NA      NA          NA
-## h2o                         NA    NA     NA          NA      NA          NA
-## co2_1                       NA    NA     NA          NA      NA          NA
-## h2o_1                       NA    NA     NA          NA      NA          NA
+## co2...125                   NA    NA     NA          NA      NA          NA
+## h2o...126                   NA    NA     NA          NA      NA          NA
+## co2...127                   NA    NA     NA          NA      NA          NA
+## h2o...128                   NA    NA     NA          NA      NA          NA
 ## co2_signal_strength_7200    NA    NA     NA          NA      NA          NA
 ## h2o_signal_strength_7200    NA    NA     NA          NA      NA          NA
 ## flowrate                    NA    NA     NA          NA      NA          NA
@@ -3072,10 +3105,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  NA       NA       NA       NA        NA
 ## w_div_co2_cov                 NA       NA       NA       NA        NA
 ## w_div_h2o_cov                 NA       NA       NA       NA        NA
-## co2                           NA       NA       NA       NA        NA
-## h2o                           NA       NA       NA       NA        NA
-## co2_1                         NA       NA       NA       NA        NA
-## h2o_1                         NA       NA       NA       NA        NA
+## co2...125                     NA       NA       NA       NA        NA
+## h2o...126                     NA       NA       NA       NA        NA
+## co2...127                     NA       NA       NA       NA        NA
+## h2o...128                     NA       NA       NA       NA        NA
 ## co2_signal_strength_7200      NA       NA       NA       NA        NA
 ## h2o_signal_strength_7200      NA       NA       NA       NA        NA
 ## flowrate                      NA       NA       NA       NA        NA
@@ -3184,10 +3217,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                     NA         NA          NA    NA   NA     NA
 ## w_div_co2_cov                    NA         NA          NA    NA   NA     NA
 ## w_div_h2o_cov                    NA         NA          NA    NA   NA     NA
-## co2                              NA         NA          NA    NA   NA     NA
-## h2o                              NA         NA          NA    NA   NA     NA
-## co2_1                            NA         NA          NA    NA   NA     NA
-## h2o_1                            NA         NA          NA    NA   NA     NA
+## co2...125                        NA         NA          NA    NA   NA     NA
+## h2o...126                        NA         NA          NA    NA   NA     NA
+## co2...127                        NA         NA          NA    NA   NA     NA
+## h2o...128                        NA         NA          NA    NA   NA     NA
 ## co2_signal_strength_7200         NA         NA          NA    NA   NA     NA
 ## h2o_signal_strength_7200         NA         NA          NA    NA   NA     NA
 ## flowrate                         NA         NA          NA    NA   NA     NA
@@ -3296,10 +3329,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  NA      NA       NA  NA   NA         NA    NA
 ## w_div_co2_cov                 NA      NA       NA  NA   NA         NA    NA
 ## w_div_h2o_cov                 NA      NA       NA  NA   NA         NA    NA
-## co2                           NA      NA       NA  NA   NA         NA    NA
-## h2o                           NA      NA       NA  NA   NA         NA    NA
-## co2_1                         NA      NA       NA  NA   NA         NA    NA
-## h2o_1                         NA      NA       NA  NA   NA         NA    NA
+## co2...125                     NA      NA       NA  NA   NA         NA    NA
+## h2o...126                     NA      NA       NA  NA   NA         NA    NA
+## co2...127                     NA      NA       NA  NA   NA         NA    NA
+## h2o...128                     NA      NA       NA  NA   NA         NA    NA
 ## co2_signal_strength_7200      NA      NA       NA  NA   NA         NA    NA
 ## h2o_signal_strength_7200      NA      NA       NA  NA   NA         NA    NA
 ## flowrate                      NA      NA       NA  NA   NA         NA    NA
@@ -3408,351 +3441,355 @@ cor_td</code></pre>
 ## w_div_ts_cov                NA    NA     NA      NA      NA            1
 ## w_div_co2_cov               NA    NA     NA      NA      NA           NA
 ## w_div_h2o_cov               NA    NA     NA      NA      NA           NA
-## co2                         NA    NA     NA      NA      NA           NA
-## h2o                         NA    NA     NA      NA      NA           NA
-## co2_1                       NA    NA     NA      NA      NA           NA
-## h2o_1                       NA    NA     NA      NA      NA           NA
+## co2...125                   NA    NA     NA      NA      NA           NA
+## h2o...126                   NA    NA     NA      NA      NA           NA
+## co2...127                   NA    NA     NA      NA      NA           NA
+## h2o...128                   NA    NA     NA      NA      NA           NA
 ## co2_signal_strength_7200    NA    NA     NA      NA      NA           NA
 ## h2o_signal_strength_7200    NA    NA     NA      NA      NA           NA
 ## flowrate                    NA    NA     NA      NA      NA           NA
-##                          w_div_co2_cov w_div_h2o_cov co2 h2o co2_1 h2o_1
-## DOY                                 NA            NA  NA  NA    NA    NA
-## file_records                        NA            NA  NA  NA    NA    NA
-## used_records                        NA            NA  NA  NA    NA    NA
-## Tau                                 NA            NA  NA  NA    NA    NA
-## qc_Tau                              NA            NA  NA  NA    NA    NA
-## rand_err_Tau                        NA            NA  NA  NA    NA    NA
-## H                                   NA            NA  NA  NA    NA    NA
-## qc_H                                NA            NA  NA  NA    NA    NA
-## rand_err_H                          NA            NA  NA  NA    NA    NA
-## LE                                  NA            NA  NA  NA    NA    NA
-## qc_LE                               NA            NA  NA  NA    NA    NA
-## rand_err_LE                         NA            NA  NA  NA    NA    NA
-## co2_flux                            NA            NA  NA  NA    NA    NA
-## qc_co2_flux                         NA            NA  NA  NA    NA    NA
-## rand_err_co2_flux                   NA            NA  NA  NA    NA    NA
-## h2o_flux                            NA            NA  NA  NA    NA    NA
-## qc_h2o_flux                         NA            NA  NA  NA    NA    NA
-## rand_err_h2o_flux                   NA            NA  NA  NA    NA    NA
-## H_strg                              NA            NA  NA  NA    NA    NA
-## LE_strg                             NA            NA  NA  NA    NA    NA
-## co2_strg                            NA            NA  NA  NA    NA    NA
-## h2o_strg                            NA            NA  NA  NA    NA    NA
-## co2_v_minus_adv                     NA            NA  NA  NA    NA    NA
-## h2o_v_minus_adv                     NA            NA  NA  NA    NA    NA
-## co2_molar_density                   NA            NA  NA  NA    NA    NA
-## co2_mole_fraction                   NA            NA  NA  NA    NA    NA
-## co2_mixing_ratio                    NA            NA  NA  NA    NA    NA
-## co2_time_lag                        NA            NA  NA  NA    NA    NA
-## h2o_molar_density                   NA            NA  NA  NA    NA    NA
-## h2o_mole_fraction                   NA            NA  NA  NA    NA    NA
-## h2o_mixing_ratio                    NA            NA  NA  NA    NA    NA
-## h2o_time_lag                        NA            NA  NA  NA    NA    NA
-## sonic_temperature                   NA            NA  NA  NA    NA    NA
-## air_temperature                     NA            NA  NA  NA    NA    NA
-## air_pressure                        NA            NA  NA  NA    NA    NA
-## air_density                         NA            NA  NA  NA    NA    NA
-## air_heat_capacity                   NA            NA  NA  NA    NA    NA
-## air_molar_volume                    NA            NA  NA  NA    NA    NA
-## water_vapor_density                 NA            NA  NA  NA    NA    NA
-## e                                   NA            NA  NA  NA    NA    NA
-## es                                  NA            NA  NA  NA    NA    NA
-## specific_humidity                   NA            NA  NA  NA    NA    NA
-## RH                                  NA            NA  NA  NA    NA    NA
-## VPD                                 NA            NA  NA  NA    NA    NA
-## Tdew                                NA            NA  NA  NA    NA    NA
-## u_unrot                             NA            NA  NA  NA    NA    NA
-## v_unrot                             NA            NA  NA  NA    NA    NA
-## w_unrot                             NA            NA  NA  NA    NA    NA
-## u_rot                               NA            NA  NA  NA    NA    NA
-## v_rot                               NA            NA  NA  NA    NA    NA
-## w_rot                               NA            NA  NA  NA    NA    NA
-## wind_speed                          NA            NA  NA  NA    NA    NA
-## max_speed                           NA            NA  NA  NA    NA    NA
-## wind_dir                            NA            NA  NA  NA    NA    NA
-## yaw                                 NA            NA  NA  NA    NA    NA
-## pitch                               NA            NA  NA  NA    NA    NA
-## u_star_                             NA            NA  NA  NA    NA    NA
-## TKE                                 NA            NA  NA  NA    NA    NA
-## L                                   NA            NA  NA  NA    NA    NA
-## _z_minus_d__div_L                   NA            NA  NA  NA    NA    NA
-## bowen_ratio                         NA            NA  NA  NA    NA    NA
-## T_star_                             NA            NA  NA  NA    NA    NA
-## x_peak                              NA            NA  NA  NA    NA    NA
-## x_offset                            NA            NA  NA  NA    NA    NA
-## x_10_perc_                          NA            NA  NA  NA    NA    NA
-## x_30_perc_                          NA            NA  NA  NA    NA    NA
-## x_50_perc_                          NA            NA  NA  NA    NA    NA
-## x_70_perc_                          NA            NA  NA  NA    NA    NA
-## x_90_perc_                          NA            NA  NA  NA    NA    NA
-## un_Tau                              NA            NA  NA  NA    NA    NA
-## Tau_scf                             NA            NA  NA  NA    NA    NA
-## un_H                                NA            NA  NA  NA    NA    NA
-## H_scf                               NA            NA  NA  NA    NA    NA
-## un_LE                               NA            NA  NA  NA    NA    NA
-## LE_scf                              NA            NA  NA  NA    NA    NA
-## un_co2_flux                         NA            NA  NA  NA    NA    NA
-## co2_scf                             NA            NA  NA  NA    NA    NA
-## un_h2o_flux                         NA            NA  NA  NA    NA    NA
-## h2o_scf                             NA            NA  NA  NA    NA    NA
-## u_spikes                            NA            NA  NA  NA    NA    NA
-## v_spikes                            NA            NA  NA  NA    NA    NA
-## w_spikes                            NA            NA  NA  NA    NA    NA
-## ts_spikes                           NA            NA  NA  NA    NA    NA
-## co2_spikes                          NA            NA  NA  NA    NA    NA
-## h2o_spikes                          NA            NA  NA  NA    NA    NA
-## head_detect                         NA            NA  NA  NA    NA    NA
-## t_out                               NA            NA  NA  NA    NA    NA
-## t_in                                NA            NA  NA  NA    NA    NA
-## aux_in                              NA            NA  NA  NA    NA    NA
-## delta_p                             NA            NA  NA  NA    NA    NA
-## chopper                             NA            NA  NA  NA    NA    NA
-## detector                            NA            NA  NA  NA    NA    NA
-## pll                                 NA            NA  NA  NA    NA    NA
-## sync                                NA            NA  NA  NA    NA    NA
-## mean_value                          NA            NA  NA  NA    NA    NA
-## u_var                               NA            NA  NA  NA    NA    NA
-## v_var                               NA            NA  NA  NA    NA    NA
-## w_var                               NA            NA  NA  NA    NA    NA
-## ts_var                              NA            NA  NA  NA    NA    NA
-## co2_var                             NA            NA  NA  NA    NA    NA
-## h2o_var                             NA            NA  NA  NA    NA    NA
-## w_div_ts_cov                        NA            NA  NA  NA    NA    NA
-## w_div_co2_cov                        1            NA  NA  NA    NA    NA
-## w_div_h2o_cov                       NA             1  NA  NA    NA    NA
-## co2                                 NA            NA   1  NA    NA    NA
-## h2o                                 NA            NA  NA   1    NA    NA
-## co2_1                               NA            NA  NA  NA     1    NA
-## h2o_1                               NA            NA  NA  NA    NA     1
-## co2_signal_strength_7200            NA            NA  NA  NA    NA    NA
-## h2o_signal_strength_7200            NA            NA  NA  NA    NA    NA
-## flowrate                            NA            NA  NA  NA    NA    NA
-##                          co2_signal_strength_7200 h2o_signal_strength_7200
-## DOY                                            NA                       NA
-## file_records                                   NA                       NA
-## used_records                                   NA                       NA
-## Tau                                            NA                       NA
-## qc_Tau                                         NA                       NA
-## rand_err_Tau                                   NA                       NA
-## H                                              NA                       NA
-## qc_H                                           NA                       NA
-## rand_err_H                                     NA                       NA
-## LE                                             NA                       NA
-## qc_LE                                          NA                       NA
-## rand_err_LE                                    NA                       NA
-## co2_flux                                       NA                       NA
-## qc_co2_flux                                    NA                       NA
-## rand_err_co2_flux                              NA                       NA
-## h2o_flux                                       NA                       NA
-## qc_h2o_flux                                    NA                       NA
-## rand_err_h2o_flux                              NA                       NA
-## H_strg                                         NA                       NA
-## LE_strg                                        NA                       NA
-## co2_strg                                       NA                       NA
-## h2o_strg                                       NA                       NA
-## co2_v_minus_adv                                NA                       NA
-## h2o_v_minus_adv                                NA                       NA
-## co2_molar_density                              NA                       NA
-## co2_mole_fraction                              NA                       NA
-## co2_mixing_ratio                               NA                       NA
-## co2_time_lag                                   NA                       NA
-## h2o_molar_density                              NA                       NA
-## h2o_mole_fraction                              NA                       NA
-## h2o_mixing_ratio                               NA                       NA
-## h2o_time_lag                                   NA                       NA
-## sonic_temperature                              NA                       NA
-## air_temperature                                NA                       NA
-## air_pressure                                   NA                       NA
-## air_density                                    NA                       NA
-## air_heat_capacity                              NA                       NA
-## air_molar_volume                               NA                       NA
-## water_vapor_density                            NA                       NA
-## e                                              NA                       NA
-## es                                             NA                       NA
-## specific_humidity                              NA                       NA
-## RH                                             NA                       NA
-## VPD                                            NA                       NA
-## Tdew                                           NA                       NA
-## u_unrot                                        NA                       NA
-## v_unrot                                        NA                       NA
-## w_unrot                                        NA                       NA
-## u_rot                                          NA                       NA
-## v_rot                                          NA                       NA
-## w_rot                                          NA                       NA
-## wind_speed                                     NA                       NA
-## max_speed                                      NA                       NA
-## wind_dir                                       NA                       NA
-## yaw                                            NA                       NA
-## pitch                                          NA                       NA
-## u_star_                                        NA                       NA
-## TKE                                            NA                       NA
-## L                                              NA                       NA
-## _z_minus_d__div_L                              NA                       NA
-## bowen_ratio                                    NA                       NA
-## T_star_                                        NA                       NA
-## x_peak                                         NA                       NA
-## x_offset                                       NA                       NA
-## x_10_perc_                                     NA                       NA
-## x_30_perc_                                     NA                       NA
-## x_50_perc_                                     NA                       NA
-## x_70_perc_                                     NA                       NA
-## x_90_perc_                                     NA                       NA
-## un_Tau                                         NA                       NA
-## Tau_scf                                        NA                       NA
-## un_H                                           NA                       NA
-## H_scf                                          NA                       NA
-## un_LE                                          NA                       NA
-## LE_scf                                         NA                       NA
-## un_co2_flux                                    NA                       NA
-## co2_scf                                        NA                       NA
-## un_h2o_flux                                    NA                       NA
-## h2o_scf                                        NA                       NA
-## u_spikes                                       NA                       NA
-## v_spikes                                       NA                       NA
-## w_spikes                                       NA                       NA
-## ts_spikes                                      NA                       NA
-## co2_spikes                                     NA                       NA
-## h2o_spikes                                     NA                       NA
-## head_detect                                    NA                       NA
-## t_out                                          NA                       NA
-## t_in                                           NA                       NA
-## aux_in                                         NA                       NA
-## delta_p                                        NA                       NA
-## chopper                                        NA                       NA
-## detector                                       NA                       NA
-## pll                                            NA                       NA
-## sync                                           NA                       NA
-## mean_value                                     NA                       NA
-## u_var                                          NA                       NA
-## v_var                                          NA                       NA
-## w_var                                          NA                       NA
-## ts_var                                         NA                       NA
-## co2_var                                        NA                       NA
-## h2o_var                                        NA                       NA
-## w_div_ts_cov                                   NA                       NA
-## w_div_co2_cov                                  NA                       NA
-## w_div_h2o_cov                                  NA                       NA
-## co2                                            NA                       NA
-## h2o                                            NA                       NA
-## co2_1                                          NA                       NA
-## h2o_1                                          NA                       NA
-## co2_signal_strength_7200                        1                       NA
-## h2o_signal_strength_7200                       NA                        1
-## flowrate                                       NA                       NA
-##                          flowrate
-## DOY                            NA
-## file_records                   NA
-## used_records                   NA
-## Tau                            NA
-## qc_Tau                         NA
-## rand_err_Tau                   NA
-## H                              NA
-## qc_H                           NA
-## rand_err_H                     NA
-## LE                             NA
-## qc_LE                          NA
-## rand_err_LE                    NA
-## co2_flux                       NA
-## qc_co2_flux                    NA
-## rand_err_co2_flux              NA
-## h2o_flux                       NA
-## qc_h2o_flux                    NA
-## rand_err_h2o_flux              NA
-## H_strg                         NA
-## LE_strg                        NA
-## co2_strg                       NA
-## h2o_strg                       NA
-## co2_v_minus_adv                NA
-## h2o_v_minus_adv                NA
-## co2_molar_density              NA
-## co2_mole_fraction              NA
-## co2_mixing_ratio               NA
-## co2_time_lag                   NA
-## h2o_molar_density              NA
-## h2o_mole_fraction              NA
-## h2o_mixing_ratio               NA
-## h2o_time_lag                   NA
-## sonic_temperature              NA
-## air_temperature                NA
-## air_pressure                   NA
-## air_density                    NA
-## air_heat_capacity              NA
-## air_molar_volume               NA
-## water_vapor_density            NA
-## e                              NA
-## es                             NA
-## specific_humidity              NA
-## RH                             NA
-## VPD                            NA
-## Tdew                           NA
-## u_unrot                        NA
-## v_unrot                        NA
-## w_unrot                        NA
-## u_rot                          NA
-## v_rot                          NA
-## w_rot                          NA
-## wind_speed                     NA
-## max_speed                      NA
-## wind_dir                       NA
-## yaw                            NA
-## pitch                          NA
-## u_star_                        NA
-## TKE                            NA
-## L                              NA
-## _z_minus_d__div_L              NA
-## bowen_ratio                    NA
-## T_star_                        NA
-## x_peak                         NA
-## x_offset                       NA
-## x_10_perc_                     NA
-## x_30_perc_                     NA
-## x_50_perc_                     NA
-## x_70_perc_                     NA
-## x_90_perc_                     NA
-## un_Tau                         NA
-## Tau_scf                        NA
-## un_H                           NA
-## H_scf                          NA
-## un_LE                          NA
-## LE_scf                         NA
-## un_co2_flux                    NA
-## co2_scf                        NA
-## un_h2o_flux                    NA
-## h2o_scf                        NA
-## u_spikes                       NA
-## v_spikes                       NA
-## w_spikes                       NA
-## ts_spikes                      NA
-## co2_spikes                     NA
-## h2o_spikes                     NA
-## head_detect                    NA
-## t_out                          NA
-## t_in                           NA
-## aux_in                         NA
-## delta_p                        NA
-## chopper                        NA
-## detector                       NA
-## pll                            NA
-## sync                           NA
-## mean_value                     NA
-## u_var                          NA
-## v_var                          NA
-## w_var                          NA
-## ts_var                         NA
-## co2_var                        NA
-## h2o_var                        NA
-## w_div_ts_cov                   NA
-## w_div_co2_cov                  NA
-## w_div_h2o_cov                  NA
-## co2                            NA
-## h2o                            NA
-## co2_1                          NA
-## h2o_1                          NA
-## co2_signal_strength_7200       NA
-## h2o_signal_strength_7200       NA
-## flowrate                        1</code></pre>
+##                          w_div_co2_cov w_div_h2o_cov co2...125 h2o...126
+## DOY                                 NA            NA        NA        NA
+## file_records                        NA            NA        NA        NA
+## used_records                        NA            NA        NA        NA
+## Tau                                 NA            NA        NA        NA
+## qc_Tau                              NA            NA        NA        NA
+## rand_err_Tau                        NA            NA        NA        NA
+## H                                   NA            NA        NA        NA
+## qc_H                                NA            NA        NA        NA
+## rand_err_H                          NA            NA        NA        NA
+## LE                                  NA            NA        NA        NA
+## qc_LE                               NA            NA        NA        NA
+## rand_err_LE                         NA            NA        NA        NA
+## co2_flux                            NA            NA        NA        NA
+## qc_co2_flux                         NA            NA        NA        NA
+## rand_err_co2_flux                   NA            NA        NA        NA
+## h2o_flux                            NA            NA        NA        NA
+## qc_h2o_flux                         NA            NA        NA        NA
+## rand_err_h2o_flux                   NA            NA        NA        NA
+## H_strg                              NA            NA        NA        NA
+## LE_strg                             NA            NA        NA        NA
+## co2_strg                            NA            NA        NA        NA
+## h2o_strg                            NA            NA        NA        NA
+## co2_v_minus_adv                     NA            NA        NA        NA
+## h2o_v_minus_adv                     NA            NA        NA        NA
+## co2_molar_density                   NA            NA        NA        NA
+## co2_mole_fraction                   NA            NA        NA        NA
+## co2_mixing_ratio                    NA            NA        NA        NA
+## co2_time_lag                        NA            NA        NA        NA
+## h2o_molar_density                   NA            NA        NA        NA
+## h2o_mole_fraction                   NA            NA        NA        NA
+## h2o_mixing_ratio                    NA            NA        NA        NA
+## h2o_time_lag                        NA            NA        NA        NA
+## sonic_temperature                   NA            NA        NA        NA
+## air_temperature                     NA            NA        NA        NA
+## air_pressure                        NA            NA        NA        NA
+## air_density                         NA            NA        NA        NA
+## air_heat_capacity                   NA            NA        NA        NA
+## air_molar_volume                    NA            NA        NA        NA
+## water_vapor_density                 NA            NA        NA        NA
+## e                                   NA            NA        NA        NA
+## es                                  NA            NA        NA        NA
+## specific_humidity                   NA            NA        NA        NA
+## RH                                  NA            NA        NA        NA
+## VPD                                 NA            NA        NA        NA
+## Tdew                                NA            NA        NA        NA
+## u_unrot                             NA            NA        NA        NA
+## v_unrot                             NA            NA        NA        NA
+## w_unrot                             NA            NA        NA        NA
+## u_rot                               NA            NA        NA        NA
+## v_rot                               NA            NA        NA        NA
+## w_rot                               NA            NA        NA        NA
+## wind_speed                          NA            NA        NA        NA
+## max_speed                           NA            NA        NA        NA
+## wind_dir                            NA            NA        NA        NA
+## yaw                                 NA            NA        NA        NA
+## pitch                               NA            NA        NA        NA
+## u_star_                             NA            NA        NA        NA
+## TKE                                 NA            NA        NA        NA
+## L                                   NA            NA        NA        NA
+## _z_minus_d__div_L                   NA            NA        NA        NA
+## bowen_ratio                         NA            NA        NA        NA
+## T_star_                             NA            NA        NA        NA
+## x_peak                              NA            NA        NA        NA
+## x_offset                            NA            NA        NA        NA
+## x_10_perc_                          NA            NA        NA        NA
+## x_30_perc_                          NA            NA        NA        NA
+## x_50_perc_                          NA            NA        NA        NA
+## x_70_perc_                          NA            NA        NA        NA
+## x_90_perc_                          NA            NA        NA        NA
+## un_Tau                              NA            NA        NA        NA
+## Tau_scf                             NA            NA        NA        NA
+## un_H                                NA            NA        NA        NA
+## H_scf                               NA            NA        NA        NA
+## un_LE                               NA            NA        NA        NA
+## LE_scf                              NA            NA        NA        NA
+## un_co2_flux                         NA            NA        NA        NA
+## co2_scf                             NA            NA        NA        NA
+## un_h2o_flux                         NA            NA        NA        NA
+## h2o_scf                             NA            NA        NA        NA
+## u_spikes                            NA            NA        NA        NA
+## v_spikes                            NA            NA        NA        NA
+## w_spikes                            NA            NA        NA        NA
+## ts_spikes                           NA            NA        NA        NA
+## co2_spikes                          NA            NA        NA        NA
+## h2o_spikes                          NA            NA        NA        NA
+## head_detect                         NA            NA        NA        NA
+## t_out                               NA            NA        NA        NA
+## t_in                                NA            NA        NA        NA
+## aux_in                              NA            NA        NA        NA
+## delta_p                             NA            NA        NA        NA
+## chopper                             NA            NA        NA        NA
+## detector                            NA            NA        NA        NA
+## pll                                 NA            NA        NA        NA
+## sync                                NA            NA        NA        NA
+## mean_value                          NA            NA        NA        NA
+## u_var                               NA            NA        NA        NA
+## v_var                               NA            NA        NA        NA
+## w_var                               NA            NA        NA        NA
+## ts_var                              NA            NA        NA        NA
+## co2_var                             NA            NA        NA        NA
+## h2o_var                             NA            NA        NA        NA
+## w_div_ts_cov                        NA            NA        NA        NA
+## w_div_co2_cov                        1            NA        NA        NA
+## w_div_h2o_cov                       NA             1        NA        NA
+## co2...125                           NA            NA         1        NA
+## h2o...126                           NA            NA        NA         1
+## co2...127                           NA            NA        NA        NA
+## h2o...128                           NA            NA        NA        NA
+## co2_signal_strength_7200            NA            NA        NA        NA
+## h2o_signal_strength_7200            NA            NA        NA        NA
+## flowrate                            NA            NA        NA        NA
+##                          co2...127 h2o...128 co2_signal_strength_7200
+## DOY                             NA        NA                       NA
+## file_records                    NA        NA                       NA
+## used_records                    NA        NA                       NA
+## Tau                             NA        NA                       NA
+## qc_Tau                          NA        NA                       NA
+## rand_err_Tau                    NA        NA                       NA
+## H                               NA        NA                       NA
+## qc_H                            NA        NA                       NA
+## rand_err_H                      NA        NA                       NA
+## LE                              NA        NA                       NA
+## qc_LE                           NA        NA                       NA
+## rand_err_LE                     NA        NA                       NA
+## co2_flux                        NA        NA                       NA
+## qc_co2_flux                     NA        NA                       NA
+## rand_err_co2_flux               NA        NA                       NA
+## h2o_flux                        NA        NA                       NA
+## qc_h2o_flux                     NA        NA                       NA
+## rand_err_h2o_flux               NA        NA                       NA
+## H_strg                          NA        NA                       NA
+## LE_strg                         NA        NA                       NA
+## co2_strg                        NA        NA                       NA
+## h2o_strg                        NA        NA                       NA
+## co2_v_minus_adv                 NA        NA                       NA
+## h2o_v_minus_adv                 NA        NA                       NA
+## co2_molar_density               NA        NA                       NA
+## co2_mole_fraction               NA        NA                       NA
+## co2_mixing_ratio                NA        NA                       NA
+## co2_time_lag                    NA        NA                       NA
+## h2o_molar_density               NA        NA                       NA
+## h2o_mole_fraction               NA        NA                       NA
+## h2o_mixing_ratio                NA        NA                       NA
+## h2o_time_lag                    NA        NA                       NA
+## sonic_temperature               NA        NA                       NA
+## air_temperature                 NA        NA                       NA
+## air_pressure                    NA        NA                       NA
+## air_density                     NA        NA                       NA
+## air_heat_capacity               NA        NA                       NA
+## air_molar_volume                NA        NA                       NA
+## water_vapor_density             NA        NA                       NA
+## e                               NA        NA                       NA
+## es                              NA        NA                       NA
+## specific_humidity               NA        NA                       NA
+## RH                              NA        NA                       NA
+## VPD                             NA        NA                       NA
+## Tdew                            NA        NA                       NA
+## u_unrot                         NA        NA                       NA
+## v_unrot                         NA        NA                       NA
+## w_unrot                         NA        NA                       NA
+## u_rot                           NA        NA                       NA
+## v_rot                           NA        NA                       NA
+## w_rot                           NA        NA                       NA
+## wind_speed                      NA        NA                       NA
+## max_speed                       NA        NA                       NA
+## wind_dir                        NA        NA                       NA
+## yaw                             NA        NA                       NA
+## pitch                           NA        NA                       NA
+## u_star_                         NA        NA                       NA
+## TKE                             NA        NA                       NA
+## L                               NA        NA                       NA
+## _z_minus_d__div_L               NA        NA                       NA
+## bowen_ratio                     NA        NA                       NA
+## T_star_                         NA        NA                       NA
+## x_peak                          NA        NA                       NA
+## x_offset                        NA        NA                       NA
+## x_10_perc_                      NA        NA                       NA
+## x_30_perc_                      NA        NA                       NA
+## x_50_perc_                      NA        NA                       NA
+## x_70_perc_                      NA        NA                       NA
+## x_90_perc_                      NA        NA                       NA
+## un_Tau                          NA        NA                       NA
+## Tau_scf                         NA        NA                       NA
+## un_H                            NA        NA                       NA
+## H_scf                           NA        NA                       NA
+## un_LE                           NA        NA                       NA
+## LE_scf                          NA        NA                       NA
+## un_co2_flux                     NA        NA                       NA
+## co2_scf                         NA        NA                       NA
+## un_h2o_flux                     NA        NA                       NA
+## h2o_scf                         NA        NA                       NA
+## u_spikes                        NA        NA                       NA
+## v_spikes                        NA        NA                       NA
+## w_spikes                        NA        NA                       NA
+## ts_spikes                       NA        NA                       NA
+## co2_spikes                      NA        NA                       NA
+## h2o_spikes                      NA        NA                       NA
+## head_detect                     NA        NA                       NA
+## t_out                           NA        NA                       NA
+## t_in                            NA        NA                       NA
+## aux_in                          NA        NA                       NA
+## delta_p                         NA        NA                       NA
+## chopper                         NA        NA                       NA
+## detector                        NA        NA                       NA
+## pll                             NA        NA                       NA
+## sync                            NA        NA                       NA
+## mean_value                      NA        NA                       NA
+## u_var                           NA        NA                       NA
+## v_var                           NA        NA                       NA
+## w_var                           NA        NA                       NA
+## ts_var                          NA        NA                       NA
+## co2_var                         NA        NA                       NA
+## h2o_var                         NA        NA                       NA
+## w_div_ts_cov                    NA        NA                       NA
+## w_div_co2_cov                   NA        NA                       NA
+## w_div_h2o_cov                   NA        NA                       NA
+## co2...125                       NA        NA                       NA
+## h2o...126                       NA        NA                       NA
+## co2...127                        1        NA                       NA
+## h2o...128                       NA         1                       NA
+## co2_signal_strength_7200        NA        NA                        1
+## h2o_signal_strength_7200        NA        NA                       NA
+## flowrate                        NA        NA                       NA
+##                          h2o_signal_strength_7200 flowrate
+## DOY                                            NA       NA
+## file_records                                   NA       NA
+## used_records                                   NA       NA
+## Tau                                            NA       NA
+## qc_Tau                                         NA       NA
+## rand_err_Tau                                   NA       NA
+## H                                              NA       NA
+## qc_H                                           NA       NA
+## rand_err_H                                     NA       NA
+## LE                                             NA       NA
+## qc_LE                                          NA       NA
+## rand_err_LE                                    NA       NA
+## co2_flux                                       NA       NA
+## qc_co2_flux                                    NA       NA
+## rand_err_co2_flux                              NA       NA
+## h2o_flux                                       NA       NA
+## qc_h2o_flux                                    NA       NA
+## rand_err_h2o_flux                              NA       NA
+## H_strg                                         NA       NA
+## LE_strg                                        NA       NA
+## co2_strg                                       NA       NA
+## h2o_strg                                       NA       NA
+## co2_v_minus_adv                                NA       NA
+## h2o_v_minus_adv                                NA       NA
+## co2_molar_density                              NA       NA
+## co2_mole_fraction                              NA       NA
+## co2_mixing_ratio                               NA       NA
+## co2_time_lag                                   NA       NA
+## h2o_molar_density                              NA       NA
+## h2o_mole_fraction                              NA       NA
+## h2o_mixing_ratio                               NA       NA
+## h2o_time_lag                                   NA       NA
+## sonic_temperature                              NA       NA
+## air_temperature                                NA       NA
+## air_pressure                                   NA       NA
+## air_density                                    NA       NA
+## air_heat_capacity                              NA       NA
+## air_molar_volume                               NA       NA
+## water_vapor_density                            NA       NA
+## e                                              NA       NA
+## es                                             NA       NA
+## specific_humidity                              NA       NA
+## RH                                             NA       NA
+## VPD                                            NA       NA
+## Tdew                                           NA       NA
+## u_unrot                                        NA       NA
+## v_unrot                                        NA       NA
+## w_unrot                                        NA       NA
+## u_rot                                          NA       NA
+## v_rot                                          NA       NA
+## w_rot                                          NA       NA
+## wind_speed                                     NA       NA
+## max_speed                                      NA       NA
+## wind_dir                                       NA       NA
+## yaw                                            NA       NA
+## pitch                                          NA       NA
+## u_star_                                        NA       NA
+## TKE                                            NA       NA
+## L                                              NA       NA
+## _z_minus_d__div_L                              NA       NA
+## bowen_ratio                                    NA       NA
+## T_star_                                        NA       NA
+## x_peak                                         NA       NA
+## x_offset                                       NA       NA
+## x_10_perc_                                     NA       NA
+## x_30_perc_                                     NA       NA
+## x_50_perc_                                     NA       NA
+## x_70_perc_                                     NA       NA
+## x_90_perc_                                     NA       NA
+## un_Tau                                         NA       NA
+## Tau_scf                                        NA       NA
+## un_H                                           NA       NA
+## H_scf                                          NA       NA
+## un_LE                                          NA       NA
+## LE_scf                                         NA       NA
+## un_co2_flux                                    NA       NA
+## co2_scf                                        NA       NA
+## un_h2o_flux                                    NA       NA
+## h2o_scf                                        NA       NA
+## u_spikes                                       NA       NA
+## v_spikes                                       NA       NA
+## w_spikes                                       NA       NA
+## ts_spikes                                      NA       NA
+## co2_spikes                                     NA       NA
+## h2o_spikes                                     NA       NA
+## head_detect                                    NA       NA
+## t_out                                          NA       NA
+## t_in                                           NA       NA
+## aux_in                                         NA       NA
+## delta_p                                        NA       NA
+## chopper                                        NA       NA
+## detector                                       NA       NA
+## pll                                            NA       NA
+## sync                                           NA       NA
+## mean_value                                     NA       NA
+## u_var                                          NA       NA
+## v_var                                          NA       NA
+## w_var                                          NA       NA
+## ts_var                                         NA       NA
+## co2_var                                        NA       NA
+## h2o_var                                        NA       NA
+## w_div_ts_cov                                   NA       NA
+## w_div_co2_cov                                  NA       NA
+## w_div_h2o_cov                                  NA       NA
+## co2...125                                      NA       NA
+## h2o...126                                      NA       NA
+## co2...127                                      NA       NA
+## h2o...128                                      NA       NA
+## co2_signal_strength_7200                       NA       NA
+## h2o_signal_strength_7200                        1       NA
+## flowrate                                       NA        1</code></pre>
 </div>
-<p>Ничего не вышло, проблема в том, что почти каждая из переменных содержит пропуски, а это приводит к тому, что невозможно провести попарную ковариацию, что ячляется первой частью корелляционного анализа. Это означает, что нам необходимо избаиться от все строк где есть хоть одно значение NA. Воспользуемся для этого готовой функцией drop_na()</p>
+<p>Ничего не вышло, проблема в том, что почти каждая из переменных
+содержит пропуски, а это приводит к тому, что невозможно провести
+попарную ковариацию, что ячляется первой частью корелляционного анализа.
+Это означает, что нам необходимо избаиться от все строк где есть хоть
+одно значение NA. Воспользуемся для этого готовой функцией drop_na()</p>
 <div class="fold o">
 <pre class="r"><code>cor_td = cor(drop_na(tbl_numeric))</code></pre>
 <pre><code>## Warning in cor(drop_na(tbl_numeric)): стандартное отклонение нулевое</code></pre>
@@ -3862,10 +3899,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.043713868  0.0212872848  0.0213565701  0.454425873
 ## w_div_co2_cov             0.349638233 -0.0215932894 -0.0215814175 -0.328887356
 ## w_div_h2o_cov            -0.330390562  0.0171824322  0.0171267434  0.443227139
-## co2                      -0.373683283 -0.0038941199 -0.0038944689 -0.281599820
-## h2o                       0.170302841 -0.0291390839 -0.0291013171 -0.119876852
-## co2_1                    -0.534826415  0.0033145759  0.0032990496 -0.238768681
-## h2o_1                     0.097870180 -0.0256645478 -0.0256336124 -0.091346928
+## co2...125                -0.373683283 -0.0038941199 -0.0038944689 -0.281599820
+## h2o...126                 0.170302841 -0.0291390839 -0.0291013171 -0.119876852
+## co2...127                -0.534826415  0.0033145759  0.0032990496 -0.238768681
+## h2o...128                 0.097870180 -0.0256645478 -0.0256336124 -0.091346928
 ## co2_signal_strength_7200 -0.876205763  0.0490611899  0.0490258892 -0.004844959
 ## h2o_signal_strength_7200 -0.876198935  0.0486001411  0.0485656375 -0.006484236
 ## flowrate                 -0.565003115  0.0290025961  0.0289460782  0.193122600
@@ -3974,10 +4011,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.0014914784  0.551354960  0.9973365643 -0.241404497
 ## w_div_co2_cov             0.1095922862 -0.411708933 -0.3413405142  0.109399393
 ## w_div_h2o_cov            -0.1036715320  0.567476331  0.5310886992 -0.200895064
-## co2                       0.0530937949 -0.342048793 -0.3947286008  0.157306242
-## h2o                       0.0411036655 -0.133029705 -0.0331512389  0.070323631
-## co2_1                     0.0554174138 -0.272274549 -0.3054452133  0.148289107
-## h2o_1                     0.0397014799 -0.090814371  0.0196144596  0.060056581
+## co2...125                 0.0530937949 -0.342048793 -0.3947286008  0.157306242
+## h2o...126                 0.0411036655 -0.133029705 -0.0331512389  0.070323631
+## co2...127                 0.0554174138 -0.272274549 -0.3054452133  0.148289107
+## h2o...128                 0.0397014799 -0.090814371  0.0196144596  0.060056581
 ## co2_signal_strength_7200  0.0051498125  0.014746054  0.0156856210  0.047883058
 ## h2o_signal_strength_7200  0.0067021547  0.010244216  0.0131839549  0.050677555
 ## flowrate                  0.0085446108  0.304853901  0.4040119492 -0.051480814
@@ -4086,10 +4123,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.764685291  0.5880916725 -0.3583036030  0.521311636
 ## w_div_co2_cov            -0.301735919 -0.7758900521  0.3400460161 -0.757671152
 ## w_div_h2o_cov             0.540726694  0.9993464012 -0.4499816629  0.954827997
-## co2                      -0.300718662 -0.2804608591  0.2560243451 -0.243871053
-## h2o                      -0.172945592 -0.1933898926  0.1668010959 -0.146752587
-## co2_1                    -0.218605533 -0.1301494680  0.1721126359 -0.098267925
-## h2o_1                    -0.119203468 -0.1117216864  0.1168834627 -0.068734414
+## co2...125                -0.300718662 -0.2804608591  0.2560243451 -0.243871053
+## h2o...126                -0.172945592 -0.1933898926  0.1668010959 -0.146752587
+## co2...127                -0.218605533 -0.1301494680  0.1721126359 -0.098267925
+## h2o...128                -0.119203468 -0.1117216864  0.1168834627 -0.068734414
 ## co2_signal_strength_7200  0.103594897  0.3269125754 -0.1708702521  0.323325491
 ## h2o_signal_strength_7200  0.099272206  0.3212961672 -0.1635315242  0.317959098
 ## flowrate                  0.365858400  0.6104164682 -0.3463356551  0.578099878
@@ -4198,10 +4235,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.3901029295 -0.1465492617      0.0004180044
 ## w_div_co2_cov             0.9922202107  0.2351204867     -0.3092502490
 ## w_div_h2o_cov            -0.7618499133 -0.3022826520      0.3282851010
-## co2                       0.2203277121  0.0852961139      0.3356072779
-## h2o                       0.1209166282  0.0715543186     -0.0175401525
-## co2_1                     0.1136021589  0.0391807095      0.4077621046
-## h2o_1                     0.0628348194  0.0458777555      0.0122335342
+## co2...125                 0.2203277121  0.0852961139      0.3356072779
+## h2o...126                 0.1209166282  0.0715543186     -0.0175401525
+## co2...127                 0.1136021589  0.0391807095      0.4077621046
+## h2o...128                 0.0628348194  0.0458777555      0.0122335342
 ## co2_signal_strength_7200 -0.2831383703 -0.1257925312      0.3371222719
 ## h2o_signal_strength_7200 -0.2793410880 -0.1230702588      0.3364757859
 ## flowrate                 -0.4386695254 -0.1880280914      0.1960091787
@@ -4310,10 +4347,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.5879547286 -0.3583036030       0.521389295
 ## w_div_co2_cov            -0.7752622958  0.3400460161      -0.757364399
 ## w_div_h2o_cov             0.9994513285 -0.4499816629       0.955352393
-## co2                      -0.2804597911  0.2560243451      -0.244023891
-## h2o                      -0.1927911110  0.1668010959      -0.146240310
-## co2_1                    -0.1298801316  0.1721126359      -0.098032622
-## h2o_1                    -0.1109970656  0.1168834627      -0.068034402
+## co2...125                -0.2804597911  0.2560243451      -0.244023891
+## h2o...126                -0.1927911110  0.1668010959      -0.146240310
+## co2...127                -0.1298801316  0.1721126359      -0.098032622
+## h2o...128                -0.1109970656  0.1168834627      -0.068034402
 ## co2_signal_strength_7200  0.3274092093 -0.1708702521       0.324119835
 ## h2o_signal_strength_7200  0.3218023562 -0.1635315242       0.318760411
 ## flowrate                  0.6115541894 -0.3463356551       0.579731882
@@ -4422,10 +4459,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.4189824074      NA       NA       NA
 ## w_div_co2_cov            -0.3541559163      NA       NA       NA
 ## w_div_h2o_cov             0.3338517330      NA       NA       NA
-## co2                      -0.0927139305      NA       NA       NA
-## h2o                       0.0107061184      NA       NA       NA
-## co2_1                    -0.0679277632      NA       NA       NA
-## h2o_1                     0.0250176800      NA       NA       NA
+## co2...125                -0.0927139305      NA       NA       NA
+## h2o...126                 0.0107061184      NA       NA       NA
+## co2...127                -0.0679277632      NA       NA       NA
+## h2o...128                 0.0250176800      NA       NA       NA
 ## co2_signal_strength_7200  0.0026731834      NA       NA       NA
 ## h2o_signal_strength_7200  0.0014605893      NA       NA       NA
 ## flowrate                  0.1040978008      NA       NA       NA
@@ -4534,10 +4571,10 @@ cor_td</code></pre>
 ## w_div_ts_cov               -0.0002932710    0.0036503117     -0.4822489929
 ## w_div_co2_cov               0.0303349924    0.0237715450      0.2165042400
 ## w_div_h2o_cov              -0.0162267486   -0.0121116292     -0.3390378127
-## co2                        -0.0019979507   -0.0035417302      0.8208738558
-## h2o                         0.0058752106    0.0095089446     -0.1447105319
-## co2_1                      -0.0052717513   -0.0050429082      0.7806789764
-## h2o_1                       0.0050116760    0.0095165388     -0.1780345100
+## co2...125                  -0.0019979507   -0.0035417302      0.8208738558
+## h2o...126                   0.0058752106    0.0095089446     -0.1447105319
+## co2...127                  -0.0052717513   -0.0050429082      0.7806789764
+## h2o...128                   0.0050116760    0.0095165388     -0.1780345100
 ## co2_signal_strength_7200   -0.0181015585   -0.0140085335      0.3997075408
 ## h2o_signal_strength_7200   -0.0183762621   -0.0142249303      0.4056100198
 ## flowrate                   -0.0131359316   -0.0057082920     -0.2561259771
@@ -4646,10 +4683,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  -0.367511197     -0.368667891           NA
 ## w_div_co2_cov                  0.086340321      0.089861544           NA
 ## w_div_h2o_cov                 -0.159996406     -0.165479385           NA
-## co2                            0.786078888      0.783434855           NA
-## h2o                           -0.113737071     -0.069768705           NA
-## co2_1                          0.818672264      0.818424470           NA
-## h2o_1                         -0.113149416     -0.068952768           NA
+## co2...125                      0.786078888      0.783434855           NA
+## h2o...126                     -0.113737071     -0.069768705           NA
+## co2...127                      0.818672264      0.818424470           NA
+## h2o...128                     -0.113149416     -0.068952768           NA
 ## co2_signal_strength_7200       0.598528500      0.592480880           NA
 ## h2o_signal_strength_7200       0.603634204      0.598057616           NA
 ## flowrate                       0.025655392      0.035004768           NA
@@ -4758,10 +4795,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  -0.044570827      0.0109696431     0.0107774660
 ## w_div_co2_cov                  0.126011516      0.0682609881     0.0685161841
 ## w_div_h2o_cov                 -0.181103936     -0.1014531883    -0.1014841825
-## co2                           -0.110294845     -0.1363219221    -0.1362475642
-## h2o                            0.999563793      0.9922784105     0.9923080790
-## co2_1                         -0.082705631     -0.0810329587    -0.0811011028
-## h2o_1                          0.992727556      0.9996402177     0.9996310392
+## co2...125                     -0.110294845     -0.1363219221    -0.1362475642
+## h2o...126                      0.999563793      0.9922784105     0.9923080790
+## co2...127                     -0.082705631     -0.0810329587    -0.0811011028
+## h2o...128                      0.992727556      0.9996402177     0.9996310392
 ## co2_signal_strength_7200      -0.251710325     -0.1759858908    -0.1764741868
 ## h2o_signal_strength_7200      -0.241211702     -0.1661674815    -0.1666549816
 ## flowrate                       0.117319176      0.2266896683     0.2260848136
@@ -4870,10 +4907,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.520609702      0.4618014351    0.4683279551
 ## w_div_co2_cov            -0.374760735     -0.4005915339   -0.4114430491
 ## w_div_h2o_cov             0.571012896      0.6268413104    0.6435133821
-## co2                      -0.260211164     -0.3351637322   -0.3311817265
-## h2o                      -0.188045379      0.1590863947    0.0949962187
-## co2_1                    -0.138621255     -0.1164552971   -0.1126931458
-## h2o_1                    -0.120735036      0.2664430725    0.2035455408
+## co2...125                -0.260211164     -0.3351637322   -0.3311817265
+## h2o...126                -0.188045379      0.1590863947    0.0949962187
+## co2...127                -0.138621255     -0.1164552971   -0.1126931458
+## h2o...128                -0.120735036      0.2664430725    0.2035455408
 ## co2_signal_strength_7200  0.218534083      0.4396479613    0.4584675371
 ## h2o_signal_strength_7200  0.214906461      0.4360126002    0.4541189502
 ## flowrate                  0.509095671      0.8834637684    0.8823166773
@@ -4982,10 +5019,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.097726475 -0.390749348       0.038063604
 ## w_div_co2_cov             0.014144360  0.370047751       0.044429827
 ## w_div_h2o_cov            -0.034476323 -0.581521638      -0.063159975
-## co2                      -0.113665693  0.271585536      -0.153615137
-## h2o                      -0.169585688 -0.215610217       0.984645539
-## co2_1                    -0.202311951  0.041637124      -0.086747937
-## h2o_1                    -0.202362800 -0.324489012       0.998045579
+## co2...125                -0.113665693  0.271585536      -0.153615137
+## h2o...126                -0.169585688 -0.215610217       0.984645539
+## co2...127                -0.202311951  0.041637124      -0.086747937
+## h2o...128                -0.202362800 -0.324489012       0.998045579
 ## co2_signal_strength_7200 -0.238606483 -0.479017352      -0.148428919
 ## h2o_signal_strength_7200 -0.239925120 -0.476254215      -0.138966636
 ## flowrate                 -0.319310273 -0.915795499       0.273516080
@@ -5094,10 +5131,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                  0.395941401       -0.0247875823  0.0140205904
 ## w_div_co2_cov                -0.374760058        0.1042683188  0.0684985671
 ## w_div_h2o_cov                 0.590196407       -0.1574495174 -0.1024867230
-## co2                          -0.274793937       -0.1127377513 -0.1399314898
-## h2o                           0.199069636        0.9982955421  0.9926361122
-## co2_1                        -0.045370680       -0.0761131333 -0.0864668719
-## h2o_1                         0.308405837        0.9958736583  0.9992393105
+## co2...125                    -0.274793937       -0.1127377513 -0.1399314898
+## h2o...126                     0.199069636        0.9982955421  0.9926361122
+## co2...127                    -0.045370680       -0.0761131333 -0.0864668719
+## h2o...128                     0.308405837        0.9958736583  0.9992393105
 ## co2_signal_strength_7200      0.479594841       -0.2218630705 -0.1820694687
 ## h2o_signal_strength_7200      0.476599558       -0.2114757634 -0.1722259707
 ## flowrate                      0.914744207        0.1520007441  0.2203730283
@@ -5206,10 +5243,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.482137903      0.0109593568 -4.099390e-01
 ## w_div_co2_cov            -0.405870236      0.0682747395  4.306025e-01
 ## w_div_h2o_cov             0.653163386     -0.1014550317 -6.527276e-01
-## co2                      -0.335905207     -0.1363181798  2.253113e-01
-## h2o                       0.053136220      0.9922805165  5.063340e-01
-## co2_1                    -0.127035626     -0.0810368172  5.549676e-02
-## h2o_1                     0.159402266      0.9996402421  4.086146e-01
+## co2...125                -0.335905207     -0.1363181798  2.253113e-01
+## h2o...126                 0.053136220      0.9922805165  5.063340e-01
+## co2...127                -0.127035626     -0.0810368172  5.549676e-02
+## h2o...128                 0.159402266      0.9996402421  4.086146e-01
 ## co2_signal_strength_7200  0.428550713     -0.1760121397 -5.425136e-01
 ## h2o_signal_strength_7200  0.424244929     -0.1661936880 -5.317765e-01
 ## flowrate                  0.850853977      0.2266574301 -6.802842e-01
@@ -5318,10 +5355,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.468888224  0.0189247271 -0.0137452932 -0.2455270211
 ## w_div_co2_cov            -0.425043109  0.0615545086  0.0873163964 -0.0219527126
 ## w_div_h2o_cov             0.684557433 -0.1007617148 -0.0625034981 -0.0003240800
-## co2                      -0.274002223 -0.1405794221 -0.0459766284  0.1116712857
-## h2o                      -0.335165688  0.9857623516 -0.0380266108 -0.1096923143
-## co2_1                    -0.090239825 -0.0841102383 -0.0960525493  0.1025299888
-## h2o_1                    -0.234128625  0.9932234402 -0.0585677405 -0.1135845975
+## co2...125                -0.274002223 -0.1405794221 -0.0459766284  0.1116712857
+## h2o...126                -0.335165688  0.9857623516 -0.0380266108 -0.1096923143
+## co2...127                -0.090239825 -0.0841102383 -0.0960525493  0.1025299888
+## h2o...128                -0.234128625  0.9932234402 -0.0585677405 -0.1135845975
 ## co2_signal_strength_7200  0.481297388 -0.1696406739 -0.2021845184  0.0023162575
 ## h2o_signal_strength_7200  0.473354305 -0.1598577734 -0.2049539416 -0.0043061586
 ## flowrate                  0.748032065  0.2331950688 -0.1860988303 -0.0509219939
@@ -5430,10 +5467,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.2892775201  0.227240527  0.0008776380  0.002375373
 ## w_div_co2_cov             0.0255990102 -0.102632714  0.0007439578  0.027873557
 ## w_div_h2o_cov             0.0374897774  0.166892093  0.0022375721 -0.015946301
-## co2                      -0.2723087512 -0.298643923 -0.0072371096 -0.004266389
-## h2o                      -0.0158039357 -0.152682835  0.0015765342  0.006055011
-## co2_1                    -0.3163726022 -0.343858747 -0.0126817349 -0.007615879
-## h2o_1                    -0.0295401767 -0.163852277 -0.0012873649  0.005247513
+## co2...125                -0.2723087512 -0.298643923 -0.0072371096 -0.004266389
+## h2o...126                -0.0158039357 -0.152682835  0.0015765342  0.006055011
+## co2...127                -0.3163726022 -0.343858747 -0.0126817349 -0.007615879
+## h2o...128                -0.0295401767 -0.163852277 -0.0012873649  0.005247513
 ## co2_signal_strength_7200 -0.3065732078 -0.326834643 -0.0199226971 -0.019148339
 ## h2o_signal_strength_7200 -0.3063852866 -0.332090979 -0.0196173864 -0.019454574
 ## flowrate                 -0.1394783711 -0.144180901 -0.0208105063 -0.013014655
@@ -5542,10 +5579,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.227240527 -0.0223515060  0.1437480049  0.160849426
 ## w_div_co2_cov            -0.102632714 -0.0069623958  0.0213297735  0.040266458
 ## w_div_h2o_cov             0.166892093  0.0251690293 -0.0061487408 -0.023115945
-## co2                      -0.298643923 -0.0036746929 -0.0700111653 -0.078528026
-## h2o                      -0.152682835 -0.0160569290  0.1244137414  0.090898607
-## co2_1                    -0.343858747  0.0022213562 -0.0821498906 -0.075645617
-## h2o_1                    -0.163852277 -0.0132857895  0.1183918287  0.091069749
+## co2...125                -0.298643923 -0.0036746929 -0.0700111653 -0.078528026
+## h2o...126                -0.152682835 -0.0160569290  0.1244137414  0.090898607
+## co2...127                -0.343858747  0.0022213562 -0.0821498906 -0.075645617
+## h2o...128                -0.163852277 -0.0132857895  0.1183918287  0.091069749
 ## co2_signal_strength_7200 -0.326834643  0.0114648557 -0.0698064028 -0.002260370
 ## h2o_signal_strength_7200 -0.332090979  0.0111020800 -0.0650369692  0.002722943
 ## flowrate                 -0.144180901  0.0223497258 -0.0312654728  0.018763496
@@ -5654,10 +5691,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.197220628  0.481202738  0.585525666  1.626225e-03
 ## w_div_co2_cov             0.031452241 -0.359817433 -0.301296016 -1.215252e-03
 ## w_div_h2o_cov            -0.007277171  0.487515227  0.503021444  5.651549e-03
-## co2                      -0.133631647 -0.327821826 -0.368740468  9.208442e-03
-## h2o                       0.103167594 -0.089806301 -0.153787380 -1.628947e-03
-## co2_1                    -0.143979253 -0.275588885 -0.311894937  1.272590e-02
-## h2o_1                     0.099751722 -0.056103304 -0.116341261  3.131774e-04
+## co2...125                -0.133631647 -0.327821826 -0.368740468  9.208442e-03
+## h2o...126                 0.103167594 -0.089806301 -0.153787380 -1.628947e-03
+## co2...127                -0.143979253 -0.275588885 -0.311894937  1.272590e-02
+## h2o...128                 0.099751722 -0.056103304 -0.116341261  3.131774e-04
 ## co2_signal_strength_7200 -0.117501546 -0.009902193 -0.058235101  1.498970e-02
 ## h2o_signal_strength_7200 -0.114014688 -0.012580304 -0.063257154  1.517435e-02
 ## flowrate                 -0.022251464  0.234022604  0.261909644  1.238213e-02
@@ -5766,10 +5803,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                 -3.576870e-02  9.655632e-03  0.9242731521
 ## w_div_co2_cov                 2.898188e-02 -4.168286e-03 -0.3878654590
 ## w_div_h2o_cov                -4.194196e-02  9.734496e-03  0.5479873816
-## co2                           6.039701e-03 -1.060112e-02 -0.4100837784
-## h2o                          -4.286525e-03 -1.559944e-03  0.0262318527
-## co2_1                         3.853068e-03 -5.266177e-03 -0.3238767277
-## h2o_1                        -5.483192e-03  1.455978e-03  0.0768445380
+## co2...125                     6.039701e-03 -1.060112e-02 -0.4100837784
+## h2o...126                    -4.286525e-03 -1.559944e-03  0.0262318527
+## co2...127                     3.853068e-03 -5.266177e-03 -0.3238767277
+## h2o...128                    -5.483192e-03  1.455978e-03  0.0768445380
 ## co2_signal_strength_7200      3.496483e-03  1.775705e-02 -0.0234155242
 ## h2o_signal_strength_7200      3.440720e-03  1.741126e-02 -0.0262629483
 ## flowrate                     -9.259738e-03  2.017434e-02  0.3922800655
@@ -5878,10 +5915,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.036521082 -0.199864903 -0.120026050 -0.114834689
 ## w_div_co2_cov             0.025899836  0.155278994  0.097895729  0.096155609
 ## w_div_h2o_cov            -0.078987808 -0.234174416 -0.159194510 -0.154044818
-## co2                      -0.024442520  0.104614430  0.043057752  0.039354286
-## h2o                      -0.024649183 -0.004295464 -0.015019370 -0.017108336
-## co2_1                    -0.049028955  0.064885502  0.010473609  0.007011069
-## h2o_1                    -0.035270838 -0.025450340 -0.031130474 -0.032965837
+## co2...125                -0.024442520  0.104614430  0.043057752  0.039354286
+## h2o...126                -0.024649183 -0.004295464 -0.015019370 -0.017108336
+## co2...127                -0.049028955  0.064885502  0.010473609  0.007011069
+## h2o...128                -0.035270838 -0.025450340 -0.031130474 -0.032965837
 ## co2_signal_strength_7200 -0.093595728 -0.067755256 -0.080338021 -0.082491327
 ## h2o_signal_strength_7200 -0.094000166 -0.067029928 -0.080146262 -0.082335447
 ## flowrate                 -0.088445414 -0.161682752 -0.126771630 -0.125184679
@@ -5990,10 +6027,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.126224436 -0.1409376072 -0.215699770  0.454839389
 ## w_div_co2_cov             0.105237472  0.1167665799  0.181601544 -0.329170517
 ## w_div_h2o_cov            -0.164928952 -0.1791538312 -0.257914752  0.443700059
-## co2                       0.048692181  0.0611709870  0.121182216 -0.281851514
-## h2o                      -0.017118745 -0.0158325435 -0.011678415 -0.119149428
-## co2_1                     0.014961969  0.0256725148  0.082396934 -0.238776901
-## h2o_1                    -0.033830614 -0.0336976613 -0.033441326 -0.090525514
+## co2...125                 0.048692181  0.0611709870  0.121182216 -0.281851514
+## h2o...126                -0.017118745 -0.0158325435 -0.011678415 -0.119149428
+## co2...127                 0.014961969  0.0256725148  0.082396934 -0.238776901
+## h2o...128                -0.033830614 -0.0336976613 -0.033441326 -0.090525514
 ## co2_signal_strength_7200 -0.081600796 -0.0810183479 -0.066894298 -0.004225755
 ## h2o_signal_strength_7200 -0.081368271 -0.0806692592 -0.065964977 -0.005851478
 ## flowrate                 -0.131483200 -0.1396166439 -0.159049083  0.194105097
@@ -6102,10 +6139,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.0748943393  0.9998525119 -0.1135045099
 ## w_div_co2_cov             0.0624455035 -0.3876092520  0.1055648554
 ## w_div_h2o_cov            -0.0968424553  0.5871436796 -0.1434225741
-## co2                       0.0413657755 -0.3995205388  0.0554339973
-## h2o                      -0.0091390848 -0.0462603484 -0.0289021209
-## co2_1                     0.0322728566 -0.3019905215  0.0359739528
-## h2o_1                    -0.0141263317  0.0107877378 -0.0386894876
+## co2...125                 0.0413657755 -0.3995205388  0.0554339973
+## h2o...126                -0.0091390848 -0.0462603484 -0.0289021209
+## co2...127                 0.0322728566 -0.3019905215  0.0359739528
+## h2o...128                -0.0141263317  0.0107877378 -0.0386894876
 ## co2_signal_strength_7200 -0.0010687543  0.0416163897 -0.0229447418
 ## h2o_signal_strength_7200 -0.0006829029  0.0387798110 -0.0225537240
 ## flowrate                 -0.0388817905  0.4357059320 -0.0798353669
@@ -6214,10 +6251,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.5905077377 -0.1284996587 -0.3870502773
 ## w_div_co2_cov            -0.7783982308  0.1189622024  0.9998931169
 ## w_div_h2o_cov             0.9997474090 -0.1492925410 -0.7715543851
-## co2                      -0.2805465313  0.0587209121  0.2120378315
-## h2o                      -0.1895502013 -0.0261129706  0.1296087254
-## co2_1                    -0.1302927748  0.0399197856  0.1026916307
-## h2o_1                    -0.1079577413 -0.0358137119  0.0702193784
+## co2...125                -0.2805465313  0.0587209121  0.2120378315
+## h2o...126                -0.1895502013 -0.0261129706  0.1296087254
+## co2...127                -0.1302927748  0.0399197856  0.1026916307
+## h2o...128                -0.1079577413 -0.0358137119  0.0702193784
 ## co2_signal_strength_7200  0.3264356036 -0.0150448986 -0.3013826883
 ## h2o_signal_strength_7200  0.3208875610 -0.0146259420 -0.2974643900
 ## flowrate                  0.6103856518 -0.0777320651 -0.4480784689
@@ -6326,10 +6363,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.1284996587  0.5903655490 -0.1284996587
 ## w_div_co2_cov             0.1189622024 -0.7777423232  0.1189622024
 ## w_div_h2o_cov            -0.1492925410  0.9998340180 -0.1492925410
-## co2                       0.0587209121 -0.2805457412  0.0587209121
-## h2o                      -0.0261129706 -0.1889722681 -0.0261129706
-## co2_1                     0.0399197856 -0.1300296711  0.0399197856
-## h2o_1                    -0.0358137119 -0.1072561102 -0.0358137119
+## co2...125                 0.0587209121 -0.2805457412  0.0587209121
+## h2o...126                -0.0261129706 -0.1889722681 -0.0261129706
+## co2...127                 0.0399197856 -0.1300296711  0.0399197856
+## h2o...128                -0.0358137119 -0.1072561102 -0.0358137119
 ## co2_signal_strength_7200 -0.0150448986  0.3269174624 -0.0150448986
 ## h2o_signal_strength_7200 -0.0146259420  0.3213786870 -0.0146259420
 ## flowrate                 -0.0777320651  0.6114999778 -0.0777320651
@@ -6438,10 +6475,10 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.2961835864 -0.299694237 -0.205187015 -0.0719350189
 ## w_div_co2_cov             0.2063639364  0.160923637  0.211104053  0.0352113389
 ## w_div_h2o_cov            -0.2218704482 -0.209703115 -0.218598650 -0.0776110348
-## co2                       0.1266715998  0.136690159  0.038764145  0.0016165008
-## h2o                      -0.0385538198 -0.090053467 -0.086668950 -0.1907166083
-## co2_1                     0.1030389659  0.105758254 -0.014768254 -0.0749018899
-## h2o_1                    -0.0511666762 -0.105072999 -0.110883100 -0.2146755659
+## co2...125                 0.1266715998  0.136690159  0.038764145  0.0016165008
+## h2o...126                -0.0385538198 -0.090053467 -0.086668950 -0.1907166083
+## co2...127                 0.1030389659  0.105758254 -0.014768254 -0.0749018899
+## h2o...128                -0.0511666762 -0.105072999 -0.110883100 -0.2146755659
 ## co2_signal_strength_7200  0.0652190867  0.041222373 -0.161095093 -0.1675852276
 ## h2o_signal_strength_7200  0.0682418500  0.041605913 -0.163094613 -0.1687238149
 ## flowrate                 -0.1064640631 -0.136396814 -0.206382978 -0.2913372045
@@ -6550,10 +6587,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.1517737542 -0.0203859198          NA    NA   NA
 ## w_div_co2_cov            -0.0143420856  0.0696480923          NA    NA   NA
 ## w_div_h2o_cov             0.0438701335 -0.0824223106          NA    NA   NA
-## co2                      -0.1156474541  0.0026140750          NA    NA   NA
-## h2o                      -0.1044902896 -0.0689395572          NA    NA   NA
-## co2_1                    -0.0974223195 -0.0012605538          NA    NA   NA
-## h2o_1                    -0.0916330595 -0.0699957019          NA    NA   NA
+## co2...125                -0.1156474541  0.0026140750          NA    NA   NA
+## h2o...126                -0.1044902896 -0.0689395572          NA    NA   NA
+## co2...127                -0.0974223195 -0.0012605538          NA    NA   NA
+## h2o...128                -0.0916330595 -0.0699957019          NA    NA   NA
 ## co2_signal_strength_7200 -0.0432699132 -0.0194648817          NA    NA   NA
 ## h2o_signal_strength_7200 -0.0468629228 -0.0206076940          NA    NA   NA
 ## flowrate                  0.0814894372 -0.0133028676          NA    NA   NA
@@ -6662,10 +6699,10 @@ cor_td</code></pre>
 ## w_div_ts_cov                 NA      NA      NA       NA  NA   NA  0.040010794
 ## w_div_co2_cov                NA      NA      NA       NA  NA   NA -0.303130760
 ## w_div_h2o_cov                NA      NA      NA       NA  NA   NA  0.329930055
-## co2                          NA      NA      NA       NA  NA   NA  0.324217163
-## h2o                          NA      NA      NA       NA  NA   NA -0.256302310
-## co2_1                        NA      NA      NA       NA  NA   NA  0.486237073
-## h2o_1                        NA      NA      NA       NA  NA   NA -0.179432483
+## co2...125                    NA      NA      NA       NA  NA   NA  0.324217163
+## h2o...126                    NA      NA      NA       NA  NA   NA -0.256302310
+## co2...127                    NA      NA      NA       NA  NA   NA  0.486237073
+## h2o...128                    NA      NA      NA       NA  NA   NA -0.179432483
 ## co2_signal_strength_7200     NA      NA      NA       NA  NA   NA  0.992642283
 ## h2o_signal_strength_7200     NA      NA      NA       NA  NA   NA  0.991921063
 ## flowrate                     NA      NA      NA       NA  NA   NA  0.574881955
@@ -6774,10 +6811,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.493982305  0.650308402  0.458593247  0.0493045288
 ## w_div_co2_cov            -0.284352828 -0.284238808 -0.351416629  0.0005360762
 ## w_div_h2o_cov             0.458210412  0.509748028  0.476056276  0.0012810820
-## co2                      -0.339231423 -0.377857652 -0.300822017 -0.0100397064
-## h2o                      -0.149820092 -0.149446110 -0.121255407 -0.1023264095
-## co2_1                    -0.292390431 -0.315318025 -0.245215933 -0.0443900324
-## h2o_1                    -0.117710318 -0.109228807 -0.086785503 -0.1095110515
+## co2...125                -0.339231423 -0.377857652 -0.300822017 -0.0100397064
+## h2o...126                -0.149820092 -0.149446110 -0.121255407 -0.1023264095
+## co2...127                -0.292390431 -0.315318025 -0.245215933 -0.0443900324
+## h2o...128                -0.117710318 -0.109228807 -0.086785503 -0.1095110515
 ## co2_signal_strength_7200 -0.068713554 -0.054400421  0.019451442 -0.0588851828
 ## h2o_signal_strength_7200 -0.073275991 -0.059880327  0.017055606 -0.0597894521
 ## flowrate                  0.218976764  0.286854295  0.243390262 -0.1212227049
@@ -6886,14 +6923,14 @@ cor_td</code></pre>
 ## w_div_ts_cov             -0.070038023  0.2514625249  1.0000000000 -0.3872578879
 ## w_div_co2_cov             0.115181997 -0.5988381073 -0.3872578879  1.0000000000
 ## w_div_h2o_cov            -0.071005092  0.7421390162  0.5893103100 -0.7757621997
-## co2                       0.240956926 -0.0840786487 -0.3989998572  0.2126145631
-## h2o                       0.025263883 -0.1018322232 -0.0467689042  0.1295277214
-## co2_1                     0.240196156  0.0289877268 -0.3003499181  0.1027714537
-## h2o_1                     0.021159395 -0.0426756625  0.0108635676  0.0698086992
+## co2...125                 0.240956926 -0.0840786487 -0.3989998572  0.2126145631
+## h2o...126                 0.025263883 -0.1018322232 -0.0467689042  0.1295277214
+## co2...127                 0.240196156  0.0289877268 -0.3003499181  0.1027714537
+## h2o...128                 0.021159395 -0.0426756625  0.0108635676  0.0698086992
 ## co2_signal_strength_7200  0.047155543  0.2660728495  0.0455835943 -0.3024605273
 ## h2o_signal_strength_7200  0.051517330  0.2638486310  0.0427575261 -0.2985288608
 ## flowrate                 -0.043521957  0.4349905183  0.4403604947 -0.4503612447
-##                          w_div_h2o_cov          co2          h2o        co2_1
+##                          w_div_h2o_cov    co2...125    h2o...126    co2...127
 ## DOY                       -0.330390562 -0.373683283  0.170302841 -0.534826415
 ## file_records               0.017182432 -0.003894120 -0.029139084  0.003314576
 ## used_records               0.017126743 -0.003894469 -0.029101317  0.003299050
@@ -6998,14 +7035,14 @@ cor_td</code></pre>
 ## w_div_ts_cov               0.589310310 -0.398999857 -0.046768904 -0.300349918
 ## w_div_co2_cov             -0.775762200  0.212614563  0.129527721  0.102771454
 ## w_div_h2o_cov              1.000000000 -0.280890907 -0.183703690 -0.129188324
-## co2                       -0.280890907  1.000000000 -0.092389922  0.969355452
-## h2o                       -0.183703690 -0.092389922  1.000000000 -0.065574364
-## co2_1                     -0.129188324  0.969355452 -0.065574364  1.000000000
-## h2o_1                     -0.101426945 -0.120790660  0.992666896 -0.065375792
+## co2...125                 -0.280890907  1.000000000 -0.092389922  0.969355452
+## h2o...126                 -0.183703690 -0.092389922  1.000000000 -0.065574364
+## co2...127                 -0.129188324  0.969355452 -0.065574364  1.000000000
+## h2o...128                 -0.101426945 -0.120790660  0.992666896 -0.065375792
 ## co2_signal_strength_7200   0.328568244  0.327457473 -0.253619213  0.492756288
 ## h2o_signal_strength_7200   0.323070463  0.331861067 -0.243135868  0.496476501
 ## flowrate                   0.616495195 -0.326000406  0.107728838 -0.088900842
-##                                  h2o_1 co2_signal_strength_7200
+##                              h2o...128 co2_signal_strength_7200
 ## DOY                       0.0978701801             -0.876205763
 ## file_records             -0.0256645478              0.049061190
 ## used_records             -0.0256336124              0.049025889
@@ -7110,10 +7147,10 @@ cor_td</code></pre>
 ## w_div_ts_cov              0.0108635676              0.045583594
 ## w_div_co2_cov             0.0698086992             -0.302460527
 ## w_div_h2o_cov            -0.1014269450              0.328568244
-## co2                      -0.1207906595              0.327457473
-## h2o                       0.9926668957             -0.253619213
-## co2_1                    -0.0653757918              0.492756288
-## h2o_1                     1.0000000000             -0.175599174
+## co2...125                -0.1207906595              0.327457473
+## h2o...126                 0.9926668957             -0.253619213
+## co2...127                -0.0653757918              0.492756288
+## h2o...128                 1.0000000000             -0.175599174
 ## co2_signal_strength_7200 -0.1755991738              1.000000000
 ## h2o_signal_strength_7200 -0.1658096998              0.999649752
 ## flowrate                  0.2212901269              0.587320589
@@ -7222,19 +7259,25 @@ cor_td</code></pre>
 ## w_div_ts_cov                         0.0427575261  0.440360495
 ## w_div_co2_cov                       -0.2985288608 -0.450361245
 ## w_div_h2o_cov                        0.3230704628  0.616495195
-## co2                                  0.3318610673 -0.326000406
-## h2o                                 -0.2431358676  0.107728838
-## co2_1                                0.4964765010 -0.088900842
-## h2o_1                               -0.1658096998  0.221290127
+## co2...125                            0.3318610673 -0.326000406
+## h2o...126                           -0.2431358676  0.107728838
+## co2...127                            0.4964765010 -0.088900842
+## h2o...128                           -0.1658096998  0.221290127
 ## co2_signal_strength_7200             0.9996497519  0.587320589
 ## h2o_signal_strength_7200             1.0000000000  0.584487987
 ## flowrate                             0.5844879866  1.000000000</code></pre>
 </div>
-<p>Полученные результаты довольно тяжело интерпретировать т.к. они выдаются в виде матрицы, поэтому преобразуем матрицу в таблицу, выберем интересующий нас столбец, а из него возьмем только те имена строк(переменных) для которых значения коэффициента детерминации было больше 0,1 (личная прихоть)</p>
+<p>Полученные результаты довольно тяжело интерпретировать т.к. они
+выдаются в виде матрицы, поэтому преобразуем матрицу в таблицу, выберем
+интересующий нас столбец, а из него возьмем только те имена
+строк(переменных) для которых значения коэффициента детерминации было
+больше 0,1 (личная прихоть)</p>
 <pre class="r"><code>cor_td = cor(drop_na(tbl_numeric)) %&gt;% as.data.frame %&gt;% select(co2_flux)</code></pre>
 <pre><code>## Warning in cor(drop_na(tbl_numeric)): стандартное отклонение нулевое</code></pre>
 <pre class="r"><code>vars = row.names(cor_td)[cor_td$co2_flux^2 &gt; .1] %&gt;% na.exclude</code></pre>
-<p>Несколько советов для регрессионного анализа. Собрать все переменные из вектора с именнами переменных в одну формулу можно следующим образом:</p>
+<p>Несколько советов для регрессионного анализа. Собрать все переменные
+из вектора с именнами переменных в одну формулу можно следующим
+образом:</p>
 <pre class="r"><code>formula = as.formula(paste(&quot;co2_flux~&quot;, paste(vars,collapse = &quot;+&quot;), sep=&quot;&quot;))
 formula</code></pre>
 <pre><code>## co2_flux ~ DOY + Tau + rand_err_Tau + H + LE + qc_LE + rand_err_LE + 
@@ -7243,10 +7286,12 @@ formula</code></pre>
 ##     air_molar_volume + es + RH + VPD + u_star_ + T_star_ + un_Tau + 
 ##     un_H + un_LE + un_co2_flux + un_h2o_flux + w_var + h2o_var + 
 ##     w_div_ts_cov + w_div_co2_cov + w_div_h2o_cov + flowrate</code></pre>
-<p>Создать произвольные(возможно пересекающиеся) обучающую и тестирующую выборки можно с помощью команды sample_n из пакета dplyr</p>
+<p>Создать произвольные(возможно пересекающиеся) обучающую и тестирующую
+выборки можно с помощью команды sample_n из пакета dplyr</p>
 <pre class="r"><code>teaching_tbl = sample_n(tbl, floor(length(tbl$date)*.7))
 testing_tbl = sample_n(tbl, floor(length(tbl$date)*.3))</code></pre>
-<p>Если вы хотите сделать непересекающиеся подвыборки, то это можно сделать базовым набором функций</p>
+<p>Если вы хотите сделать непересекающиеся подвыборки, то это можно
+сделать базовым набором функций</p>
 <pre class="r"><code>row_numbers = 1:length(tbl$date)
 teach = sample(row_numbers, floor(length(tbl$date)*.7))
 test = row_numbers[-teach]

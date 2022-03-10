@@ -13,8 +13,8 @@
 
 <title>Введение в программирование на языке R</title>
 
-<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -297,8 +297,10 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Эконометрика</li>
 </ul>
 <hr />
-<div id="уровня-организации-языков-и-где-на-них-находится-r" class="section level4">
-<h4>3 уровня организации языков и где на них <strong>находится R</strong></h4>
+<div id="уровня-организации-языков-и-где-на-них-находится-r"
+class="section level4">
+<h4>3 уровня организации языков и где на них <strong>находится
+R</strong></h4>
 <ul>
 <li><strong>Высокиоуровневые</strong> vs Низкоуровневые</li>
 <li><strong>Общие</strong> vs Специализированные</li>
@@ -411,7 +413,8 @@ x&lt;5</code></pre>
 x</code></pre>
 <pre><code>## [1] Inf</code></pre>
 <hr />
-<div id="правила-повтора-векторов-recycling-rule" class="section level4">
+<div id="правила-повтора-векторов-recycling-rule"
+class="section level4">
 <h4>Правила повтора векторов (Recycling Rule)</h4>
 <pre class="r"><code>x&lt;-c(2,4,5,3,-4,0)
 x*5</code></pre>
@@ -424,7 +427,7 @@ x*z</code></pre>
 <pre><code>## Warning in x * z: длина большего объекта не является произведением длины
 ## меньшего объекта</code></pre>
 <pre><code>## [1]  2  8 15 12 -4  0</code></pre>
-#### Измерение длинны вектора
+<p>#### Измерение длинны вектора</p>
 </td>
 <pre class="r"><code>length(x)</code></pre>
 <pre><code>## [1] 6</code></pre>
@@ -570,8 +573,11 @@ order(x)</code></pre>
 </div>
 <div id="семинар-2" class="section level1">
 <h1>Семинар 2</h1>
-<div id="задание.-получите-из-данного-вектора-вектор-в-котором-будет-обратный-порядок-элементов" class="section level4">
-<h4>Задание. Получите из данного вектора вектор в котором будет обратный порядок элементов</h4>
+<div
+id="задание.-получите-из-данного-вектора-вектор-в-котором-будет-обратный-порядок-элементов"
+class="section level4">
+<h4>Задание. Получите из данного вектора вектор в котором будет обратный
+порядок элементов</h4>
 <pre class="r"><code>a&lt;-seq(-8,10,.5)
 a</code></pre>
 <pre><code>##  [1] -8.0 -7.5 -7.0 -6.5 -6.0 -5.5 -5.0 -4.5 -4.0 -3.5 -3.0 -2.5 -2.0 -1.5 -1.0
@@ -583,7 +589,8 @@ x</code></pre>
 ## [16]  2.5  2.0  1.5  1.0  0.5  0.0 -0.5 -1.0 -1.5 -2.0 -2.5 -3.0 -3.5 -4.0 -4.5
 ## [31] -5.0 -5.5 -6.0 -6.5 -7.0 -7.5 -8.0</code></pre>
 </div>
-<div id="задание.-вставьте-число-99-в-середину-данного-вектора" class="section level4">
+<div id="задание.-вставьте-число-99-в-середину-данного-вектора"
+class="section level4">
 <h4>Задание. Вставьте число 99 в середину данного вектора</h4>
 <pre class="r"><code>y=c(a[1:round(length(a)/2)],99,a[(round(length(a)/2)+1):length(a)])</code></pre>
 </div>
@@ -632,8 +639,11 @@ summary(x)</code></pre>
 <pre><code>## Mean 
 ##  5.5</code></pre>
 </div>
-<div id="задание-посчитайте-долю-каждого-нуклеотида-в-векторе-содержащем-последовательность-днк" class="section level4">
-<h4>Задание посчитайте долю каждого нуклеотида в векторе содержащем последовательность ДНК</h4>
+<div
+id="задание-посчитайте-долю-каждого-нуклеотида-в-векторе-содержащем-последовательность-днк"
+class="section level4">
+<h4>Задание посчитайте долю каждого нуклеотида в векторе содержащем
+последовательность ДНК</h4>
 <pre class="r"><code>dna=factor(rep(c(&quot;T&quot;,&quot;G&quot;,&quot;C&quot;,&quot;A&quot;),c(16,38,6,10)))
 ratio=summary(dna)/sum(summary(dna))</code></pre>
 </div>
@@ -691,8 +701,11 @@ union(x,y)</code></pre>
 <pre class="r"><code>cumsum(1:10)</code></pre>
 <pre><code>##  [1]  1  3  6 10 15 21 28 36 45 55</code></pre>
 </div>
-<div id="задание.-создайте-длинные-последовательности-с-заданными-пропорциями-элементов" class="section level4">
-<h4>Задание. Создайте длинные последовательности с заданными пропорциями элементов</h4>
+<div
+id="задание.-создайте-длинные-последовательности-с-заданными-пропорциями-элементов"
+class="section level4">
+<h4>Задание. Создайте длинные последовательности с заданными пропорциями
+элементов</h4>
 <pre class="r"><code>dna2=sample(c(&quot;A&quot;,&quot;T&quot;,&quot;G&quot;,&quot;G&quot;,&quot;G&quot;,&quot;C&quot;), size=3826513,replace=TRUE)
 ratio=summary(factor(dna2))/length(dna2)
 ratio</code></pre>
@@ -907,8 +920,11 @@ ratio</code></pre>
 </tbody>
 </table>
 </div>
-<div id="виды-у-которых-petal.length2-но-3-вывести-виды-и-количество-попадений-в-условия" class="section level4">
-<h4>Виды у которых Petal.Length&gt;2 но &lt;3, вывести виды и количество попадений в условия</h4>
+<div
+id="виды-у-которых-petal.length2-но-3-вывести-виды-и-количество-попадений-в-условия"
+class="section level4">
+<h4>Виды у которых Petal.Length&gt;2 но &lt;3, вывести виды и количество
+попадений в условия</h4>
 <pre class="r"><code>summary(factor(iris[(iris$Petal.Length&gt;2 &amp; iris$Petal.Length&lt;6),&quot;Species&quot; ]))</code></pre>
 <pre><code>## versicolor  virginica 
 ##         50         39</code></pre>
@@ -1060,16 +1076,22 @@ for (i in seq(10,10000,10))
     }
 plot(pis,type=&quot;l&quot;)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
-<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-1.png" /><!-- --></p>
+<p><img
+src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-1.png" /><!-- --></p>
 <pre class="r"><code>hist(pis,nclas=100)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
-<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-2.png" /><!-- --></p>
+<p><img
+src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-3-2.png" /><!-- --></p>
 <pre class="r"><code>mean(pis)</code></pre>
 <pre><code>## [1] 3.136978</code></pre>
 <pre><code>## [1] NA</code></pre>
 </div>
-<div id="взяв-iris-data.frame-для-первых-двух-колонок-получить-список-содержащий-матрицы-для-каждого-ряда-со-значениями-строки-и-суммы-колоник-без-учета-данных-строки" class="section level4">
-<h4>Взяв iris data.frame, для первых двух колонок получить список содержащий матрицы для каждого ряда со значениями строки и суммы колоник без учета данных строки</h4>
+<div
+id="взяв-iris-data.frame-для-первых-двух-колонок-получить-список-содержащий-матрицы-для-каждого-ряда-со-значениями-строки-и-суммы-колоник-без-учета-данных-строки"
+class="section level4">
+<h4>Взяв iris data.frame, для первых двух колонок получить список
+содержащий матрицы для каждого ряда со значениями строки и суммы колоник
+без учета данных строки</h4>
 <p>iris<span class="math display">\[1\]</span></p>
 <div class="fold o">
 <pre class="r"><code>l=list()
@@ -1834,8 +1856,13 @@ l</code></pre>
 </div>
 <div id="функция-apply" class="section level4">
 <h4>Функция Apply</h4>
-<p>apply (data.frame(), 1 or 2, FUNCTION) 1 - функция будет применена к каждой строке 2 - к каждой колонке</p>
-<p>lapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает список sapply(list, FUNCTION) - аналогичная функция, которая в качестве результата выдает вектор tapply(vector,factor, FUN) - выбирает и группирует строки по градациям фактора и применяет функцию к каждой полученной группе</p>
+<p>apply (data.frame(), 1 or 2, FUNCTION) 1 - функция будет применена к
+каждой строке 2 - к каждой колонке</p>
+<p>lapply(list, FUNCTION) - аналогичная функция, которая в качестве
+результата выдает список sapply(list, FUNCTION) - аналогичная функция,
+которая в качестве результата выдает вектор tapply(vector,factor, FUN) -
+выбирает и группирует строки по градациям фактора и применяет функцию к
+каждой полученной группе</p>
 <pre class="r"><code>apply(iris[,1:4],2,sum)</code></pre>
 <pre><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
 ##        876.5        458.6        563.7        179.9</code></pre>
@@ -1890,7 +1917,8 @@ lines(seq(-2,2,.01),rep(c(0),401))</code></pre>
 <pre class="r"><code>#install.packages(&quot;ggplot2&quot;)
 library(ggplot2)</code></pre>
 </div>
-<div id="давайте-посмотрим-на-содержимое-mtcars-с-помощью-функции-str" class="section level1">
+<div id="давайте-посмотрим-на-содержимое-mtcars-с-помощью-функции-str"
+class="section level1">
 <h1>Давайте посмотрим на содержимое mtcars с помощью функции str()</h1>
 <pre class="r"><code>str(mtcars)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
@@ -1909,7 +1937,8 @@ library(ggplot2)</code></pre>
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 </div>
-<div id="давайте-построим-график-рассматривая-cyl-как-фактор" class="section level1">
+<div id="давайте-построим-график-рассматривая-cyl-как-фактор"
+class="section level1">
 <h1>Давайте построим график рассматривая cyl как фактор</h1>
 <pre class="r"><code>ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
   geom_point()</code></pre>
@@ -1921,8 +1950,11 @@ library(ggplot2)</code></pre>
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 </div>
-<div id="ggplot-умеет-автоматически-создавать-легенды-для-категориальных-переменных-например-когда-вы-задаете-ею-цвето-точек." class="section level1">
-<h1>ggplot умеет автоматически создавать легенды для категориальных переменных, например когда вы задаете ею цвето точек.</h1>
+<div
+id="ggplot-умеет-автоматически-создавать-легенды-для-категориальных-переменных-например-когда-вы-задаете-ею-цвето-точек."
+class="section level1">
+<h1>ggplot умеет автоматически создавать легенды для категориальных
+переменных, например когда вы задаете ею цвето точек.</h1>
 <pre class="r"><code>ggplot(mtcars, aes(x = wt, y = mpg, col = disp)) +
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
@@ -1933,7 +1965,8 @@ library(ggplot2)</code></pre>
   geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 </div>
-<div id="добавим-geom_point-и-geom_smooth-через-символ" class="section level1">
+<div id="добавим-geom_point-и-geom_smooth-через-символ"
+class="section level1">
 <h1>Добавим geom_point() и geom_smooth() через символ +</h1>
 <pre class="r"><code>ggplot(diamonds, aes(x = carat, y = price)) + geom_point() + geom_smooth()</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
@@ -1957,7 +1990,8 @@ ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
 ggplot(diamonds, aes(x = carat, y = price, col=clarity)) +
   geom_point(alpha = 0.4)</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
-<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-5.png" /><!-- --></p>
+<p><img
+src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-5.png" /><!-- --></p>
 <pre class="r"><code># Create the object containing the data and aes layers: dia_plot
 dia_plot = ggplot(diamonds, aes(x = carat, y = price))
 
@@ -1965,7 +1999,8 @@ dia_plot = ggplot(diamonds, aes(x = carat, y = price))
 
 dia_plot + geom_point()</code></pre>
 <p><img src="Part-1-topic-1_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
-<p><img src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-6.png" /><!-- --></p>
+<p><img
+src="Lecture3_ru_files/figure-markdown_github/unnamed-chunk-14-6.png" /><!-- --></p>
 <pre class="r"><code># Add the same geom layer, but with aes() inside
 
 dia_plot + geom_point(aes(col=clarity))</code></pre>
