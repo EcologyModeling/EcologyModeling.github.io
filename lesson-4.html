@@ -13,7 +13,7 @@
 
 <title>Multiple regression modelling</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -63,6 +63,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
 
@@ -87,6 +88,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -234,7 +238,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<pre><code>## # A tibble: 1,379 x 6
+<pre><code>## # A tibble: 1,379 × 6
 ##      earn height sex    race        ed   age
 ##     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
 ##  1 79571.   73.9 male   white       16    49
@@ -247,8 +251,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ##  8 50960.   73.3 male   white       17    50
 ##  9  3213.   72.2 male   hispanic    15    25
 ## 10 42997.   72.4 male   white       12    30
-## # ... with 1,369 more rows</code></pre>
-<pre><code>## # A tibble: 48 x 5
+## # … with 1,369 more rows</code></pre>
+<pre><code>## # A tibble: 48 × 5
 ##    state       abbr    low murder tc2009
 ##    &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ##  1 Alabama     AL      -27    7.1  4338.
@@ -261,7 +265,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 ##  8 Delaware    DE      -17    4.6  3997.
 ##  9 Florida     FL       -2    5.5  4454.
 ## 10 Georgia     GA      -17    6    4181.
-## # ... with 38 more rows</code></pre>
+## # … with 38 more rows</code></pre>
 <pre><code>## tc2009 ~ low</code></pre>
 <pre><code>## [1] &quot;formula&quot;</code></pre>
 <div id="multiple-comparison" class="section level2">

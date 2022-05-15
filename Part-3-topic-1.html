@@ -13,7 +13,7 @@
 
 <title>Манипуляции над данными, работа с таблицами</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -63,6 +63,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="css/envmodel.css" type="text/css" />
 
 
@@ -87,6 +88,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -314,15 +318,15 @@ library(&quot;readr&quot;)</code></pre>
 получить, для этого нам понадобиться пакет readr и его функция
 read_csv</p>
 <pre class="r"><code>greendb &lt;- read_csv(&quot;greendb.csv&quot;)</code></pre>
-<pre><code>## Rows: 841574 Columns: 7</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
+<pre><code>## Rows: 841574 Columns: 7
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): species_ru, adm_region
 ## dbl (3): objectid, height_m, d_trunk_m
-## lgl (2): species_l, d_canopy_m</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## lgl (2): species_l, d_canopy_m
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Функция позволяет читать csv файлы, которые представляют собой
 табличные данные, представленные в виде текста, разделенного запятыми.
 Каждая новая строчка текста соответсвует новой строчке таблицы, а
@@ -334,15 +338,15 @@ read_csv</p>
 спокойно использовать следующий код, но только не часто (скачать 76 Мб
 до сих пор не самая быстрая операция)</p>
 <pre class="r"><code>greendb &lt;- read_csv(&quot;https://github.com/EcologyModeling/EcologyModeling.github.io/raw/master/greendb.csv&quot;)</code></pre>
-<pre><code>## Rows: 841574 Columns: 7</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
+<pre><code>## Rows: 841574 Columns: 7
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (2): species_ru, adm_region
 ## dbl (3): objectid, height_m, d_trunk_m
-## lgl (2): species_l, d_canopy_m</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## lgl (2): species_l, d_canopy_m
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Таблица содержит базу данных зеленых насаждений Москвы и такие
 колонки как species_ru - название вида на русском языке, height_m -
 высота дерева в метрах, d_trunk_m - диаметр дерева в метрах, adm_region
@@ -354,29 +358,29 @@ read_csv</p>
 должны в результате выдавать логический вектор. Давайте попытаемся найти
 все ели высота которых выше 10 метров и диаметр больше 0,4 метра.</p>
 <pre class="r"><code>filter(greendb, height_m == 10, d_trunk_m &gt; 0.4, species_ru == &quot;Ель колючая&quot; )</code></pre>
-<pre><code>## # A tibble: 3 x 7
+<pre><code>## # A tibble: 3 × 7
 ##   objectid species_ru  species_l height_m d_trunk_m d_canopy_m adm_region       
 ##      &lt;dbl&gt; &lt;chr&gt;       &lt;lgl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;      &lt;chr&gt;            
 ## 1  4662600 Ель колючая NA              10      0.44 NA         район Щукино     
-## 2  2337476 Ель колючая NA              10      0.44 NA         район Ново-Перед~
+## 2  2337476 Ель колючая NA              10      0.44 NA         район Ново-Перед…
 ## 3  5060902 Ель колючая NA              10      0.44 NA         район Щукино</code></pre>
 <p>Следующий код находит все рейсы, отправленные в ноябре или
 декабре:</p>
 <pre class="r"><code>filter(greendb, adm_region == &quot;район Щукино&quot; | species_ru == &quot;Ель колючая&quot;)</code></pre>
-<pre><code>## # A tibble: 38,654 x 7
-##    objectid species_ru      species_l height_m d_trunk_m d_canopy_m adm_region  
-##       &lt;dbl&gt; &lt;chr&gt;           &lt;lgl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;      &lt;chr&gt;       
-##  1  3292138 Ель колючая     NA            10        0.24 NA         район Просп~
-##  2  3292139 Ель колючая     NA            10        0.24 NA         район Просп~
-##  3  3292492 Липа мелколист~ NA            15        0.18 NA         район Щукино
-##  4  3295362 Ель колючая     NA             1.3     NA    NA         район Митино
-##  5  3295756 Ива ломкая      NA            12        0.26 NA         район Щукино
-##  6  3296086 Липа мелколист~ NA            10        0.18 NA         район Щукино
-##  7  3296351 Береза повисла~ NA             6        0.12 NA         район Щукино
-##  8  3296341 Липа мелколист~ NA            15        0.32 NA         район Щукино
-##  9  3296342 Липа мелколист~ NA            15        0.46 NA         район Щукино
-## 10  3297987 Липа мелколист~ NA            15        0.32 NA         район Щукино
-## # ... with 38,644 more rows</code></pre>
+<pre><code>## # A tibble: 38,654 × 7
+##    objectid species_ru        species_l height_m d_trunk_m d_canopy_m adm_region
+##       &lt;dbl&gt; &lt;chr&gt;             &lt;lgl&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;      &lt;chr&gt;     
+##  1  3292138 Ель колючая       NA            10        0.24 NA         район Про…
+##  2  3292139 Ель колючая       NA            10        0.24 NA         район Про…
+##  3  3292492 Липа мелколистная NA            15        0.18 NA         район Щук…
+##  4  3295362 Ель колючая       NA             1.3     NA    NA         район Мит…
+##  5  3295756 Ива ломкая        NA            12        0.26 NA         район Щук…
+##  6  3296086 Липа мелколистная NA            10        0.18 NA         район Щук…
+##  7  3296351 Береза повислая … NA             6        0.12 NA         район Щук…
+##  8  3296341 Липа мелколистная NA            15        0.32 NA         район Щук…
+##  9  3296342 Липа мелколистная NA            15        0.46 NA         район Щук…
+## 10  3297987 Липа мелколистная NA            15        0.32 NA         район Щук…
+## # … with 38,644 more rows</code></pre>
 <p>Полезным конструкцией для решения подобных проблем является x %in% y.
 Она выберет каждую строку, где x является одним из значений y. Мы могли
 бы использовать его для перезаписи предыдущего кода:</p>
@@ -388,7 +392,7 @@ read_csv</p>
 будет использоваться для разрыва связей в значениях предыдущих
 столбцов:</p>
 <pre class="r"><code>arrange(flights, year, month, day)</code></pre>
-<pre><code>## # A tibble: 336,776 x 19
+<pre><code>## # A tibble: 336,776 × 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
 ##  1  2013     1     1      517            515         2      830            819
@@ -401,11 +405,11 @@ read_csv</p>
 ##  8  2013     1     1      557            600        -3      709            723
 ##  9  2013     1     1      557            600        -3      838            846
 ## 10  2013     1     1      558            600        -2      753            745
-## # ... with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+## # … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <pre class="r"><code>arrange(flights, desc(arr_delay))</code></pre>
-<pre><code>## # A tibble: 336,776 x 19
+<pre><code>## # A tibble: 336,776 × 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
 ##  1  2013     1     9      641            900      1301     1242           1530
@@ -418,7 +422,7 @@ read_csv</p>
 ##  8  2013     7    22     2257            759       898      121           1026
 ##  9  2013    12     5      756           1700       896     1058           2020
 ## 10  2013     5     3     1133           2055       878     1250           2215
-## # ... with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+## # … with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
 ## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Функция desc() говорит о том, что колонку нужно пересортировать от
@@ -429,7 +433,7 @@ read_csv</p>
 действительно интересны. Select() позволяет быстро получить полезное
 подмножество, используя операции, основанные на именах переменных.</p>
 <pre class="r"><code>select(flights, year, month, day)</code></pre>
-<pre><code>## # A tibble: 336,776 x 3
+<pre><code>## # A tibble: 336,776 × 3
 ##     year month   day
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
 ##  1  2013     1     1
@@ -442,11 +446,11 @@ read_csv</p>
 ##  8  2013     1     1
 ##  9  2013     1     1
 ## 10  2013     1     1
-## # ... with 336,766 more rows</code></pre>
+## # … with 336,766 more rows</code></pre>
 <p>Интересной особенностью является возможностью выбирать ряд колонок
 меж двух заданных</p>
 <pre class="r"><code>select(flights, year:day)</code></pre>
-<pre><code>## # A tibble: 336,776 x 3
+<pre><code>## # A tibble: 336,776 × 3
 ##     year month   day
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
 ##  1  2013     1     1
@@ -459,9 +463,9 @@ read_csv</p>
 ##  8  2013     1     1
 ##  9  2013     1     1
 ## 10  2013     1     1
-## # ... with 336,766 more rows</code></pre>
+## # … with 336,766 more rows</code></pre>
 <pre class="r"><code>select(flights, -(year:day))</code></pre>
-<pre><code>## # A tibble: 336,776 x 16
+<pre><code>## # A tibble: 336,776 × 16
 ##    dep_time sched_dep_time dep_delay arr_time sched_arr_time arr_delay carrier
 ##       &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;  
 ##  1      517            515         2      830            819        11 UA     
@@ -474,15 +478,15 @@ read_csv</p>
 ##  8      557            600        -3      709            723       -14 EV     
 ##  9      557            600        -3      838            846        -8 B6     
 ## 10      558            600        -2      753            745         8 AA     
-## # ... with 336,766 more rows, and 9 more variables: flight &lt;int&gt;,
-## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
-## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+## # … with 336,766 more rows, and 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Помимо выбора наборов существующих столбцов, часто полезно добавлять
 новые столбцы, которые являются функциями существующих столбцов. Это
 задача функции mutate().</p>
 <pre class="r"><code>flights_sml &lt;- select(flights, year:day, ends_with(&quot;delay&quot;), distance, air_time )
 mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 60)</code></pre>
-<pre><code>## # A tibble: 336,776 x 9
+<pre><code>## # A tibble: 336,776 × 9
 ##     year month   day dep_delay arr_delay distance air_time  gain speed
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1  2013     1     1         2        11     1400      227     9  370.
@@ -495,11 +499,11 @@ mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 
 ##  8  2013     1     1        -3       -14      229       53   -11  259.
 ##  9  2013     1     1        -3        -8      944      140    -5  405.
 ## 10  2013     1     1        -2         8      733      138    10  319.
-## # ... with 336,766 more rows</code></pre>
+## # … with 336,766 more rows</code></pre>
 <p>Последний ключевой глагол - summarize((). Он сворачивает фрейм данных
 в одну строку:</p>
 <pre class="r"><code>summarize(flights, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## # A tibble: 1 x 1
+<pre><code>## # A tibble: 1 × 1
 ##   delay
 ##   &lt;dbl&gt;
 ## 1  12.6</code></pre>
@@ -512,8 +516,9 @@ mutate(flights_sml, gain = arr_delay - dep_delay, speed = distance / air_time * 
 дату:</p>
 <pre class="r"><code>by_day &lt;- group_by(flights, year, month, day)
 summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 365 x 4
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 365 × 4
 ## # Groups:   year, month [12]
 ##     year month   day delay
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -527,7 +532,7 @@ summarize(by_day, delay = mean(dep_delay, na.rm = TRUE))</code></pre>
 ##  8  2013     1     8  2.55
 ##  9  2013     1     9  2.28
 ## 10  2013     1    10  2.84
-## # ... with 355 more rows</code></pre>
+## # … with 355 more rows</code></pre>
 <p>Вместе функции group_by() и summarize() предоставляют один из
 инструментов, который вы будете использовать наиболее часто при работе с
 dplyr: сгруппированные заключения по данными в виде вектора. Но прежде
@@ -549,8 +554,9 @@ dplyr, вы можете написать код следующим образо
 <p>Например, последние наши действия можно теперь записать более
 наглядным образом:</p>
 <pre class="r"><code>group_by(flights, year, month, day) %&gt;% summarize( delay = mean(dep_delay, na.rm = TRUE))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 365 x 4
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;, &#39;month&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 365 × 4
 ## # Groups:   year, month [12]
 ##     year month   day delay
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -564,7 +570,7 @@ dplyr, вы можете написать код следующим образо
 ##  8  2013     1     8  2.55
 ##  9  2013     1     9  2.28
 ## 10  2013     1    10  2.84
-## # ... with 355 more rows</code></pre>
+## # … with 355 more rows</code></pre>
 <p>##Разбор возможностей пакетов на примере реальных данных</p>
 <p>Возьмем данные из второй задачи по регресиионному линейному анализу и
 попытаемся подготовить их корелляционному анализу. Воспользуемся
@@ -573,41 +579,141 @@ dplyr, вы можете написать код следующим образо
 мы попытаемся для себя использовать</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;)</code></pre>
 <pre><code>## New names:
-## * `` -&gt; ...2
-## * `` -&gt; ...3
-## * `` -&gt; ...4
-## * `` -&gt; ...5
-## * `` -&gt; ...6
-## * ...</code></pre>
+## • `` -&gt; `...2`
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...6`
+## • `` -&gt; `...7`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`
+## • `` -&gt; `...11`
+## • `` -&gt; `...12`
+## • `` -&gt; `...13`
+## • `` -&gt; `...14`
+## • `` -&gt; `...15`
+## • `` -&gt; `...16`
+## • `` -&gt; `...17`
+## • `` -&gt; `...18`
+## • `` -&gt; `...19`
+## • `` -&gt; `...20`
+## • `` -&gt; `...21`
+## • `` -&gt; `...22`
+## • `` -&gt; `...24`
+## • `` -&gt; `...25`
+## • `` -&gt; `...26`
+## • `` -&gt; `...28`
+## • `` -&gt; `...30`
+## • `` -&gt; `...31`
+## • `` -&gt; `...32`
+## • `` -&gt; `...33`
+## • `` -&gt; `...34`
+## • `` -&gt; `...35`
+## • `` -&gt; `...36`
+## • `` -&gt; `...37`
+## • `` -&gt; `...38`
+## • `` -&gt; `...40`
+## • `` -&gt; `...41`
+## • `` -&gt; `...42`
+## • `` -&gt; `...43`
+## • `` -&gt; `...44`
+## • `` -&gt; `...45`
+## • `` -&gt; `...46`
+## • `` -&gt; `...47`
+## • `` -&gt; `...48`
+## • `` -&gt; `...49`
+## • `` -&gt; `...50`
+## • `` -&gt; `...51`
+## • `` -&gt; `...53`
+## • `` -&gt; `...54`
+## • `` -&gt; `...56`
+## • `` -&gt; `...57`
+## • `` -&gt; `...58`
+## • `` -&gt; `...59`
+## • `` -&gt; `...60`
+## • `` -&gt; `...62`
+## • `` -&gt; `...63`
+## • `` -&gt; `...65`
+## • `` -&gt; `...66`
+## • `` -&gt; `...67`
+## • `` -&gt; `...68`
+## • `` -&gt; `...69`
+## • `` -&gt; `...71`
+## • `` -&gt; `...72`
+## • `` -&gt; `...73`
+## • `` -&gt; `...74`
+## • `` -&gt; `...75`
+## • `` -&gt; `...76`
+## • `` -&gt; `...77`
+## • `` -&gt; `...79`
+## • `` -&gt; `...80`
+## • `` -&gt; `...81`
+## • `` -&gt; `...82`
+## • `` -&gt; `...83`
+## • `` -&gt; `...84`
+## • `` -&gt; `...85`
+## • `` -&gt; `...86`
+## • `` -&gt; `...87`
+## • `` -&gt; `...89`
+## • `` -&gt; `...90`
+## • `` -&gt; `...91`
+## • `` -&gt; `...92`
+## • `` -&gt; `...93`
+## • `` -&gt; `...94`
+## • `` -&gt; `...95`
+## • `` -&gt; `...96`
+## • `` -&gt; `...97`
+## • `` -&gt; `...98`
+## • `` -&gt; `...99`
+## • `` -&gt; `...101`
+## • `` -&gt; `...102`
+## • `` -&gt; `...103`
+## • `` -&gt; `...104`
+## • `` -&gt; `...105`
+## • `` -&gt; `...107`
+## • `` -&gt; `...108`
+## • `` -&gt; `...109`
+## • `` -&gt; `...110`
+## • `` -&gt; `...111`
+## • `` -&gt; `...112`
+## • `` -&gt; `...113`
+## • `` -&gt; `...114`
+## • `` -&gt; `...117`
+## • `` -&gt; `...118`
+## • `` -&gt; `...119`
+## • `` -&gt; `...120`
+## • `` -&gt; `...121`
+## • `` -&gt; `...123`
+## • `` -&gt; `...124`</code></pre>
 <pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
-<pre><code>## Rows: 8742 Columns: 125</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
+<pre><code>## Rows: 8742 Columns: 125
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (125): file_info, ...2, ...3, ...4, ...5, ...6, ...7, corrected_fluxes_a...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## chr (125): file_info, ...2, ...3, ...4, ...5, ...6, ...7, corrected_fluxes_a...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,742 x 125
-##    file_info  ...2   ...3   ...4  ...5  ...6  ...7  corrected_fluxe~ ...9  ...10
-##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
-##  1 filename   date   time   DOY   dayt~ file~ used~ Tau              qc_T~ rand~
-##  2 &lt;NA&gt;       [yyyy~ [HH:M~ [ddd~ [T/F] [#]   [#]   [kg+1m-1s-2]     [#]   [kg+~
-##  3 2013-05-1~ 2013-~ 19:00  133.~ T     36000 36000 6.1421563557279~ 1     7.74~
-##  4 2013-05-1~ 2013-~ 19:30  133.~ F     36000 36000 5.4505740676589~ 4     7.18~
-##  5 2013-05-1~ 2013-~ 20:00  133.~ F     36000 36000 6.3575995727091~ 1     1.01~
-##  6 2013-05-1~ 2013-~ 20:30  133.~ F     36000 36000 2.7864866398925~ 1     3.00~
-##  7 2013-05-1~ 2013-~ 21:00  133.~ F     36000 36000 5.2068050915970~ 9     -999~
-##  8 2013-05-1~ 2013-~ 21:30  133.~ F     36000 36000 2.2669079711154~ 5     1.17~
-##  9 2013-05-1~ 2013-~ 22:00  133.~ F     36000 36000 1.1717808154933~ 1     1.81~
-## 10 2013-05-1~ 2013-~ 22:30  133.~ F     36000 36000 2.4471305498879~ 4     5.40~
-## # ... with 8,732 more rows, and 115 more variables: ...11 &lt;chr&gt;, ...12 &lt;chr&gt;,
+<pre><code>## # A tibble: 8,742 × 125
+##    file_info    ...2  ...3  ...4  ...5  ...6  ...7  corrected_fluxe… ...9  ...10
+##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;
+##  1 filename     date  time  DOY   dayt… file… used… Tau              qc_T… rand…
+##  2 &lt;NA&gt;         [yyy… [HH:… [ddd… [T/F] [#]   [#]   [kg+1m-1s-2]     [#]   [kg+…
+##  3 2013-05-13T… 2013… 19:00 133.… T     36000 36000 6.1421563557279… 1     7.74…
+##  4 2013-05-13T… 2013… 19:30 133.… F     36000 36000 5.4505740676589… 4     7.18…
+##  5 2013-05-13T… 2013… 20:00 133.… F     36000 36000 6.3575995727091… 1     1.01…
+##  6 2013-05-13T… 2013… 20:30 133.… F     36000 36000 2.7864866398925… 1     3.00…
+##  7 2013-05-13T… 2013… 21:00 133.… F     36000 36000 5.2068050915970… 9     -999…
+##  8 2013-05-13T… 2013… 21:30 133.… F     36000 36000 2.2669079711154… 5     1.17…
+##  9 2013-05-13T… 2013… 22:00 133.… F     36000 36000 1.1717808154933… 1     1.81…
+## 10 2013-05-13T… 2013… 22:30 133.… F     36000 36000 2.4471305498879… 4     5.40…
+## # … with 8,732 more rows, and 115 more variables: ...11 &lt;chr&gt;, ...12 &lt;chr&gt;,
 ## #   ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;, ...16 &lt;chr&gt;, ...17 &lt;chr&gt;,
 ## #   ...18 &lt;chr&gt;, ...19 &lt;chr&gt;, ...20 &lt;chr&gt;, ...21 &lt;chr&gt;, ...22 &lt;chr&gt;,
 ## #   storage_fluxes &lt;chr&gt;, ...24 &lt;chr&gt;, ...25 &lt;chr&gt;, ...26 &lt;chr&gt;,
 ## #   vertical_advection_fluxes &lt;chr&gt;, ...28 &lt;chr&gt;,
 ## #   gas_densities_concentrations_and_timelags &lt;chr&gt;, ...30 &lt;chr&gt;, ...31 &lt;chr&gt;,
-## #   ...32 &lt;chr&gt;, ...33 &lt;chr&gt;, ...34 &lt;chr&gt;, ...35 &lt;chr&gt;, ...36 &lt;chr&gt;, ...</code></pre>
+## #   ...32 &lt;chr&gt;, ...33 &lt;chr&gt;, ...34 &lt;chr&gt;, ...35 &lt;chr&gt;, ...36 &lt;chr&gt;, …</code></pre>
 <p>Первое на что вы должны обратить внимание, это то, что полученный в
 результате объект не является привычным нам data.frame, а некой новой
 структурой типа tibble. Точнее, на самом деле он является и data.frame
@@ -630,40 +736,43 @@ tidyverse и преобразует все таблицы в tibble. С tibble �
 параметр skip:</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip =1)</code></pre>
 <pre><code>## New names:
-## * skweness_kurtosis -&gt; skweness_kurtosis...92
-## * skweness_kurtosis -&gt; skweness_kurtosis...93
-## * discontinuities -&gt; discontinuities...94
-## * discontinuities -&gt; discontinuities...95
-## * timelag -&gt; timelag...96
-## * ...</code></pre>
-<pre><code>## Rows: 8741 Columns: 131</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
-## Delimiter: &quot;,&quot;
-## chr (131): filename, date, time, DOY, daytime, file_records, used_records, T...</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## Rows: 8741 Columns: 131
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+## (131): filename, date, time, DOY, daytime, file_records, used_records, T...
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...92`
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...93`
+## • `discontinuities` -&gt; `discontinuities...94`
+## • `discontinuities` -&gt; `discontinuities...95`
+## • `timelag` -&gt; `timelag...96`
+## • `timelag` -&gt; `timelag...97`
+## • `co2` -&gt; `co2...125`
+## • `h2o` -&gt; `h2o...126`
+## • `co2` -&gt; `co2...127`
+## • `h2o` -&gt; `h2o...128`</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,741 x 131
-##    filename   date   time  DOY   daytime file_records used_records Tau    qc_Tau
-##    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; 
-##  1 &lt;NA&gt;       [yyyy~ [HH:~ [ddd~ [T/F]   [#]          [#]          [kg+1~ [#]   
-##  2 2013-05-1~ 2013-~ 19:00 133.~ T       36000        36000        6.142~ 1     
-##  3 2013-05-1~ 2013-~ 19:30 133.~ F       36000        36000        5.450~ 4     
-##  4 2013-05-1~ 2013-~ 20:00 133.~ F       36000        36000        6.357~ 1     
-##  5 2013-05-1~ 2013-~ 20:30 133.~ F       36000        36000        2.786~ 1     
-##  6 2013-05-1~ 2013-~ 21:00 133.~ F       36000        36000        5.206~ 9     
-##  7 2013-05-1~ 2013-~ 21:30 133.~ F       36000        36000        2.266~ 5     
-##  8 2013-05-1~ 2013-~ 22:00 133.~ F       36000        36000        1.171~ 1     
-##  9 2013-05-1~ 2013-~ 22:30 133.~ F       36000        36000        2.447~ 4     
-## 10 2013-05-1~ 2013-~ 23:00 133.~ F       36000        36000        9.273~ 4     
-## # ... with 8,731 more rows, and 122 more variables: rand_err_Tau &lt;chr&gt;,
-## #   H &lt;chr&gt;, qc_H &lt;chr&gt;, rand_err_H &lt;chr&gt;, LE &lt;chr&gt;, qc_LE &lt;chr&gt;,
-## #   rand_err_LE &lt;chr&gt;, co2_flux &lt;chr&gt;, qc_co2_flux &lt;chr&gt;,
-## #   rand_err_co2_flux &lt;chr&gt;, h2o_flux &lt;chr&gt;, qc_h2o_flux &lt;chr&gt;,
-## #   rand_err_h2o_flux &lt;chr&gt;, H_strg &lt;chr&gt;, LE_strg &lt;chr&gt;, co2_strg &lt;chr&gt;,
-## #   h2o_strg &lt;chr&gt;, co2_v-adv &lt;chr&gt;, h2o_v-adv &lt;chr&gt;, co2_molar_density &lt;chr&gt;,
-## #   co2_mole_fraction &lt;chr&gt;, co2_mixing_ratio &lt;chr&gt;, co2_time_lag &lt;chr&gt;, ...</code></pre>
+<pre><code>## # A tibble: 8,741 × 131
+##    filename     date  time  DOY   daytime file_records used_records Tau   qc_Tau
+##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt; 
+##  1 &lt;NA&gt;         [yyy… [HH:… [ddd… [T/F]   [#]          [#]          [kg+… [#]   
+##  2 2013-05-13T… 2013… 19:00 133.… T       36000        36000        6.14… 1     
+##  3 2013-05-13T… 2013… 19:30 133.… F       36000        36000        5.45… 4     
+##  4 2013-05-13T… 2013… 20:00 133.… F       36000        36000        6.35… 1     
+##  5 2013-05-13T… 2013… 20:30 133.… F       36000        36000        2.78… 1     
+##  6 2013-05-13T… 2013… 21:00 133.… F       36000        36000        5.20… 9     
+##  7 2013-05-13T… 2013… 21:30 133.… F       36000        36000        2.26… 5     
+##  8 2013-05-13T… 2013… 22:00 133.… F       36000        36000        1.17… 1     
+##  9 2013-05-13T… 2013… 22:30 133.… F       36000        36000        2.44… 4     
+## 10 2013-05-13T… 2013… 23:00 133.… F       36000        36000        9.27… 4     
+## # … with 8,731 more rows, and 122 more variables: rand_err_Tau &lt;chr&gt;, H &lt;chr&gt;,
+## #   qc_H &lt;chr&gt;, rand_err_H &lt;chr&gt;, LE &lt;chr&gt;, qc_LE &lt;chr&gt;, rand_err_LE &lt;chr&gt;,
+## #   co2_flux &lt;chr&gt;, qc_co2_flux &lt;chr&gt;, rand_err_co2_flux &lt;chr&gt;, h2o_flux &lt;chr&gt;,
+## #   qc_h2o_flux &lt;chr&gt;, rand_err_h2o_flux &lt;chr&gt;, H_strg &lt;chr&gt;, LE_strg &lt;chr&gt;,
+## #   co2_strg &lt;chr&gt;, h2o_strg &lt;chr&gt;, `co2_v-adv` &lt;chr&gt;, `h2o_v-adv` &lt;chr&gt;,
+## #   co2_molar_density &lt;chr&gt;, co2_mole_fraction &lt;chr&gt;, co2_mixing_ratio &lt;chr&gt;,
+## #   co2_time_lag &lt;chr&gt;, co2_def_timelag &lt;chr&gt;, h2o_molar_density &lt;chr&gt;, …</code></pre>
 <p>Как мы видим, теперь проблема решена. Обратите внимание, что readr
 при чтении таблицы выдает большое количество предупреждений, но при этом
 продолжает работать. Основная идея авторов заключалась в том, чтобы с
@@ -687,44 +796,48 @@ tibble легко заметить, что все переменные в таб
 будет символ “[”</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, comment=c(&quot;[&quot;))</code></pre>
 <pre><code>## New names:
-## * skweness_kurtosis -&gt; skweness_kurtosis...92
-## * skweness_kurtosis -&gt; skweness_kurtosis...93
-## * discontinuities -&gt; discontinuities...94
-## * discontinuities -&gt; discontinuities...95
-## * timelag -&gt; timelag...96
-## * ...</code></pre>
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...92`
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...93`
+## • `discontinuities` -&gt; `discontinuities...94`
+## • `discontinuities` -&gt; `discontinuities...95`
+## • `timelag` -&gt; `timelag...96`
+## • `timelag` -&gt; `timelag...97`
+## • `co2` -&gt; `co2...125`
+## • `h2o` -&gt; `h2o...126`
+## • `co2` -&gt; `co2...127`
+## • `h2o` -&gt; `h2o...128`</code></pre>
 <pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
-<pre><code>## Rows: 8741 Columns: 131</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
+<pre><code>## Rows: 8741 Columns: 131
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr   (17): filename, daytime, co2_def_timelag, h2o_def_timelag, model, spik...
 ## dbl  (112): DOY, file_records, used_records, Tau, qc_Tau, rand_err_Tau, H, q...
 ## date   (1): date
-## time   (1): time</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## time   (1): time
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl</code></pre>
-<pre><code>## # A tibble: 8,741 x 131
+<pre><code>## # A tibble: 8,741 × 131
 ##    filename    date       time    DOY daytime file_records used_records      Tau
 ##    &lt;chr&gt;       &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 &lt;NA&gt;        NA            NA   NA  &lt;NA&gt;              NA           NA NA      
-##  2 2013-05-13~ 2013-05-13 19:00  134. T              36000        36000  0.0614 
-##  3 2013-05-13~ 2013-05-13 19:30  134. F              36000        36000  0.0545 
-##  4 2013-05-13~ 2013-05-13 20:00  134. F              36000        36000  0.0636 
-##  5 2013-05-13~ 2013-05-13 20:30  134. F              36000        36000  0.0279 
-##  6 2013-05-13~ 2013-05-13 21:00  134. F              36000        36000  0.00521
-##  7 2013-05-13~ 2013-05-13 21:30  134. F              36000        36000  0.00227
-##  8 2013-05-13~ 2013-05-13 22:00  134. F              36000        36000  0.0117 
-##  9 2013-05-13~ 2013-05-13 22:30  134. F              36000        36000  0.0245 
-## 10 2013-05-13~ 2013-05-13 23:00  134. F              36000        36000  0.00927
-## # ... with 8,731 more rows, and 123 more variables: qc_Tau &lt;dbl&gt;,
+##  2 2013-05-13… 2013-05-13 19:00  134. T              36000        36000  0.0614 
+##  3 2013-05-13… 2013-05-13 19:30  134. F              36000        36000  0.0545 
+##  4 2013-05-13… 2013-05-13 20:00  134. F              36000        36000  0.0636 
+##  5 2013-05-13… 2013-05-13 20:30  134. F              36000        36000  0.0279 
+##  6 2013-05-13… 2013-05-13 21:00  134. F              36000        36000  0.00521
+##  7 2013-05-13… 2013-05-13 21:30  134. F              36000        36000  0.00227
+##  8 2013-05-13… 2013-05-13 22:00  134. F              36000        36000  0.0117 
+##  9 2013-05-13… 2013-05-13 22:30  134. F              36000        36000  0.0245 
+## 10 2013-05-13… 2013-05-13 23:00  134. F              36000        36000  0.00927
+## # … with 8,731 more rows, and 123 more variables: qc_Tau &lt;dbl&gt;,
 ## #   rand_err_Tau &lt;dbl&gt;, H &lt;dbl&gt;, qc_H &lt;dbl&gt;, rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;,
 ## #   qc_LE &lt;dbl&gt;, rand_err_LE &lt;dbl&gt;, co2_flux &lt;dbl&gt;, qc_co2_flux &lt;dbl&gt;,
 ## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;,
 ## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
-## #   h2o_strg &lt;dbl&gt;, co2_v-adv &lt;dbl&gt;, h2o_v-adv &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
-## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, ...</code></pre>
+## #   h2o_strg &lt;dbl&gt;, `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;,
+## #   co2_molar_density &lt;dbl&gt;, co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, …</code></pre>
 <p>Проблема с типами колонок теперь решена, но мешавшая нам строчка
 осталась, содержит она только NA и теперь мы точно можем от нее
 избавиться. Говоря об NA давайте вспомним, что полученные нами данные
@@ -735,46 +848,50 @@ tibble легко заметить, что все переменные в таб
 стадии считывания файла</p>
 <pre class="r"><code>tbl = read_csv(&quot;https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1&quot;, skip = 1, na =c(&quot;&quot;,&quot;NA&quot;,&quot;-9999&quot;,&quot;-9999.0&quot;), comment=c(&quot;[&quot;))</code></pre>
 <pre><code>## New names:
-## * skweness_kurtosis -&gt; skweness_kurtosis...92
-## * skweness_kurtosis -&gt; skweness_kurtosis...93
-## * discontinuities -&gt; discontinuities...94
-## * discontinuities -&gt; discontinuities...95
-## * timelag -&gt; timelag...96
-## * ...</code></pre>
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...92`
+## • `skweness_kurtosis` -&gt; `skweness_kurtosis...93`
+## • `discontinuities` -&gt; `discontinuities...94`
+## • `discontinuities` -&gt; `discontinuities...95`
+## • `timelag` -&gt; `timelag...96`
+## • `timelag` -&gt; `timelag...97`
+## • `co2` -&gt; `co2...125`
+## • `h2o` -&gt; `h2o...126`
+## • `co2` -&gt; `co2...127`
+## • `h2o` -&gt; `h2o...128`</code></pre>
 <pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
-<pre><code>## Rows: 8741 Columns: 131</code></pre>
-<pre><code>## -- Column specification --------------------------------------------------------
+<pre><code>## Rows: 8741 Columns: 131
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr   (14): filename, model, spikes, amplitude_resolution, drop_out, absolut...
 ## dbl  (111): DOY, file_records, used_records, Tau, qc_Tau, rand_err_Tau, H, q...
 ## lgl    (4): daytime, co2_def_timelag, h2o_def_timelag, roll
 ## date   (1): date
-## time   (1): time</code></pre>
-<pre><code>## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## time   (1): time
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>tbl = tbl[-1,]
 tbl</code></pre>
-<pre><code>## # A tibble: 8,740 x 131
+<pre><code>## # A tibble: 8,740 × 131
 ##    filename     date       time    DOY daytime file_records used_records     Tau
 ##    &lt;chr&gt;        &lt;date&gt;     &lt;tim&gt; &lt;dbl&gt; &lt;lgl&gt;          &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;
-##  1 2013-05-13T~ 2013-05-13 19:00  134. TRUE           36000        36000 0.0614 
-##  2 2013-05-13T~ 2013-05-13 19:30  134. FALSE          36000        36000 0.0545 
-##  3 2013-05-13T~ 2013-05-13 20:00  134. FALSE          36000        36000 0.0636 
-##  4 2013-05-13T~ 2013-05-13 20:30  134. FALSE          36000        36000 0.0279 
-##  5 2013-05-13T~ 2013-05-13 21:00  134. FALSE          36000        36000 0.00521
-##  6 2013-05-13T~ 2013-05-13 21:30  134. FALSE          36000        36000 0.00227
-##  7 2013-05-13T~ 2013-05-13 22:00  134. FALSE          36000        36000 0.0117 
-##  8 2013-05-13T~ 2013-05-13 22:30  134. FALSE          36000        36000 0.0245 
-##  9 2013-05-13T~ 2013-05-13 23:00  134. FALSE          36000        36000 0.00927
-## 10 2013-05-13T~ 2013-05-13 23:30  134. FALSE          36000        36000 0.0214 
-## # ... with 8,730 more rows, and 123 more variables: qc_Tau &lt;dbl&gt;,
+##  1 2013-05-13T… 2013-05-13 19:00  134. TRUE           36000        36000 0.0614 
+##  2 2013-05-13T… 2013-05-13 19:30  134. FALSE          36000        36000 0.0545 
+##  3 2013-05-13T… 2013-05-13 20:00  134. FALSE          36000        36000 0.0636 
+##  4 2013-05-13T… 2013-05-13 20:30  134. FALSE          36000        36000 0.0279 
+##  5 2013-05-13T… 2013-05-13 21:00  134. FALSE          36000        36000 0.00521
+##  6 2013-05-13T… 2013-05-13 21:30  134. FALSE          36000        36000 0.00227
+##  7 2013-05-13T… 2013-05-13 22:00  134. FALSE          36000        36000 0.0117 
+##  8 2013-05-13T… 2013-05-13 22:30  134. FALSE          36000        36000 0.0245 
+##  9 2013-05-13T… 2013-05-13 23:00  134. FALSE          36000        36000 0.00927
+## 10 2013-05-13T… 2013-05-13 23:30  134. FALSE          36000        36000 0.0214 
+## # … with 8,730 more rows, and 123 more variables: qc_Tau &lt;dbl&gt;,
 ## #   rand_err_Tau &lt;dbl&gt;, H &lt;dbl&gt;, qc_H &lt;dbl&gt;, rand_err_H &lt;dbl&gt;, LE &lt;dbl&gt;,
 ## #   qc_LE &lt;dbl&gt;, rand_err_LE &lt;dbl&gt;, co2_flux &lt;dbl&gt;, qc_co2_flux &lt;dbl&gt;,
 ## #   rand_err_co2_flux &lt;dbl&gt;, h2o_flux &lt;dbl&gt;, qc_h2o_flux &lt;dbl&gt;,
 ## #   rand_err_h2o_flux &lt;dbl&gt;, H_strg &lt;dbl&gt;, LE_strg &lt;dbl&gt;, co2_strg &lt;dbl&gt;,
-## #   h2o_strg &lt;dbl&gt;, co2_v-adv &lt;dbl&gt;, h2o_v-adv &lt;dbl&gt;, co2_molar_density &lt;dbl&gt;,
-## #   co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, co2_time_lag &lt;dbl&gt;, ...</code></pre>
+## #   h2o_strg &lt;dbl&gt;, `co2_v-adv` &lt;dbl&gt;, `h2o_v-adv` &lt;dbl&gt;,
+## #   co2_molar_density &lt;dbl&gt;, co2_mole_fraction &lt;dbl&gt;, co2_mixing_ratio &lt;dbl&gt;, …</code></pre>
 <p>Теперь данные имеют адекватный вид и мы сделали все, что можно еще на
 стадии их прочтения. Давайте внимательнее посмотрим на сами переменные и
 для этого воспользуеся функцией glimpse(), которая более наглядно
@@ -784,137 +901,137 @@ tbl</code></pre>
 <pre class="r"><code>glimpse(tbl)</code></pre>
 <pre><code>## Rows: 8,740
 ## Columns: 131
-## $ filename                 &lt;chr&gt; &quot;2013-05-13T183000_AIU-0833.ghg&quot;, &quot;2013-05-13~
-## $ date                     &lt;date&gt; 2013-05-13, 2013-05-13, 2013-05-13, 2013-05-~
-## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:00, 21:0~
-## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 133.874, ~
-## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS~
-## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360~
-## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360~
-## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996, 0.0278~
-## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1, 1, 6, ~
-## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706955, 0.0~
-## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -25.64848~
-## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1, 1, 5, ~
-## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.701881, 1.223~
-## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.117618, 1~
-## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, ~
-## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.1806819, 1~
-## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -2.263651~
-## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1, 2, 5, ~
-## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0.2955232~
-## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1.2320225~
-## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, ~
-## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0.1407072~
-## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083741, -2.~
-## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ co2_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ h2o_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ `co2_v-adv`              &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655e-13, -5~
-## $ `h2o_v-adv`              &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324e-15, -1~
-## $ co2_molar_density        &lt;dbl&gt; 15.22140, 15.14026, 15.15888, 15.22958, 15.41~
-## $ co2_mole_fraction        &lt;dbl&gt; 387.7888, 385.6089, 386.1619, 386.2551, 388.5~
-## $ co2_mixing_ratio         &lt;dbl&gt; 391.1283, 389.0639, 389.5689, 389.9161, 392.2~
-## $ co2_time_lag             &lt;dbl&gt; 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0~
-## $ co2_def_timelag          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU~
-## $ h2o_molar_density        &lt;dbl&gt; 335.1319, 348.6739, 343.3058, 370.2009, 375.9~
-## $ h2o_mole_fraction        &lt;dbl&gt; 8.538007, 8.880412, 8.745477, 9.389096, 9.477~
-## $ h2o_mixing_ratio         &lt;dbl&gt; 8.611532, 8.959980, 8.822635, 9.478087, 9.567~
-## $ h2o_time_lag             &lt;dbl&gt; 0.20, 0.20, 0.20, 0.20, 0.05, 0.05, 0.05, 0.0~
-## $ h2o_def_timelag          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE,~
-## $ sonic_temperature        &lt;dbl&gt; 301.8003, 302.2411, 301.9661, 300.4221, 298.8~
-## $ air_temperature          &lt;dbl&gt; 300.9846, 301.3914, 301.1301, 299.5293, 297.9~
-## $ air_pressure             &lt;dbl&gt; 97950.87, 97993.05, 97963.04, 97933.45, 97902~
-## $ air_density              &lt;dbl&gt; 1.130119, 1.128935, 1.129626, 1.135045, 1.140~
-## $ air_heat_capacity        &lt;dbl&gt; 1010.377, 1010.576, 1010.494, 1010.798, 1010.~
-## $ air_molar_volume         &lt;dbl&gt; 0.02561660, 0.02564296, 0.02562748, 0.0255041~
-## $ water_vapor_density      &lt;dbl&gt; 0.006006063, 0.006240504, 0.006149394, 0.0066~
-## $ e                        &lt;dbl&gt; 834.2622, 867.9981, 854.5841, 917.0116, 925.3~
-## $ es                       &lt;dbl&gt; 3732.452, 3821.895, 3764.219, 3427.037, 3120.~
-## $ specific_humidity        &lt;dbl&gt; 0.005314538, 0.005527782, 0.005443746, 0.0058~
-## $ RH                       &lt;dbl&gt; 22.35159, 22.71120, 22.70283, 26.75815, 29.65~
-## $ VPD                      &lt;dbl&gt; 2898.1897, 2953.8968, 2909.6346, 2510.0251, 2~
-## $ Tdew                     &lt;dbl&gt; 277.5258, 278.0928, 277.8697, 278.8829, 279.0~
-## $ u_unrot                  &lt;dbl&gt; -0.421602678, -0.008885363, -1.085429083, -1.~
-## $ v_unrot                  &lt;dbl&gt; 2.53086026, 2.10471408, 1.60815995, 0.3206234~
-## $ w_unrot                  &lt;dbl&gt; 0.020732006, 0.014296283, -0.006371309, 0.019~
-## $ u_rot                    &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1~
-## $ v_rot                    &lt;dbl&gt; 7.010024e-17, 3.989834e-16, 1.831120e-15, 1.4~
-## $ w_rot                    &lt;dbl&gt; 2.746046e-17, 6.678000e-17, -2.649045e-17, -3~
-## $ wind_speed               &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1~
-## $ max_speed                &lt;dbl&gt; 6.391510, 5.658323, 6.305762, 3.384460, 2.229~
-## $ wind_dir                 &lt;dbl&gt; 125.54225, 134.75812, 100.98258, 59.63849, 47~
-## $ yaw                      &lt;dbl&gt; 99.45775, 90.24188, 124.01742, 165.36151, 177~
-## $ pitch                    &lt;dbl&gt; 0.46295896, 0.38917246, -0.18815060, 0.868933~
-## $ roll                     &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N~
-## $ `u*`                     &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0.1551818~
-## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0.1780187~
-## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 12.836383~
-## $ `(z-d)/L`                &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0.1895393~
-## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -0.473939~
-## $ `T*`                     &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363, -0.144~
-## $ model                    &lt;chr&gt; &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;kormann_~
-## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.65037, 54.50~
-## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.000000, 25~
-## $ `x_10%`                  &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.00000, 55.00~
-## $ `x_30%`                  &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.00000, 115.0~
-## $ `x_50%`                  &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.00000, 235.0~
-## $ `x_70%`                  &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.00000, 570.~
-## $ `x_90%`                  &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00000, 312~
-## $ un_Tau                   &lt;dbl&gt; 0.060389779, 0.053604219, 0.062551825, 0.0273~
-## $ Tau_scf                  &lt;dbl&gt; 1.017085, 1.016818, 1.016373, 1.019440, 1.036~
-## $ un_H                     &lt;dbl&gt; -14.685845, -18.459793, -21.498517, -22.18504~
-## $ H_scf                    &lt;dbl&gt; 1.019669, 1.018870, 1.018041, 1.021328, 1.042~
-## $ un_LE                    &lt;dbl&gt; 76.247230, 84.354531, 71.675492, 47.124193, 9~
-## $ LE_scf                   &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ un_co2_flux              &lt;dbl&gt; -2.2860625, -4.0014450, -3.1628528, -1.971127~
-## $ co2_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ un_h2o_flux              &lt;dbl&gt; 1.73827695, 1.92386853, 1.63428246, 1.0728126~
-## $ h2o_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ spikes                   &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ amplitude_resolution     &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ drop_out                 &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ absolute_limits          &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ skweness_kurtosis...92   &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF~
-## $ skweness_kurtosis...93   &lt;chr&gt; &quot;SF00101199&quot;, &quot;SF00111099&quot;, &quot;SF00100099&quot;, &quot;SF~
-## $ discontinuities...94     &lt;chr&gt; &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF~
-## $ discontinuities...95     &lt;chr&gt; &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF~
-## $ timelag...96             &lt;chr&gt; &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF01~
-## $ timelag...97             &lt;chr&gt; &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF01~
-## $ attack_angle             &lt;chr&gt; &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF~
-## $ non_steady_wind          &lt;chr&gt; &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF~
-## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,~
-## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, 42, 58, ~
-## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4, 11, 4,~
-## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9, 4, 9, 1~
-## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5, 15, 6, ~
-## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23, 8, 3, 1~
-## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 8~
-## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0.1719886~
-## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0.1407104~
-## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0.0433382~
-## $ ts_var                   &lt;dbl&gt; 0.46585066, 0.14925435, 0.04129100, 0.1315604~
-## $ co2_var                  &lt;dbl&gt; 1.8118416, 1.7002642, 1.2321601, 1.0151777, 0~
-## $ h2o_var                  &lt;dbl&gt; 0.214627215, 0.355580722, 0.246317085, 0.2488~
-## $ `w/ts_cov`               &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.~
-## $ `w/co2_cov`              &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.~
-## $ `w/h2o_cov`              &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0~
-## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
-## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
-## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
-## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
-## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94~
-## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98~
-## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0~</code></pre>
+## $ filename                 &lt;chr&gt; &quot;2013-05-13T183000_AIU-0833.ghg&quot;, &quot;2013-05-13…
+## $ date                     &lt;date&gt; 2013-05-13, 2013-05-13, 2013-05-13, 2013-05-…
+## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:00, 21:0…
+## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 133.874, …
+## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360…
+## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360…
+## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996, 0.0278…
+## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1, 1, 6, …
+## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706955, 0.0…
+## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -25.64848…
+## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1, 1, 5, …
+## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.701881, 1.223…
+## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.117618, 1…
+## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, …
+## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.1806819, 1…
+## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -2.263651…
+## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1, 2, 5, …
+## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0.2955232…
+## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1.2320225…
+## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, …
+## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0.1407072…
+## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083741, -2.…
+## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ co2_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ h2o_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ `co2_v-adv`              &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655e-13, -5…
+## $ `h2o_v-adv`              &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324e-15, -1…
+## $ co2_molar_density        &lt;dbl&gt; 15.22140, 15.14026, 15.15888, 15.22958, 15.41…
+## $ co2_mole_fraction        &lt;dbl&gt; 387.7888, 385.6089, 386.1619, 386.2551, 388.5…
+## $ co2_mixing_ratio         &lt;dbl&gt; 391.1283, 389.0639, 389.5689, 389.9161, 392.2…
+## $ co2_time_lag             &lt;dbl&gt; 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0…
+## $ co2_def_timelag          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…
+## $ h2o_molar_density        &lt;dbl&gt; 335.1319, 348.6739, 343.3058, 370.2009, 375.9…
+## $ h2o_mole_fraction        &lt;dbl&gt; 8.538007, 8.880412, 8.745477, 9.389096, 9.477…
+## $ h2o_mixing_ratio         &lt;dbl&gt; 8.611532, 8.959980, 8.822635, 9.478087, 9.567…
+## $ h2o_time_lag             &lt;dbl&gt; 0.20, 0.20, 0.20, 0.20, 0.05, 0.05, 0.05, 0.0…
+## $ h2o_def_timelag          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE,…
+## $ sonic_temperature        &lt;dbl&gt; 301.8003, 302.2411, 301.9661, 300.4221, 298.8…
+## $ air_temperature          &lt;dbl&gt; 300.9846, 301.3914, 301.1301, 299.5293, 297.9…
+## $ air_pressure             &lt;dbl&gt; 97950.87, 97993.05, 97963.04, 97933.45, 97902…
+## $ air_density              &lt;dbl&gt; 1.130119, 1.128935, 1.129626, 1.135045, 1.140…
+## $ air_heat_capacity        &lt;dbl&gt; 1010.377, 1010.576, 1010.494, 1010.798, 1010.…
+## $ air_molar_volume         &lt;dbl&gt; 0.02561660, 0.02564296, 0.02562748, 0.0255041…
+## $ water_vapor_density      &lt;dbl&gt; 0.006006063, 0.006240504, 0.006149394, 0.0066…
+## $ e                        &lt;dbl&gt; 834.2622, 867.9981, 854.5841, 917.0116, 925.3…
+## $ es                       &lt;dbl&gt; 3732.452, 3821.895, 3764.219, 3427.037, 3120.…
+## $ specific_humidity        &lt;dbl&gt; 0.005314538, 0.005527782, 0.005443746, 0.0058…
+## $ RH                       &lt;dbl&gt; 22.35159, 22.71120, 22.70283, 26.75815, 29.65…
+## $ VPD                      &lt;dbl&gt; 2898.1897, 2953.8968, 2909.6346, 2510.0251, 2…
+## $ Tdew                     &lt;dbl&gt; 277.5258, 278.0928, 277.8697, 278.8829, 279.0…
+## $ u_unrot                  &lt;dbl&gt; -0.421602678, -0.008885363, -1.085429083, -1.…
+## $ v_unrot                  &lt;dbl&gt; 2.53086026, 2.10471408, 1.60815995, 0.3206234…
+## $ w_unrot                  &lt;dbl&gt; 0.020732006, 0.014296283, -0.006371309, 0.019…
+## $ u_rot                    &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1…
+## $ v_rot                    &lt;dbl&gt; 7.010024e-17, 3.989834e-16, 1.831120e-15, 1.4…
+## $ w_rot                    &lt;dbl&gt; 2.746046e-17, 6.678000e-17, -2.649045e-17, -3…
+## $ wind_speed               &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1…
+## $ max_speed                &lt;dbl&gt; 6.391510, 5.658323, 6.305762, 3.384460, 2.229…
+## $ wind_dir                 &lt;dbl&gt; 125.54225, 134.75812, 100.98258, 59.63849, 47…
+## $ yaw                      &lt;dbl&gt; 99.45775, 90.24188, 124.01742, 165.36151, 177…
+## $ pitch                    &lt;dbl&gt; 0.46295896, 0.38917246, -0.18815060, 0.868933…
+## $ roll                     &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ `u*`                     &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0.1551818…
+## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0.1780187…
+## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 12.836383…
+## $ `(z-d)/L`                &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0.1895393…
+## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -0.473939…
+## $ `T*`                     &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363, -0.144…
+## $ model                    &lt;chr&gt; &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;kljun_04&quot;, &quot;kormann_…
+## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.65037, 54.50…
+## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.000000, 25…
+## $ `x_10%`                  &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.00000, 55.00…
+## $ `x_30%`                  &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.00000, 115.0…
+## $ `x_50%`                  &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.00000, 235.0…
+## $ `x_70%`                  &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.00000, 570.…
+## $ `x_90%`                  &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00000, 312…
+## $ un_Tau                   &lt;dbl&gt; 0.060389779, 0.053604219, 0.062551825, 0.0273…
+## $ Tau_scf                  &lt;dbl&gt; 1.017085, 1.016818, 1.016373, 1.019440, 1.036…
+## $ un_H                     &lt;dbl&gt; -14.685845, -18.459793, -21.498517, -22.18504…
+## $ H_scf                    &lt;dbl&gt; 1.019669, 1.018870, 1.018041, 1.021328, 1.042…
+## $ un_LE                    &lt;dbl&gt; 76.247230, 84.354531, 71.675492, 47.124193, 9…
+## $ LE_scf                   &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ un_co2_flux              &lt;dbl&gt; -2.2860625, -4.0014450, -3.1628528, -1.971127…
+## $ co2_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ un_h2o_flux              &lt;dbl&gt; 1.73827695, 1.92386853, 1.63428246, 1.0728126…
+## $ h2o_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ spikes                   &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF…
+## $ amplitude_resolution     &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF…
+## $ drop_out                 &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF…
+## $ absolute_limits          &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF…
+## $ skweness_kurtosis...92   &lt;chr&gt; &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF00000099&quot;, &quot;HF…
+## $ skweness_kurtosis...93   &lt;chr&gt; &quot;SF00101199&quot;, &quot;SF00111099&quot;, &quot;SF00100099&quot;, &quot;SF…
+## $ discontinuities...94     &lt;chr&gt; &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF00000000&quot;, &quot;HF…
+## $ discontinuities...95     &lt;chr&gt; &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF00000000&quot;, &quot;SF…
+## $ timelag...96             &lt;chr&gt; &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF0100&quot;, &quot;HF01…
+## $ timelag...97             &lt;chr&gt; &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF0100&quot;, &quot;SF01…
+## $ attack_angle             &lt;chr&gt; &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF…
+## $ non_steady_wind          &lt;chr&gt; &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF1&quot;, &quot;HF0&quot;, &quot;HF0&quot;, &quot;HF…
+## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,…
+## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, 42, 58, …
+## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4, 11, 4,…
+## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9, 4, 9, 1…
+## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5, 15, 6, …
+## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23, 8, 3, 1…
+## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 8…
+## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0.1719886…
+## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0.1407104…
+## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0.0433382…
+## $ ts_var                   &lt;dbl&gt; 0.46585066, 0.14925435, 0.04129100, 0.1315604…
+## $ co2_var                  &lt;dbl&gt; 1.8118416, 1.7002642, 1.2321601, 1.0151777, 0…
+## $ h2o_var                  &lt;dbl&gt; 0.214627215, 0.355580722, 0.246317085, 0.2488…
+## $ `w/ts_cov`               &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.…
+## $ `w/co2_cov`              &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.…
+## $ `w/h2o_cov`              &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0…
+## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08…
+## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9…
+## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5…
+## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477…
+## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94…
+## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98…
+## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0…</code></pre>
 </div>
 <p>При внимательном рассмотрении можно заметить, что переменная roll
 содержит только NA, а потому будет только мешать нам при анализе.
@@ -965,136 +1082,136 @@ u*“,”x_90% ” и т.д. Формально этого лучше избег
 glimpse(tbl)</code></pre>
 <pre><code>## Rows: 8,740
 ## Columns: 130
-## $ filename                 &lt;fct&gt; 2013-05-13T183000_AIU-0833.ghg, 2013-05-13T19~
-## $ date                     &lt;date&gt; 2013-05-13, 2013-05-13, 2013-05-13, 2013-05-~
-## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:00, 21:0~
-## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 133.874, ~
-## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS~
-## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360~
-## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360~
-## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996, 0.0278~
-## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1, 1, 6, ~
-## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706955, 0.0~
-## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -25.64848~
-## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1, 1, 5, ~
-## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.701881, 1.223~
-## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.117618, 1~
-## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, ~
-## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.1806819, 1~
-## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -2.263651~
-## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1, 2, 5, ~
-## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0.2955232~
-## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1.2320225~
-## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, ~
-## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0.1407072~
-## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083741, -2.~
-## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ co2_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ h2o_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
-## $ co2_v_minus_adv          &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655e-13, -5~
-## $ h2o_v_minus_adv          &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324e-15, -1~
-## $ co2_molar_density        &lt;dbl&gt; 15.22140, 15.14026, 15.15888, 15.22958, 15.41~
-## $ co2_mole_fraction        &lt;dbl&gt; 387.7888, 385.6089, 386.1619, 386.2551, 388.5~
-## $ co2_mixing_ratio         &lt;dbl&gt; 391.1283, 389.0639, 389.5689, 389.9161, 392.2~
-## $ co2_time_lag             &lt;dbl&gt; 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0~
-## $ co2_def_timelag          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU~
-## $ h2o_molar_density        &lt;dbl&gt; 335.1319, 348.6739, 343.3058, 370.2009, 375.9~
-## $ h2o_mole_fraction        &lt;dbl&gt; 8.538007, 8.880412, 8.745477, 9.389096, 9.477~
-## $ h2o_mixing_ratio         &lt;dbl&gt; 8.611532, 8.959980, 8.822635, 9.478087, 9.567~
-## $ h2o_time_lag             &lt;dbl&gt; 0.20, 0.20, 0.20, 0.20, 0.05, 0.05, 0.05, 0.0~
-## $ h2o_def_timelag          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE,~
-## $ sonic_temperature        &lt;dbl&gt; 301.8003, 302.2411, 301.9661, 300.4221, 298.8~
-## $ air_temperature          &lt;dbl&gt; 300.9846, 301.3914, 301.1301, 299.5293, 297.9~
-## $ air_pressure             &lt;dbl&gt; 97950.87, 97993.05, 97963.04, 97933.45, 97902~
-## $ air_density              &lt;dbl&gt; 1.130119, 1.128935, 1.129626, 1.135045, 1.140~
-## $ air_heat_capacity        &lt;dbl&gt; 1010.377, 1010.576, 1010.494, 1010.798, 1010.~
-## $ air_molar_volume         &lt;dbl&gt; 0.02561660, 0.02564296, 0.02562748, 0.0255041~
-## $ water_vapor_density      &lt;dbl&gt; 0.006006063, 0.006240504, 0.006149394, 0.0066~
-## $ e                        &lt;dbl&gt; 834.2622, 867.9981, 854.5841, 917.0116, 925.3~
-## $ es                       &lt;dbl&gt; 3732.452, 3821.895, 3764.219, 3427.037, 3120.~
-## $ specific_humidity        &lt;dbl&gt; 0.005314538, 0.005527782, 0.005443746, 0.0058~
-## $ RH                       &lt;dbl&gt; 22.35159, 22.71120, 22.70283, 26.75815, 29.65~
-## $ VPD                      &lt;dbl&gt; 2898.1897, 2953.8968, 2909.6346, 2510.0251, 2~
-## $ Tdew                     &lt;dbl&gt; 277.5258, 278.0928, 277.8697, 278.8829, 279.0~
-## $ u_unrot                  &lt;dbl&gt; -0.421602678, -0.008885363, -1.085429083, -1.~
-## $ v_unrot                  &lt;dbl&gt; 2.53086026, 2.10471408, 1.60815995, 0.3206234~
-## $ w_unrot                  &lt;dbl&gt; 0.020732006, 0.014296283, -0.006371309, 0.019~
-## $ u_rot                    &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1~
-## $ v_rot                    &lt;dbl&gt; 7.010024e-17, 3.989834e-16, 1.831120e-15, 1.4~
-## $ w_rot                    &lt;dbl&gt; 2.746046e-17, 6.678000e-17, -2.649045e-17, -3~
-## $ wind_speed               &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1~
-## $ max_speed                &lt;dbl&gt; 6.391510, 5.658323, 6.305762, 3.384460, 2.229~
-## $ wind_dir                 &lt;dbl&gt; 125.54225, 134.75812, 100.98258, 59.63849, 47~
-## $ yaw                      &lt;dbl&gt; 99.45775, 90.24188, 124.01742, 165.36151, 177~
-## $ pitch                    &lt;dbl&gt; 0.46295896, 0.38917246, -0.18815060, 0.868933~
-## $ u_star_                  &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0.1551818~
-## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0.1780187~
-## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 12.836383~
-## $ `_z_minus_d__div_L`      &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0.1895393~
-## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -0.473939~
-## $ T_star_                  &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363, -0.144~
-## $ model                    &lt;fct&gt; kljun_04, kljun_04, kljun_04, kormann_meixner~
-## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.65037, 54.50~
-## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.000000, 25~
-## $ x_10_perc_               &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.00000, 55.00~
-## $ x_30_perc_               &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.00000, 115.0~
-## $ x_50_perc_               &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.00000, 235.0~
-## $ x_70_perc_               &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.00000, 570.~
-## $ x_90_perc_               &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00000, 312~
-## $ un_Tau                   &lt;dbl&gt; 0.060389779, 0.053604219, 0.062551825, 0.0273~
-## $ Tau_scf                  &lt;dbl&gt; 1.017085, 1.016818, 1.016373, 1.019440, 1.036~
-## $ un_H                     &lt;dbl&gt; -14.685845, -18.459793, -21.498517, -22.18504~
-## $ H_scf                    &lt;dbl&gt; 1.019669, 1.018870, 1.018041, 1.021328, 1.042~
-## $ un_LE                    &lt;dbl&gt; 76.247230, 84.354531, 71.675492, 47.124193, 9~
-## $ LE_scf                   &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ un_co2_flux              &lt;dbl&gt; -2.2860625, -4.0014450, -3.1628528, -1.971127~
-## $ co2_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ un_h2o_flux              &lt;dbl&gt; 1.73827695, 1.92386853, 1.63428246, 1.0728126~
-## $ h2o_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308~
-## $ spikes                   &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ amplitude_resolution     &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ drop_out                 &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ absolute_limits          &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ skweness_kurtosis...92   &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009~
-## $ skweness_kurtosis...93   &lt;fct&gt; SF00101199, SF00111099, SF00100099, SF0010009~
-## $ discontinuities...94     &lt;fct&gt; HF00000000, HF00000000, HF00000000, HF0000000~
-## $ discontinuities...95     &lt;fct&gt; SF00000000, SF00000000, SF00000000, SF0000000~
-## $ timelag...96             &lt;fct&gt; HF0100, HF0100, HF0100, HF0100, HF0100, HF110~
-## $ timelag...97             &lt;fct&gt; SF0100, SF0100, SF0100, SF0100, SF0100, SF110~
-## $ attack_angle             &lt;fct&gt; HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, ~
-## $ non_steady_wind          &lt;fct&gt; HF1, HF1, HF1, HF1, HF0, HF0, HF0, HF1, HF1, ~
-## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,~
-## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, 42, 58, ~
-## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4, 11, 4,~
-## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9, 4, 9, 1~
-## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5, 15, 6, ~
-## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23, 8, 3, 1~
-## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ~
-## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 8~
-## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0.1719886~
-## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0.1407104~
-## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0.0433382~
-## $ ts_var                   &lt;dbl&gt; 0.46585066, 0.14925435, 0.04129100, 0.1315604~
-## $ co2_var                  &lt;dbl&gt; 1.8118416, 1.7002642, 1.2321601, 1.0151777, 0~
-## $ h2o_var                  &lt;dbl&gt; 0.214627215, 0.355580722, 0.246317085, 0.2488~
-## $ w_div_ts_cov             &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.~
-## $ w_div_co2_cov            &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.~
-## $ w_div_h2o_cov            &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0~
-## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08~
-## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9~
-## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5~
-## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477~
-## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94~
-## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98~
-## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0~</code></pre>
+## $ filename                 &lt;fct&gt; 2013-05-13T183000_AIU-0833.ghg, 2013-05-13T19…
+## $ date                     &lt;date&gt; 2013-05-13, 2013-05-13, 2013-05-13, 2013-05-…
+## $ time                     &lt;time&gt; 19:00:00, 19:30:00, 20:00:00, 20:30:00, 21:0…
+## $ DOY                      &lt;dbl&gt; 133.791, 133.812, 133.833, 133.854, 133.874, …
+## $ daytime                  &lt;lgl&gt; TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALS…
+## $ file_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360…
+## $ used_records             &lt;dbl&gt; 36000, 36000, 36000, 36000, 36000, 36000, 360…
+## $ Tau                      &lt;dbl&gt; 0.061421564, 0.054505741, 0.063575996, 0.0278…
+## $ qc_Tau                   &lt;dbl&gt; 1, 4, 1, 1, 9, 5, 1, 4, 4, 1, 1, 1, 1, 1, 6, …
+## $ rand_err_Tau             &lt;dbl&gt; 0.0077426471, 0.0071860367, 0.0101706955, 0.0…
+## $ H                        &lt;dbl&gt; -19.901255, -24.257360, -26.491235, -25.64848…
+## $ qc_H                     &lt;dbl&gt; 4, 4, 1, 2, 4, 5, 1, 2, 1, 1, 1, 1, 1, 1, 5, …
+## $ rand_err_H               &lt;dbl&gt; 7.591799, 4.626570, 2.107392, 2.701881, 1.223…
+## $ LE                       &lt;dbl&gt; 85.928191, 94.837111, 80.210703, 54.117618, 1…
+## $ qc_LE                    &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, …
+## $ rand_err_LE              &lt;dbl&gt; 7.6130315, 8.8600890, 9.0396126, 6.1806819, 1…
+## $ co2_flux                 &lt;dbl&gt; -2.5763193, -4.4986971, -3.5394894, -2.263651…
+## $ qc_co2_flux              &lt;dbl&gt; 2, 1, 1, 1, 8, 5, 2, 4, 1, 2, 1, 1, 1, 2, 5, …
+## $ rand_err_co2_flux        &lt;dbl&gt; 0.52767895, 0.42433543, 0.46206475, 0.2955232…
+## $ h2o_flux                 &lt;dbl&gt; 1.95898258, 2.16294407, 1.82889493, 1.2320225…
+## $ qc_h2o_flux              &lt;dbl&gt; 1, 1, 1, 1, 2, 5, 1, 4, 1, 8, 1, 1, 1, 2, 5, …
+## $ rand_err_h2o_flux        &lt;dbl&gt; 0.17356115, 0.20207150, 0.20611341, 0.1407072…
+## $ H_strg                   &lt;dbl&gt; NA, 0.64468098, -0.41433946, -2.55083741, -2.…
+## $ LE_strg                  &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ co2_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ h2o_strg                 &lt;dbl&gt; NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ co2_v_minus_adv          &lt;dbl&gt; 4.179866e-13, 1.011067e-12, -4.015655e-13, -5…
+## $ h2o_v_minus_adv          &lt;dbl&gt; 9.202877e-15, 2.328444e-14, -9.094324e-15, -1…
+## $ co2_molar_density        &lt;dbl&gt; 15.22140, 15.14026, 15.15888, 15.22958, 15.41…
+## $ co2_mole_fraction        &lt;dbl&gt; 387.7888, 385.6089, 386.1619, 386.2551, 388.5…
+## $ co2_mixing_ratio         &lt;dbl&gt; 391.1283, 389.0639, 389.5689, 389.9161, 392.2…
+## $ co2_time_lag             &lt;dbl&gt; 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0…
+## $ co2_def_timelag          &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…
+## $ h2o_molar_density        &lt;dbl&gt; 335.1319, 348.6739, 343.3058, 370.2009, 375.9…
+## $ h2o_mole_fraction        &lt;dbl&gt; 8.538007, 8.880412, 8.745477, 9.389096, 9.477…
+## $ h2o_mixing_ratio         &lt;dbl&gt; 8.611532, 8.959980, 8.822635, 9.478087, 9.567…
+## $ h2o_time_lag             &lt;dbl&gt; 0.20, 0.20, 0.20, 0.20, 0.05, 0.05, 0.05, 0.0…
+## $ h2o_def_timelag          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE,…
+## $ sonic_temperature        &lt;dbl&gt; 301.8003, 302.2411, 301.9661, 300.4221, 298.8…
+## $ air_temperature          &lt;dbl&gt; 300.9846, 301.3914, 301.1301, 299.5293, 297.9…
+## $ air_pressure             &lt;dbl&gt; 97950.87, 97993.05, 97963.04, 97933.45, 97902…
+## $ air_density              &lt;dbl&gt; 1.130119, 1.128935, 1.129626, 1.135045, 1.140…
+## $ air_heat_capacity        &lt;dbl&gt; 1010.377, 1010.576, 1010.494, 1010.798, 1010.…
+## $ air_molar_volume         &lt;dbl&gt; 0.02561660, 0.02564296, 0.02562748, 0.0255041…
+## $ water_vapor_density      &lt;dbl&gt; 0.006006063, 0.006240504, 0.006149394, 0.0066…
+## $ e                        &lt;dbl&gt; 834.2622, 867.9981, 854.5841, 917.0116, 925.3…
+## $ es                       &lt;dbl&gt; 3732.452, 3821.895, 3764.219, 3427.037, 3120.…
+## $ specific_humidity        &lt;dbl&gt; 0.005314538, 0.005527782, 0.005443746, 0.0058…
+## $ RH                       &lt;dbl&gt; 22.35159, 22.71120, 22.70283, 26.75815, 29.65…
+## $ VPD                      &lt;dbl&gt; 2898.1897, 2953.8968, 2909.6346, 2510.0251, 2…
+## $ Tdew                     &lt;dbl&gt; 277.5258, 278.0928, 277.8697, 278.8829, 279.0…
+## $ u_unrot                  &lt;dbl&gt; -0.421602678, -0.008885363, -1.085429083, -1.…
+## $ v_unrot                  &lt;dbl&gt; 2.53086026, 2.10471408, 1.60815995, 0.3206234…
+## $ w_unrot                  &lt;dbl&gt; 0.020732006, 0.014296283, -0.006371309, 0.019…
+## $ u_rot                    &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1…
+## $ v_rot                    &lt;dbl&gt; 7.010024e-17, 3.989834e-16, 1.831120e-15, 1.4…
+## $ w_rot                    &lt;dbl&gt; 2.746046e-17, 6.678000e-17, -2.649045e-17, -3…
+## $ wind_speed               &lt;dbl&gt; 2.5658200, 2.1047814, 1.9401998, 1.2688391, 1…
+## $ max_speed                &lt;dbl&gt; 6.391510, 5.658323, 6.305762, 3.384460, 2.229…
+## $ wind_dir                 &lt;dbl&gt; 125.54225, 134.75812, 100.98258, 59.63849, 47…
+## $ yaw                      &lt;dbl&gt; 99.45775, 90.24188, 124.01742, 165.36151, 177…
+## $ pitch                    &lt;dbl&gt; 0.46295896, 0.38917246, -0.18815060, 0.868933…
+## $ u_star_                  &lt;dbl&gt; 0.23116366, 0.21790394, 0.23531669, 0.1551818…
+## $ TKE                      &lt;dbl&gt; 0.71684178, 0.49347607, 0.79131163, 0.1780187…
+## $ L                        &lt;dbl&gt; 54.6855879, 37.5932152, 43.3416836, 12.836383…
+## $ `_z_minus_d__div_L`      &lt;dbl&gt; 0.04449070, 0.06471913, 0.05613534, 0.1895393…
+## $ bowen_ratio              &lt;dbl&gt; -0.2316033, -0.2557792, -0.3302706, -0.473939…
+## $ T_star_                  &lt;dbl&gt; -0.07539683, -0.09757549, -0.09862363, -0.144…
+## $ model                    &lt;fct&gt; kljun_04, kljun_04, kljun_04, kormann_meixner…
+## $ x_peak                   &lt;dbl&gt; 34.46135, 39.96569, 35.96977, 12.65037, 54.50…
+## $ x_offset                 &lt;dbl&gt; -5.229643, -6.064948, -5.458551, 5.000000, 25…
+## $ x_10_perc_               &lt;dbl&gt; 11.82947, 13.71893, 12.34726, 10.00000, 55.00…
+## $ x_30_perc_               &lt;dbl&gt; 29.45704, 34.16207, 30.74642, 25.00000, 115.0…
+## $ x_50_perc_               &lt;dbl&gt; 44.92385, 52.09931, 46.89023, 45.00000, 235.0…
+## $ x_70_perc_               &lt;dbl&gt; 63.00634, 73.07003, 65.76421, 105.00000, 570.…
+## $ x_90_perc_               &lt;dbl&gt; 94.39497, 109.47222, 98.52677, 480.00000, 312…
+## $ un_Tau                   &lt;dbl&gt; 0.060389779, 0.053604219, 0.062551825, 0.0273…
+## $ Tau_scf                  &lt;dbl&gt; 1.017085, 1.016818, 1.016373, 1.019440, 1.036…
+## $ un_H                     &lt;dbl&gt; -14.685845, -18.459793, -21.498517, -22.18504…
+## $ H_scf                    &lt;dbl&gt; 1.019669, 1.018870, 1.018041, 1.021328, 1.042…
+## $ un_LE                    &lt;dbl&gt; 76.247230, 84.354531, 71.675492, 47.124193, 9…
+## $ LE_scf                   &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ un_co2_flux              &lt;dbl&gt; -2.2860625, -4.0014450, -3.1628528, -1.971127…
+## $ co2_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ un_h2o_flux              &lt;dbl&gt; 1.73827695, 1.92386853, 1.63428246, 1.0728126…
+## $ h2o_scf                  &lt;dbl&gt; 1.126968, 1.124268, 1.119081, 1.148404, 1.308…
+## $ spikes                   &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009…
+## $ amplitude_resolution     &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009…
+## $ drop_out                 &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009…
+## $ absolute_limits          &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009…
+## $ skweness_kurtosis...92   &lt;fct&gt; HF00000099, HF00000099, HF00000099, HF0000009…
+## $ skweness_kurtosis...93   &lt;fct&gt; SF00101199, SF00111099, SF00100099, SF0010009…
+## $ discontinuities...94     &lt;fct&gt; HF00000000, HF00000000, HF00000000, HF0000000…
+## $ discontinuities...95     &lt;fct&gt; SF00000000, SF00000000, SF00000000, SF0000000…
+## $ timelag...96             &lt;fct&gt; HF0100, HF0100, HF0100, HF0100, HF0100, HF110…
+## $ timelag...97             &lt;fct&gt; SF0100, SF0100, SF0100, SF0100, SF0100, SF110…
+## $ attack_angle             &lt;fct&gt; HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, HF0, …
+## $ non_steady_wind          &lt;fct&gt; HF1, HF1, HF1, HF1, HF0, HF0, HF0, HF1, HF1, …
+## $ u_spikes                 &lt;dbl&gt; 15, 12, 10, 67, 29, 27, 43, 0, 37, 9, 23, 25,…
+## $ v_spikes                 &lt;dbl&gt; 3, 23, 1, 26, 16, 46, 20, 7, 23, 10, 42, 58, …
+## $ w_spikes                 &lt;dbl&gt; 2, 10, 1, 5, 4, 3, 5, 8, 36, 14, 9, 4, 11, 4,…
+## $ ts_spikes                &lt;dbl&gt; 1, 12, 11, 0, 43, 47, 6, 4, 58, 3, 9, 4, 9, 1…
+## $ co2_spikes               &lt;dbl&gt; 30, 40, 17, 20, 83, 38, 5, 11, 18, 5, 15, 6, …
+## $ h2o_spikes               &lt;dbl&gt; 10, 10, 7, 1, 8, 23, 2, 1, 15, 4, 23, 8, 3, 1…
+## $ head_detect              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ t_out                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ t_in                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ aux_in                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ delta_p                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ chopper                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ detector                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ pll                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ sync                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ mean_value               &lt;dbl&gt; 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 8…
+## $ u_var                    &lt;dbl&gt; 0.63639924, 0.49024588, 0.85861805, 0.1719886…
+## $ v_var                    &lt;dbl&gt; 0.67467837, 0.42148942, 0.60985820, 0.1407104…
+## $ w_var                    &lt;dbl&gt; 0.12260597, 0.07521683, 0.11414700, 0.0433382…
+## $ ts_var                   &lt;dbl&gt; 0.46585066, 0.14925435, 0.04129100, 0.1315604…
+## $ co2_var                  &lt;dbl&gt; 1.8118416, 1.7002642, 1.2321601, 1.0151777, 0…
+## $ h2o_var                  &lt;dbl&gt; 0.214627215, 0.355580722, 0.246317085, 0.2488…
+## $ w_div_ts_cov             &lt;dbl&gt; -0.012861485, -0.016180394, -0.018833890, -0.…
+## $ w_div_co2_cov            &lt;dbl&gt; -0.059064200, -0.103525919, -0.081769272, -0.…
+## $ w_div_h2o_cov            &lt;dbl&gt; 0.0449112565, 0.0497745829, 0.0422511245, 0.0…
+## $ co2...125                &lt;dbl&gt; 14.88711, 14.79964, 14.82322, 14.89772, 15.08…
+## $ h2o...126                &lt;dbl&gt; 327.7537, 340.8174, 335.6923, 362.1378, 367.9…
+## $ co2...127                &lt;dbl&gt; 387.7893, 385.6097, 386.1626, 386.2555, 388.5…
+## $ h2o...128                &lt;dbl&gt; 8.537787, 8.880028, 8.745216, 9.388799, 9.477…
+## $ co2_signal_strength_7200 &lt;dbl&gt; 80.86754, 80.88258, 80.90261, 80.92750, 80.94…
+## $ h2o_signal_strength_7200 &lt;dbl&gt; 77.88942, 77.91185, 77.94164, 77.96743, 77.98…
+## $ flowrate                 &lt;dbl&gt; 0.0003477768, 0.0003472057, 0.0003476911, 0.0…</code></pre>
 </div>
 <p>Функция cor работает только с численными данными, поэтому, чтобы
 перейти к корелляционному анализу нужно выбрать все переменные типа
